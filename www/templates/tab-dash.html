@@ -1,28 +1,36 @@
-<ion-view view-title="Dashboard">
+<ion-view hide-nav-bar="true" hide-back-button="true">
+  <ion-header-bar align-title="center" class="bar-positive">
+  <div class="buttons">
+    <button class="button" ng-click="doSomething()">Left Button</button>
+    <!-- <div>
+      <span>上海大众汽车</span>
+      <span>Shanghai VolksWagen</span>
+    </div> -->
+  </div>
+  <h1 class="title">CPX 小组信息板</h1>
+  <div class="buttons">
+    <button class="button">Right Button</button>
+  </div>
+</ion-header-bar>
   <ion-content class="padding">
-    <div class="list card">
-      <div class="item item-divider">Recent Updates</div>
-      <div class="item item-body">
-        <div>
-          There is a fire in <b>sector 3</b>
-        </div>
-      </div>
+    <div class="bz-summary tc">
+      <ul>
+        <li><span>班组：</span><span>张三</span></li>
+        <li><span>A班负责人：</span><span>李四</span></li>
+        <li><span>B班负责人：</span><span>王五</span></li>
+        <li><span>更新时间：</span><span>2015年8月20日 15:30</span></li>
+      </ul>
     </div>
-    <div class="list card">
-      <div class="item item-divider">Health</div>
-      <div class="item item-body">
-        <div>
-          You ate an apple today!
+    <div ng-repeat="m in menus" class="bz-menu" ng-class="'col-'+col">
+      <a ng-href="{{m.url}}" ng-style="{'color': m.fc}">
+        <div class="list card" ng-style="{'border-color': m.bc}">
+          <span ng-bind="m.nb" class="number"></span>
+          <div class="item item-body">
+            <span ng-bind="m.nm"></span>
+          </div>
         </div>
-      </div>
+      </a>
     </div>
-    <div class="list card">
-      <div class="item item-divider">Upcoming</div>
-      <div class="item item-body">
-        <div>
-          You have <b>29</b> meetings on your calendar tomorrow.
-        </div>
-      </div>
-    </div>
+    
   </ion-content>
 </ion-view>
