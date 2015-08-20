@@ -156,7 +156,7 @@
 
 
 /* For Chart */
-.actualIndicator, .bar {
+.actualIndicator, .chartBar {
   fill: steelblue;
 }
 .actualIndicator{
