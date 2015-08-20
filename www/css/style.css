@@ -207,7 +207,7 @@ svg{
 .val{
   font-size:1em;
 }
-.dtline{
+.dtline, .xyPadding{
   fill: none;
   stroke: #000;
   stroke-width: 1px;
