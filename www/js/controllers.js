@@ -3,11 +3,65 @@ angular.module('starter.controllers', [])
 .controller('DashCtrl', ['$scope', 'Backend', function($scope, Backend) {
   $scope.col=3;
   $scope.$on('$ionicView.enter', function(e) {
-    Backend.menu.query(function(menus){
+    /*Backend.menu.query(function(menus){
       console.log(menus);
-      $scope.menus=menus;
-    });
+    });*/
   });
+  $scope.menus=[{
+    "nm": "班组结构图", 
+    "fc": "#36CD14", 
+    "bc": "#16E216", 
+    "url": "#/org",
+    "nb": 1  
+  },{
+    "nm": "考勤汇总", 
+    "fc": "#62839D", 
+    "bc": "#182FD3", 
+    "url": "#/attend",
+    "nb": 2 
+  },{
+    "nm": "当班出勤", 
+    "fc": "#aaa", 
+    "bc": "#827F7F", 
+    "url": "#",
+    "nb": 3 
+  },{
+    "nm": "岗位柔性表", 
+    "fc": "#aaa", 
+    "bc": "#827F7F", 
+    "url": "#",
+    "nb": 4 
+  },{
+    "nm": "轮岗计划", 
+    "fc": "#aaa", 
+    "bc": "#827F7F", 
+    "url": "#",
+    "nb": 5 
+  },{
+    "nm": "TL班组KPI", 
+    "fc": "#aaa", 
+    "bc": "#827F7F", 
+    "url": "#",
+    "nb": 6 
+  },{
+    "nm": "安全绿十字", 
+    "fc": "#aaa", 
+    "bc": "#827F7F", 
+    "url": "#",
+    "nb": 7
+  },{
+    "nm": "第三方物流KPI图表", 
+    "fc": "#aaa", 
+    "bc": "#827F7F", 
+    "url": "#",
+    "nb": 8 
+  },{
+    "nm": "年度计划及季度回顾", 
+    "fc": "#aaa", 
+    "bc": "#827F7F", 
+    "url": "#",
+    "nb": 9
+  }];
 }])
 
 .controller('OrgCtrl', ['$scope', function($scope) {
@@ -28,14 +82,42 @@ angular.module('starter.controllers', [])
   
   $scope.chart = {
    title: "审核问题关闭率（月度KPI样例）",
-   data:  [],
+   data:  [{
+    "month": "3",
+    "frequency": 0.2782,
+    "expect": 0.32782
+}, {
+    "month": "4",
+    "frequency": 0.13253,
+    "expect": 0.18782
+}, {
+    "month": "5",
+    "frequency": 0.12702,
+    "expect": 0.49820
+}, {
+    "month": "6",
+    "frequency": 0.16288,
+    "expect": 0.20782
+}, {
+    "month": "7",
+    "frequency": 0.3,
+    "expect": 0.243
+}, {
+    "month": "8",
+    "frequency": 0.14094,
+    "expect": 0.2
+}, {
+    "month": "9",
+    "frequency": 0.13966,
+    "expect": 0.23700
+}],
    yLabel: "审核问题关闭率"
   }
 
   $scope.$on('$ionicView.enter', function(e) {
-    Backend.kaoqin.query(function(data){
+    /*Backend.kaoqin.query(function(data){
       $scope.chart.data=data;
-    });
+    });*/
   });
 }])
 
