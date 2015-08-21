@@ -42,7 +42,7 @@ angular.module('starter.directives',['d3'])
           var yAxis = d3.svg.axis()
               .scale(y)
               .orient("left")
-              .ticks(20, "%");
+              .ticks(15, "%");
 
           var line = d3.svg.line()
               .x(function(d) { return x(d.month); })
@@ -318,4 +318,30 @@ angular.module('starter.directives',['d3'])
           }
       }
     }
-  }]);
+  }]).directive('org', function() {
+    var defaultCol = 3;
+    return {
+      restrict: 'E',
+      templateUrl: 'js/directive.org.html',
+      scope: {
+        group : '='
+      },
+      link: function(scope, element, attrs) {
+        scope.col = scope.col || defaultCol;
+        scope.subTeams = [];
+
+        if(scope.group && scope.group.members){
+          var totalNum = scope.group.members.length;
+          if(totalNum){
+            var subTeamNum = totalNum > scope.col ? scope.col:totalNum;
+            for(var i = 0; i < subTeamNum; i++){
+              scope.subTeams[i] = []; 
+            }
+            for(var i = 0; i < totalNum; i++){
+              scope.subTeams[i%subTeamNum].push(scope.group.members[i]);
+            }
+          }
+        }
+      }
+    }
+  });

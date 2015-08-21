@@ -74,7 +74,58 @@ angular.module('starter.controllers', [])
 
   });
 
-  
+  $scope.groupA={
+    name: 'B 小组',
+    leader: {
+      name: '张三',
+      pinyin: 'Zhang San',
+      job: '清洁工',
+      tel: '186-1666-1666'
+    },
+    members: [{
+      name: '张三',
+      pinyin: 'Zhang San',
+      job: '清洁工',
+      tel: '186-1666-1666'
+    },{
+      name: '张三',
+      pinyin: 'Zhang San',
+      job: '清洁工',
+      tel: '186-1666-1666'
+    }]
+  };
+
+  $scope.groupB={
+    name: 'A 小组',
+    leader: {
+      name: '张三',
+      pinyin: 'Zhang San',
+      job: '清洁工',
+      tel: '186-1666-1666'
+    },
+    members: [{
+      name: '张三',
+      pinyin: 'Zhang San',
+      job: '清洁工',
+      tel: '186-1666-1666'
+    },{
+      name: '张三',
+      pinyin: 'Zhang San',
+      job: '清洁工',
+      tel: '186-1666-1666'
+    },{
+      name: '张三',
+      pinyin: 'Zhang San',
+      job: '清洁工',
+      tel: '186-1666-1666'
+    },{
+      name: '张三',
+      pinyin: 'Zhang San',
+      job: '清洁工',
+      tel: '186-1666-1666'
+    }]
+  };
+
 }])
 
 
