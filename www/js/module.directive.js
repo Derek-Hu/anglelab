@@ -19,62 +19,20 @@ angular.module('starter.directives',['d3'])
       link: function(scope, element, attrs) {
 
           var fontSize = parseInt(d3.select("body").style("font-size"));
-
-          var totalW = scope.width || $window.innerWidth, totalH = scope.height || $window.innerHeight, data = scope.data, title=scope.title, yLabel=scope.ylabel;
-
-          // todo Deal with empty month
           var margin = {top: fontSize*3, right: fontSize*2, bottom: fontSize*10, left: fontSize*8};
-
-          var width = totalW - margin.left - margin.right,
-              height = totalH - margin.top - margin.bottom;
-
-          var x = d3.scale.ordinal()
-              .rangeRoundBands([0, width], .1);
-
-          var y = d3.scale.linear()
-              .range([height, 0]);
-
-          var xAxis = d3.svg.axis()
-              .scale(x)
-              .orient("bottom")
-              .tickFormat(function(d) { return d+'月'});
-
-          var yAxis = d3.svg.axis()
-              .scale(y)
-              .orient("left")
-              .ticks(15, "%");
-
-          var line = d3.svg.line()
-              .x(function(d) { return x(d.month); })
-              .y(function(d) { return y(d.expect?d.expect:0); });
-
+          var svg, svgXA, svgYA;
           var barWidth, xRange, xExtent, xStep, xStart;
 
-          var svg, svgXA, svgYA;
+          var totalW = scope.width || $window.innerWidth, 
+            totalH = scope.height || $window.innerHeight;
 
-          svg = d3.select(element[0]).append("div")
-              .attr("class", chartCls)
-              .style("width", width+'px').append("svg")
-              .attr("width", width + margin.left + margin.right)
-              .attr("height", height + margin.top + margin.bottom)
-              .append("g")
-              .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
-
-          svgXA = svg.append("g").attr("class", "x axis");
-          svgYA = svg.append("g").attr("class", "y axis");
+          init();
 
           checkData();
           setXYMax();          
           sketch();
           dynamicRender();
 
-          function clearChart(){
-            d3.selectAll('.targetPath.line').remove();
-            d3.selectAll('.chartBar').remove();
-            d3.selectAll('.targetDot.dot').remove();
-            d3.selectAll('.targetVal.val').remove();
-            d3.selectAll('.actualVal.val').remove();
-          }
           scope.$watch('data', function(n, o){
               data = scope.data = n;
               clearChart();
@@ -82,7 +40,80 @@ angular.module('starter.directives',['d3'])
               setXYMax(); 
               //sketch();         
               dynamicRender();
-          })
+          });
+
+          scope.getWindowDimensions = function () {
+              return {
+                  'h': $window.innerHeight,
+                  'w': $window.innerWidth
+              };
+          };
+          scope.$watch(scope.getWindowDimensions, function (newValue, oldValue) {
+              totalW = newValue.w; 
+              totalH = newValue.h;
+
+              d3.select(element[0]).html('');
+
+              init();
+              clearChart();
+              checkData();
+              setXYMax(); 
+              //sketch();         
+              dynamicRender();
+
+          }, true);
+
+          /*w.bind('resize', function () {
+              scope.$apply();
+          });*/
+          var data,title,yLabel;
+          var width, height, x, y, xAxis, yAxis, line;
+          function init(){
+              data = scope.data, 
+              title=scope.title, 
+              yLabel=scope.ylabel;
+
+             width = totalW - margin.left - margin.right,
+                height = totalH - margin.top - margin.bottom;
+
+             x = d3.scale.ordinal()
+                .rangeRoundBands([0, width], .1);
+
+             y = d3.scale.linear()
+                .range([height, 0]);
+
+             xAxis = d3.svg.axis()
+                .scale(x)
+                .orient("bottom")
+                .tickFormat(function(d) { return d+'月'});
+
+             yAxis = d3.svg.axis()
+                .scale(y)
+                .orient("left")
+                .ticks(15, "%");
+
+             line = d3.svg.line()
+                .x(function(d) { return x(d.month); })
+                .y(function(d) { return y(d.expect?d.expect:0); });
+
+            svg = d3.select(element[0]).append("div")
+                .attr("class", chartCls)
+                .style("width", width+'px').append("svg")
+                .attr("width", width + margin.left + margin.right)
+                .attr("height", height + margin.top + margin.bottom)
+                .append("g")
+                .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+            svgXA = svg.append("g").attr("class", "x axis");
+            svgYA = svg.append("g").attr("class", "y axis");
+          }
+          function clearChart(){
+            d3.selectAll('.targetPath.line').remove();
+            d3.selectAll('.chartBar').remove();
+            d3.selectAll('.targetDot.dot').remove();
+            d3.selectAll('.targetVal.val').remove();
+            d3.selectAll('.actualVal.val').remove();
+          }
           function checkData(){
             if(!data){
               data=[];
