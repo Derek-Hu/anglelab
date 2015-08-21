@@ -334,6 +334,7 @@ angular.module('starter.directives',['d3'])
           var totalNum = scope.group.members.length;
           if(totalNum){
             var subTeamNum = totalNum > scope.col ? scope.col:totalNum;
+            scope.oddTeam = (subTeamNum % 2 === 1);
             for(var i = 0; i < subTeamNum; i++){
               scope.subTeams[i] = []; 
             }

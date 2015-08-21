@@ -123,6 +123,11 @@ angular.module('starter.controllers', [])
       pinyin: 'Zhang San',
       job: '清洁工',
       tel: '186-1666-1666'
+    },{
+      name: '张三',
+      pinyin: 'Zhang San',
+      job: '清洁工',
+      tel: '186-1666-1666'
     }]
   };
 

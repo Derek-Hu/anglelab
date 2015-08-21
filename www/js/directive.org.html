@@ -1,19 +1,21 @@
-<div class="director memeber">
-    <div class="section">
-        <span class="bz-catalog" ng-bind="group.name"></span>
-        <img src="" />
-        <div class="name">
-            <span ng-bind="group.leader.name"></span>
-            <span ng-bind="group.leader.pinyin"></span>
-        </div>
-        <div class="job">
-            <span ng-bind="group.leader.job"></span>
-            <span ng-bind="group.leader.tel"></span>
+<div class="org-chart cf">
+    <div class="director memeber" ng-class="{odd : oddTeam}">
+        <div class="section">
+            <span class="bz-catalog" ng-bind="group.name"></span>
+            <img src="" />
+            <div class="name">
+                <span ng-bind="group.leader.name"></span>
+                <span ng-bind="group.leader.pinyin"></span>
+            </div>
+            <div class="job">
+                <span ng-bind="group.leader.job"></span>
+                <span ng-bind="group.leader.tel"></span>
+            </div>
         </div>
     </div>
-    <div ng-repeat="sub in subTeams" class="member-wp">
+    <div class="member-wp">
         <div>
-            <div class="members cf">
+            <div ng-repeat="sub in subTeams"  class="members cf">
                 <div ng-repeat="m in sub" class="section">
                     <img src="" />
                     <div class="name">

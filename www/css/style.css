@@ -86,7 +86,7 @@
     min-width: 60em;
 	width: 48%;
     font-size: 0.71em;
-    display: inline-block;
+	float: left;
     margin: 0 auto;
 }
 .org-chart *{
@@ -117,7 +117,10 @@
 	z-index: 2;
 	border-left: 0.3em solid #78cbd1;
 }
-
+.director.odd:after{
+	height: 4em;
+	bottom: -4em;
+}
 .org-chart div.memeber{
 	text-align: center;
 	font-weight: bold;
