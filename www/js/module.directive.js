@@ -29,7 +29,7 @@ angular.module('starter.directives',['d3'])
               height = totalH - margin.top - margin.bottom;
 
           var x = d3.scale.ordinal()
-              .rangeRoundBands([0, width], .1);
+              .rangeRoundBands([fontSize, width], .1);
 
           var y = d3.scale.linear()
               .range([height, 0]);
@@ -37,7 +37,8 @@ angular.module('starter.directives',['d3'])
           var xAxis = d3.svg.axis()
               .scale(x)
               .orient("bottom")
-              .tickFormat(function(d) { return d+'月'});
+              .tickFormat(function(d) { return d+'月'})
+              .outerTickSize(0);
 
           var yAxis = d3.svg.axis()
               .scale(y)
@@ -192,6 +193,12 @@ angular.module('starter.directives',['d3'])
               .attr("x2", 0)
               .attr("y2", fontSize*(lastRow-lineH))
               .attr("transform", "translate("+xExtent[1]+"," + height + ")");
+
+          /* XY Padding */
+          svg.append("path")
+              .attr("class", "xyPadding")
+              .attr("d", "M0,0H"+(fontSize+1))
+              .attr("transform", "translate(0," + height + ")");
 
           /* Vertical Line of the table */
           svg.selectAll(".vtline")

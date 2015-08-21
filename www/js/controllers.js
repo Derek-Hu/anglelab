@@ -139,6 +139,14 @@ angular.module('starter.controllers', [])
   $scope.chart = {
    title: "审核问题关闭率（月度KPI样例）",
    data:  [{
+    "month": "1",
+    "frequency": 0.3782,
+    "expect": 0.32782
+}, {
+    "month": "2",
+    "frequency": 0.23253,
+    "expect": 0.18782
+},{
     "month": "3",
     "frequency": 0.2782,
     "expect": 0.32782
