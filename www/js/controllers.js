@@ -1,6 +1,7 @@
 angular.module('starter.controllers', [])
 
 .controller('DashCtrl', ['$scope', 'Backend', function($scope, Backend) {
+
   $scope.col=3;
   $scope.$on('$ionicView.enter', function(e) {
     /*Backend.menu.query(function(menus){
@@ -64,7 +65,7 @@ angular.module('starter.controllers', [])
   }];
 }])
 
-.controller('OrgCtrl', ['$scope', function($scope) {
+.controller('OrgCtrl', ['$scope', '$state',function($scope, $state) {
   // With the new view caching in Ionic, Controllers are only called
   // when they are recreated or on app start, instead of every page change.
   // To listen for when this page is active (for example, to refresh data),
@@ -73,7 +74,10 @@ angular.module('starter.controllers', [])
   $scope.$on('$ionicView.enter', function(e) {
 
   });
-
+  $scope.goHome=function(){
+    $state.go('dash');
+  }
+  
   $scope.groupA={
     name: 'B 小组',
     leader: {
@@ -134,8 +138,12 @@ angular.module('starter.controllers', [])
 }])
 
 
-.controller('AttendCtrl', ['$scope', 'Backend', '$window', function($scope, Backend, $window) {
+.controller('AttendCtrl', ['$scope', '$state', 'Backend', '$window', function($scope, $state, Backend, $window) {
   
+  $scope.goHome=function(){
+    $state.go('dash');
+  }
+
   $scope.chart = {
    title: "审核问题关闭率（月度KPI样例）",
    data:  [{
