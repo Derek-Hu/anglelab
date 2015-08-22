@@ -352,4 +352,32 @@ angular.module('starter.directives',['d3'])
         }
       }
     }
-  });
+  }).directive('onDoubleClick', function ($timeout) {
+    return {
+      restrict: 'A',
+      link: function ($scope, $elm, $attrs) {
+      var clicks = 0;
+      var lastClick = new Date();
+              $elm.bind('click', function (evt) {
+                  var dateDiff = new Date() - lastClick;
+                  if (dateDiff > 300) { // 300 ms
+                      clicks = 0;
+                  }
+                  lastClick = new Date();
+                  clicks++;
+                  console.log('clicks'+clicks);
+                  if (clicks == 1) {
+                      $timeout(function () {
+                          if (clicks == 1) {
+                              //....
+                          } else {
+                              $scope.$apply(function () {
+                                  $scope.$eval($attrs.onDoubleClick);
+                              });
+                          }
+                      }, 300);
+                  }
+              });
+          }
+      };
+    });
