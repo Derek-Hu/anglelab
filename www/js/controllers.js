@@ -187,9 +187,9 @@ angular.module('starter.controllers', [])
   }
 
   $scope.$on('$ionicView.enter', function(e) {
-    /*Backend.kaoqin.query(function(data){
+    Backend.kaoqin.query(function(data){
       $scope.chart.data=data;
-    });*/
+    });
   });
 }])
 
