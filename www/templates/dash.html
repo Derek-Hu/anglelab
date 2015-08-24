@@ -12,8 +12,13 @@
     <!-- <button class="button">Right Button</button> -->
   </div>
 </ion-header-bar>
-  <ion-content class="padding">
-    <div class="bz-summary tc">
+  <ion-content zoomable class="padding">
+    <img src="../img/home.jpg" usemap="menuMap" style="border:0;"/>
+    <map name="menuMap" id="menuMap">
+      <area shape="circle" coords="180,139,14" href ="venus.html" style="cursor: pointer" alt="Venus" />
+      <area shape="circle" coords="180,139,14" href ="venus.html" style="cursor: pointer" alt="Venus" />
+    </map>
+    <!-- <div class="bz-summary tc">
       <ul>
         <li><span>班组：</span><span>张三</span></li>
         <li><span>A班负责人：</span><span>李四</span></li>
@@ -31,6 +36,9 @@
         </div>
       </a>
     </div>
-    
+    {{text}}
+    <button ng-init="text = 'Gesture' " class="button">Init</button>
+    <button on-hold="text = 'on hold'" class="button">onHold</button> -->
+
   </ion-content>
 </ion-view>

@@ -2,6 +2,8 @@ angular.module('starter.controllers', [])
 
 .controller('DashCtrl', ['$scope', 'Backend', function($scope, Backend) {
 
+ 
+
   $scope.col=3;
   $scope.$on('$ionicView.enter', function(e) {
     /*Backend.menu.query(function(menus){
