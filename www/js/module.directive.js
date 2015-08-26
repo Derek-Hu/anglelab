@@ -76,28 +76,28 @@ angular.module('starter.directives', [])
     restrict: 'A',
     scope: true,
     link: function($scope, $element, $attrs) {
-      $scope.zoomIn = function(event)  {
-        $scope.$root.type= 'zoom in';
-        alert('zoom in ');
-      };
-      $scope.zoomOut = function(event)  {
-        $scope.$root.type= '';
-        alert('zoom out');
-      };
-      $scope.doubletap = function(event)  {
-        $scope.$root.type= 'double';
-        alert('double ');
-      };
-      var doubletapGesture = $ionicGesture.on('doubletap', $scope.doubletap, $element);      
-      var pinchinGesture = $ionicGesture.on('pinchin', $scope.zoom, $element);      
-      var pinchoutGesture = $ionicGesture.on('pinchout', $scope.zoom, $element);      
+      var target = $element[0];
+      target.style.webkitTransition = 'all ease 0.05s';
 
-      // cleanup
-      $scope.$on('$destroy', function() {
-        $ionicGesture.off(doubletapGesture, 'doubletap', $element);
-        $ionicGesture.off(pinchinGesture, 'pinchin', $element);
-        $ionicGesture.off(pinchoutGesture, 'pinchout', $element);
+      touch.on(target, 'touchstart', function(ev){
+        ev.preventDefault();
       });
+
+      var initialScale = 1;
+      var currentScale;
+
+      touch.on(target, 'pinchend', function(ev){
+        currentScale = ev.scale - 1;
+        currentScale = initialScale + currentScale;
+        currentScale = currentScale > 2 ? 2 : currentScale;
+        currentScale = currentScale < 1 ? 1 : currentScale;
+        this.style.webkitTransform = 'scale(' + currentScale + ')';
+        log("当前缩放比例为:" + currentScale + ".");
+      });
+      touch.on(target, 'pinchend', function(ev){
+        initialScale = currentScale;
+      });
+      
     }
   };
 }]);
