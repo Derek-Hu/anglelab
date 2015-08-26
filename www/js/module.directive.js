@@ -27,7 +27,51 @@ angular.module('starter.directives', [])
               });
           }
       };
-}).directive('zoomable', function($timeout, $ionicGesture) {
+})
+.directive('demoImg', ['$window' ,function ($window) {
+    var imagOriginalWidth = 2048
+    var imagOriginalHeight = 1200; 
+    var wUnit = 1000;
+    var hUnit = imagOriginalHeight * wUnit / imagOriginalWidth;
+    var kpi = {
+      url: '#/kpi',
+      pos: [688, 271, 980, 388]
+    };
+    var green = {
+      url:'#/green-cross',
+      pos: [18, 402, 309, 519]
+    };
+    var imgMenuPos=[kpi,green];
+    return {
+      restrict: 'A',
+      scope: {},
+      template: '<area ng-repeat="img in imageMap" shape="rect" coords="{{img.coords}}" ng-href ="{{img.url}}" style="cursor:pointer;"/>',
+      link: function ($scope, $elm, $attrs) {
+        var width = $window.innerWidth;
+        var height = Math.round(imagOriginalHeight * width / imagOriginalWidth);
+        console.log('original = '+imagOriginalWidth +','+ imagOriginalHeight);
+        console.log('current = '+width +','+ height);
+        $scope.imageMap = [];
+        for(var i=0;i<imgMenuPos.length;i++){
+          var pos = imgMenuPos[i].pos;
+          for(var j =0; j<pos.length;j++){
+            if(j%2===0){
+              pos[j]= Math.round(pos[j]*width/wUnit);
+              console.log('x--', pos[j])
+            }else{
+              pos[j]= Math.round(pos[j]*height/hUnit);
+              console.log('y--', pos[j])
+            }
+          }
+          $scope.imageMap.push({
+            coords : pos.join(','),
+            url : imgMenuPos[i].url
+          });
+        }
+      }
+    }
+}])
+.directive('zoomable', function($timeout, $ionicGesture) {
   return {
     restrict: 'A',
     scope: true,
