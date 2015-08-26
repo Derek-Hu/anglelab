@@ -29,17 +29,17 @@ angular.module('starter.directives', [])
       };
 })
 .directive('demoImg', ['$window' ,function ($window) {
-    var imagOriginalWidth = 2048
-    var imagOriginalHeight = 1200; 
-    var wUnit = 1000;
+    var imagOriginalWidth = 697;
+    var imagOriginalHeight = 392; 
+    var wUnit = 697;
     var hUnit = imagOriginalHeight * wUnit / imagOriginalWidth;
     var kpi = {
       url: '#/kpi',
-      pos: [688, 271, 980, 388]
+      pos: [480, 183, 685, 265]
     };
     var green = {
       url:'#/green-cross',
-      pos: [18, 402, 309, 519]
+      pos: [10, 275, 214, 357]
     };
     var imgMenuPos=[kpi,green];
     return {
