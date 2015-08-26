@@ -1,5 +1,5 @@
 angular.module('starter.directives', [])
-.directive('onDoubleClick', function ($timeout) {
+.directive('onDoubleClick', ['$timeout', function ($timeout) {
     return {
       restrict: 'A',
       link: function ($scope, $elm, $attrs) {
@@ -27,7 +27,7 @@ angular.module('starter.directives', [])
               });
           }
       };
-})
+}])
 .directive('demoImg', ['$window' ,function ($window) {
     var imagOriginalWidth = 697;
     var imagOriginalHeight = 392; 
@@ -71,62 +71,33 @@ angular.module('starter.directives', [])
       }
     }
 }])
-.directive('zoomable', function($timeout, $ionicGesture) {
+.directive('zoomable', ['$ionicGesture', function($ionicGesture) {
   return {
     restrict: 'A',
     scope: true,
     link: function($scope, $element, $attrs) {
-      var minHeight, minWidth, maxHeight, maxWidth;
-
-      // set max/min size after image is loaded
-      $element.bind('load', function() {
-        var el = $element[0];
-        minHeight = el.height;
-        minWidth = el.width;
-        maxHeight = el.naturalHeight;
-        maxWidth = el.naturalWidth;
-      });
-
-      // pinch to scale
-      var handlePinch = function(e) {
-        e.gesture.srcEvent.preventDefault();
-        $scope.$apply(function() {
-          TweenMax.set($element, { scale: e.gesture.scale });
-        });
+      $scope.zoomIn = function(event)  {
+        $scope.$root.type= 'zoom in';
+        alert('zoom in ');
       };
-      handlePinch = ionic.animationFrameThrottle(handlePinch);
-      var pinchGesture = $ionicGesture.on('pinch', handlePinch, $element);
-
-      // resize after done
-      var handleTransformEnd = function() {
-        //resize zoomable container
-        var newHeight, newWidth;
-        var dimensions = $element[0].getBoundingClientRect();
-
-        newHeight = Math.round(dimensions.height);
-        newWidth = Math.round(dimensions.width);
-
-        // upper bounds (dictated by naturalHeight and naturalWidth of image)
-        newHeight = Math.min(newHeight, maxHeight);
-        newWidth = Math.min(newWidth, maxWidth);
-
-        // lower bounds (dictacted by screen)
-        newHeight = Math.max(newHeight, minHeight);
-        newWidth = Math.max(newWidth, minWidth);
-
-        $scope.$apply(function() {
-          TweenMax.set($element, { clearProps: 'scale' });
-          $scope.containerStyle.height = newHeight + 'px';
-          $scope.containerStyle.width = newWidth + 'px';
-        });
+      $scope.zoomOut = function(event)  {
+        $scope.$root.type= '';
+        alert('zoom out');
       };
-      var resizeGesture = $ionicGesture.on('transformend', handleTransformEnd, $element);
+      $scope.doubletap = function(event)  {
+        $scope.$root.type= 'double';
+        alert('double ');
+      };
+      var doubletapGesture = $ionicGesture.on('doubletap', $scope.doubletap, $element);      
+      var pinchinGesture = $ionicGesture.on('pinchin', $scope.zoom, $element);      
+      var pinchoutGesture = $ionicGesture.on('pinchout', $scope.zoom, $element);      
 
       // cleanup
       $scope.$on('$destroy', function() {
-        $ionicGesture.off(pinchGesture, 'pinch', $element);
-        $ionicGesture.off(resizeGesture, 'transformend', $element);
+        $ionicGesture.off(doubletapGesture, 'doubletap', $element);
+        $ionicGesture.off(pinchinGesture, 'pinchin', $element);
+        $ionicGesture.off(pinchoutGesture, 'pinchout', $element);
       });
     }
   };
-});
+}]);
