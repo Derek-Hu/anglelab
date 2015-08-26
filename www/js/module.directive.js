@@ -1,5 +1,5 @@
 angular.module('starter.directives', [])
-.directive('onDoubleClick', ['$timeout', function ($timeout) {
+/*.directive('onDoubleClick', ['$timeout', function ($timeout) {
     return {
       restrict: 'A',
       link: function ($scope, $elm, $attrs) {
@@ -27,7 +27,7 @@ angular.module('starter.directives', [])
               });
           }
       };
-}])
+}])*/
 .directive('demoImg', ['$window' ,function ($window) {
     var imagOriginalWidth = 697;
     var imagOriginalHeight = 392; 
@@ -71,13 +71,13 @@ angular.module('starter.directives', [])
       }
     }
 }])
-.directive('zoomable', ['$ionicGesture', function($ionicGesture) {
+.directive('zoomable', function() {
   return {
     restrict: 'A',
     scope: true,
     link: function($scope, $element, $attrs) {
       var target = $element[0];
-      target.style.webkitTransition = 'all ease 0.05s';
+      target.style.webkitTransition = 'all linear 0.05s';
 
       touch.on(target, 'touchstart', function(ev){
         ev.preventDefault();
@@ -90,14 +90,26 @@ angular.module('starter.directives', [])
         currentScale = ev.scale - 1;
         currentScale = initialScale + currentScale;
         currentScale = currentScale > 2 ? 2 : currentScale;
-        currentScale = currentScale < 1 ? 1 : currentScale;
+        currentScale = currentScale < 0.5 ? 0.5 : currentScale;
         this.style.webkitTransform = 'scale(' + currentScale + ')';
-        log("当前缩放比例为:" + currentScale + ".");
       });
       touch.on(target, 'pinchend', function(ev){
         initialScale = currentScale;
       });
-      
+      touch.on(target, 'doubletap', function(ev){
+        console.log('dd');
+          if(currentScale!==1){
+            currentScale = 1;
+            this.style.webkitTransform = 'scale(' + currentScale + ')';
+          }else{
+            if($attrs.onDoubleClick){
+
+              $scope.$apply(function () {
+                  $scope.$eval($attrs.onDoubleClick);
+              });
+            }
+          }
+      });
     }
   };
-}]);
+});
