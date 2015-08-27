@@ -9,9 +9,9 @@ angular.module('starter.controllers', [])
     $state.go('dash');
   }
 
-	var imagOriginalWidth = 697;
-	var imagOriginalHeight = 392; 
-	var wUnit = 697;
+	var imagOriginalWidth = 2043;
+	var imagOriginalHeight = 1150; 
+	var wUnit = 1000;
 	var hUnit = imagOriginalHeight * wUnit / imagOriginalWidth;
 	var template = '<area shape="rect" coords="{{coords}}" href ="{{url}}" style="cursor:pointer;"/>';
 
@@ -22,10 +22,10 @@ angular.module('starter.controllers', [])
     console.log('current = '+width +','+ height);
 	var imgMenuPos=[{
 	  url: '#/kpi',
-	  pos: [480, 183, 685, 265]
+	  pos: [688, 263, 981, 380]
 	},{
 	  url:'#/green-cross',
-	  pos: [10, 275, 214, 357]
+	  pos: [16, 396, 308, 513]
 	}];
     var imageMap = '';
     for(var i=0;i<imgMenuPos.length;i++){
