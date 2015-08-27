@@ -33,10 +33,10 @@ angular.module('starter.controllers', [])
       for(var j =0; j<pos.length;j++){
         if(j%2===0){
           pos[j]= Math.round(pos[j]*width/wUnit);
-          console.log('x--', pos[j])
+          //console.log('x--', pos[j])
         }else{
           pos[j]= Math.round(pos[j]*height/hUnit);
-          console.log('y--', pos[j])
+          //console.log('y--', pos[j])
         }
       }
       imageMap += template.replace('{{coords}}', pos.join(',')).replace('{{url}}', imgMenuPos[i].url);
@@ -44,7 +44,7 @@ angular.module('starter.controllers', [])
     }
   })
   $scope.$on('$ionicView.leave', function(){
-  	console.log('leave');
+  	//console.log('leave');
   	angular.element(document.querySelector('map')).html('')
   })
 }]);

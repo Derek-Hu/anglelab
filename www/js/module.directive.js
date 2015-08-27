@@ -75,7 +75,7 @@ angular.module('starter.directives', [])
       }
     }
 }])*/
-.directive('zoomable', function() {
+.directive('zoomable', ['$timeout',function($timeout) {
   return {
     restrict: 'A',
     scope: true,
@@ -83,7 +83,7 @@ angular.module('starter.directives', [])
       var target = $element[0];
 
       var styleTarget = target.children[0].children[0].children[0];
-      console.log(target, target.children[0],styleTarget);
+      //console.log(target, target.children[0],styleTarget);
       styleTarget.style.webkitTransition = 'all linear 0.05s';
 
 
@@ -105,19 +105,37 @@ angular.module('starter.directives', [])
       touch.on(target, 'pinchend', function(ev){
         initialScale = currentScale;
       });
-      touch.on(target, 'doubletap', function(ev){
-          if(currentScale!==1){
-            currentScale = 1;
-            styleTarget.style.webkitTransform = 'scale(' + currentScale + ')';
-          }else{
-            if($attrs.onDoubleClick){
 
-              $scope.$apply(function () {
-                  $scope.$eval($attrs.onDoubleClick);
-              });
-            }
+      var clicks = 0;
+      var lastClick = new Date();
+      $element.bind('click', function (evt) {
+          var dateDiff = new Date() - lastClick;
+          console.log('dateDiff', dateDiff);
+          if (dateDiff > 300) { // 300 ms
+              clicks = 0;
+          }
+          lastClick = new Date();
+          clicks++;
+          console.log('clicks'+clicks);
+          if (clicks == 1) {
+              $timeout(function () {
+                  if (clicks == 1) {
+                      //....
+                  } else {
+                      if(currentScale!== undefined && currentScale!==1){
+                        currentScale = 1;
+                        styleTarget.style.webkitTransform = 'scale(' + currentScale + ')';
+                      }else{
+                        if($attrs.onDoubleClick){
+                          $scope.$apply(function () {
+                              $scope.$eval($attrs.onDoubleClick);
+                          });
+                        }
+                      }
+                  }
+              }, 300);
           }
       });
     }
   };
-});
+}]);
