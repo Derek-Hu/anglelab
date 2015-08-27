@@ -28,7 +28,7 @@ angular.module('starter.directives', [])
           }
       };
 }])*/
-.directive('demoImg', ['$window' ,function ($window) {
+/*.directive('demoImg', ['$window' ,function ($window) {
     var imagOriginalWidth = 697;
     var imagOriginalHeight = 392; 
     var wUnit = 697;
@@ -74,14 +74,19 @@ angular.module('starter.directives', [])
         })
       }
     }
-}])
+}])*/
 .directive('zoomable', function() {
   return {
     restrict: 'A',
     scope: true,
     link: function($scope, $element, $attrs) {
       var target = $element[0];
-      target.style.webkitTransition = 'all linear 0.05s';
+
+      var styleTarget = target.children[0].children[0].children[0];
+      console.log(target, target.children[0],styleTarget);
+      styleTarget.style.webkitTransition = 'all linear 0.05s';
+
+
 
       touch.on(target, 'touchstart', function(ev){
         ev.preventDefault();
@@ -95,16 +100,15 @@ angular.module('starter.directives', [])
         currentScale = initialScale + currentScale;
         currentScale = currentScale > 2 ? 2 : currentScale;
         currentScale = currentScale < 0.5 ? 0.5 : currentScale;
-        this.style.webkitTransform = 'scale(' + currentScale + ')';
+        styleTarget.style.webkitTransform = 'scale(' + currentScale + ')';
       });
       touch.on(target, 'pinchend', function(ev){
         initialScale = currentScale;
       });
       touch.on(target, 'doubletap', function(ev){
-        console.log('dd');
           if(currentScale!==1){
             currentScale = 1;
-            this.style.webkitTransform = 'scale(' + currentScale + ')';
+            styleTarget.style.webkitTransform = 'scale(' + currentScale + ')';
           }else{
             if($attrs.onDoubleClick){
 
