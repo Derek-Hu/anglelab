@@ -68,6 +68,9 @@ angular.module('starter.directives', [])
             url : imgMenuPos[i].url
           });
         }
+        $scope.$on('$ionicView.leave', function(){
+          $elm.html('');
+        })
       }
     }
 }])
