@@ -69,6 +69,7 @@ angular.module('starter.directives', [])
           });
         }
         $scope.$on('$ionicView.leave', function(){
+          console.log('...');
           $elm.html('');
         })
       }
