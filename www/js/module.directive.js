@@ -137,4 +137,16 @@ angular.module('starter.directives', [])
       });
     }
   };
+}])
+.directive('scrollArea', ['$window',function($window) {
+  return {
+    restrict: 'A',
+    scope: true,
+    link: function($scope, $element, $attrs) {
+      console.log($window.innerWidth, $window.innerHeight, $element)
+      var cssText='width:'+$window.innerWidth+'px;height:'+$window.innerHeight+'px;';
+      console.log(cssText);
+      $element[0].style.cssText = cssText;
+    }
+  }
 }]);
