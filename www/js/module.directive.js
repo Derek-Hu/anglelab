@@ -28,20 +28,23 @@ angular.module('starter.directives', [])
           }
       };
 }])*/
-/*.directive('demoImg', ['$window' ,function ($window) {
-    var imagOriginalWidth = 697;
-    var imagOriginalHeight = 392; 
-    var wUnit = 697;
-    var hUnit = imagOriginalHeight * wUnit / imagOriginalWidth;
+.directive('demoImg', ['$window' ,function ($window) {
     var kpi = {
       url: '#/kpi',
-      pos: [480, 183, 685, 265]
+      pos: [688, 263, 981, 380]
     };
     var green = {
       url:'#/green-cross',
-      pos: [10, 275, 214, 357]
+      pos: [16, 396, 308, 513]
     };
     var imgMenuPos=[kpi,green];
+
+    var imagOriginalWidth = 2043;
+    var imagOriginalHeight = 1150; 
+    var wUnit = 1000;
+    var hUnit = imagOriginalHeight * wUnit / imagOriginalWidth;
+    var template = '<area shape="rect" coords="{{coords}}" href ="{{url}}" style="cursor:pointer;"/>';
+
     return {
       restrict: 'A',
       scope: {},
@@ -68,13 +71,9 @@ angular.module('starter.directives', [])
             url : imgMenuPos[i].url
           });
         }
-        $scope.$on('$ionicView.leave', function(){
-          console.log('...');
-          $elm.html('');
-        })
       }
     }
-}])*/
+}])
 .directive('zoomable', ['$timeout',function($timeout) {
   return {
     restrict: 'A',
