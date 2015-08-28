@@ -1,11 +1,14 @@
 angular.module('starter.controllers', [])
-.controller('DemoCtrl', ['$scope', '$state', function($scope, $state) {
-  $scope.goHome=function(){
-    $state.go('dash');
-  }
-}])
-.controller('HomeCtrl', ['$scope', '$state', '$window', '$ionicScrollDelegate', '$timeout', function($scope, $state, $window, $ionicScrollDelegate, $timeout) {
-  $scope.goHome=function(){
-    $state.go('dash');
+.controller('DemoCtrl', ['$scope', '$state', '$ionicScrollDelegate', function($scope, $state, $ionicScrollDelegate) {
+  $scope.goHome = function(type) {
+    var scrollDelegate = $ionicScrollDelegate.$getByHandle(type);
+    var view = scrollDelegate.getScrollView();
+    var scale = view.__zoomLevel;
+    console.log('scale:'+scale);
+    if(scale===1){
+      $state.go('dash');
+    }else{
+      scrollDelegate.zoomTo(1, true, 0, 0);
+    }
   }
 }]);

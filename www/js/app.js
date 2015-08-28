@@ -21,7 +21,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.directives']
     views: {
       'dash': {
         templateUrl: 'templates/dash.html',
-        controller: 'HomeCtrl'
+        controller: 'DemoCtrl'
       }
     }
   })
