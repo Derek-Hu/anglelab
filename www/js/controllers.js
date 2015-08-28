@@ -6,7 +6,9 @@ angular.module('starter.controllers', [])
     var scale = view.__zoomLevel;
     console.log('scale:'+scale);
     if(scale===1){
-      $state.go('dash');
+      if(type !== 'home'){
+        $state.go('dash');
+      }
     }else{
       scrollDelegate.zoomTo(1, true, 0, 0);
     }
