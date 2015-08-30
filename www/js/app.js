@@ -34,6 +34,15 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.directives']
         }
       }
     })
+  .state('kqhz', {
+      url: '/kqhz',
+      views: {
+        'dash': {
+          templateUrl: 'templates/kqhz.html',
+          controller: 'DemoCtrl'
+        }
+      }
+    })
   .state('green-cross', {
       url: '/green-cross',
       views: {

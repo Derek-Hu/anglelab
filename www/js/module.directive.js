@@ -37,7 +37,11 @@ angular.module('starter.directives', [])
       url:'#/green-cross',
       pos: [16, 396, 308, 513]
     };
-    var imgMenuPos=[kpi,green];
+    var kqhz = {
+      url: '#/kqhz',
+      pos: [16, 396, 308, 513]
+    };
+    var imgMenuPos=[kpi,green,kqhz];
 
     var imagOriginalWidth = 2043;
     var imagOriginalHeight = 1150; 
@@ -52,18 +56,18 @@ angular.module('starter.directives', [])
       link: function ($scope, $elm, $attrs) {
         var width = $window.innerWidth;
         var height = Math.round(imagOriginalHeight * width / imagOriginalWidth);
-        console.log('original = '+imagOriginalWidth +','+ imagOriginalHeight);
-        console.log('current = '+width +','+ height);
+        //console.log('original = '+imagOriginalWidth +','+ imagOriginalHeight);
+        //console.log('current = '+width +','+ height);
         $scope.imageMap = [];
         for(var i=0;i<imgMenuPos.length;i++){
           var pos = imgMenuPos[i].pos;
           for(var j =0; j<pos.length;j++){
             if(j%2===0){
               pos[j]= Math.round(pos[j]*width/wUnit);
-              console.log('x--', pos[j])
+              //console.log('x--', pos[j])
             }else{
               pos[j]= Math.round(pos[j]*height/hUnit);
-              console.log('y--', pos[j])
+              //console.log('y--', pos[j])
             }
           }
           $scope.imageMap.push({
@@ -109,13 +113,13 @@ angular.module('starter.directives', [])
       var lastClick = new Date();
       $element.bind('click', function (evt) {
           var dateDiff = new Date() - lastClick;
-          console.log('dateDiff', dateDiff);
+          //console.log('dateDiff', dateDiff);
           if (dateDiff > 300) { // 300 ms
               clicks = 0;
           }
           lastClick = new Date();
           clicks++;
-          console.log('clicks'+clicks);
+          //console.log('clicks'+clicks);
           if (clicks == 1) {
               $timeout(function () {
                   if (clicks == 1) {
@@ -143,9 +147,9 @@ angular.module('starter.directives', [])
     restrict: 'A',
     scope: true,
     link: function($scope, $element, $attrs) {
-      console.log($window.innerWidth, $window.innerHeight, $element)
+      //console.log($window.innerWidth, $window.innerHeight, $element)
       var cssText='width:'+$window.innerWidth+'px;height:'+$window.innerHeight+'px;';
-      console.log(cssText);
+      //console.log(cssText);
       $element[0].style.cssText = cssText;
     }
   }
