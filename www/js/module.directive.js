@@ -31,21 +31,21 @@ angular.module('starter.directives', [])
 .directive('demoImg', ['$window' ,function ($window) {
     var kpi = {
       url: '#/kpi',
-      pos: [688, 263, 981, 380]
+      pos: [705, 364, 1003, 482]
     };
     var green = {
       url:'#/green-cross',
-      pos: [16, 396, 308, 513]
+      pos: [18, 584, 316, 667]
     };
     var kqhz = {
       url: '#/kqhz',
-      pos: [16, 396, 308, 513]
+      pos: [362, 184, 660, 303]
     };
     var imgMenuPos=[kpi,green,kqhz];
 
-    var imagOriginalWidth = 2043;
-    var imagOriginalHeight = 1150; 
-    var wUnit = 1000;
+    var imagOriginalWidth = 2048;
+    var imagOriginalHeight = 1536; 
+    var wUnit = 1024;
     var hUnit = imagOriginalHeight * wUnit / imagOriginalWidth;
     var template = '<area shape="rect" coords="{{coords}}" href ="{{url}}" style="cursor:pointer;"/>';
 
