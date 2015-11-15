@@ -49,7 +49,7 @@ angular.module('starter.directives',['d3'])
 
           var line = d3.svg.line()
               .x(function(d) { return x(d.month); })
-              .y(function(d) { return y(d.expect?d.expect:0); });
+              .y(function(d) { return y(d.TARGET?d.TARGET:0); });
 
           var barWidth, xRange, xExtent, xStep, xStart;
 
@@ -118,8 +118,8 @@ angular.module('starter.directives',['d3'])
           }
           function setXYMax(){
             var yMax = d3.max([
-              d3.max(data, function(d) { return d.frequency; }), 
-              d3.max(data, function(d) { return d.expect; })
+              d3.max(data, function(d) { return d.ACTUAL; }), 
+              d3.max(data, function(d) { return d.TARGET; })
               ]);
             x.domain(data.map(function(d) { return d.month; }));
             y.domain([0, yMax?yMax : 1]);
@@ -215,7 +215,7 @@ angular.module('starter.directives',['d3'])
               .style("display", function(d, i){if(i==0){return "none"}});
 
           svg.append("text")
-              //.attr("transform", function(d){return "translate("+d.month+","+d.expect+")"})
+              //.attr("transform", function(d){return "translate("+d.month+","+d.TARGET+")"})
               .attr("class", "val")
               .attr("x", xExtent[1]/2)
               .attr("y", -textMargin*fontSize)
@@ -245,7 +245,7 @@ angular.module('starter.directives',['d3'])
 
           /* Text 'Actual' in the bottom table */
           svg.append("text")
-              //.attr("transform", function(d){return "translate("+d.month+","+d.expect+")"})
+              //.attr("transform", function(d){return "translate("+d.month+","+d.TARGET+")"})
               .attr("class", "val")
               .attr("x", width+fontSize*4)
               .attr("y", fontSize*middleRow)
@@ -258,7 +258,7 @@ angular.module('starter.directives',['d3'])
 
           /* Text 'Target' in the bottom table */
           svg.append("text")
-              //.attr("transform", function(d){return "translate("+d.month+","+d.expect+")"})
+              //.attr("transform", function(d){return "translate("+d.month+","+d.TARGET+")"})
               .attr("class", "val")
               .attr("x", width+fontSize*4)
               .attr("y", fontSize*bottomR)
@@ -294,12 +294,12 @@ angular.module('starter.directives',['d3'])
               .attr("class", "chartBar")
               .attr("x", function(d) { return x(d.month); })
               .attr("width", x.rangeBand())
-              .attr("y", function(d) { return y(d.frequency?d.frequency:0); })
-              .attr("height", function(d) { return height - y(d.frequency?d.frequency:0); });
+              .attr("y", function(d) { return y(d.ACTUAL?d.ACTUAL:0); })
+              .attr("height", function(d) { return height - y(d.ACTUAL?d.ACTUAL:0); });
           /* Target line */
           svg.append("path")
               .datum(data.filter(function(ele){
-                  return typeof ele.expect!=='undefined';
+                  return typeof ele.TARGET!=='undefined';
               }))
               .attr("class", "line targetPath")
               .attr("d", line)
@@ -307,13 +307,13 @@ angular.module('starter.directives',['d3'])
           /* dot in target line */
           svg.selectAll(".dot")
               .data(data.filter(function(ele){
-                  return typeof ele.expect !== 'undefined'
+                  return typeof ele.TARGET !== 'undefined'
               }))
             .enter().append("circle")
               .attr("class", "dot targetDot")
               .attr("r", middleRow+textPadding)
               .attr("cx", function(d) { return x(d.month); })
-              .attr("cy", function(d) { return y(d.expect?d.expect:0); })
+              .attr("cy", function(d) { return y(d.TARGET?d.TARGET:0); })
               .attr("transform", "translate(" + barWidth/2 + ",0)");
           /* Actual value in the table */
           svg.selectAll(".text")
@@ -326,7 +326,7 @@ angular.module('starter.directives',['d3'])
               .attr("dy", ".71em")
               .attr("transform", "translate(0," + height + ")")
               .style("text-anchor", "middle")
-              .text(function(d){if(typeof d.expect==='undefined') return '';return percentage(d3.round(d.expect, 4))});
+              .text(function(d){if(typeof d.TARGET==='undefined') return '';return percentage(d3.round(d.TARGET, 4))});
           /* Target value in the table */
           svg.selectAll(".text")
               .data(data)
@@ -338,7 +338,7 @@ angular.module('starter.directives',['d3'])
               .attr("dy", ".71em")
               .attr("transform", "translate(0," + height + ")")
               .style("text-anchor", "middle")
-              .text(function(d){if(typeof d.frequency==='undefined') return '';return percentage(d3.round(d.frequency, 4))});
+              .text(function(d){if(typeof d.ACTUAL==='undefined') return '';return percentage(d3.round(d.ACTUAL, 4))});
           }
       }
     }

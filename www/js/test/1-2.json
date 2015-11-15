@@ -1,1 +1,61 @@
-[{"STATE":null,"ACTUAL":"0","TARGET":"0","ID":"1"},{"STATE":null,"ACTUAL":"0","TARGET":"0","ID":"2"},{"STATE":null,"ACTUAL":"0","TARGET":"0","ID":"3"},{"STATE":null,"ACTUAL":"0","TARGET":"0","ID":"4"},{"STATE":null,"ACTUAL":"0","TARGET":"0","ID":"5"},{"STATE":null,"ACTUAL":"0","TARGET":"0","ID":"6"},{"STATE":null,"ACTUAL":"0","TARGET":"0","ID":"7"},{"STATE":null,"ACTUAL":"0","TARGET":"0","ID":"8"},{"STATE":null,"ACTUAL":"0","TARGET":"0","ID":"9"},{"STATE":null,"ACTUAL":"0","TARGET":"0","ID":"10"},{"STATE":null,"ACTUAL":"1","TARGET":"0","ID":"11"},{"STATE":null,"ACTUAL":"1","TARGET":"0","ID":"12"}]
+[{
+    "STATE": null,
+    "ACTUAL": "10",
+    "TARGET": "100",
+    "ID": "1"
+}, {
+    "STATE": null,
+    "ACTUAL": "20",
+    "TARGET": "100",
+    "ID": "2"
+}, {
+    "STATE": null,
+    "ACTUAL": "60",
+    "TARGET": "90",
+    "ID": "3"
+}, {
+    "STATE": null,
+    "ACTUAL": "40",
+    "TARGET": "80",
+    "ID": "4"
+}, {
+    "STATE": null,
+    "ACTUAL": "80",
+    "TARGET": "100",
+    "ID": "5"
+}, {
+    "STATE": null,
+    "ACTUAL": "60",
+    "TARGET": "100",
+    "ID": "6"
+}, {
+    "STATE": null,
+    "ACTUAL": "90",
+    "TARGET": "100",
+    "ID": "7"
+}, {
+    "STATE": null,
+    "ACTUAL": "20",
+    "TARGET": "100",
+    "ID": "8"
+}, {
+    "STATE": null,
+    "ACTUAL": "50",
+    "TARGET": "100",
+    "ID": "9"
+}, {
+    "STATE": null,
+    "ACTUAL": "78",
+    "TARGET": "100",
+    "ID": "10"
+}, {
+    "STATE": null,
+    "ACTUAL": "16",
+    "TARGET": "100",
+    "ID": "11"
+}, {
+    "STATE": null,
+    "ACTUAL": "59",
+    "TARGET": "100",
+    "ID": "12"
+}]

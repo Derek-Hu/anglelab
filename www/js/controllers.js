@@ -2,6 +2,7 @@ angular.module('starter.controllers', [])
 .controller('KPIChartCtrl', ['$scope', '$stateParams', '$state', '$ionicScrollDelegate', 'MetaDataSvc', 'KPIItem', 'Constant', 'DateUtil',
   function($scope, $stateParams, $state, $ionicScrollDelegate, MetaDataSvc, KPIItem, Constant, DateUtil) {
     
+  $scope.chart = {};
   $scope.$on('$ionicView.enter', function(e) {
     MetaDataSvc($stateParams.PageType).then(function(data){
       $scope.metaData = data;
@@ -10,7 +11,12 @@ angular.module('starter.controllers', [])
     var lastDay = DateUtil.getLastDay();
 
     KPIItem($stateParams.BizType).then(function(data){
-      
+      $scope.chart.data = data.map(function(d){
+        d.ACTUAL = d.ACTUAL/100;
+        d.TARGET = d.TARGET/100;
+        d.month = d.ID;
+        return d;
+      });
     });
   });
 
