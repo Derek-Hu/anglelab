@@ -98,15 +98,7 @@ angular.module('starter', ['ionic', 'LocalStorageModule', 'ngResource', 'starter
         }
       }
     })
-    .state('demo', {
-      url: '/demo',
-      views: {
-        'dash': {
-          templateUrl: 'templates/chart-demo.html',
-          controller: 'KPICtrl'
-        }
-      }
-    })
+   
   .state('kqhz', {
       url: '/kqhz/:PageType',
       views: {
