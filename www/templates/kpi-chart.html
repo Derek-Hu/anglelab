@@ -20,19 +20,24 @@
         <div></div>
         <div class="title anji-theme">
             <div class="title-wp">
-                <img class="fl logo-left" src="img/logo1.jpg"/>
+                <div class=" logo-left"><img class="fl" src="img/logo1.jpg"/></div>
+                <div class="fr logo-right-wp"><img src="img/LOG9.jpg"/></div>
                 <div>
                     <div class="bold-title single-line">
-                        <span ng-bind="selectedCriteria.kuqu.whse_code"></span>
-                        <span ng-bind="selectedCriteria.banzu.description"></span>第三方物流KPI样图</div>
+                        <span class="mainTitle" ng-bind="KPITitle"></span>
+                        <span class="subTitle">
+                            (<span ng-bind="selectedCriteria.kuqu.whse_name">仓库代码</span>-
+                            <span ng-bind="selectedCriteria.banzu.description">班组</span>
+                            <span ng-hide="aspect=='member'" ng-bind="selectedCriteria.banci.description">班次</span>)
+                        </span>
+                    </div>
                 </div>
-                <div class="fr logo-right-wp"><img src="img/ANJI.jpg"/><img src="img/CEVA.svg"/></div>
             </div>
 
         </div>
         <div></div>
     </ion-header-bar>
-    <ion-content scroll="false" id="kpiChart" class="bgFF padding" style="background: #FFF;    margin-bottom: 3em;">
+    <ion-content scroll="false" class="bgFF padding kpiChart" style="background: #FFF;    margin-bottom: 3em;">
         
        <kao-qin-chart data="chart.data" ylabel="{{chart.yLabel}}" title="{{chart.title}}"></kao-qin-chart>
     </ion-content>
@@ -59,7 +64,7 @@
     </div>
     <div class="clear"></div>
     <div class="quickNav">
-        <a href="#/dash"><span class="glyphicon glyphicon-circle-arrow-left"></span></a>
+        <a ng-click="historyBack()"><span class="glyphicon glyphicon-circle-arrow-left"></span></a>
         <a href="#/entry"><span class="glyphicon glyphicon-home"></span></a>
     </div>
   </ion-footer-bar>

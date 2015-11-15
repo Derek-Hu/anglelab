@@ -1,9 +1,18 @@
 angular.module('starter.controllers', [])
-.controller('KPIChartCtrl', ['$scope', '$stateParams', '$state', '$ionicScrollDelegate', 'MetaDataSvc', 'KPIItem', 'Constant', 'DateUtil',
-  function($scope, $stateParams, $state, $ionicScrollDelegate, MetaDataSvc, KPIItem, Constant, DateUtil) {
+.controller('KPIChartCtrl', ['$scope', '$stateParams', '$state', '$ionicScrollDelegate', 'MetaDataSvc', 'KPIItem', 'Constant', 'DateUtil', 'localStorageService',
+  function($scope, $stateParams, $state, $ionicScrollDelegate, MetaDataSvc, KPIItem, Constant, DateUtil, localStorageService) {
     
   $scope.chart = {};
+  var aspect = Constant.kpiMenus[$stateParams.aspect];
+  $scope.aspect = $stateParams.aspect;
+  var BizType = $stateParams.BizType;
+  for(var i =0, len = aspect.length; i<len;i++){
+    if(aspect[i].BizType == BizType){
+      $scope.KPITitle = aspect[i].nm;
+    }
+  }
   $scope.$on('$ionicView.enter', function(e) {
+    $scope.selectedCriteria = localStorageService.get('criteria');
     MetaDataSvc($stateParams.PageType).then(function(data){
       $scope.metaData = data;
     });
@@ -182,12 +191,12 @@ angular.module('starter.controllers', [])
   if(!type){
     $scope.menus=Constant.viewBoard.menus;
   }else{
-    $scope.menus = Constant.kpiMenus[type];
+      $scope.menus = Constant.kpiMenus[type];
       KPIDetail(type).then(function(menus){
         $scope.menus = menus;
         if(type == 'security'){
           // Green Cross
-          $scope.menus[0].hatColor = ''; 
+          //$scope.menus[0].hatColor = ''; 
         }
       },function(){});
   }
@@ -475,18 +484,28 @@ angular.module('starter.controllers', [])
   //$ionicScrollDelegate.$getByHandle('mainScroll').freezeScroll(true);
 
 }])
-.controller('KPIDetailCtrl', ['$scope', 'KPIDetail', 'Constant', '$stateParams', 'MetaDataSvc',
-  function($scope, KPIDetail, Constant, $stateParams, MetaDataSvc) {
+.controller('KPIDetailCtrl', ['$scope', 'KPIDetail', 'Constant', '$stateParams', 'MetaDataSvc', '$state', 'localStorageService',
+  function($scope, KPIDetail, Constant, $stateParams, MetaDataSvc, $state, localStorageService) {
+
+    $scope.goKPIDetail = function(state, BizType){
+      $state.go(state?state:'kpi-item',{"aspect": $stateParams.aspect, "PageType": $stateParams.PageType, "BizType": BizType});
+    }
 
     var type = $stateParams.aspect;
+    for(var idx=0, idlen = Constant.kpis.length;idx<idlen;idx++){
+      if(Constant.kpis[idx].type == type){
+          $scope.aspectTitle = Constant.kpis[idx].name;
+          break;
+      }
+    }
     $scope.$on('$ionicView.enter', function(e) {
-
+      $scope.criteriaFromCache = localStorageService.get('criteria');
       $scope.menus = Constant.kpiMenus[type];
       KPIDetail(type).then(function(menus){
         $scope.menus = menus;
         if(type == 'security'){
           // Green Cross
-          $scope.menus[0].hatColor = ''; 
+          //$scope.menus[0].hatColor = ''; 
         }
       },function(){});
 

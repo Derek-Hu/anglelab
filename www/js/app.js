@@ -139,7 +139,7 @@ angular.module('starter', ['ionic', 'LocalStorageModule', 'ngResource', 'starter
       views: {
         'dash': {
           templateUrl: 'templates/kpi-detail.html',
-          controller: 'DashCtrl'
+          controller: 'KPIDetailCtrl'
         }
       }
     })

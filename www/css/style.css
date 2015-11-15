@@ -526,7 +526,7 @@ ion-footer-bar .color-menu-type.header div.twrapper:last-child{ float: left;}
 /* Entry Style */
 .entryWp{margin: 0 auto; text-align: center;height: 100%;width:100%;}
 .entry{
-	position: relative;
+    position: relative;
     box-sizing: border-box;
     text-align: left;
     padding: 2em;
@@ -535,7 +535,9 @@ ion-footer-bar .color-menu-type.header div.twrapper:last-child{ float: left;}
     border-radius: 0.5em;
     width: 30%;
     height: 40%;
-    margin: 8% 8%;
+    /* margin: 8% 8%; */
+    top: 4em;
+    margin-top: 10%;
 }
 .entry .number{
     font-size: 4em;

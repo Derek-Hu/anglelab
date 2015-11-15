@@ -6,7 +6,8 @@ angular.module('starter.directives',['d3'])
     var middleTableBorder = bottomR-lineP-textPadding, barIndcatorPos = 2*textMargin-lineP;
     var lastRow = bottomR+textMargin, middleRow = 2*textMargin;
     var chartCls ='svg-content';
-    var percentage = d3.format(".2%");
+    var percentage = d3.format(".2");
+    var totalW, totalH;
     return {
       restrict: 'E',
       scope: {
@@ -20,12 +21,21 @@ angular.module('starter.directives',['d3'])
 
           var fontSize = parseInt(d3.select("body").style("font-size"));
 
-          var totalW = scope.width || $('#kpiChart').width(), 
-          totalH = scope.height || $('#kpiChart').height(), 
+          var kpiCharts = $('.kpiChart');
+          totalW = $(kpiCharts[0]).width();
+          totalH = $(kpiCharts[0]).height();
+          for(var ki =0; ki<kpiCharts.length;ki++){
+            if($(kpiCharts[ki]).width()>totalW){
+              totalW = $(kpiCharts[ki]).width();
+            }
+            if($(kpiCharts[ki]).height()>totalH){
+              totalH = $(kpiCharts[ki]).height();
+            }
+          }
           data = scope.data, title=scope.title, yLabel=scope.ylabel;
 
           // todo Deal with empty month
-          var margin = {top: fontSize, right: fontSize*16, bottom: fontSize*12, left: fontSize*12};
+          var margin = {top: fontSize*3, right: fontSize*10, bottom: fontSize*14, left: fontSize*3};
 
           var width = totalW - margin.left - margin.right,
               height = totalH - margin.top - margin.bottom;
@@ -45,7 +55,8 @@ angular.module('starter.directives',['d3'])
           var yAxis = d3.svg.axis()
               .scale(y)
               .orient("right")
-              .ticks(15, "%");
+              //.ticks(15, "%");
+              .ticks(15, "");
 
           var line = d3.svg.line()
               .x(function(d) { return x(d.month); })
@@ -79,6 +90,16 @@ angular.module('starter.directives',['d3'])
             d3.selectAll('.actualVal.val').remove();
           }
           scope.$watch('data', function(n, o){
+            totalW = $(kpiCharts[0]).width();
+            totalH = $(kpiCharts[0]).height();
+            for(var ki =0; ki<kpiCharts.length;ki++){
+              if($(kpiCharts[ki]).width()>totalW){
+                totalW = $(kpiCharts[ki]).width();
+              }
+              if($(kpiCharts[ki]).height()>totalH){
+                totalH = $(kpiCharts[ki]).height();
+              }
+            }
               data = scope.data = n;
               clearChart();
               checkData();
