@@ -125,8 +125,7 @@ angular.module('starter.services', ['ngResource'])
           "enm": "Frequency of Injury",
           "fc": "#aaa", 
           "bg": 'img/svg/frequency-of-injury.svg',
-          "bc": "#049BF4", 
-          "url": "#"
+          "bc": "#049BF4"
         }],
       'flow': [{
           "nm": "生产停线时间", 
@@ -134,8 +133,7 @@ angular.module('starter.services', ['ngResource'])
           "enm": "Turnover Rate",
           "fc": "#aaa", 
           "bc": "#049BF4", 
-          "bg": 'img/svg/turnover-rate.svg',
-          "url": "#/green-cross"
+          "bg": 'img/svg/turnover-rate.svg'
         }],
       'quality': [{
           "nm": "库存准确率", 
@@ -143,56 +141,49 @@ angular.module('starter.services', ['ngResource'])
           "enm": "Inventory Accuracy",
           "fc": "#aaa", 
           "bc": "#049BF4", 
-          "bg": 'img/svg/inventory-accuracy.svg',
-          "url": "#/green-cross"
+          "bg": 'img/svg/inventory-accuracy.svg'
         },{
           "nm": "FIFO符合率", 
           "BizType": '3-2',
           "enm": "FIFO Coincidence Rate",
           "fc": "#aaa", 
           "bg": 'img/svg/FIFO-coincidence-rate.svg',
-          "bc": "#049BF4", 
-          "url": "#"
+          "bc": "#049BF4"
         },{
           "nm": "库位一致性", 
           "BizType": '3-3',
           "enm": "Library Level Consistency",
           "fc": "#aaa", 
           "bc": "#049BF4", 
-          "bg": 'img/svg/library-level-consistency.svg',
-          "url": "#/green-cross"
+          "bg": 'img/svg/library-level-consistency.svg'
         },{
           "nm": "非规范性操作", 
           "BizType": '3-4',
           "enm": "Non Normative Operation",
           "fc": "#aaa", 
           "bc": "#049BF4", 
-          "bg": 'img/svg/non-normative-operation.svg',
-          "url": "#/green-cross"
+          "bg": 'img/svg/non-normative-operation.svg'
         },{
           "nm": "物流清洁度", 
           "BizType": '3-5',
           "enm": "Logistics Cleanliness",
           "fc": "#aaa", 
           "bc": "#049BF4", 
-          "bg": 'img/svg/logistics-cleanliness.svg',
-          "url": "#/green-cross"
+          "bg": 'img/svg/logistics-cleanliness.svg'
         },{
           "nm": "料箱清洁度", 
           "BizType": '3-6',
           "enm": "Material Box Cleanness",
           "fc": "#aaa", 
           "bc": "#049BF4", 
-          "bg": 'img/svg/material-box-cleanness.svg',
-          "url": "#/green-cross"
+          "bg": 'img/svg/material-box-cleanness.svg'
         },{
           "nm": "物流工废索赔额", 
           "BizType": '3-7',
           "enm": "Industry Waste Claims",
           "fc": "#aaa", 
           "bc": "#049BF4", 
-          "bg": 'img/svg/industry-waste-claims.svg',
-          "url": "#/green-cross"
+          "bg": 'img/svg/industry-waste-claims.svg'
         }],
       'member': [{
           "nm": "离职率", 
@@ -200,16 +191,14 @@ angular.module('starter.services', ['ngResource'])
           "enm": "Turnover Rate",
           "fc": "#aaa", 
           "bc": "#049BF4", 
-          "bg": 'img/svg/turnover-rate.svg',
-          "url": "#/green-cross"
+          "bg": 'img/svg/turnover-rate.svg'
         },{
           "nm": "缺勤率", 
           "BizType": '4-2',
           "enm": "AbsentTeeism Rate",
           "fc": "#aaa", 
           "bg": 'img/svg/absent-teeism-rate.svg',
-          "bc": "#049BF4", 
-          "url": "#"
+          "bc": "#049BF4"
         }],
       'cost': [{
           "nm": "AVG开发率", 
@@ -217,32 +206,28 @@ angular.module('starter.services', ['ngResource'])
           "enm": "AGV Development Rate",
           "fc": "#aaa", 
           "bc": "#049BF4", 
-          "bg": 'img//svg/avg-development-rate.svg',
-          "url": "#/green-cross"
+          "bg": 'img//svg/avg-development-rate.svg'
         },{
           "nm": "移动设备开发率", 
           "BizType": '5-2',
           "enm": "Mobile Device Starting Rate",
           "fc": "#aaa", 
           "bg": 'img/svg/mobile-device-starting-rate.svg',
-          "bc": "#049BF4", 
-          "url": "#"
+          "bc": "#049BF4"
         },{
           "nm": "移动设备开发率", 
           "BizType": '5-3',
           "enm": "Mobile Device Integrity",
           "fc": "#aaa", 
           "bc": "#049BF4", 
-          "bg": 'img/svg/mobile-device-integrity.svg',
-          "url": "#/green-cross"
+          "bg": 'img/svg/mobile-device-integrity.svg'
         },{
           "nm": "劳动生产率VBZ", 
           "BizType": '5-4',
           "enm": "Labor Productivity VBZ",
           "fc": "#aaa", 
           "bc": "#049BF4", 
-          "bg": 'img/svg/labor-productivity-VBZ.svg',
-          "url": "#/green-cross"
+          "bg": 'img/svg/labor-productivity-VBZ.svg'
         }]
     }
   };
