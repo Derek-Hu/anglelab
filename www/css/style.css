@@ -410,12 +410,12 @@ ion-view.view {
 }
 .line {
   fill: none;
-  stroke: #E214C0;
+  stroke: #A1B752;
   stroke-width: 1.5px;
 }
 .dotIndicator, .dot {
-  fill: #E214C0;
-  stroke: #E214C0;
+  fill: #A1B752;
+  stroke: #A1B752;
 }
 .bar-chart{
   position: relative;

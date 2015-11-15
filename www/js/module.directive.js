@@ -309,12 +309,19 @@ angular.module('starter.directives',['d3'])
               .data(data.filter(function(ele){
                   return typeof ele.TARGET !== 'undefined'
               }))
-            .enter().append("circle")
+            .enter().append("rect")
               .attr("class", "dot targetDot")
-              .attr("r", middleRow+textPadding)
+
+              .attr("x", function(d) { return x(d.month); })
+              .attr("width", fontSize)
+              .attr("y", function(d) { return y(d.TARGET?d.TARGET:0); })
+              .attr("height", fontSize)
+
+              /*.attr("r", middleRow+textPadding)
               .attr("cx", function(d) { return x(d.month); })
-              .attr("cy", function(d) { return y(d.TARGET?d.TARGET:0); })
-              .attr("transform", "translate(" + barWidth/2 + ",0)");
+              .attr("cy", function(d) { return y(d.TARGET?d.TARGET:0); })*/
+
+              .attr("transform", "translate(" + (barWidth/2-fontSize/2) + ","+(-fontSize/2)+")");
           /* Actual value in the table */
           svg.selectAll(".text")
               .data(data)
