@@ -201,21 +201,21 @@ angular.module('starter.services', ['ngResource'])
           "bc": "#049BF4"
         }],
       'cost': [{
-          "nm": "AVG开发率", 
+          "nm": "AGV开动率", 
           "BizType": '4-1',
           "enm": "AGV Development Rate",
           "fc": "#aaa", 
           "bc": "#049BF4", 
           "bg": 'img//svg/avg-development-rate.svg'
         },{
-          "nm": "移动设备开发率", 
+          "nm": "移动设备开动率", 
           "BizType": '4-2',
           "enm": "Mobile Device Starting Rate",
           "fc": "#aaa", 
           "bg": 'img/svg/mobile-device-starting-rate.svg',
           "bc": "#049BF4"
         },{
-          "nm": "移动设备开发率", 
+          "nm": "移动设备完好率", 
           "BizType": '4-3',
           "enm": "Mobile Device Integrity",
           "fc": "#aaa", 
