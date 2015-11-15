@@ -1,0 +1,57 @@
+<!--
+  This template loads for the 'tab.friend-detail' state (app.js)
+  'friend' is a $scope variable created in the FriendsCtrl controller (controllers.js)
+  The FriendsCtrl pdivls data from the Friends service (service.js)
+  The Friends service returns an array of friend data
+-->
+<ion-view on-double-click="goHome()" hide-nav-bar="true" hide-back-button="true">
+    <ion-header-bar align-title="center">
+        <div></div>
+        <div class="title anji-theme">
+            <div class="title-wp">
+                <img class="fl logo-left" src="img/logo1.jpg"/>
+                <div>
+                    <div class="bold-title single-line">
+                        <span ng-bind="selectedCriteria.kuqu.whse_code"></span>-<span ng-bind="selectedCriteria.banzu.description"></span>组织机构图</div>
+                </div>
+                <div class="fr logo-right-wp"><img src="img/Anji.svg"/><img src="img/CEVA.svg"/></div>
+            </div>
+
+        </div>
+        <div></div>
+    </ion-header-bar>
+    <ion-content class="padding">
+        
+    </ion-content>
+    <ion-footer-bar style="    height: calc(100% - 4em);">
+    <div ng-show="group!==null && group.leader!=null" class="content tc" style="width:100%;height: 100%; padding-bottom: 3em;">
+        
+        <org group="group"></org>
+    </div>
+    <div class="clear header tc color-menu-type" style="    width: 100%; position: absolute; left: 0; bottom: 0;">
+        <div class="twrapper">
+            <div class="type two clear">
+            <div class="name">编制</div>
+            <div class="value">&nbsp;<span ng-bind="metaData.bianzhi"></span></div>
+        </div>
+        </div>
+        <div class="twrapper"><div class="type two clear">
+            <div class="name">审核</div>
+            <div class="value">&nbsp;<span ng-bind="metaData.shenhe"></span></div>
+        </div></div>
+        <div class=" twrapper"><div class="type two clear">
+            <div class="name">批准</div>
+            <div class="value">&nbsp;<span ng-bind="metaData.pizhun"></span></div>
+        </div></div>
+        <div class=" twrapper"><div class="type two clear">
+            <div class="name">日期</div>
+            <div class="value">&nbsp;<span ng-bind="metaData.bianzhi_date"></span></div>
+        </div></div>
+    </div>
+    <div class="clear"></div>
+    <div class="quickNav">
+        <a href="#/dash"><span class="glyphicon glyphicon-circle-arrow-left"></span></a>
+        <a href="#/entry"><span class="glyphicon glyphicon-home"></span></a>
+    </div>
+  </ion-footer-bar>
+</ion-view>

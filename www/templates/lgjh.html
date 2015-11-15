@@ -1,0 +1,146 @@
+<ion-view hide-nav-bar="true" hide-back-button="true">
+	<ion-header-bar align-title="center">
+	  	<div></div>
+		<div class="title anji-theme">
+			<div class="title-wp">
+				<img class="fl logo-left" src="img/logo1.jpg"/>
+				<div>
+			  		<div class="bold-title single-line">
+			  			<span class="mainTitle">岗位轮岗计划</span>
+						<div class="subTitle">
+							<span ng-bind="selectedCriteria.kuqu.whse_name">仓库代码</span>-
+							<span ng-bind="selectedCriteria.banzu.description">班组</span>-
+							<span ng-bind="selectedCriteria.banci.description">班次</span>
+						</div>
+			  		</div>
+				</div>
+				<div class="fr logo-right-wp"><img src="img/Anji.svg"/><img src="img/CEVA.svg"/></div>
+			</div>
+		</div>
+	  	<div></div>
+	</ion-header-bar>
+    <ion-content class="bgFF" style="background: #FFF" on-double-tap="goHome('kqhz')">
+	    <div class="kqhz gwrx content-wrapper">
+		<table>
+			<thead>
+			<tr>
+				<th rowspan="2">序号</th>
+				<th rowspan="2">岗位名称</th>
+				<th rowspan="2">岗位操作人</th>
+				<th rowspan="2">轮岗人</th>
+				<th colspan="12">轮岗计划</th>
+			</tr>
+			<tr>
+				<th>一月</th>
+				<th>二月</th>
+				<th>三月</th>
+				<th>四月</th>
+				<th>五月</th>
+				<th>六月</th>
+				<th>七月</th>
+				<th>八月</th>
+				<th>九月</th>
+				<th>十月</th>
+				<th>十一月</th>
+				<th>十二月</th>
+			</tr>
+			</thead>
+			<tbody ng-show="loadingStatus!=''" >
+				<tr><td colspan="17">
+					<span ng-bind="loadingStatus">加载中</span>
+				</td></tr>
+			</tbody>
+			<tbody ng-repeat="r in rows">
+				<!-- 
+					rows = [{
+			          name: 
+			          items: [{
+			            operator:,
+			            rotate: ,
+			            months: [1,0,0,1,1,0,0,1,1,0,0,1]
+			          }]
+			        }]
+				-->
+				<tr>
+					<td rowspan="{{r.items.length}}" ng-bind="$index+1"></td>
+					<td rowspan="{{r.items.length}}" ng-bind="r.name"></td>
+					<td ng-bind="r.items[0].operator"></td>
+					<td ng-bind="r.items[0].rotate"></td>
+					<td ng-repeat="m in r.items[0].months track by $index">
+						<span class="{{m==1? 'glyphicon glyphicon-ok': ''}}"></span>
+					</td>
+				</tr>
+				<tr ng-if="$index!=0" ng-repeat="item in r.items">
+					<td ng-bind="item.operator"></td>
+					<td ng-bind="item.rotate"></td>
+					<td ng-repeat="m in item.months track by $index">
+						<span class="{{m==1? 'glyphicon glyphicon-ok': ''}}"></span>
+					</td>
+				</tr>
+				<!--
+				<tr ng-if="$index!=0" ng-repeat="it in rows[0].items">
+					<td ng-bind="it.operator"></td>
+					<td ng-bind="it.rotate"></td>
+					<td ng-repeat="m in it.months track by $index">
+						<span class="{{m==1? 'glyphicon glyphicon-ok': ''}}"></span>
+					</td>
+				</tr>
+				<tr ng-if="$index!=0" ng-repeat="r in rows">
+					<td rowspan="{{r.items.length}}" ng-bind="$index+1"></td>
+					<td rowspan="{{r.items.length}}" ng-bind="r.name"></td>
+					<td ng-bind="r.items[0].operator"></td>
+					<td ng-bind="r.items[0].rotate"></td>
+					<td ng-repeat="m in r.items[0].months track by $index">
+						<span class="{{m==1? 'glyphicon glyphicon-ok': ''}}"></span>
+					</td>
+				</tr>
+				<tr ng-if="$index!=0" ng-repeat="it in rows[1].items">
+					<td ng-bind="it.operator"></td>
+					<td ng-bind="it.rotate"></td>
+					<td ng-repeat="m in it.months track by $index">
+						<span class="{{m==1? 'glyphicon glyphicon-ok': ''}}"></span>
+					</td>
+				</tr> -->
+				
+			</tbody>
+		</table>
+		</div>
+    </ion-content>
+    <ion-footer-bar>
+	    <div class="clear header six tc color-menu-type">
+			<div class="twrapper">
+				<div class="type two clear">
+				<div class="name">编制</div>
+				<div class="value">&nbsp;<span ng-bind="metaData.bianzhi"></span></div>
+			</div>
+			</div>
+			<div class="twrapper"><div class="type two clear">
+				<div class="name">审核</div>
+				<div class="value">&nbsp;<span ng-bind="metaData.shenhe"></span></div>
+			</div></div>
+			<div class=" twrapper"><div class="type two clear">
+				<div class="name">批准</div>
+				<div class="value">&nbsp;<span ng-bind="metaData.pizhun"></span></div>
+			</div></div>
+			<div class=" twrapper" style="width:20%"><div class="type two clear">
+				<div class="name">日期</div>
+				<div class="value">&nbsp;<span ng-bind="metaData.bianzhi_date"></span></div>
+			</div></div>
+
+			<!-- <div class="twrapper"><div class="type clear">
+				<div class="value damage">&nbsp;</div>
+				<div class="name">新员工</div>
+			</div></div>
+
+			<div class="twrapper"><div class="type clear">
+				<div class="value damage">&nbsp;</div>
+				<div class="name">离职员工</div>
+			</div></div> -->
+
+		</div>
+		<div class="quickNav">
+			<a href="#/dash"><span class="glyphicon glyphicon-circle-arrow-left"></span></a>
+			<a href="#/entry"><span class="glyphicon glyphicon-home"></span></a>
+		</div>
+	</ion-footer-bar>
+</ion-view>

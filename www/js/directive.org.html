@@ -1,0 +1,35 @@
+<div class="org-chart cf" style="height: 100%;    padding-top: 3em;">
+    <span class="orgTitle" ng-bind="selectedCriteria.banci.shift_code"></span>
+    <div class="director memeber" ng-class="{odd : oddTeam, one: subTeams.length==0}" style="height: 20%;">
+        <div style="background: url();height: 90%;">
+            <div class="section" >
+                <div class="name">
+                    <span ng-bind="group.leader.Employee_name"></span>
+                    <span ng-bind="group.leader.Telephone"></span>
+                </div>
+                <div class="job">
+                    <span ng-bind="group.leader.Job"></span>
+                    <span class="member-status"></span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="member-wp" style="height: 80%;">
+        <div>
+            <div ng-repeat="sub in subTeams" ng-class="{two: subTeams.length==1,left: ($index+1)<((subTeams.length+1)/2), right: ($index+1)>((subTeams.length+1)/2), center: ($index+1)==((subTeams.length+1)/2)}" class="members cf">
+                <div ng-repeat="m in sub" class="sub">
+                    <div  class="section" style="position: re">
+                        <!-- <img ng-href="{{m.Picture}}" /> -->
+                        <div class="name">
+                            <span ng-bind="m.Employee_name"></span>
+                            <span ng-bind="m.Telephone"></span>
+                        </div>
+                        <div class="job">
+                            <span ng-bind="m.Job"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

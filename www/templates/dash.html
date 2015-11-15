@@ -1,1 +1,106 @@
-ABC<span ng-bind="httpAjaxStatus"></span>
+<ion-view hide-nav-bar="true" hide-back-button="true" style="background: #19426E;">
+  <ion-header-bar align-title="center" style="height: 3em">
+	  	<div></div>
+		<div class="title anji-theme" style="margin-top: 0;">
+			<div class="title-wp">
+				<img class="fl logo-left" src="img/logo1.jpg"/>
+				<div>
+			  		<div class="bold-title single-line"><span ng-bind="criteria.kuqu?criteria.kuqu.whse_code:''"></span>小组信息板</div>
+				</div>
+				<div class="fr logo-right-wp"><img src="img/Anji.svg"/><img src="img/CEVA.svg"/></div>
+			</div>
+		</div>
+	  	<div></div>
+	</ion-header-bar>
+  <ion-content on-double-tap="goHome('home')" style="padding-top: 0;">
+  		
+  </ion-content>
+  <ion-footer-bar style="height: calc(100% - 3em);padding: 0.5em;padding-bottom: 3em;">
+  <div style="width: 100%; display: block; position: absolute; left: 0; top: 0.5em; bottom: 3.5em;"> 
+  			<div class="clear header five tc color-menu-type" style="position: absolute;">
+				<div class="twrapper">
+					<div class="type an-dropdown clear" ng-class="{open: kqDropdown.isOpen}">
+						<div class="name">库区</div>
+						<div class="value" ng-click="kqDropdown.open()" ng-bind="criteria.kuqu?criteria.kuqu.whse_code:'加载中'">加载中</div>
+						<div class="option" ng-class="{visHide: (!kuqus || kuqu.length<=1)}" ng-click="kqDropdown.open()">
+							<span class="glyphicon glyphicon-chevron-down"></span>
+						</div>
+						<div class="an-select">
+							<div class="value" ng-click="kqDropdown.selectOption(kuqu)" ng-repeat="kuqu in kuqus" ng-bind="kuqu.whse_code"></div>
+						</div>
+					</div>
+				</div>
+				<div class="twrapper">
+					<div class="type an-dropdown clear" ng-class="{open: bzDropdown.isOpen}">
+					<div class="name">班组</div>
+					<div class="value" ng-click="bzDropdown.open()" ng-bind="criteria.banzu?criteria.banzu.description:'加载中'">加载中</div>
+					<div class="option" ng-class="{visHide: (!banzus || banzus.length<=1)}" ng-click="bzDropdown.open()">
+						<span class="glyphicon glyphicon-chevron-down"></span>
+					</div>
+					<div class="an-select">
+						<div class="value" ng-click="bzDropdown.selectOption(bz)" ng-repeat="bz in banzus" ng-bind="bz.description"></div>
+					</div>
+				</div>
+				</div>
+				<div class="twrapper">
+					<div class="type an-dropdown clear" ng-class="{open: bcDropdown.isOpen}">
+						<div class="name">班次</div>
+						<div class="value" ng-click="bcDropdown.open()" ng-bind="criteria.banci?criteria.banci.shift_code:'加载中'">加载中</div>
+						<div class="option" ng-class="{visHide: (!bancis || bancis.length<=1)}" ng-click="bcDropdown.open()">
+							<span class="glyphicon glyphicon-chevron-down"></span>
+						</div>
+						<div class="an-select">
+							<div class="value" ng-click="bcDropdown.selectOption(bc)" ng-repeat="bc in bancis" ng-bind="bc.shift_code"></div>
+						</div>
+					</div>
+				</div>
+				<div class=" twrapper"><div class="type two clear">
+					<div class="name">当班负责人</div>
+					<div class="value" ng-bind="criteria.charger">加载中</div>
+				</div></div>
+				<div class=" twrapper"><div class="type two clear">
+					<div class="name">更新日期</div>
+					<div class="value" ng-bind="criteria.currentDate">加载中</div>
+				</div></div>
+			</div>
+	
+		    <div class="clear" style="    height: 100%; padding-top: 4em;">
+			    <div ng-repeat="m in menus" class="bz-menu col-3">
+			      <a ng-click="goTo(m)" ng-style="{'color': m.fc}">
+			        <div class="list card" ng-style="{'border-color': m.bc, 'background-image': 'url('+m.bg+')'}">
+			          <div class="item item-body">
+			          	<div ng-bind="$index+1" class="number"></div>
+			            <div class="menu-desc">
+				            <span class="menu-eng" ng-bind="m.enm"></span>
+			            	<span class="menu-name" ng-bind="m.nm"></span>
+				        </div>
+			          </div>
+			        </div>
+			      </a>
+			    </div>
+			</div>
+		</div>
+		<div class="clear"></div>
+	<div class="clear footer color-menu-type" style="padding-bottom: 0 ;padding-bottom: 0; position: absolute; width: 100%; bottom: 0.5em; left: 0;">
+		<div class="twrapper" style="padding: 0;margin-right: 1em;"><div class="type clear">
+			<div class="name" style="padding: 0.5em;">每天</div>
+			<div class="value not-sure" style="margin: 0.5em;">&nbsp;</div>
+		</div></div>
+
+		<div class="twrapper" style="padding: 0;margin-right: 1em;"><div class="type clear">
+			<div class="name" style="padding: 0.5em;">每周</div>
+			<div class="value weekly" style="margin: 0.5em;">&nbsp;</div>
+		</div></div>
+
+		<div class="twrapper" style="padding: 0;margin-right: 1em;"><div class="type clear">
+			<div class="name" style="padding: 0.5em;">不定期</div>
+			<div class="value daily" style="margin: 0.5em;">&nbsp;</div>
+		</div></div>
+	</div>
+	
+	<div class="quickNav" style="position: absolute; right: 1em; bottom: 0.5em; font-size: 1.5em; line-height: 1em;">
+		<a href="#/entry"><span class="glyphicon glyphicon-circle-arrow-left"></span></a>
+		<a href="#/entry"><span class="glyphicon glyphicon-home"></span></a>
+	</div>
+  </ion-footer-bar>
+</ion-view>

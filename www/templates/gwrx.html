@@ -1,0 +1,86 @@
+<ion-view hide-nav-bar="true" hide-back-button="true">
+	<ion-header-bar align-title="center">
+	  	<div></div>
+		<div class="title anji-theme">
+			<div class="title-wp">
+				<img class="fl logo-left" src="img/logo1.jpg"/>
+				<div>
+			  		<div class="bold-title single-line">
+			  			<span class="mainTitle">外库运作岗位柔性表</span>
+						<div class="subTitle">
+							<span ng-bind="selectedCriteria.kuqu.whse_name">仓库代码</span>-
+							<span ng-bind="selectedCriteria.banzu.description">班组</span>-
+							<span ng-bind="selectedCriteria.banci.description">班次</span>
+						</div>
+			  		</div>
+				</div>
+				<div class="fr logo-right-wp"><img src="img/Anji.svg"/><img src="img/CEVA.svg"/></div>
+			</div>
+		</div>
+	  	<div></div>
+	</ion-header-bar>
+    <ion-content class="bgFF" style="background: #FFF">
+	    <div class="kqhz gwrx content-wrapper">
+	    <span class="anji-theme" style="font-size:0.9em" ng-show="loadingStatus!=''" ng-bind="loadingStatus">加载中</span>
+		<table>
+			<thead>
+			<tr>
+				<th ng-repeat="h in headers" ng-bind="h"></th>
+			</tr>
+			</thead>
+			<tbody>
+				<tr ng-repeat="r in records">
+					<td ng-repeat = "h in headers" ng-bind="r[h]"></td>
+				</tr>
+			</tbody>
+		</table>
+		</div>
+    </ion-content>
+    <ion-footer-bar>
+	    <div class="clear header six tc color-menu-type">
+			<div class="twrapper">
+				<div class="type two clear">
+				<div class="name">编制</div>
+				<div class="value">&nbsp;<span ng-bind="metaData.bianzhi"></span></div>
+			</div>
+			</div>
+			<div class="twrapper"><div class="type two clear">
+				<div class="name">审核</div>
+				<div class="value">&nbsp;<span ng-bind="metaData.shenhe"></span></div>
+			</div></div>
+			<div class=" twrapper"><div class="type two clear">
+				<div class="name">批准</div>
+				<div class="value">&nbsp;<span ng-bind="metaData.pizhun"></span></div>
+			</div></div>
+			<div class=" twrapper"><div class="type two clear">
+				<div class="name">日期</div>
+				<div class="value">&nbsp;<span ng-bind="metaData.bianzhi_date"></span></div>
+			</div></div>
+
+			<div class=" twrapper"><div class="type two clear">
+				<div class="name">Y</div>
+				<div class="value">&nbsp;<span>有相关证件</span></div>
+			</div></div>
+
+			<div class=" twrapper"><div class="type two clear">
+				<div class="name">N</div>
+				<div class="value">&nbsp;<span>无相关证件</span></div>
+			</div></div>
+
+			<!-- <div class="twrapper"><div class="type clear">
+				<div class="value damage">&nbsp;</div>
+				<div class="name">新员工</div>
+			</div></div>
+
+			<div class="twrapper"><div class="type clear">
+				<div class="value damage">&nbsp;</div>
+				<div class="name">离职员工</div>
+			</div></div> -->
+
+		</div>
+		<div class="quickNav">
+			<a href="#/dash"><span class="glyphicon glyphicon-circle-arrow-left"></span></a>
+			<a href="#/entry"><span class="glyphicon glyphicon-home"></span></a>
+		</div>
+	</ion-footer-bar>
+</ion-view>

@@ -1,0 +1,117 @@
+<ion-view hide-nav-bar="true" hide-back-button="true">
+	<ion-header-bar align-title="center">
+	  	<div></div>
+		<div class="title anji-theme">
+			<div class="title-wp">
+				<img class="fl logo-left" src="img/logo1.jpg"/>
+				<div>
+			  		<div class="bold-title single-line">安全绿十字</div>
+				</div>
+				<div class="fr logo-right-wp"><img class="anji" src="img/Anji.svg"/><img src="img/CEVA.svg"/></div>
+			</div>
+
+		</div>
+	  	<div></div>
+	</ion-header-bar>
+    <ion-content on-double-tap="goHome('cross')">
+        	
+			<div class="content-wrapper green-calendar">
+				<table>
+					<tbody>
+					<tr>
+						<td class="empty">&nbsp;</td>
+						<td class="empty">&nbsp;</td>
+						<td ng-repeat="elem in rows[0] track by $index" ng-style="{'background': colors[elem.STATE], 'color': '#fff'}" ng-bind="elem.ID"></td>
+						<td class="empty">&nbsp;</td>
+						<td class="empty">&nbsp;</td>
+					</tr>
+					<tr>
+						<td class="empty">&nbsp;</td>
+						<td class="empty">&nbsp;</td>
+						<td ng-repeat="elem in rows[1] track by $index" ng-style="{'background': colors[elem.STATE], 'color': '#fff'}" ng-bind="elem.ID"></td>
+						<td class="empty">&nbsp;</td>
+						<td class="empty">&nbsp;</td></tr>
+					<tr>
+						<td ng-repeat="elem in rows[2] track by $index" ng-style="{'background': colors[elem.STATE], 'color': '#fff'}" ng-bind="elem.ID"></td>
+					</tr>
+					<tr>
+						<td ng-repeat="elem in rows[3] track by $index" ng-style="{'background': colors[elem.STATE], 'color': '#fff'}" ng-bind="elem.ID"></td>
+					</tr>
+					<tr>
+						<td ng-repeat="elem in rows[4] track by $index" ng-style="{'background': colors[elem.STATE], 'color': '#fff'}" ng-bind="elem.ID"></td>
+					</tr>
+					<tr>
+						<td class="empty">&nbsp;</td>
+						<td class="empty">&nbsp;</td>
+						<td ng-repeat="elem in rows[5] track by $index" ng-style="{'background': colors[elem.STATE], 'color': '#fff'}" ng-bind="elem.ID"></td>
+						<td class="empty">&nbsp;</td>
+						<td class="empty">&nbsp;</td>
+					</tr>
+					<tr><td class="empty">&nbsp;</td>
+						<td class="empty">&nbsp;</td>
+						<td ng-repeat="elem in rows[6] track by $index" ng-style="{'background': colors[elem.STATE], 'color': '#fff'}" ng-bind="elem.ID"></td>
+						<td>&nbsp;</td>
+						<td>&nbsp;</td>
+						<td class="empty">&nbsp;</td>
+						<td class="empty">&nbsp;</td></tr>
+					</tbody>
+				</table>	
+			</div>
+
+			<div class="clear footer green-cross color-menu-type">
+				
+				<div class="twrapper"><div class="type indicator clear">
+					<div class="value no-acc">&nbsp;</div>
+					<div class="name">无事故</div>
+				</div></div>
+				
+				<div class="twrapper"><div class="type indicator clear">
+					<div class="value danger">&nbsp;</div>
+					<div class="name">险肇事故</div>
+				</div></div>
+
+				<div class="twrapper"><div class="type indicator clear">
+					<div class="value emmerge">&nbsp;</div>
+					<div class="name">急救事故</div>
+				</div></div>
+
+				<div class="twrapper"><div class="type indicator clear">
+					<div class="value damage">&nbsp;</div>
+					<div class="name">损失工时事故</div>
+				</div></div>
+
+				<div class="twrapper"><div class="type indicator clear">
+					<div class="value supplier">&nbsp;</div>
+					<div class="name">供应商事故</div>
+				</div></div>
+			</div>
+			<div class="clear"></div>
+
+    </ion-content>
+	<ion-footer-bar>
+    <div class="clear header tc color-menu-type">
+		<div class="twrapper">
+			<div class="type two clear">
+			<div class="name">编制</div>
+			<div class="value">&nbsp;<span ng-bind="metaData.bianzhi"></span></div>
+		</div>
+		</div>
+		<div class="twrapper"><div class="type two clear">
+			<div class="name">审核</div>
+			<div class="value">&nbsp;<span ng-bind="metaData.shenhe"></span></div>
+		</div></div>
+		<div class=" twrapper"><div class="type two clear">
+			<div class="name">批准</div>
+			<div class="value">&nbsp;<span ng-bind="metaData.pizhun"></span></div>
+		</div></div>
+		<div class=" twrapper"><div class="type two clear">
+			<div class="name">日期</div>
+			<div class="value">&nbsp;<span ng-bind="metaData.bianzhi_date"></span></div>
+		</div></div>
+	</div>
+	<div class="quickNav">
+		<a ng-click="historyBack()"><span class="glyphicon glyphicon-circle-arrow-left"></span></a>
+		<a href="#/entry"><span class="glyphicon glyphicon-home"></span></a>
+	</div>
+	</ion-footer-bar>
+</ion-view>

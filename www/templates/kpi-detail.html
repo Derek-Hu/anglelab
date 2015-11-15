@@ -1,0 +1,91 @@
+<ion-view hide-nav-bar="true" hide-back-button="true">
+  <ion-header-bar align-title="center">
+	  	<div></div>
+		<div class="title anji-theme">
+			<div class="title-wp">
+				<img class="fl logo-left" src="img/logo1.jpg"/>
+				<div>
+			  		<div class="bold-title single-line">
+			  			<span class="mainTitle">KPI跟踪-<span ng-bind="aspectTitle"></span></span>
+						<div class="subTitle">
+				  			<span ng-bind="criteriaFromCache.kuqu?criteriaFromCache.kuqu.whse_name+'-':''"></span>
+				  			<span ng-bind="criteriaFromCache.banzu?criteriaFromCache.banzu.description+'-':''"></span>
+				  			<span ng-bind="criteriaFromCache.banci?criteriaFromCache.banci.description:''"></span></div>
+						</div>
+						
+			  		
+				</div>
+				<div class="fr logo-right-wp"><img src="img/Anji.svg"/><img src="img/CEVA.svg"/></div>
+			</div>
+
+		</div>
+	  	<div></div>
+	</ion-header-bar>
+  <ion-content on-double-tap="goHome('home')">
+  			<!-- <div class="clear header three tc color-menu-type">
+				<div class="twrapper">
+					<div class="type an-dropdown clear" ng-class="{open: kqDropdown.isOpen}">
+						<div class="name">库区</div>
+						<div class="value" ng-click="kqDropdown.open()" ng-bind="criteria.kuqu?criteria.kuqu.whse_name:'加载中'">加载中</div>
+						<div class="option" ng-click="kqDropdown.open()">
+							<span class="glyphicon glyphicon-chevron-down"></span>
+						</div>
+						<div class="an-select">
+							<div class="value" ng-click="kqDropdown.selectOption(kuqu)" ng-repeat="kuqu in kuqus" ng-bind="kuqu.whse_name"></div>
+						</div>
+					</div>
+				</div>
+				<div class="twrapper">
+					<div class="type an-dropdown clear" ng-class="{open: bzDropdown.isOpen}">
+					<div class="name">班组</div>
+					<div class="value" ng-click="bzDropdown.open()" ng-bind="criteria.banzu?criteria.banzu.description:'加载中'">加载中</div>
+					<div class="option" ng-click="bzDropdown.open()">
+						<span class="glyphicon glyphicon-chevron-down"></span>
+					</div>
+					<div class="an-select">
+						<div class="value" ng-click="bzDropdown.selectOption(bz)" ng-repeat="bz in banzus" ng-bind="bz.description"></div>
+					</div>
+				</div>
+				</div>
+				<div class="twrapper">
+					<div class="type an-dropdown clear" ng-class="{open: bcDropdown.isOpen}">
+						<div class="name">班次</div>
+						<div class="value" ng-click="bcDropdown.open()" ng-bind="criteria.banci?criteria.banci.description:'加载中'">加载中</div>
+						<div class="option" ng-click="bcDropdown.open()">
+							<span class="glyphicon glyphicon-chevron-down"></span>
+						</div>
+						<div class="an-select">
+							<div class="value" ng-click="bcDropdown.selectOption(bc)" ng-repeat="bc in bancis" ng-bind="bc.description"></div>
+						</div>
+					</div>
+				</div>
+				
+			</div> -->
+  </ion-content>
+  <ion-footer-bar style="height: calc(100% - 4em);">
+    <div class="clear" style="width: 100%; height: 100%;">
+	    <div ng-repeat="m in menus" class="bz-menu col-3">
+        <div ng-hide="!m.hatColor || m.hatColor==''" class="hat"><span class="glyphicon glyphicon-bed" style="color: {{m.hatColor}}"></span></div>
+        <div class="rate">
+        	<span ng-bind="m.rate"></span>
+        </div>
+	      <a ng-click="goKPIDetail(m.url, m.BizType)" ng-style="{'color': m.fc}">
+	        <div class="list card" ng-style="{'border-color': m.bc, 'background-image': 'url('+m.bg+')'}">
+	          <div class="item item-body">
+	          	<div ng-bind="$index+1" class="number"></div>
+	            <div class="menu-desc">
+		            <span class="menu-eng" ng-bind="m.enm"></span>
+	            	<span class="menu-name" ng-bind="m.nm"></span>
+		        </div>
+	          </div>
+	        </div>
+	      </a>
+	    </div>
+	</div>
+	<div class="clear"></div>
+	<div class="quickNav">
+		<a href="#/kpi"><span class="glyphicon glyphicon-circle-arrow-left"></span></a>
+		<a href="#/entry"><span class="glyphicon glyphicon-home"></span></a>
+	</div>
+  </ion-footer-bar>
+</ion-view>

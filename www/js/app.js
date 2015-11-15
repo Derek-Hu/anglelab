@@ -3,17 +3,25 @@
 // angular.module is a global place for creating, registering and retrieving Angular modules
 // 'starter' is the name of this angular module example (also set in a <body> attribute in index.html)
 // the 2nd parameter is an array of 'requires'
-angular.module('starter', ['ionic'])
+// 'starter.services' is found in services.js
+// 'starter.controllers' is found in controllers.js
+angular.module('starter', ['ionic', 'LocalStorageModule', 'ngResource', 'starter.controllers', 'starter.services','d3', 'starter.directives'])
 
-.run(function($ionicPlatform) {
+.run(function($ionicPlatform, $rootScope, $window) {
+  $rootScope.historyBack = function(){
+    $window.history.back();
+  }
   $ionicPlatform.ready(function() {
     // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
     // for form inputs)
-    if(window.cordova && window.cordova.plugins.Keyboard) {
+    if (window.cordova && window.cordova.plugins && window.cordova.plugins.Keyboard) {
       cordova.plugins.Keyboard.hideKeyboardAccessoryBar(true);
+      cordova.plugins.Keyboard.disableScroll(true);
+
     }
-    if(window.StatusBar) {
-      StatusBar.styleDefault();
+    if (window.StatusBar) {
+      // org.apache.cordova.statusbar required
+      StatusBar.styleLightContent();
     }
   });
 })
@@ -40,25 +48,103 @@ angular.module('starter', ['ionic'])
     views: {
       'dash': {
         templateUrl: 'templates/dash.html',
-        controller: 'KPICtrl'
+        controller: 'DashCtrl'
         
       }
     }
   })
-  // if none of the above states are matched, use this as the fallback
-  $urlRouterProvider.otherwise('/dash');
-
-})
-.controller('KPICtrl', ['$scope', '$http', function($scope, $http) {
-
-  $http({method: 'GET', url: 'http://58.246.227.27:8001/Zone.aspx?WareHouseId=3'}).then(function successCallback(response) {
-      $scope.httpAjaxStatus = '使用http发送请求获取数据成功：'+JSON.stringify(response);
-      // this callback will be called asynchronously
-      // when the response is available
-    }, function errorCallback(response) {
-      // called asynchronously if an error occurs
-      // or server returns response with an error status.
-        $scope.httpAjaxStatus = '使用http发送请求获取数据失败 '+JSON.stringify(response);
+  .state('gwrx', {
+      url: '/gwrx/:PageType',
+      views: {
+        'dash': {
+          templateUrl: 'templates/gwrx.html',
+          controller: 'GwrxCtrl'
+        }
+      }
+    })
+  .state('lgjh', {
+    url: '/lgjh/:PageType',
+    views: {
+      'dash': {
+        templateUrl: 'templates/lgjh.html',
+        controller: 'LgjhCtrl'
+      }
+    }
+  })
+  .state('entry', {
+    url: '/entry',
+    views: {
+      'dash': {
+        templateUrl: 'templates/entry.html'
+      }
+    }
+  })
+  .state('org', {
+      url: '/org/:PageType',
+      views: {
+        'dash': {
+          templateUrl: 'templates/org.html',
+          controller: 'OrgCtrl'
+        }
+      }
+    })
+  
+    .state('attend', {
+      url: '/attend',
+      views: {
+        'dash': {
+          templateUrl: 'templates/kao-qin.html',
+          controller: 'AttendCtrl'
+        }
+      }
+    })
+    .state('kpi', {
+      url: '/kpi',
+      views: {
+        'dash': {
+          templateUrl: 'templates/kpi-group.html',
+          controller: 'KPICtrl'
+        }
+      }
+    })
+  .state('kqhz', {
+      url: '/kqhz/:PageType',
+      views: {
+        'dash': {
+          templateUrl: 'templates/kqhz.html',
+          controller: 'kqhzCtrl'
+        }
+      }
+    })
+  .state('green-cross', {
+      url: '/green-cross/:aspect/:PageType/:BizType',
+      views: {
+        'dash': {
+          templateUrl: 'templates/green-cross.html',
+          controller: 'GreenCrossCtrl'
+        }
+      }
+    })
+  .state('kpi-item', {
+      url: '/kpi-item/:aspect/:PageType/:BizType',
+      views: {
+        'dash': {
+          templateUrl: 'templates/green-cross.html',
+          controller: 'GreenCrossCtrl'
+        }
+      }
+    })
+  .state('kpi-detail', {
+      url: '/kpi/:aspect/:PageType',
+      views: {
+        'dash': {
+          templateUrl: 'templates/kpi-detail.html',
+          controller: 'DashCtrl'
+        }
+      }
     })
 
-}])
+  // if none of the above states are matched, use this as the fallback
+  $urlRouterProvider.otherwise('/entry');
+
+});
