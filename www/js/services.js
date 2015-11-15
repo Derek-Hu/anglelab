@@ -344,6 +344,8 @@ angular.module('starter.services', ['ngResource'])
         'ShiftId': selectedCriteria.banci.ID,
         'BizType': Constant.kpiBizType[kpiType]
       }, function(data){
+
+        var isRate = (kpiType == 'member' || kpiType == 'cost' || kpiType == 'quality')
         if(!data){
           return;
         }
@@ -352,7 +354,11 @@ angular.module('starter.services', ['ngResource'])
           var idx = parseInt(data[i].ID.split('-')[1])-1;
           if(menus[idx]){
             if(data[i].ACTUAL || data[i].TARGET){
-              menus[idx].rate = data[i].ACTUAL + '/'+ data[i].TARGET;
+              if(isRate){
+                  menus[idx].rate = Math.ceil(100*data[i].ACTUAL)+'% / '+ Math.ceil(100*data[i].TARGET)+'%';
+              }else{
+                  menus[idx].rate = data[i].ACTUAL+' / '+data[i].TARGET;
+              }
             }
             menus[idx].hatColor = Constant.kpiColor[data[i].STATE];
           }

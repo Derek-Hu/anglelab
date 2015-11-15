@@ -8,6 +8,7 @@ angular.module('starter.directives',['d3'])
     var chartCls ='svg-content';
     var percentage = d3.format(".2");
     var totalW, totalH;
+    var yAxis;
     return {
       restrict: 'E',
       scope: {
@@ -52,11 +53,20 @@ angular.module('starter.directives',['d3'])
               .tickFormat(function(d) { return d+'月'})
               .outerTickSize(0);
 
-          var yAxis = d3.svg.axis()
+          var isRate = scope.data && !!scope.data.filter(function(d){
+              return d.TARGET.indexOf('%')!=-1;
+            }).length;
+            yAxis =d3.svg.axis()
               .scale(y)
-              .orient("right")
-              //.ticks(15, "%");
-              .ticks(15, "");
+              .orient("right");
+
+            yAxis = isRate? yAxis.ticks(15, "%"): yAxis.ticks(15, "");
+
+          /*yAxis =d3.svg.axis()
+              .scale(y)
+              .orient("right");*/
+
+          //yAxis = isRate? yAxis.ticks(15, "%"): yAxis.ticks(15, "");
 
           var line = d3.svg.line()
               .x(function(d) { return x(d.month); })
@@ -100,12 +110,26 @@ angular.module('starter.directives',['d3'])
                 totalH = $(kpiCharts[ki]).height();
               }
             }
-              data = scope.data = n;
-              clearChart();
-              checkData();
-              setXYMax(); 
-              //sketch();         
-              dynamicRender();
+            var isRate = scope.data && !!scope.data.filter(function(d){
+              return d.TARGET.indexOf('%')!=-1;
+            }).length;
+            yAxis =d3.svg.axis()
+              .scale(y)
+              .orient("right");
+
+            yAxis = isRate? yAxis.ticks(15, "%"): yAxis.ticks(15, "");
+
+              /* x Axis */
+            svgXA.attr("transform", "translate(0," + height + ")").call(xAxis);
+            /* y Axis */
+            svgYA.attr("transform", "translate("+ width+ ".0)").call(yAxis)
+            
+            data = scope.data = n;
+            clearChart();
+            checkData();
+            setXYMax(); 
+            //sketch();         
+            dynamicRender();
           })
           function checkData(){
             if(!data){
@@ -151,10 +175,7 @@ angular.module('starter.directives',['d3'])
             xStep = xRange[1] - xRange[0] - barWidth;
             xStart = xRange[0];
 
-              /* x Axis */
-            svgXA.attr("transform", "translate(0," + height + ")").call(xAxis);
-            /* y Axis */
-            svgYA.attr("transform", "translate("+ width+ ".0)").call(yAxis)
+            
           }
           
           function sketch(){

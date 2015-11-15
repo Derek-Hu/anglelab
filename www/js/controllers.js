@@ -57,8 +57,8 @@ angular.module('starter.controllers', [])
       }];
 
 }])
-.controller('GreenCrossCtrl', ['$scope', '$stateParams', '$state', '$ionicScrollDelegate', 'MetaDataSvc', 'KPIItem', 'Constant', 'DateUtil',
-  function($scope, $stateParams, $state, $ionicScrollDelegate, MetaDataSvc, KPIItem, Constant, DateUtil) {
+.controller('GreenCrossCtrl', ['$scope', '$stateParams', '$state', '$ionicScrollDelegate', 'MetaDataSvc', 'KPIItem', 'Constant', 'DateUtil', 'localStorageService',
+  function($scope, $stateParams, $state, $ionicScrollDelegate, MetaDataSvc, KPIItem, Constant, DateUtil, localStorageService) {
     function generate(data){
       $scope.rows = [];
       $scope.rows.push(data.filter(function(el){
@@ -97,6 +97,7 @@ angular.module('starter.controllers', [])
     }
   $scope.colors = Constant.kpiColor;
   $scope.$on('$ionicView.enter', function(e) {
+    $scope.selectedCriteria = localStorageService.get('criteria');
     MetaDataSvc($stateParams.PageType).then(function(data){
       $scope.metaData = data;
     });
@@ -508,6 +509,7 @@ angular.module('starter.controllers', [])
       $scope.menus = Constant.kpiMenus[type];
       KPIDetail(type).then(function(menus){
         $scope.menus = menus;
+
         if(type == 'security'){
           // Green Cross
           //$scope.menus[0].hatColor = ''; 
