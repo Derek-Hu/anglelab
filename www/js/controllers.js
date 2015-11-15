@@ -21,6 +21,28 @@ angular.module('starter.controllers', [])
   });
 
 }])
+.controller('ViewBoardCtrl', ['$scope', '$stateParams', '$state', '$ionicScrollDelegate', 'MetaDataSvc', 'KPIItem', 'Constant', 'DateUtil',
+  function($scope, $stateParams, $state, $ionicScrollDelegate, MetaDataSvc, KPIItem, Constant, DateUtil) {
+    
+  $scope.menus = [{
+        'PageType': 1,
+        "nm": "KPI跟踪", 
+        "enm": "KPI Tracking",
+        "fc": "#36CD14", 
+        "bc": "#95C730", 
+        "state": "",
+        "bg": 'img/svg/kpi-tracking.svg'
+      },{
+        'PageType': 2,
+        "nm": "问题跟踪", 
+        "enm": "Problem Tracking",
+        "fc": "#62839D", 
+        "bc": "#95C730", 
+        "state": "",
+        "bg": 'img/svg/problem-tracking.svg'
+      }];
+
+}])
 .controller('GreenCrossCtrl', ['$scope', '$stateParams', '$state', '$ionicScrollDelegate', 'MetaDataSvc', 'KPIItem', 'Constant', 'DateUtil',
   function($scope, $stateParams, $state, $ionicScrollDelegate, MetaDataSvc, KPIItem, Constant, DateUtil) {
     function generate(data){
@@ -281,7 +303,9 @@ angular.module('starter.controllers', [])
       'ZoneId': $scope.selectedCriteria.banzu.Id,
       'ShiftId': $scope.selectedCriteria.banci.ID
     }, function(data){
-      console.log(data);
+      if(!data[0] || data[0].ErrorCode!==undefined){
+        return;
+      }
       data.sort(function(a, b){
         return parseInt(a.Order_number) - parseInt(b.Order_number);
       });

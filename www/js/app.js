@@ -143,7 +143,24 @@ angular.module('starter', ['ionic', 'LocalStorageModule', 'ngResource', 'starter
         }
       }
     })
-
+  .state('view-board', {
+      url: '/view-board',
+      views: {
+        'dash': {
+          templateUrl: 'templates/view-board.html',
+          controller: 'ViewBoardCtrl'
+        }
+      }
+    })
+  .state('kpi-view-board', {
+      url: '/view-board',
+      views: {
+        'dash': {
+          templateUrl: 'templates/view-board.html',
+          controller: 'ViewBoardCtrl'
+        }
+      }
+    })
   // if none of the above states are matched, use this as the fallback
   $urlRouterProvider.otherwise('/entry');
 
