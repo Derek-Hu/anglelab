@@ -514,11 +514,14 @@ ion-footer-bar .color-menu-type.header div.twrapper:last-child{ float: left;}
     height: 3em;}
 .green-calendar table td.empty{border: 0;}
 
-.mainTitle{    position: relative;    font-size: 0.9em;
+.mainTitle{        position: relative;
+    font-size: 0.9em;
     bottom: 0.4em;}
-.subTitle{    position: relative;
+.subTitle{        position: relative;
     display: block;
     bottom: 3em;
+    font-size: 0.5em;
+    bottom: 1.8em;
     font-size: 0.5em;}
 /* Entry Style */
 .entryWp{margin: 0 auto; text-align: center;height: 100%;width:100%;}
@@ -545,7 +548,7 @@ ion-footer-bar .color-menu-type.header div.twrapper:last-child{ float: left;}
 }
 .bold-title.single-line{
 	
-    line-height: 2em;
+    /*line-height: 2em;*/
 }
 .bold-title{
     font-weight: bold;
@@ -578,7 +581,7 @@ ion-footer-bar .color-menu-type.header div.twrapper:last-child{ float: left;}
 
 /* Header */
 .has-header{
-    top: 4em;
+    top: 5em;
 }
 .aj-header{
 	position: fixed;
@@ -588,19 +591,20 @@ ion-footer-bar .color-menu-type.header div.twrapper:last-child{ float: left;}
 	background: url(/img/CEVA.svg) no-repeat;
 }
 .title .title-wp{
-	position: relative;
-	height: 100%;
+    position: relative;
+    height: 100%;
+    padding: 0.5em;
 }
+.bold-title, .title-wp > div {height: 100%;}
 .title .logo-right-wp{
-	position: absolute;
+	/*position: absolute;
     right: 0;
-    top: 0;
+    top: 0;*/
     height: 100%;
 }
-.title .logo-left{
-	position: absolute;
-    left: 0;
-    top: 0;
+.logo-left{
+	height: 100%;
+    float: left;
 }
 .title .title-eng{
 	line-height: 0.8em;
@@ -609,7 +613,7 @@ ion-footer-bar .color-menu-type.header div.twrapper:last-child{ float: left;}
 
 
 .logo-right-wp img{
-	padding-right: 1em;
+    margin-right: 1em;
 }
 /* Footer */
 .bar.bar-footer{
@@ -723,7 +727,7 @@ ion-content.bgFF{
 	right: 1em;
 	bottom: 0;
     font-size: 1.5em;
-    line-height: 2.5em;
+    line-height: 2em;
 }
 .anji-theme{
 	color: #19426E;
@@ -744,7 +748,7 @@ ion-content.bgFF{
 	float: left;
 }
 .bar{
-	/*height: 4em;*/
+	height: 4em;
 	background: #19426E;
 	border: 0;
 }
@@ -791,12 +795,16 @@ span.green-indicator{
     width: 2.5em;
     display: inline-block;
     border-radius: 1em;
+    font-size: 0.7em;
+    margin-top: 0.2em;
 }
 span.red-indicator{
     background: #E73334;
     width: 2.5em;
     display: inline-block;
     border-radius: 1em;
+    font-size: 0.7em;
+    margin-top: 0.2em;
 }
 span.arrow-up{
 	display: inline-block;

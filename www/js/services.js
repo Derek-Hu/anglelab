@@ -2,7 +2,7 @@ angular.module('starter.services', ['ngResource'])
 
 .service('Constant', function(){
   return {
-    baseURL : 'http://58.246.227.27:8001',
+    baseURL : 'http://221.181.71.171:8082',
     viewBoard: {
 
       menus: [{
