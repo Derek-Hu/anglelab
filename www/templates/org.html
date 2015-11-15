@@ -20,14 +20,14 @@
         </div>
         <div></div>
     </ion-header-bar>
-    <ion-content class="padding">
+    <ion-content scroll="false" class="padding">
         
+        <div ng-show="group!==null && group.leader!=null" class="content tc" style="width:100%;height: 100%; padding-bottom: 3em;">
+            
+            <org group="group"></org>
+        </div>
     </ion-content>
-    <ion-footer-bar style="    height: calc(100% - 4em);">
-    <div ng-show="group!==null && group.leader!=null" class="content tc" style="width:100%;height: 100%; padding-bottom: 3em;">
-        
-        <org group="group"></org>
-    </div>
+    <ion-footer-bar style="">
     <div class="clear header tc color-menu-type" style="    width: 100%; position: absolute; left: 0; bottom: 0;">
         <div class="twrapper">
             <div class="type two clear">

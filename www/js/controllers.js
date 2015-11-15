@@ -424,6 +424,11 @@ angular.module('starter.controllers', [])
   }
 
 }])
+.controller('EntryCtrl', ['$ionicScrollDelegate', 'Constant', '$state', 'localStorageService',
+ function($ionicScrollDelegate, Constant, $state, localStorageService) {
+  //$ionicScrollDelegate.$getByHandle('mainScroll').freezeScroll(true);
+
+}])
 .controller('KPIDetailCtrl', ['$scope', 'KPIDetail', 'Constant', '$stateParams', 'MetaDataSvc',
   function($scope, KPIDetail, Constant, $stateParams, MetaDataSvc) {
 

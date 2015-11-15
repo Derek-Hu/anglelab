@@ -75,7 +75,8 @@ angular.module('starter', ['ionic', 'LocalStorageModule', 'ngResource', 'starter
     url: '/entry',
     views: {
       'dash': {
-        templateUrl: 'templates/entry.html'
+        templateUrl: 'templates/entry.html',
+        controller: 'EntryCtrl'
       }
     }
   })

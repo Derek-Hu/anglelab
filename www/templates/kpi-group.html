@@ -20,18 +20,18 @@
 		</div>
 	  	<div></div>
 	</ion-header-bar>
-    <ion-content>
+    <ion-content scroll="false">
+	    <div class="kpiGroup tc" style="position: absolute; width: 100%; height: 100%;">
+	    	<div class="center">
+	    		<img src="img/3.svg">
+	        	<a ng-click="goDetail(kpi.type, kpi.PageType)" ng-repeat="kpi in kpis" class="kpi {{kpi.type}}" ng-bind="kpi.name"></a>
+	    	</div>
+	    </div>
+		<div class="quickNav" style="bottom: 0;">
+			<a href="#/dash"><span class="glyphicon glyphicon-circle-arrow-left"></span></a>
+			<a href="#/entry"><span class="glyphicon glyphicon-home"></span></a>
+		</div>
     </ion-content>
-    <ion-footer-bar style="height: calc(100% - 4em);">
-    <div class="kpiGroup tc" style="position: absolute; width: 100%; height: 100%;">
-    	<div class="center">
-    		<img src="img/3.svg">
-        	<a ng-click="goDetail(kpi.type, kpi.PageType)" ng-repeat="kpi in kpis" class="kpi {{kpi.type}}" ng-bind="kpi.name"></a>
-    	</div>
-    </div>
-	<div class="quickNav" style="bottom: 0;">
-		<a href="#/dash"><span class="glyphicon glyphicon-circle-arrow-left"></span></a>
-		<a href="#/entry"><span class="glyphicon glyphicon-home"></span></a>
-	</div>
+    <ion-footer-bar>
 	</ion-footer-bar>
 </ion-view>

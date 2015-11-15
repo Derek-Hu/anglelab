@@ -12,12 +12,9 @@
 		</div>
 	  	<div></div>
 	</ion-header-bar>
-  <ion-content on-double-tap="goHome('home')" style="padding-top: 0;">
-  		
-  </ion-content>
-  <ion-footer-bar style="height: calc(100% - 3em);padding: 0.5em;padding-bottom: 3em;">
-  <div style="width: 100%; display: block; position: absolute; left: 0; top: 0.5em; bottom: 3.5em;"> 
-  			<div class="clear header five tc color-menu-type" style="position: absolute;">
+  <ion-content scroll="false" on-double-tap="goHome('home')" style="padding-top: 0;">
+  		<div style="width: 100%; display: block; position: absolute; left: 0; top: 0.5em; bottom: 3.5em;width: 100%;"> 
+  			<div class="clear header five tc color-menu-type" style="position: absolute;width: 100%;">
 				<div class="twrapper">
 					<div class="type an-dropdown clear" ng-class="{open: kqDropdown.isOpen}">
 						<div class="name">库区</div>
@@ -102,5 +99,5 @@
 		<a href="#/entry"><span class="glyphicon glyphicon-circle-arrow-left"></span></a>
 		<a href="#/entry"><span class="glyphicon glyphicon-home"></span></a>
 	</div>
-  </ion-footer-bar>
+  </ion-content>
 </ion-view>

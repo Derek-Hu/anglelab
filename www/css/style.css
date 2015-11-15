@@ -524,15 +524,15 @@ ion-footer-bar .color-menu-type.header div.twrapper:last-child{ float: left;}
 .entryWp{margin: 0 auto; text-align: center;height: 100%;width:100%;}
 .entry{
 	position: relative;
-	box-sizing: border-box;
-	text-align: left;
-	padding: 2em;
-	display: inline-block;
-	background: #FFF;
-	border-radius: 0.5em;
+    box-sizing: border-box;
+    text-align: left;
+    padding: 2em;
+    display: inline-block;
+    background: #FFF;
+    border-radius: 0.5em;
     width: 30%;
     height: 40%;
-    margin: 15% 8%;
+    margin: 8% 8%;
 }
 .entry .number{
     font-size: 4em;
@@ -562,12 +562,10 @@ ion-footer-bar .color-menu-type.header div.twrapper:last-child{ float: left;}
     white-space: nowrap;
 }
 .entry .img img{
-	opacity: 0.4;
-    height: 90%;
     opacity: 0.4;
-    width: 50%;
+    height: 50%;
     position: absolute;
-    left: 25%;
+    left: 35%;
 }
 .entry .img{
 }
