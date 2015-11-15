@@ -245,8 +245,8 @@ angular.module('starter.services', ['ngResource'])
   var lgjh = $resource(baseURL+'/DutyRotation.aspx');
   var kpi = $resource(baseURL+'/KPI.aspx');
   
-  var org = $resource('js/test/org.json');
   /*
+  var org = $resource('js/test/org.json');
   var kpi = $resource('js/test/1-2.json');
   var kaoqin = $resource('js/test/kqhz.json');
   var gwrx = $resource('js/test/gwrx.json');
