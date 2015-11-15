@@ -11,6 +11,7 @@ angular.module('starter.controllers', [])
       $scope.KPITitle = aspect[i].nm;
     }
   }
+  $scope.chart.isRate = ($scope.aspect == 'member' || $scope.aspect == 'cost' || $scope.aspect=='quality');
   $scope.$on('$ionicView.enter', function(e) {
     $scope.selectedCriteria = localStorageService.get('criteria');
     MetaDataSvc($stateParams.PageType).then(function(data){
@@ -20,10 +21,14 @@ angular.module('starter.controllers', [])
     var lastDay = DateUtil.getLastDay();
 
     KPIItem($stateParams.BizType).then(function(data){
-      $scope.chart.data = data.map(function(d){
-        d.ACTUAL = d.ACTUAL/100;
-        d.TARGET = d.TARGET/100;
-        d.month = d.ID;
+      $scope.chart.data = data.filter(function(d){
+        if($scope.chart.isRate){
+          d.ACTUAL =  d.ACTUAL * 100 + '%';
+          d.TARGET =  d.TARGET * 100 + '%';
+        }
+        return d.ID.indexOf('M')==0
+      }).map(function(d){
+        d.month = d.ID.match(/\d+/)[0];
         return d;
       });
     });

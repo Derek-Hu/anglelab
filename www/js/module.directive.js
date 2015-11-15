@@ -60,7 +60,7 @@ angular.module('starter.directives',['d3'])
 
           var line = d3.svg.line()
               .x(function(d) { return x(d.month); })
-              .y(function(d) { return y(d.TARGET?d.TARGET:0); });
+              .y(function(d) { return y(parseFloat(d.TARGET)?parseFloat(d.TARGET):0); });
 
           var barWidth, xRange, xExtent, xStep, xStart;
 
@@ -139,8 +139,8 @@ angular.module('starter.directives',['d3'])
           }
           function setXYMax(){
             var yMax = d3.max([
-              d3.max(data, function(d) { return d.ACTUAL; }), 
-              d3.max(data, function(d) { return d.TARGET; })
+              d3.max(data, function(d) { return parseFloat(d.ACTUAL); }), 
+              d3.max(data, function(d) { return parseFloat(d.TARGET); })
               ]);
             x.domain(data.map(function(d) { return d.month; }));
             y.domain([0, yMax?yMax : 1]);
@@ -309,41 +309,7 @@ angular.module('starter.directives',['d3'])
           }
           function dynamicRender(){
             /* bar Axis */
-          svg.selectAll(".chartBar")
-              .data(data)
-            .enter().append("rect")
-              .attr("class", "chartBar")
-              .attr("x", function(d) { return x(d.month); })
-              .attr("width", x.rangeBand())
-              .attr("y", function(d) { return y(d.ACTUAL?d.ACTUAL:0); })
-              .attr("height", function(d) { return height - y(d.ACTUAL?d.ACTUAL:0); });
-          /* Target line */
-          svg.append("path")
-              .datum(data.filter(function(ele){
-                  return typeof ele.TARGET!=='undefined';
-              }))
-              .attr("class", "line targetPath")
-              .attr("d", line)
-              .attr("transform", "translate(" + barWidth/2 + ",0)");
-          /* dot in target line */
-          svg.selectAll(".dot")
-              .data(data.filter(function(ele){
-                  return typeof ele.TARGET !== 'undefined'
-              }))
-            .enter().append("rect")
-              .attr("class", "dot targetDot")
-
-              .attr("x", function(d) { return x(d.month); })
-              .attr("width", fontSize)
-              .attr("y", function(d) { return y(d.TARGET?d.TARGET:0); })
-              .attr("height", fontSize)
-
-              /*.attr("r", middleRow+textPadding)
-              .attr("cx", function(d) { return x(d.month); })
-              .attr("cy", function(d) { return y(d.TARGET?d.TARGET:0); })*/
-
-              .attr("transform", "translate(" + (barWidth/2-fontSize/2) + ","+(-fontSize/2)+")");
-          /* Actual value in the table */
+            /* Actual value in the table */
           svg.selectAll(".text")
               .data(data)
             .enter().append("text")
@@ -354,7 +320,9 @@ angular.module('starter.directives',['d3'])
               .attr("dy", ".71em")
               .attr("transform", "translate(0," + height + ")")
               .style("text-anchor", "middle")
-              .text(function(d){if(typeof d.TARGET==='undefined') return '';return percentage(d3.round(d.TARGET, 4))});
+              .text(function(d){
+                if(typeof d.TARGET==='undefined') return '';return d.TARGET
+              });
           /* Target value in the table */
           svg.selectAll(".text")
               .data(data)
@@ -366,7 +334,49 @@ angular.module('starter.directives',['d3'])
               .attr("dy", ".71em")
               .attr("transform", "translate(0," + height + ")")
               .style("text-anchor", "middle")
-              .text(function(d){if(typeof d.ACTUAL==='undefined') return '';return percentage(d3.round(d.ACTUAL, 4))});
+              .text(function(d){if(typeof d.ACTUAL==='undefined') return '';return d.ACTUAL});
+              
+          svg.selectAll(".chartBar")
+              .data(data)
+            .enter().append("rect")
+              .attr("class", "chartBar")
+              .attr("x", function(d) { return x(d.month); })
+              .attr("width", x.rangeBand())
+              .attr("y", function(d) { return y(parseFloat(d.ACTUAL)?parseFloat(d.ACTUAL):0); })
+              .attr("height", function(d) { return height - y(parseFloat(d.ACTUAL)?parseFloat(d.ACTUAL):0); });
+          /* Target line */
+          svg.append("path")
+              .datum(data.filter(function(ele){
+                  return typeof ele.TARGET!=='undefined';
+              }).map(function(d){
+                d.TARGET = parseFloat(d.TARGET);
+                return d;
+              }))
+              .attr("class", "line targetPath")
+              .attr("d", line)
+              .attr("transform", "translate(" + barWidth/2 + ",0)");
+          /* dot in target line */
+          svg.selectAll(".dot")
+              .data(data.filter(function(ele){
+                  return typeof ele.TARGET !== 'undefined'
+              }).map(function(d){
+                d.TARGET = parseFloat(d.TARGET);
+                return d;
+              }))
+            .enter().append("rect")
+              .attr("class", "dot targetDot")
+
+              .attr("x", function(d) { return x(d.month); })
+              .attr("width", fontSize)
+              .attr("y", function(d) { return y(parseFloat(d.TARGET)?parseFloat(d.TARGET):0); })
+              .attr("height", fontSize)
+
+              /*.attr("r", middleRow+textPadding)
+              .attr("cx", function(d) { return x(d.month); })
+              .attr("cy", function(d) { return y(d.TARGET?d.TARGET:0); })*/
+
+              .attr("transform", "translate(" + (barWidth/2-fontSize/2) + ","+(-fontSize/2)+")");
+
           }
       }
     }
