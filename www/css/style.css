@@ -713,6 +713,7 @@ ion-content.bgFF{
 }
 .quickNav span{
 	padding-right: 1em;
+    font-size: 1.3em;
 }
 .quickNav a{
 	color: #FFF;
