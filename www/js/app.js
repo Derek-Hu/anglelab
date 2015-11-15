@@ -89,21 +89,20 @@ angular.module('starter', ['ionic', 'LocalStorageModule', 'ngResource', 'starter
         }
       }
     })
-  
-    .state('attend', {
-      url: '/attend',
-      views: {
-        'dash': {
-          templateUrl: 'templates/kao-qin.html',
-          controller: 'AttendCtrl'
-        }
-      }
-    })
     .state('kpi', {
       url: '/kpi',
       views: {
         'dash': {
           templateUrl: 'templates/kpi-group.html',
+          controller: 'KPICtrl'
+        }
+      }
+    })
+    .state('demo', {
+      url: '/demo',
+      views: {
+        'dash': {
+          templateUrl: 'templates/chart-demo.html',
           controller: 'KPICtrl'
         }
       }
@@ -130,8 +129,8 @@ angular.module('starter', ['ionic', 'LocalStorageModule', 'ngResource', 'starter
       url: '/kpi-item/:aspect/:PageType/:BizType',
       views: {
         'dash': {
-          templateUrl: 'templates/green-cross.html',
-          controller: 'GreenCrossCtrl'
+          templateUrl: 'templates/kpi-chart.html',
+          controller: 'KPIChartCtrl'
         }
       }
     })

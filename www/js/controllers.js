@@ -1,4 +1,20 @@
 angular.module('starter.controllers', [])
+.controller('KPIChartCtrl', ['$scope', '$stateParams', '$state', '$ionicScrollDelegate', 'MetaDataSvc', 'KPIItem', 'Constant', 'DateUtil',
+  function($scope, $stateParams, $state, $ionicScrollDelegate, MetaDataSvc, KPIItem, Constant, DateUtil) {
+    
+  $scope.$on('$ionicView.enter', function(e) {
+    MetaDataSvc($stateParams.PageType).then(function(data){
+      $scope.metaData = data;
+    });
+
+    var lastDay = DateUtil.getLastDay();
+
+    KPIItem($stateParams.BizType).then(function(data){
+      
+    });
+  });
+
+}])
 .controller('GreenCrossCtrl', ['$scope', '$stateParams', '$state', '$ionicScrollDelegate', 'MetaDataSvc', 'KPIItem', 'Constant', 'DateUtil',
   function($scope, $stateParams, $state, $ionicScrollDelegate, MetaDataSvc, KPIItem, Constant, DateUtil) {
     function generate(data){

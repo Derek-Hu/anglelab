@@ -389,7 +389,7 @@ ion-view.view {
 
 /* For Chart */
 .actualIndicator, .chartBar {
-  fill: steelblue;
+  fill: #219DD0;
 }
 .actualIndicator{
   stroke: #eee;
@@ -401,7 +401,7 @@ ion-view.view {
 .axis path,
 .axis line {
   fill: none;
-  stroke: #000;
+  stroke: #A8BBC8;
   shape-rendering: crispEdges;
 }
 
@@ -441,11 +441,11 @@ svg{
 }
 .dtline, .xyPadding{
   fill: none;
-  stroke: #000;
+  stroke: #C3D2D7;
   stroke-width: 1px;
 }
 /* End of Chart */
-
+.axis{fill:#A8BBC8;}
 
 .color-menu-type .type{font-size: 0.8em;  background-color: #FFF;border-radius: 0.8em; position: relative;}
 .color-menu-type div.twrapper{ float: left; padding: 0.5em; }

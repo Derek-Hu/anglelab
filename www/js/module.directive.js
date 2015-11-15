@@ -20,10 +20,12 @@ angular.module('starter.directives',['d3'])
 
           var fontSize = parseInt(d3.select("body").style("font-size"));
 
-          var totalW = scope.width || $window.innerWidth, totalH = scope.height || $window.innerHeight, data = scope.data, title=scope.title, yLabel=scope.ylabel;
+          var totalW = scope.width || $('#kpiChart').width(), 
+          totalH = scope.height || $('#kpiChart').height(), 
+          data = scope.data, title=scope.title, yLabel=scope.ylabel;
 
           // todo Deal with empty month
-          var margin = {top: fontSize*3, right: fontSize*2, bottom: fontSize*10, left: fontSize*8};
+          var margin = {top: fontSize, right: fontSize*16, bottom: fontSize*12, left: fontSize*12};
 
           var width = totalW - margin.left - margin.right,
               height = totalH - margin.top - margin.bottom;
@@ -42,7 +44,7 @@ angular.module('starter.directives',['d3'])
 
           var yAxis = d3.svg.axis()
               .scale(y)
-              .orient("left")
+              .orient("right")
               .ticks(15, "%");
 
           var line = d3.svg.line()
@@ -131,7 +133,7 @@ angular.module('starter.directives',['d3'])
               /* x Axis */
             svgXA.attr("transform", "translate(0," + height + ")").call(xAxis);
             /* y Axis */
-            svgYA.call(yAxis)
+            svgYA.attr("transform", "translate("+ width+ ".0)").call(yAxis)
           }
           
           function sketch(){
@@ -146,26 +148,26 @@ angular.module('starter.directives',['d3'])
               /* Border of the table's row */
             svg.append("line")
                 .attr("class", "dtline")
-                .attr("x1", -fontSize*(lastRow+textPadding))
+                .attr("x1", 0)
                 .attr("y1", fontSize*topTableBorder)
-                .attr("x2", xExtent[1])
+                .attr("x2", xExtent[1]+fontSize*(lastRow+textPadding))
                 .attr("y2", fontSize*topTableBorder)
                 .attr("transform", "translate(0, " + height + ")")
 
             /* Border of the table's row */
             svg.append("line")
                 .attr("class", "dtline")
-                .attr("x1", -fontSize*(lastRow+textPadding))
+                .attr("x1", 0)
                 .attr("y1", fontSize*middleTableBorder)
-                .attr("x2", xExtent[1])
+                .attr("x2", xExtent[1]+fontSize*(lastRow+textPadding))
                 .attr("y2", fontSize*middleTableBorder)
                 .attr("transform", "translate(0," + height + ")")
             /* Border of the table's row */
             svg.append("line")
                 .attr("class", "dtline")
-                .attr("x1", -fontSize*(lastRow+textPadding))
+                .attr("x1", 0)
                 .attr("y1", fontSize*(lastRow-lineH))
-                .attr("x2", xExtent[1])
+                .attr("x2", xExtent[1]+fontSize*(lastRow+textPadding))
                 .attr("y2", fontSize*(lastRow-lineH))
                 .attr("transform", "translate(0," + height + ")")
             /* Second Left of the table's col */
@@ -179,9 +181,9 @@ angular.module('starter.directives',['d3'])
             /* Left Border of the table */
             svg.append("line")
                 .attr("class", "dtline")
-                .attr("x1", 0)
+                .attr("x1", xExtent[1]+fontSize*(lastRow+textPadding)*2)
                 .attr("y1", fontSize*topTableBorder)
-                .attr("x2", 0)
+                .attr("x2", xExtent[1]+fontSize*(lastRow+textPadding)*2)
                 .attr("y2", fontSize*(lastRow-lineH))
                 .attr("transform", "translate("+(-fontSize*(lastRow+textPadding))+"," + height + ")");
 
@@ -209,7 +211,8 @@ angular.module('starter.directives',['d3'])
               .attr("y1", 0)
               .attr("x2", 0)
               .attr("y2", fontSize*(lastRow-lineH))
-              .attr("transform", function(d, i){if(i==0){return ""}; return "translate("+(xRange[i]-xStep/2)+"," + height + ")"});
+              .attr("transform", function(d, i){if(i==0){return ""}; return "translate("+(xRange[i]-xStep/2)+"," + height + ")"})
+              .style("display", function(d, i){if(i==0){return "none"}});
 
           svg.append("text")
               //.attr("transform", function(d){return "translate("+d.month+","+d.expect+")"})
@@ -219,55 +222,69 @@ angular.module('starter.directives',['d3'])
               .style("text-anchor", "middle")
               .text(title);
 
+          
+
+          /* target indicator in the bottom table */
+          svg.append("rect")
+              .attr("class", "actualIndicator")
+              .attr("x", width)
+              .attr("width", fontSize*(lastRow+textPadding))
+              .attr("y", fontSize*topTableBorder)
+              .attr("height", fontSize*(middleTableBorder-topTableBorder))
+              .attr("transform", "translate(0," + height + ")");
+
+          /* actual indicator in the bottom table */
+          svg.append("rect")
+              .attr("class", "actualIndicator")
+              .attr("x", width)
+              .attr("width", fontSize*(lastRow+textPadding))
+              .attr("y", fontSize*middleTableBorder)
+              .attr("height", fontSize*(middleTableBorder-topTableBorder))
+              .style("fill", "#A1B752")
+              .attr("transform", "translate(0," + height + ")");
+
           /* Text 'Actual' in the bottom table */
           svg.append("text")
               //.attr("transform", function(d){return "translate("+d.month+","+d.expect+")"})
               .attr("class", "val")
-              .attr("x", -fontSize)
+              .attr("x", width+fontSize*4)
               .attr("y", fontSize*middleRow)
               .attr("dx", fontSize/4)
               .attr("dy", ".71em")
               .attr("transform", "translate(0," + height + ")")
               .style("text-anchor", "end")
+              .style("fill", "#FFF")
               .text("Actual");
 
           /* Text 'Target' in the bottom table */
           svg.append("text")
               //.attr("transform", function(d){return "translate("+d.month+","+d.expect+")"})
               .attr("class", "val")
-              .attr("x", -fontSize)
+              .attr("x", width+fontSize*4)
               .attr("y", fontSize*bottomR)
               .attr("dx", fontSize/4)
               .attr("dy", ".71em")
               .attr("transform", "translate(0," + height + ")")
               .style("text-anchor", "end")
+              .style("fill", "#FFF")
               .text("Target");
 
-          /* bar indicator in the bottom table */
-          svg.append("rect")
-              .attr("class", "actualIndicator")
-              .attr("x", -fontSize*lastRow)
-              .attr("width", fontSize*2)
-              .attr("y", fontSize*barIndcatorPos)
-              .attr("height", fontSize)
-              .attr("transform", "translate(0," + height + ")");
-
           /* line indicator in the bottom table */
-          svg.append("line")
+          /*svg.append("line")
               .attr("class", "line")
               .attr("x1", -fontSize*lastRow)
               .attr("y1", fontSize*(bottomR+textPadding))
               .attr("x2", fontSize*2-fontSize*lastRow)
               .attr("y2", fontSize*(bottomR+textPadding))
-              .attr("transform", "translate(0," + height + ")");
+              .attr("transform", "translate(0," + height + ")");*/
 
           /* dot indicator in the bottom table */
-          svg.append("circle")
+          /*svg.append("circle")
               .attr("class", "dotIndicator")
               .attr("r", middleRow+textPadding)
               .attr("cx", -fontSize*lastRow+fontSize)
               .attr("cy", fontSize*(bottomR+textPadding))
-              .attr("transform", "translate(0," + height + ")");
+              .attr("transform", "translate(0," + height + ")");*/
           }
           function dynamicRender(){
             /* bar Axis */
