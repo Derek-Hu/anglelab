@@ -92,20 +92,31 @@ angular.module('starter.controllers', [])
         return id==31;
       });
 
-      days.length = 1;
+      days.length = 3;
       $scope.rows.push(days);
     }
   $scope.colors = Constant.kpiColor;
+  $scope.isLoading = false;
   $scope.$on('$ionicView.enter', function(e) {
+    $scope.tableWidth = angular.element(document.getElementById('greenCrossTable')).height();
+    $scope.isLoading = true;
     $scope.selectedCriteria = localStorageService.get('criteria');
     MetaDataSvc($stateParams.PageType).then(function(data){
       $scope.metaData = data;
     });
-    var holder = [];
-    holder.length = DateUtil.getLastDay();
-    generate(holder);
     KPIItem($stateParams.BizType).then(function(data){
       generate(data);
+      $scope.isLoading = false;
+    }, function(){
+      var holder = [];
+      for(var i=0, len = DateUtil.getLastDay(); i<len;i++){
+        holder.push({
+          ID: i+1,
+          STATE: ''
+        });
+      }
+      generate(holder);
+      $scope.isLoading = false;
     });
   });
 

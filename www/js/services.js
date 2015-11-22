@@ -246,10 +246,10 @@ angular.module('starter.services', ['ngResource'])
   var kpi = $resource(baseURL+'/KPI.aspx');
   
   var org = $resource('js/test/org.json');
+  var gwrx = $resource('js/test/gwrx.json');
   /*
   var kpi = $resource('js/test/1-2.json');
   var kaoqin = $resource('js/test/kqhz.json');
-  var gwrx = $resource('js/test/gwrx.json');
   var lgjh = $resource('js/test/lgjh.json');
   var metaData = $resource('js/test/meta.json');
   var banci = $resource('js/test/banci.json');

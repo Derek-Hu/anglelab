@@ -11,7 +11,7 @@
 						<div class="subTitle">
 							(<span ng-bind="selectedCriteria.kuqu.whse_code">仓库代码</span>-
 							<span ng-bind="selectedCriteria.banzu.description">班组</span>-
-							<span ng-bind="selectedCriteria.banci.description">班次</span>)
+							<span ng-bind="selectedCriteria.banci.shift_code">班次</span>)
 						</div>
 			  		</div>
 				</div>
@@ -19,52 +19,51 @@
 		</div>
 	  	<div></div>
 	</ion-header-bar>
-    <ion-content on-double-tap="goHome('cross')">
-        	
-			<div class="content-wrapper green-calendar" style="    height: initial;">
-				<table>
+    <ion-content scroll="false" on-double-tap="goHome('cross')">
+			<div class="content-wrapper green-calendar" style="height: calc(100% - 6em);padding:0;">
+				<div style="height: 100%;">
+				<p style="padding-top: 2em;" class="anji-theme" ng-if="isLoading">加载中...</p>
+				<table id="greenCrossTable" style="height: 80%; top: 10%; position: relative; width: {{tableWidth}}px">
 					<tbody>
 					<tr>
 						<td class="empty">&nbsp;</td>
 						<td class="empty">&nbsp;</td>
-						<td ng-repeat="elem in rows[0] track by $index" ng-style="{'background': colors[elem.STATE], 'color': '#fff'}" ng-bind="elem.ID"></td>
+						<td ng-repeat="elem in rows[0] track by $index" ng-style="{'background': colors[elem.STATE]}" ng-bind="elem.ID"></td>
 						<td class="empty">&nbsp;</td>
 						<td class="empty">&nbsp;</td>
 					</tr>
 					<tr>
 						<td class="empty">&nbsp;</td>
 						<td class="empty">&nbsp;</td>
-						<td ng-repeat="elem in rows[1] track by $index" ng-style="{'background': colors[elem.STATE], 'color': '#fff'}" ng-bind="elem.ID"></td>
+						<td ng-repeat="elem in rows[1] track by $index" ng-style="{'background': colors[elem.STATE]}" ng-bind="elem.ID"></td>
 						<td class="empty">&nbsp;</td>
 						<td class="empty">&nbsp;</td></tr>
 					<tr>
-						<td ng-repeat="elem in rows[2] track by $index" ng-style="{'background': colors[elem.STATE], 'color': '#fff'}" ng-bind="elem.ID"></td>
+						<td ng-repeat="elem in rows[2] track by $index" ng-style="{'background': colors[elem.STATE]}" ng-bind="elem.ID"></td>
 					</tr>
 					<tr>
-						<td ng-repeat="elem in rows[3] track by $index" ng-style="{'background': colors[elem.STATE], 'color': '#fff'}" ng-bind="elem.ID"></td>
+						<td ng-repeat="elem in rows[3] track by $index" ng-style="{'background': colors[elem.STATE]}" ng-bind="elem.ID"></td>
 					</tr>
 					<tr>
-						<td ng-repeat="elem in rows[4] track by $index" ng-style="{'background': colors[elem.STATE], 'color': '#fff'}" ng-bind="elem.ID"></td>
+						<td ng-repeat="elem in rows[4] track by $index" ng-style="{'background': colors[elem.STATE]}" ng-bind="elem.ID"></td>
 					</tr>
 					<tr>
 						<td class="empty">&nbsp;</td>
 						<td class="empty">&nbsp;</td>
-						<td ng-repeat="elem in rows[5] track by $index" ng-style="{'background': colors[elem.STATE], 'color': '#fff'}" ng-bind="elem.ID"></td>
+						<td ng-repeat="elem in rows[5] track by $index" ng-style="{'background': colors[elem.STATE]}" ng-bind="elem.ID"></td>
 						<td class="empty">&nbsp;</td>
 						<td class="empty">&nbsp;</td>
 					</tr>
 					<tr><td class="empty">&nbsp;</td>
 						<td class="empty">&nbsp;</td>
-						<td ng-repeat="elem in rows[6] track by $index" ng-style="{'background': colors[elem.STATE], 'color': '#fff'}" ng-bind="elem.ID"></td>
-						<td>&nbsp;</td>
-						<td>&nbsp;</td>
+						<td ng-repeat="elem in rows[6] track by $index" ng-style="{'background': colors[elem.STATE]}" ng-bind="elem.ID"></td>
 						<td class="empty">&nbsp;</td>
 						<td class="empty">&nbsp;</td></tr>
 					</tbody>
-				</table>	
+				</table>
+				</div>
 			</div>
-
-			<div class="clear footer green-cross color-menu-type">
+			<div class="clear footer green-cross color-menu-type" style="position: absolute; bottom: 2.5em;">
 				
 				<div class="twrapper"><div class="type indicator clear">
 					<div class="value no-acc">&nbsp;</div>
@@ -92,7 +91,6 @@
 				</div></div>
 			</div>
 			<div class="clear"></div>
-
     </ion-content>
 	<ion-footer-bar>
     <div class="clear header tc color-menu-type">
