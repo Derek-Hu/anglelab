@@ -727,11 +727,14 @@ ion-content.bgFF{
 }
 .quickNav{
 	position: absolute;
-	right: 1em;
-	bottom: 0;
+    right: 1em;
+    bottom: 0;
+    text-align: right;
     font-size: 1.5em;
+    width: 10em;
     line-height: 2em;
 }
+
 .anji-theme{
 	color: #19426E;
 }

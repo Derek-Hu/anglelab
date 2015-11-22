@@ -57,6 +57,34 @@ angular.module('starter.controllers', [])
       }];
 
 }])
+.controller('SettingsCtrl', ['$scope', 'Constant',
+  function($scope, Constant) {
+  $scope.settings = {};
+  $scope.openModify = function(){
+    $scope.isModify = true;
+    $scope.settings.serverURL = $scope.serverAddr;
+  }
+  $scope.modify = function(serverURL){
+    $scope.isModify = false;
+    Constant.updateServerURL(serverURL)
+    $scope.serverAddr = serverURL;
+    $scope.settings.serverURL = serverURL;
+  }
+  $scope.getURL = function(){
+    return $scope.settings.serverURL;
+  }
+  $scope.cancelModify = function(){
+    $scope.isModify = false;
+    $scope.settings.serverURL = $scope.serverAddr;
+  }
+  $scope.$on('$ionicView.enter', function(e) {
+    $scope.serverAddr = Constant.baseURL();
+    $scope.settings.serverURL = $scope.serverAddr;
+    $scope.isModify = false;
+
+  });
+
+}])
 .controller('GreenCrossCtrl', ['$scope', '$stateParams', '$state', '$ionicScrollDelegate', 'MetaDataSvc', 'KPIItem', 'Constant', 'DateUtil', 'localStorageService',
   function($scope, $stateParams, $state, $ionicScrollDelegate, MetaDataSvc, KPIItem, Constant, DateUtil, localStorageService) {
     function generate(data){
@@ -324,7 +352,7 @@ angular.module('starter.controllers', [])
 
     $scope.selectedCriteria = localStorageService.get('criteria');
     $scope.group = null;
-    Backend.org.query({
+    Backend().org.query({
       'WareHouseId': $scope.selectedCriteria.kuqu.Id,
       'ZoneId': $scope.selectedCriteria.banzu.Id,
       'ShiftId': $scope.selectedCriteria.banci.ID
@@ -336,7 +364,7 @@ angular.module('starter.controllers', [])
         return parseInt(a.Order_number) - parseInt(b.Order_number);
       });
       for(var i=0, len = data.length; i< len;i++){
-        data[i].Picture = Constant.baseURL+'/Imagers/'+data[i].Picture;
+        data[i].Picture = Constant.baseURL()+'/Imagers/'+data[i].Picture;
       }
       $scope.group = {};
       $scope.group.leader = data.splice(0,1)[0];
@@ -401,7 +429,7 @@ angular.module('starter.controllers', [])
   }
 
   $scope.$on('$ionicView.enter', function(e) {
-    /*Backend.kaoqin.query(function(data){
+    /*Backend().kaoqin.query(function(data){
       $scope.chart.data=data;
     });*/
   });
@@ -440,7 +468,7 @@ angular.module('starter.controllers', [])
   //var tailCols = ['迟到', '早退', '正班', '加班', '旷工', '请假', '休假','调休','签名'];
   $scope.loadData = function(WareHouseId, ZoneId, ShiftId, Date, IsSendEmail){
     $scope.loadingStatus = '加载中';
-    Backend.kaoqin.query({
+    Backend().kaoqin.query({
       'WareHouseId': WareHouseId,
       'ZoneId': ZoneId,
       'ShiftId': ShiftId,
@@ -543,7 +571,7 @@ angular.module('starter.controllers', [])
 
   $scope.loadGwrx = function(WareHouseId, ZoneId, ShiftId){
     $scope.loadingStatus = '加载中';
-    Backend.gwrx.query({
+    Backend().gwrx.query({
       'WareHouseId': WareHouseId,
       'ZoneId': ZoneId,
       'ShiftId': ShiftId
@@ -581,7 +609,7 @@ angular.module('starter.controllers', [])
   $scope.loadingStatus = '';
   $scope.loadLgjh = function(WareHouseId, ZoneId, ShiftId){
     $scope.loadingStatus = '加载中';
-    Backend.lgjh.query({
+    Backend().lgjh.query({
       'WareHouseId': WareHouseId,
       'ZoneId': ZoneId,
       'ShiftId': ShiftId

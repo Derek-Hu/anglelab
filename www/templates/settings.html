@@ -1,0 +1,49 @@
+<!--
+  This template loads for the 'tab.friend-detail' state (app.js)
+  'friend' is a $scope variable created in the FriendsCtrl controller (controllers.js)
+  The FriendsCtrl pdivls data from the Friends service (service.js)
+  The Friends service returns an array of friend data
+-->
+<ion-view on-double-click="goHome()" hide-nav-bar="true" hide-back-button="true">
+    <ion-header-bar align-title="center">
+        <div></div>
+        <div class="title anji-theme">
+            <div class="title-wp">
+                <div class=" logo-left"><img class="fl" src="img/logo1.jpg"/></div>
+                <div class="fr logo-right-wp"><img src="img/LOG9.jpg"/></div>
+                <div>
+                    <div class="bold-title single-line">
+                        <span class="">设置</span>
+                        <!-- <div class="subTitle">
+                            (<span ng-bind="selectedCriteria.kuqu.whse_code">仓库代码</span>-
+                            <span ng-bind="selectedCriteria.banzu.description">班组</span>)
+                        </div> -->
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <div></div>
+    </ion-header-bar>
+    <ion-content class="padding" style="margin: 0 0.5em; border-radius: 0.5em;">
+        <div style="color: #FFF;">
+            <p>
+                <h3>服务器地址
+                    <button ng-hide="isModify" class="btn btn-default" ng-click="openModify()" type="submit">点击修改</button>
+                    <button ng-show="isModify" ng-click="modify(settings.serverURL)" class="btn btn-danger" type="submit">保存</button>
+                    <button ng-show="isModify" class="btn btn-default" ng-click="cancelModify()" type="submit">取消</button>
+                </h3>
+                <span ng-bind="serverAddr"></span>
+                <input ng-show="isModify" value="{{getURL()}}" ng-model="settings.serverURL" style="width: 100%;padding: 0.5em;" type="text" />
+            </p>
+        </div>
+    </ion-content>
+    <ion-footer-bar style="height: 4em;">
+    
+        <div class="quickNav">
+            <a ng-click="historyBack()"><span class="glyphicon glyphicon-circle-arrow-left"></span></a>
+            <a href="#/entry"><span class="glyphicon glyphicon-home"></span></a>
+            <!-- <a href="#/settings"><span class="glyphicon glyphicon-cog"></span></a> -->
+        </div>
+  </ion-footer-bar>
+</ion-view>

@@ -62,6 +62,15 @@ angular.module('starter', ['ionic', 'LocalStorageModule', 'ngResource', 'starter
         }
       }
     })
+  .state('settings', {
+    url: '/settings',
+    views: {
+      'dash': {
+        templateUrl: 'templates/settings.html',
+        controller: 'SettingsCtrl'
+      }
+    }
+  })
   .state('lgjh', {
     url: '/lgjh/:PageType',
     views: {

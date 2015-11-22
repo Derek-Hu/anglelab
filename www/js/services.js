@@ -1,8 +1,16 @@
 angular.module('starter.services', ['ngResource'])
 
 .service('Constant', function(){
+  var settings = {
+    cacheURL : 'http://221.181.71.171:8082'
+  };
   return {
-    baseURL : 'http://221.181.71.171:8082',
+    baseURL : function(){
+      return settings.cacheURL;
+    },
+    updateServerURL : function(url){
+      settings.cacheURL = url;
+    },
     viewBoard: {
 
       menus: [{
@@ -234,20 +242,11 @@ angular.module('starter.services', ['ngResource'])
 })
 .service('Backend', ['$resource', 'Constant', function($resource, Constant) {
   // Might use a resource here that returns a JSON array
-  var baseURL = Constant.baseURL;
-  var kaoqin = $resource(baseURL+'/EmployeeDutyListSub.aspx');
-  var kuqu = $resource(baseURL+'/Warehouse.aspx');
-  var banzu = $resource(baseURL+'/Zone.aspx');
-  var banci = $resource(baseURL+'/Shift.aspx');
-  var metaData = $resource(baseURL+'/Index.aspx');
-  var org = $resource(baseURL+'/EmployeeDutyList.aspx');
-  var gwrx = $resource(baseURL+'/PositionFlexible.aspx');
-  var lgjh = $resource(baseURL+'/DutyRotation.aspx');
-  var kpi = $resource(baseURL+'/KPI.aspx');
-  
+  var baseURL = '';
+
+  /*
   var org = $resource('js/test/org.json');
   var gwrx = $resource('js/test/gwrx.json');
-  /*
   var kpi = $resource('js/test/1-2.json');
   var kaoqin = $resource('js/test/kqhz.json');
   var lgjh = $resource('js/test/lgjh.json');
@@ -256,16 +255,32 @@ angular.module('starter.services', ['ngResource'])
   var kuqu = $resource('js/test/kuqu.json');
   var banzu = $resource('js/test/banzu.json');
   var banCharge = $resource('js/test/banCharge.json');*/
-  return {
-    kaoqin:kaoqin,
-    kuqu: kuqu,
-    banzu: banzu,
-    banci: banci,
-    metaData: metaData,
-    gwrx: gwrx,
-    lgjh: lgjh,
-    org: org,
-    kpi: kpi
+
+  return function(){
+    if(baseURL != Constant.baseURL()){
+     baseURL = Constant.baseURL();
+     kaoqin = $resource(baseURL+'/EmployeeDutyListSub.aspx');
+     kuqu = $resource(baseURL+'/Warehouse.aspx');
+     banzu = $resource(baseURL+'/Zone.aspx');
+     banci = $resource(baseURL+'/Shift.aspx');
+     metaData = $resource(baseURL+'/Index.aspx');
+     org = $resource(baseURL+'/EmployeeDutyList.aspx');
+     gwrx = $resource(baseURL+'/PositionFlexible.aspx');
+     lgjh = $resource(baseURL+'/DutyRotation.aspx');
+     kpi = $resource(baseURL+'/KPI.aspx');
+    }
+
+    return{
+      kaoqin:kaoqin,
+      kuqu: kuqu,
+      banzu: banzu,
+      banci: banci,
+      metaData: metaData,
+      gwrx: gwrx,
+      lgjh: lgjh,
+      org: org,
+      kpi: kpi
+    }
   }
 }])
 .service('MetaDataSvc', [ 'Backend', 'Constant', 'localStorageService', '$q',
@@ -283,7 +298,7 @@ angular.module('starter.services', ['ngResource'])
         deferred.resolve(empty);
         return deferred.promise;
       }
-      Backend.metaData.query({
+      Backend().metaData.query({
         'WareHouseId': selectedCriteria.kuqu.Id,
         'ZoneId': selectedCriteria.banzu.Id,
         'ShiftId': selectedCriteria.banci.ID,
@@ -312,7 +327,7 @@ angular.module('starter.services', ['ngResource'])
         deferred.resolve([]);
         return deferred.promise;
       }
-      Backend.kpi.query({
+      Backend().kpi.query({
         'WareHouseId': selectedCriteria.kuqu.Id,
         'ZoneId': selectedCriteria.banzu.Id,
         'ShiftId': selectedCriteria.banci.ID,
@@ -338,7 +353,7 @@ angular.module('starter.services', ['ngResource'])
         deferred.resolve(menus);
         return deferred.promise;
       }
-      Backend.kpi.query({
+      Backend().kpi.query({
         'WareHouseId': selectedCriteria.kuqu.Id,
         'ZoneId': selectedCriteria.banzu.Id,
         'ShiftId': selectedCriteria.banci.ID,
@@ -395,7 +410,7 @@ angular.module('starter.services', ['ngResource'])
       "whse_code":"N/A",
       "whse_name":"N/A"
     }];
-    Backend.kuqu.query(function(data){
+    Backend().kuqu.query(function(data){
       if(!data[0] || data[0].ErrorCode!==undefined){
         deferred.resolve(empty);
         return;
@@ -426,7 +441,7 @@ angular.module('starter.services', ['ngResource'])
       deferred.resolve(empty);
       return;
     }
-    Backend.banzu.query({
+    Backend().banzu.query({
       'WareHouseId': WareHouseId
     },function(data){
       if(!data[0] || data[0].ErrorCode!==undefined){
@@ -455,7 +470,7 @@ angular.module('starter.services', ['ngResource'])
       "shift_code":"N/A",
       "description":"N/A"
     }];
-    Backend.banci.query({
+    Backend().banci.query({
       'WareHouseId': WareHouseId,
       'ZoneId': ZoneId
     },function(data){
@@ -485,7 +500,7 @@ angular.module('starter.services', ['ngResource'])
         'DateTime': 'N/A'
       };
     var deferred = $q.defer();
-    Backend.metaData.query({
+    Backend().metaData.query({
       'WareHouseId': WareHouseId,
       'ZoneId': ZoneId,
       'ShiftId': ShiftId,
