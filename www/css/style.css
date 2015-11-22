@@ -225,21 +225,20 @@ ion-view.view {
 	    height: 100%;
 }
 .members{
-	padding: 2em 5em;
+	padding: 2em 7em;
 	    height: 100%;
 }
 .org-chart img{
-    height: 9em;
-    width: 8em;
+    height: 100%;
+    width: 100%;
     border: 0;
     z-index: 3;
     background-color: #fff;
 }
 .org-chart .section{
-	    z-index: 9;
+    z-index: 9;
 	position: relative;
-	    height: 90%;
-    padding-bottom: 2em;
+    height: 90%;
     background-color: #FFF;
 }
 .org-chart .director .section{
@@ -281,16 +280,19 @@ ion-view.view {
 .org-chart .section div.name{
 	top:50%;
     margin-top: -2em;
+    width: 7em;
+    z-index: 9;
 }
 .org-chart .section div.job{
     bottom: 50%;
     left: 0;
+    width: 7em;
     top: 50%;
     z-index: 10;
-        color: #F5AA35;
-        font-weight: bold;
+    color: #F5AA35;
+    font-weight: bold;
     margin-top: -2em;
-    margin-left: -5em;
+    margin-left: -6.8em;
 }
 .members:after{
 	content: "";
@@ -845,4 +847,22 @@ span.arrow-border-up span{
 
 .visHide{
 	visibility: hidden;
+}
+
+.member-status.v0{background:#A2D329;}
+.member-status.v1{background: #12AAEB;}
+.member-status.v2{background: #F2E439;}
+.member-status.v3{background: #E73334;}
+.newOrOld{
+    visibility: hidden;
+}
+.newOrOld.isNew{
+    position: absolute;
+    visibility: visible;
+    left: -1.5em;
+    top: -0.5em;
+    width: 1.5em;
+    color: red;
+    z-index: 9;
+    font-size: 1.5em;
 }

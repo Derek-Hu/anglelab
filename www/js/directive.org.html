@@ -3,14 +3,15 @@
     <div class="director memeber" ng-class="{odd : oddTeam, one: subTeams.length==0}" style="height: 20%;">
         <div style="background: url();height: 90%;">
             <div class="section" >
-                <img ng-href="{{group.leader.Picture}}" />
+                <div ng-class="{isNew: group.leader.Is_new=='是'}" class="newOrOld"><span class="glyphicon glyphicon-star"></span></div>
+                <img ng-src="{{group.leader.Picture}}" />
                 <div class="name">
                     <span ng-bind="group.leader.Employee_name"></span>
                     <span ng-bind="group.leader.Telephone"></span>
                 </div>
                 <div class="job">
                     <span ng-bind="group.leader.Job"></span>
-                    <span class="member-status"></span>
+                    <span class="member-status v{{group.leader.DutyState}}"></span>
                 </div>
             </div>
         </div>
@@ -19,14 +20,16 @@
         <div>
             <div ng-repeat="sub in subTeams" ng-class="{two: subTeams.length==1,left: ($index+1)<((subTeams.length+1)/2), right: ($index+1)>((subTeams.length+1)/2), center: ($index+1)==((subTeams.length+1)/2)}" class="members cf">
                 <div ng-repeat="m in sub" class="sub">
-                    <div  class="section" style="position: re">
-                        <img ng-href="{{m.Picture}}" />
+                    <div  class="section">
+                        <div ng-class="{isNew: m.Is_new=='是'}" class="newOrOld"><span class="glyphicon glyphicon-star"></span></div>
+                        <img ng-src="{{m.Picture}}" />
                         <div class="name">
                             <span ng-bind="m.Employee_name"></span>
                             <span ng-bind="m.Telephone"></span>
                         </div>
                         <div class="job">
                             <span ng-bind="m.Job"></span>
+                            <span class="member-status v{{m.DutyState}}"></span>
                         </div>
                     </div>
                 </div>
