@@ -28,7 +28,7 @@
 					<td ng-bind="r['工号']"></td>
 					<td ng-class="{isNew: r.Is_new=='是', isDisableMember: r.Is_disabled=='否'}" ng-bind="r['姓名']"></td>
 					<td ng-repeat="d in daysArr">
-						<span ng-if="clzMap[r[d]] != 'hurt'" class="{{clzMap[r[d]]}}">&nbsp;</span>
+						<span ng-if="clzMap[r[d]] != 'hurt'" class="{{clzMap[r[d]]}}"></span>
 						<span ng-if="clzMap[r[d]] == 'hurt'">#</span>
 					</td>
 					</tr>

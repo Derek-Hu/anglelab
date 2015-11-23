@@ -453,7 +453,7 @@ svg{
 .color-menu-type div.twrapper{ float: left; padding: 0.5em; }
 .color-menu-type .type > div{float: left;padding: 0.75em;}
 .color-menu-type .type .value{
-	color: #4172A9;font-weight: bold; width:100%; padding-right: 3em; padding-left: 4em; text-align: center;
+	color: #4172A9;font-weight: bold; width:100%; padding-right: 3em; padding-left: 2.5em; text-align: center;
 }
 .color-menu-type .type.two .value{padding-right: 0;}
 .color-menu-type .type .option {
@@ -473,12 +473,12 @@ svg{
 .color-menu-type .type .name{border-right: 0.2em dashed #94ACB6; color: #94ACB6; font-weight: bold;}
 
 .color-menu-type.header .type .name{position: absolute;left: 0;}
-.color-menu-type.header div.twrapper{ width:16.5%;}
+.color-menu-type.header div.twrapper{ width:16.5%; }
 .color-menu-type.header div.twrapper:last-child{ float: right;}
 
 .color-menu-type.header.three div.twrapper{ width:33.3%;}
 .color-menu-type.header.five div.twrapper{ width:20%;}
-.color-menu-type.header.six div.twrapper{ width:14%;}
+.color-menu-type.header.six div.twrapper{ width:14%; max-width: 10em;}
 
 ion-footer-bar .color-menu-type.header{width: 100%;}
 ion-footer-bar .color-menu-type.header div.twrapper:last-child{ float: left;}
@@ -505,6 +505,8 @@ ion-footer-bar .color-menu-type.header div.twrapper:last-child{ float: left;}
     border-radius: 0.5em; text-align: center;}
 
 .kqhz table{width: 100%;    font-size: 0.9em;}
+.kqhz table td > span{width: 1em; display: inline-block;}
+
 .kqhz th{color: #94ACB6;}
 .kqhz table td, .kqhz table th{word-break: break-all; border: 0.2em solid #A9BCC9; padding: 0.2em 0; vertical-align: middle;    color: #4172A9; font-size: 0.9em;}
 .green-calendar table{border-collapse: collapse; color:#95ACBC; margin: 0 auto;font-weight: bold;}
@@ -719,15 +721,18 @@ ion-content.bgFF{
 	color: blue;
 }
 .quickNav span{
-	padding-right: 1em;
+	padding-right: 0.5em;
     font-size: 1.3em;
 }
 .quickNav a{
 	color: #FFF;
 }
+.quickNav a:last-child span{
+    padding-right: 0;
+}
 .quickNav{
 	position: absolute;
-    right: 1em;
+    right: 0.5em;
     bottom: 0;
     text-align: right;
     font-size: 1.5em;
