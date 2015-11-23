@@ -61,7 +61,10 @@
 			</div> -->
 			<div class="clear" style="width: 100%; height: 100%;">
 	    <div ng-repeat="m in menus" class="bz-menu col-3">
-        <div ng-if="m.hatColor && m.hatColor!=''" class="hat"><span class="glyphicon glyphicon-bed" style="color: {{m.hatColor}}"></span></div>
+        <div ng-if="m.hatColor && m.hatColor!=''" class="hat">
+        	<!-- <span class="glyphicon glyphicon-bed" style="color: {{m.hatColor}}"></span> -->
+        	<img ng-src="img/{{m.hatColor}}.svg" />
+        </div>
         <div class="rate">
         	<span ng-bind="m.rate"></span>
         </div>

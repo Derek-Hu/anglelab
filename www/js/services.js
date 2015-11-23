@@ -84,7 +84,7 @@ angular.module('starter.services', ['ngResource'])
       }]
     },
     kpiColor: {
-      '红': '#f00',
+      '红': 'red',
       '绿': 'green',
       '黄': 'yellow',
       '蓝': 'blue',
