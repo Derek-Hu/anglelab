@@ -35,9 +35,10 @@ angular.module('starter.controllers', [])
   });
 
 }])
-.controller('ViewBoardCtrl', ['$scope', '$stateParams', '$state', '$ionicScrollDelegate', 'MetaDataSvc', 'KPIItem', 'Constant', 'DateUtil', 'localStorageService', 'Warehouse', 'MenuBorder',
-  function($scope, $stateParams, $state, $ionicScrollDelegate, MetaDataSvc, KPIItem, Constant, DateUtil, localStorageService, Warehouse, MenuBorder) {
-    
+.controller('ViewBoardCtrl', ['$scope', '$stateParams', '$state', '$ionicScrollDelegate', 'MetaDataSvc', 'KPIItem', 'Constant', 'DateUtil', 'localStorageService', 'Warehouse', 'MenuBorder', 'Util',
+  function($scope, $stateParams, $state, $ionicScrollDelegate, MetaDataSvc, KPIItem, Constant, DateUtil, localStorageService, Warehouse, MenuBorder, Util) {
+  
+  $scope.getBorderFreq = Util.getBorderFreq;
   $scope.menus = [{
     'PageType': 10,
     "nm": "KPI跟踪", 
@@ -95,7 +96,7 @@ angular.module('starter.controllers', [])
     if(!$scope.criteria || !$scope.criteria.kuqu){
       return;
     }
-    MenuBorder.lineBoard($scope.criteria.kuqu.whse_code).then(function(data){
+    MenuBorder.lineBoard($scope.criteria.kuqu.Id).then(function(data){
       $scope.menuBorders = data;
     });
   })
@@ -193,9 +194,10 @@ angular.module('starter.controllers', [])
   });
 
 }])
-.controller('DashCtrl', ['$scope', '$state', 'localStorageService', 'Constant', 'Warehouse', 'Zone', 'Shift', 'Charge', '$stateParams', 'KPIDetail', 'MetaDataSvc', 'MenuBorder',
-  function($scope, $state, localStorageService, Constant, Warehouse, Zone, Shift, Charge, $stateParams, KPIDetail, MetaDataSvc, MenuBorder) {
+.controller('DashCtrl', ['$scope', '$state', 'localStorageService', 'Constant', 'Warehouse', 'Zone', 'Shift', 'Charge', '$stateParams', 'KPIDetail', 'MetaDataSvc', 'MenuBorder', 'Util',
+  function($scope, $state, localStorageService, Constant, Warehouse, Zone, Shift, Charge, $stateParams, KPIDetail, MetaDataSvc, MenuBorder, Util) {
 
+  $scope.getBorderFreq = Util.getBorderFreq;
   $scope.criteria = {
     kuqu: '',
     banzu: '',
@@ -310,7 +312,6 @@ angular.module('starter.controllers', [])
     $scope.kqDropdown.close();
     $scope.bzDropdown.close();
     $scope.bcDropdown.close();
-
     
   });
   $scope.$watch('criteria.kuqu', function(){
@@ -318,7 +319,7 @@ angular.module('starter.controllers', [])
       return;
     }
     // load border color
-    MenuBorder.viewBoard($scope.criteria.kuqu.whse_code).then(function(data){
+    MenuBorder.viewBoard($scope.criteria.kuqu.Id).then(function(data){
       $scope.menuBorders = data;
     });
 

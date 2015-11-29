@@ -59,7 +59,7 @@
 	
 		    <div class="clear" style="    height: 100%; padding-top: 4em;">
 			    <div ng-repeat="m in menus" 
-			    	ng-class="{freDay: menuBorders[$index].frequency==1, freWeek: menuBorders[$index].frequency==2, freNotSure: menuBorders[$index].frequency==3}" 
+			    	ng-class="{freDay: getBorderFreq(menuBorders, m)==1, freWeek: getBorderFreq(menuBorders, m)==2, freNotSure: getBorderFreq(menuBorders, m)==3}" 
 			    	class="bz-menu col-3">
 			      <a ng-click="goTo(m)" ng-style="{'color': m.fc}">
 			        <div class="list card" ng-style="{'background-image': 'url('+m.bg+')'}">
