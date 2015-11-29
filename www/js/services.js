@@ -85,6 +85,10 @@ angular.module('starter.services', ['ngResource'])
       '蓝': '#12AAEB',
       '橙': '#F5AA35'
     },
+    hatImage: {
+      '红': 'red',
+      '绿': 'green'
+    },
     kpis: [{
         name: '安全',
         PageType: 5,
@@ -419,7 +423,7 @@ angular.module('starter.services', ['ngResource'])
                   menus[idx].rate = data[i].ACTUAL+' / '+data[i].TARGET;
               }
             }
-            menus[idx].hatColor = Constant.kpiColor[data[i].STATE];
+            menus[idx].hatColor = Constant.hatImage[data[i].STATE];
           }
         }
         deferred.resolve(menus);

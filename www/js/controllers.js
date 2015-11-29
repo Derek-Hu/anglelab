@@ -625,7 +625,6 @@ angular.module('starter.controllers', [])
 .controller('GwrxCtrl', ['localStorageService', '$scope', 'Backend', '$stateParams', 'MetaDataSvc',
   function(localStorageService, $scope, Backend, $stateParams, MetaDataSvc) {
 
-  $scope.selectedCriteria = localStorageService.get('criteria');
   $scope.loadingStatus = '';
 
   $scope.loadGwrx = function(WareHouseId, ZoneId, ShiftId){
@@ -653,6 +652,7 @@ angular.module('starter.controllers', [])
     });
   };
   $scope.$on('$ionicView.enter', function(e) {
+    $scope.selectedCriteria = localStorageService.get('criteria');
     $scope.loadGwrx($scope.selectedCriteria.kuqu.Id, $scope.selectedCriteria.banzu.Id, $scope.selectedCriteria.banci.ID);
 
     MetaDataSvc($stateParams.PageType).then(function(data){
@@ -664,7 +664,7 @@ angular.module('starter.controllers', [])
 .controller('LgjhCtrl', ['localStorageService', '$scope', 'Backend', 'MetaDataSvc', '$stateParams',
   function(localStorageService, $scope, Backend, MetaDataSvc, $stateParams) {
 
-  $scope.selectedCriteria = localStorageService.get('criteria');
+  
   $scope.loadingStatus = '';
   $scope.loadLgjh = function(WareHouseId, ZoneId, ShiftId){
     $scope.loadingStatus = '加载中';
@@ -747,6 +747,7 @@ angular.module('starter.controllers', [])
 
   };
   $scope.$on('$ionicView.enter', function(e) {
+    $scope.selectedCriteria = localStorageService.get('criteria');
     $scope.loadLgjh($scope.selectedCriteria.kuqu.Id, $scope.selectedCriteria.banzu.Id, $scope.selectedCriteria.banci.ID);
 
     MetaDataSvc($stateParams.PageType).then(function(data){
