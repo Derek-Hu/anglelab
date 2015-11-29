@@ -54,6 +54,7 @@ angular.module('starter.services', ['ngResource'])
         "state": "kpi",
         "bg": 'img/svg/kpi-tracking.svg'
       },{
+        'PageType': 6,
         "nm": "问题跟踪推进", 
         "enm": "Problem Tracking",
         "fc": "#aaa", 
@@ -61,6 +62,7 @@ angular.module('starter.services', ['ngResource'])
         "bc": "#CCD1D5", 
         "state": ""
       },{
+        'PageType': 7,
         "nm": "变更点管理", 
         "enm": "Change Point Management",
         "fc": "#aaa", 
@@ -68,6 +70,7 @@ angular.module('starter.services', ['ngResource'])
         "bc": "#CCD1D5", 
         "state": ""
       },{
+        'PageType': 8,
         "nm": "岗位工时平衡墙", 
         "enm": "Job Time Balance Wall",
         "fc": "#aaa", 
@@ -75,6 +78,7 @@ angular.module('starter.services', ['ngResource'])
         "bc": "#CCD1D5", 
         "state": ""
       },{
+        'PageType': 9,
         "nm": "班组园地", 
         "enm": "Team Garden",
         "fc": "#aaa", 

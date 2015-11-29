@@ -39,7 +39,7 @@ angular.module('starter.controllers', [])
   function($scope, $stateParams, $state, $ionicScrollDelegate, MetaDataSvc, KPIItem, Constant, DateUtil) {
     
   $scope.menus = [{
-        'PageType': 1,
+        'PageType': 10,
         "nm": "KPI跟踪", 
         "enm": "KPI Tracking",
         "fc": "#36CD14", 
@@ -47,8 +47,8 @@ angular.module('starter.controllers', [])
         "state": "",
         "bg": 'img/svg/kpi-tracking.svg'
       },{
-        'PageType': 2,
-        "nm": "问题跟踪", 
+        'PageType': 11,
+        "nm": "问题跟踪推进", 
         "enm": "Problem Tracking",
         "fc": "#62839D", 
         "bc": "#95C730", 

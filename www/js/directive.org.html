@@ -1,8 +1,9 @@
 <div class="org-chart cf" style="height: 100%;    padding-top: 3em;">
-    <span class="orgTitle" ng-bind="selectedCriteria.banci.shift_code"></span>
+    
     <div class="director memeber" ng-class="{odd : oddTeam, one: subTeams.length==0}" style="height: 20%;">
         <div style="background: url();height: 90%;">
-            <div class="section" >
+            <div class="section tc" >
+                <span class="orgTitle" ng-bind="title" style="display: inline-block;position: relative;top: -2em;margin: 0;"></span>
                 <div ng-class="{isNew: group.leader.Is_new=='是'}" class="newOrOld"><span class="glyphicon glyphicon-star"></span></div>
                 <img ng-src="{{group.leader.Picture}}" />
                 <div class="name">
@@ -57,5 +58,10 @@
     <div class="twrapper" style="padding:0"><div class="type indicator clear">
         <div class="value supplier">&nbsp;</div>
         <div class="name">缺勤</div>
+    </div></div>
+
+    <div class="twrapper" style="padding:0"><div class="type indicator clear">
+        <div class="glyphicon glyphicon-star" style="padding: 0.5em;color:red;"></div>
+        <div class="name">新员工</div>
     </div></div>
 </div>

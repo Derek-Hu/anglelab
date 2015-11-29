@@ -406,7 +406,8 @@ angular.module('starter.directives',['d3'])
       restrict: 'E',
       templateUrl: 'js/directive.org.html',
       scope: {
-        group : '='
+        group : '=',
+        title: '@'
       },
       link: function(scope, element, attrs) {
         scope.$watch('group', function(){
