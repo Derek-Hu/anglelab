@@ -23,8 +23,8 @@ angular.module('starter.controllers', [])
     KPIItem($stateParams.BizType).then(function(data){
       $scope.chart.data = data.filter(function(d){
         if($scope.chart.isRate){
-          d.ACTUAL =  d.ACTUAL * 100 + '%';
-          d.TARGET =  d.TARGET * 100 + '%';
+          d.ACTUAL =  d.ACTUAL + '%';
+          d.TARGET =  d.TARGET + '%';
         }
         return d.ID.indexOf('M')==0
       }).map(function(d){
