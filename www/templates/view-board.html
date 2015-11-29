@@ -15,7 +15,7 @@
   <ion-content scroll="false" on-double-tap="goHome('home')" style="padding-top: 0;">
   		<div style="width: 100%; display: block; position: absolute; left: 0; top: 0.5em; bottom: 3.5em;width: 100%;"> 
   			<div class="clear header five tc color-menu-type" style="position: absolute;width: 100%;">
-				<div class="twrapper">
+				<div class="twrapper" style="float:left;">
 					<div class="type an-dropdown clear" ng-class="{open: kqDropdown.isOpen}">
 						<div class="name">库区</div>
 						<div class="value" ng-click="kqDropdown.open()" ng-bind="criteria.kuqu?criteria.kuqu.whse_code:'加载中'">加载中</div>
@@ -27,7 +27,7 @@
 						</div>
 					</div>
 				</div>
-				<div class="twrapper">
+				<!-- <div class="twrapper">
 					<div class="type an-dropdown clear" ng-class="{open: bzDropdown.isOpen}">
 					<div class="name">班组</div>
 					<div class="value" ng-click="bzDropdown.open()" ng-bind="criteria.banzu?criteria.banzu.description:'加载中'">加载中</div>
@@ -50,21 +50,19 @@
 							<div class="value" ng-click="bcDropdown.selectOption(bc)" ng-repeat="bc in bancis" ng-bind="bc.shift_code"></div>
 						</div>
 					</div>
-				</div>
-				<div class=" twrapper"><div class="type two clear">
+				</div> -->
+				<!-- <div class=" twrapper"><div class="type two clear">
 					<div class="name">成本</div>
 					<div class="value" >加载中</div>
-				</div></div>
-				<div class=" twrapper"><div class="type two clear">
-					<div class="name">人员</div>
-					<div class="value">加载中</div>
-				</div></div>
+				</div></div> -->
 			</div>
 	
 		    <div class="clear" style="    height: 100%; padding-top: 4em;">
-			    <div ng-repeat="m in menus" class="bz-menu col-3">
+			    <div ng-repeat="m in menus" 
+			    	ng-class="{freDay: menuBorders[$index].frequency==1, freWeek: menuBorders[$index].frequency==2, freNotSure: menuBorders[$index].frequency==3}" 
+			    	class="bz-menu col-3">
 			      <a ng-click="goTo(m)" ng-style="{'color': m.fc}">
-			        <div class="list card" ng-style="{'border-color': m.bc, 'background-image': 'url('+m.bg+')'}">
+			        <div class="list card" ng-style="{'background-image': 'url('+m.bg+')'}">
 			          <div class="item item-body">
 			          	<div ng-bind="$index+1" class="number"></div>
 			            <div class="menu-desc">

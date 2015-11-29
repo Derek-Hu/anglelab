@@ -35,26 +35,70 @@ angular.module('starter.controllers', [])
   });
 
 }])
-.controller('ViewBoardCtrl', ['$scope', '$stateParams', '$state', '$ionicScrollDelegate', 'MetaDataSvc', 'KPIItem', 'Constant', 'DateUtil',
-  function($scope, $stateParams, $state, $ionicScrollDelegate, MetaDataSvc, KPIItem, Constant, DateUtil) {
+.controller('ViewBoardCtrl', ['$scope', '$stateParams', '$state', '$ionicScrollDelegate', 'MetaDataSvc', 'KPIItem', 'Constant', 'DateUtil', 'localStorageService', 'Warehouse', 'MenuBorder',
+  function($scope, $stateParams, $state, $ionicScrollDelegate, MetaDataSvc, KPIItem, Constant, DateUtil, localStorageService, Warehouse, MenuBorder) {
     
   $scope.menus = [{
-        'PageType': 10,
-        "nm": "KPI跟踪", 
-        "enm": "KPI Tracking",
-        "fc": "#36CD14", 
-        "bc": "#95C730", 
-        "state": "",
-        "bg": 'img/svg/kpi-tracking.svg'
-      },{
-        'PageType': 11,
-        "nm": "问题跟踪推进", 
-        "enm": "Problem Tracking",
-        "fc": "#62839D", 
-        "bc": "#95C730", 
-        "state": "",
-        "bg": 'img/svg/problem-tracking.svg'
-      }];
+    'PageType': 10,
+    "nm": "KPI跟踪", 
+    "enm": "KPI Tracking",
+    "fc": "#36CD14", 
+    "state": "",
+    "bg": 'img/svg/kpi-tracking.svg'
+  },{
+    'PageType': 11,
+    "nm": "问题跟踪推进", 
+    "enm": "Problem Tracking",
+    "fc": "#62839D", 
+    "state": "",
+    "bg": 'img/svg/problem-tracking.svg'
+  }];
+
+  $scope.kqDropdown = {
+    isOpen : false,
+    close: function(){
+      this.isOpen = false;
+    },
+    open: function(){
+      if(!$scope.kuqus || $scope.kuqus.length<=1){
+        return;
+      }
+      this.isOpen = !this.isOpen;
+      //$scope.bzDropdown.close();
+      //$scope.bcDropdown.close();
+    },
+    selectOption: function(option){
+      $scope.criteria.kuqu = option;
+      this.close();
+    }
+  }
+  $scope.criteria = {};
+  $scope.$on('$ionicView.enter', function(e) {
+    var selectedCriteria = localStorageService.get('criteria');
+    Warehouse.getWareHouse().then(function(Warehouse){
+      $scope.kuqus = Warehouse;
+      var isExist = selectedCriteria && selectedCriteria.kuqu && !!$scope.kuqus.filter(function(kq){
+        return kq.whse_code == selectedCriteria.kuqu.whse_code;
+      }).length;
+      if(isExist){
+        $scope.criteria.kuqu = selectedCriteria.kuqu;
+      }else{
+        $scope.criteria.kuqu = $scope.kuqus[0];
+      }
+    }, function(Warehouse){
+      $scope.kuqus = Warehouse;
+    });
+    $scope.kqDropdown.close();
+  });
+
+  $scope.$watch('criteria.kuqu', function(){
+    if(!$scope.criteria || !$scope.criteria.kuqu){
+      return;
+    }
+    MenuBorder.lineBoard($scope.criteria.kuqu.whse_code).then(function(data){
+      $scope.menuBorders = data;
+    });
+  })
 
 }])
 .controller('SettingsCtrl', ['$scope', 'Constant',
@@ -149,8 +193,8 @@ angular.module('starter.controllers', [])
   });
 
 }])
-.controller('DashCtrl', ['$scope', '$state', 'localStorageService', 'Constant', 'Warehouse', 'Zone', 'Shift', 'Charge', '$stateParams', 'KPIDetail', 'MetaDataSvc',
-  function($scope, $state, localStorageService, Constant, Warehouse, Zone, Shift, Charge, $stateParams, KPIDetail, MetaDataSvc) {
+.controller('DashCtrl', ['$scope', '$state', 'localStorageService', 'Constant', 'Warehouse', 'Zone', 'Shift', 'Charge', '$stateParams', 'KPIDetail', 'MetaDataSvc', 'MenuBorder',
+  function($scope, $state, localStorageService, Constant, Warehouse, Zone, Shift, Charge, $stateParams, KPIDetail, MetaDataSvc, MenuBorder) {
 
   $scope.criteria = {
     kuqu: '',
@@ -273,6 +317,11 @@ angular.module('starter.controllers', [])
     if(!$scope.criteria || !$scope.criteria.kuqu){
       return;
     }
+    // load border color
+    MenuBorder.viewBoard($scope.criteria.kuqu.whse_code).then(function(data){
+      $scope.menuBorders = data;
+    });
+
     $scope.criteria.banzu = '';
     Zone.getZone($scope.criteria.kuqu.Id).then(function(zones){
       $scope.banzus = zones;

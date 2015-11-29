@@ -18,7 +18,6 @@ angular.module('starter.services', ['ngResource'])
         "nm": "班组结构图", 
         "enm": "Team Structure",
         "fc": "#36CD14", 
-        "bc": "#95C730", 
         "state": "org",
         "bg": 'img/svg/team-structure.svg'
       },{
@@ -26,7 +25,6 @@ angular.module('starter.services', ['ngResource'])
         "nm": "考勤汇总", 
         "enm": "Attendance Summary",
         "fc": "#62839D", 
-        "bc": "#95C730", 
         "state": "kqhz",
         "bg": 'img/svg/attendance-summary.svg'
       },{
@@ -34,7 +32,6 @@ angular.module('starter.services', ['ngResource'])
         "nm": "岗位柔性表", 
         "enm": "Flexible Job List",
         "fc": "#aaa", 
-        "bc": "#95C730", 
         "bg": 'img/svg/flexible-job-list.svg',
         "state": "gwrx"
       },{
@@ -42,7 +39,6 @@ angular.module('starter.services', ['ngResource'])
         "nm": "轮岗计划", 
         "enm": "Rotation Plan",
         "fc": "#aaa", 
-        "bc": "#CCD1D5", 
         "bg": 'img/svg/rotation-plan.svg',
         "state": "lgjh"
       },{
@@ -50,7 +46,6 @@ angular.module('starter.services', ['ngResource'])
         "nm": "KPI跟踪", 
         "enm": "KPI Tracking",
         "fc": "#aaa", 
-        "bc": "#CCD1D5", 
         "state": "kpi",
         "bg": 'img/svg/kpi-tracking.svg'
       },{
@@ -59,7 +54,6 @@ angular.module('starter.services', ['ngResource'])
         "enm": "Problem Tracking",
         "fc": "#aaa", 
         "bg": 'img/svg/problem-tracking.svg',
-        "bc": "#CCD1D5", 
         "state": ""
       },{
         'PageType': 7,
@@ -67,7 +61,6 @@ angular.module('starter.services', ['ngResource'])
         "enm": "Change Point Management",
         "fc": "#aaa", 
         "bg": 'img/svg/change-point-management.svg',
-        "bc": "#CCD1D5", 
         "state": ""
       },{
         'PageType': 8,
@@ -75,7 +68,6 @@ angular.module('starter.services', ['ngResource'])
         "enm": "Job Time Balance Wall",
         "fc": "#aaa", 
         "bg": 'img/svg/job-time-balance-wall.svg',
-        "bc": "#CCD1D5", 
         "state": ""
       },{
         'PageType': 9,
@@ -83,7 +75,6 @@ angular.module('starter.services', ['ngResource'])
         "enm": "Team Garden",
         "fc": "#aaa", 
         "bg": 'img/svg/team-garden.svg',
-        "bc": "#CCD1D5", 
         "state": ""
       }]
     },
@@ -345,6 +336,39 @@ angular.module('starter.services', ['ngResource'])
         deferred.reject('Load Data Error');
       });
       return deferred.promise;
+    }
+}])
+.service('MenuBorder', [ 'Backend', 'Constant', 'localStorageService', '$q',
+  function(Backend, Constant, localStorageService, $q) {
+
+    function getBoard(PageType){
+      return function(WareHouseId){
+        var deferred = $q.defer();
+        if(!WareHouseId || !PageType){
+          deferred.resolve([]);
+          return deferred.promise;
+        }
+        Backend().metaData.query({
+          'WareHouseId': WareHouseId,
+          'BizType': 3,
+          'PageType': PageType
+        }, function(data){
+          if(!data || !data[0] || data[0].ErrorCode!==undefined){
+            deferred.resolve([]);
+          }else{
+            deferred.resolve(data);
+          }
+        }, function(){
+          deferred.resolve([]);
+        });
+        return deferred.promise;
+      }
+    }
+    var viewBoard = getBoard(1);
+    var lineBoard = getBoard(2);
+    return {
+      viewBoard: viewBoard,
+      lineBoard: lineBoard
     }
 }])
 .service('KPIDetail', [ 'Backend', 'Constant', 'localStorageService', '$q',

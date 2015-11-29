@@ -578,11 +578,9 @@ ion-footer-bar .color-menu-type.header div.twrapper:last-child{ float: left;}
 .entry .img img{
     opacity: 0.4;
     height: 50%;
-    position: absolute;
-    left: 35%;
+    width: 100%;
 }
-.entry .img{
-}
+.entry .img{    height: 100%; }
 .entry .group{
     position: absolute;
     left: 5em;
@@ -883,3 +881,6 @@ span.arrow-border-up span{
 .gRow > div{    
     display: inline-block;
     min-width: 3em;}
+.freDay .list.card{border-color: #CCD1D5;}
+.freWeek .list.card{border-color: #049BF4;}
+.freNotSure .list.card{border-color: #95C730;}
