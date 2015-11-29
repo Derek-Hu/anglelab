@@ -883,3 +883,9 @@ span.arrow-border-up span{
 .freDay .list.card{border-color: #CCD1D5;}
 .freWeek .list.card{border-color: #049BF4;}
 .freNotSure .list.card{border-color: #95C730;}
+.kpiDropType{position: absolute; right: 0.5em; bottom: 4em; width: 5em; text-align: center;}
+.kpiDropType .an-dropdown > .value{ padding: 0.5em 0; border: 0.2em solid #A8BBC8; border-radius: 0.5em;position: relative;}
+.kpiDropType .an-select > .value{    padding: 0.75em 0; border-bottom: 0.2em solid #A8BBC8;}
+.kpiDropType .an-select > .value:last-child {border-bottom: 0;}
+.kpiDropType .an-select{right: 0; bottom: 2.5em; top: inherit;border: 0.2em solid #A8BBC8; border-radius: 0.5em 0.5em 0 0;}
+.kpiDropType .an-dropdown.open > .value{border-radius: 0 0 0.5em 0.5em; border-top: 0;}

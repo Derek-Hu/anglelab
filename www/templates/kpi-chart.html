@@ -41,20 +41,21 @@
         
        <kao-qin-chart data="chart.data" isRate="chart.isRate" ylabel="{{chart.yLabel}}" title="{{chart.title}}"></kao-qin-chart>
        <!-- DropDown -->
-       <div class="twrapper">
+       <div class="twrapper kpiDropType">
             <div class="type an-dropdown clear" ng-class="{open: chartTypeDropdown.isOpen}">
                 <!-- <div class="name">库区</div> -->
-                <div class="value" ng-click="chartTypeDropdown.open()" ng-bind="chartTypeDropdown.option.value"></div>
-                <div class="option" ng-class="{visHide: (!kuqus || kuqu.length<=1)}" ng-click="kqDropdown.open()">
-                    <span class="glyphicon glyphicon-chevron-down"></span>
+                <div class="value" 
+                ng-click="chartTypeDropdown.open()" >
+                    <span ng-bind="chartTypeDropdown.option.value"></span>
+                    <span class="glyphicon glyphicon-chevron-up" style="    position: absolute; top: 0.65em; right: 0.5em;"></span>
                 </div>
+                
                 <div class="an-select">
                     <div class="value" ng-click="chartTypeDropdown.selectOption(tp)" ng-repeat="tp in chartTypeDropdown.items" ng-bind="tp.value"></div>
                 </div>
             </div>
         </div>
-       <div class="type an-dropdown clear" ng-class="{open: chartTypeDropdown.isOpen}">
-            <!-- <div class="name">库区</div> -->
+ <!--       <div class="type an-dropdown clear" ng-class="{open: chartTypeDropdown.isOpen}">
             <div class="value" ng-click="chartTypeDropdown.open()" ng-bind="chartTypeDropdown.option.value"></div>
             <div class="option" ng-class="{visHide: (!kuqus || kuqu.length<=1)}" ng-click="kqDropdown.open()">
                 <span class="glyphicon glyphicon-chevron-down"></span>
@@ -62,7 +63,7 @@
             <div class="an-select">
                 <div class="value" ng-click="chartTypeDropdown.selectOption(tp)" ng-repeat="tp in chartTypeDropdown.items" ng-bind="tp.value"></div>
             </div>
-        </div>
+        </div> -->
     </ion-content>
     <ion-footer-bar class="clear" style="">
     <div class="clear header tc color-menu-type" style="    width: 100%; position: absolute; left: 0; bottom: 0;">
