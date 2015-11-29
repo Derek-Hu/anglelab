@@ -535,9 +535,9 @@ ion-footer-bar .color-menu-type.header div.twrapper:last-child{ float: left;}
     bottom: 1.8em;
     font-size: 0.5em;}
 /* Entry Style */
-.entryWp{margin: 0 auto; text-align: center;height: 100%;width:100%;}
+.entryWp{margin: 0 auto; text-align: center;height: 100%;width:100%;position: relative;}
 .entry{
-    position: relative;
+    position: absolute;
     box-sizing: border-box;
     text-align: left;
     padding: 2em;
@@ -545,10 +545,8 @@ ion-footer-bar .color-menu-type.header div.twrapper:last-child{ float: left;}
     background: #FFF;
     border-radius: 0.5em;
     width: 30%;
-    height: 40%;
-    /* margin: 8% 8%; */
-    top: 4em;
-    margin-top: 10%;
+    height: 50%;
+    top: 25%;
 }
 .entry .number{
     font-size: 4em;
@@ -657,7 +655,7 @@ ion-footer-bar .color-menu-type.header div.twrapper:last-child{ float: left;}
     left: 50%;
     top: 50%;
     margin-left: -8em;
-    margin-top: -10em;
+    margin-top: -8em;
 }
 ion-content.bgFF{
 	background-color: #fff;

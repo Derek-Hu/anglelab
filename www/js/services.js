@@ -246,7 +246,7 @@ angular.module('starter.services', ['ngResource'])
 })
 .service('Backend', ['$resource', 'Constant', function($resource, Constant) {
   // Might use a resource here that returns a JSON array
-  var baseURL = '';
+  var baseURL = '', kaoqin, kuqu, banzu, banci, metaData, org, gwrx, lgjh, kpi;
 
   /*
   var org = $resource('js/test/org.json');
