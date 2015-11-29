@@ -12,6 +12,39 @@ angular.module('starter.controllers', [])
     }
   }
   $scope.chart.isRate = ($scope.aspect == 'member' || $scope.aspect == 'cost' || $scope.aspect=='quality');
+
+  function renderData(key){
+    $scope.chart.data = $scope.types[key].map(function(d){
+      d.month = d.ID.match(/\d+/)[0];
+      return d;
+    });;
+  }
+  function generatorDropdown(name, items, defaultOpt) {
+    $scope[name] = {};
+    $scope[name].isOpen = false;
+    $scope[name].items = items;
+    $scope[name].close = function () {
+      $scope[name].isOpen = false;
+    }
+    $scope[name].open = function () {
+      if(!$scope[name].items || $scope[name].items.length<=1){
+        return;
+      }
+      this.isOpen = !this.isOpen;
+    }
+    $scope[name].selectOption = function (option) {
+      $scope[name].option = option;
+      renderData($scope[name].option.key);
+      this.close();
+    }
+    if (!defaultOpt && items.length) {
+     $scope[name].selectOption(items[0]);
+    } else {
+     $scope[name].selectOption(defaultOpt);
+    }
+  }
+  
+
   $scope.$on('$ionicView.enter', function(e) {
     $scope.selectedCriteria = localStorageService.get('criteria');
     MetaDataSvc($stateParams.PageType).then(function(data){
@@ -21,16 +54,45 @@ angular.module('starter.controllers', [])
     var lastDay = DateUtil.getLastDay();
 
     KPIItem($stateParams.BizType).then(function(data){
-      $scope.chart.data = data.filter(function(d){
+
+      data = data.map(function(d){
         if($scope.chart.isRate){
           d.ACTUAL =  d.ACTUAL + '%';
           d.TARGET =  d.TARGET + '%';
         }
-        return d.ID.indexOf('M')==0
-      }).map(function(d){
-        d.month = d.ID.match(/\d+/)[0];
         return d;
       });
+
+      var ConstantTypes = {
+        'M': '月',
+        'W': '周',
+        'D': '天'
+      };
+      var types = Object.keys(ConstantTypes);
+      $scope.types = {};
+      for(var dx=0, dlen=data.length; dx<dlen;dx++){
+          var ele = data[dx];
+          for(var i=0, len= types.length;i< len;i++){
+            var type = types[i];
+            if(ele.ID.indexOf(type)==0){
+              if(type in $scope.types){
+                $scope.types[type].push(ele);
+              }else{
+                $scope.types[type] = [ele];
+              }
+              break;
+            }
+          }
+      }
+      types = Object.keys($scope.types);
+      $scope.typeDropdown = [];
+      for(var i=0, len = types.length;i<len;i++){
+        $scope.typeDropdown.push({
+          key: types[i],
+          value: ConstantTypes[types[i]]
+        });
+      }
+      generatorDropdown('chartTypeDropdown', $scope.typeDropdown);     
     });
   });
 

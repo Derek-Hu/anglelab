@@ -20,7 +20,7 @@ angular.module('starter.directives',['d3'])
       link: function(scope, element, attrs) {
 
           var fontSize = parseInt(d3.select("body").style("font-size"));
-          var margin = {top: fontSize*3, right: fontSize*10, bottom: fontSize*14, left: fontSize*3};
+          var margin = {top: fontSize*3, right: fontSize*14, bottom: fontSize*10, left: fontSize*3};
           var data = scope.data, title=scope.title, yLabel=scope.ylabel;
 
           scope.$watch('data', function(n, o){
@@ -60,9 +60,12 @@ angular.module('starter.directives',['d3'])
           function drawSchetch(data, width, height){
 
             var isRate = data && !!data.filter(function(d){
-                return d.TARGET.indexOf('%')!=-1;
+                if(d.TARGET){
+                  return d.TARGET.indexOf('%')!=-1;
+                }
+                return false;
               }).length;
-            
+
             var x = d3.scale.ordinal().rangeRoundBands([fontSize, width], .1);
             var y = d3.scale.linear().range([height, 0]);
 
@@ -76,7 +79,7 @@ angular.module('starter.directives',['d3'])
             var xAxis = d3.svg.axis()
                 .scale(x)
                 .orient("bottom")
-                .tickFormat(function(d) { return d+'月'})
+                .tickFormat(function(d) { return d})
                 .outerTickSize(0);
 
             
