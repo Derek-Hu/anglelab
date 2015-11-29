@@ -447,7 +447,7 @@ svg{
   overflow: visible;
 }
 .val{
-  font-size:1em;
+  font-size:0.75em;
 }
 .dtline, .xyPadding{
   fill: none;

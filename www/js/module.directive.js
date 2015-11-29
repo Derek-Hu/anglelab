@@ -15,7 +15,8 @@ angular.module('starter.directives',['d3'])
         title: '@',
         ylabel: '@',
         width: '=',
-        height:'='
+        height:'=',
+        xlabel: '@'
       },
       link: function(scope, element, attrs) {
 
@@ -32,13 +33,19 @@ angular.module('starter.directives',['d3'])
             if(n===o){
               return;
             }
+            var isRate = data && !!data.filter(function(d){
+              if(d.TARGET){
+                return d.TARGET.indexOf('%')!=-1;
+              }
+              return false;
+            }).length;
             var dimension = getDimension();
             var width = dimension[0], height = dimension[1];
 
-            var chart = drawSchetch(data, width, height);
+            var chart = drawSchetch(data, width, height, isRate);
             //checkData(scope.data, );
-            sketch(chart.svg, chart.x, chart.y, width, height, data, chart.line);
-            dynamicRender(chart.svg, chart.x, chart.y, width, height, data, chart.line);
+            sketch(chart.svg, chart.x, chart.y, width, height, data, chart.line, isRate);
+            dynamicRender(chart.svg, chart.x, chart.y, width, height, data, chart.line, isRate);
 
           })
 
@@ -57,14 +64,7 @@ angular.module('starter.directives',['d3'])
             return [totalW - margin.left - margin.right, totalH - margin.top - margin.bottom];
           }
 
-          function drawSchetch(data, width, height){
-
-            var isRate = data && !!data.filter(function(d){
-                if(d.TARGET){
-                  return d.TARGET.indexOf('%')!=-1;
-                }
-                return false;
-              }).length;
+          function drawSchetch(data, width, height, isRate){
 
             var x = d3.scale.ordinal().rangeRoundBands([fontSize, width], .1);
             var y = d3.scale.linear().range([height, 0]);
@@ -79,7 +79,7 @@ angular.module('starter.directives',['d3'])
             var xAxis = d3.svg.axis()
                 .scale(x)
                 .orient("bottom")
-                .tickFormat(function(d) { return d})
+                .tickFormat(function(d) { return d + (scope.xlabel?scope.xlabel: '')})
                 .outerTickSize(0);
 
             
@@ -148,7 +148,7 @@ angular.module('starter.directives',['d3'])
             return data;
           }
           
-          function sketch(svg, x, y, width, height, data, line){
+          function sketch(svg, x, y, width, height, data, line, isRate){
             var barWidth = x.rangeBand();
             var xRange = x.range();
             var xExtent = x.rangeExtent();
@@ -281,7 +281,7 @@ angular.module('starter.directives',['d3'])
                 .text("Target");
 
           }
-          function dynamicRender(svg, x, y, width, height, data, line){
+          function dynamicRender(svg, x, y, width, height, data, line, isRate){
             var barWidth = x.rangeBand();
             var xRange = x.range();
             var xExtent = x.rangeExtent();
@@ -300,7 +300,10 @@ angular.module('starter.directives',['d3'])
                 .attr("transform", "translate(0," + height + ")")
                 .style("text-anchor", "middle")
                 .text(function(d){
-                  if(typeof d.TARGET==='undefined') return '';return d.TARGET
+                  if(typeof d.TARGET==='undefined') {
+                    return '';
+                  }
+                  return isRate?(Math.ceil(parseFloat(d.TARGET)*10000)/100)+'%': d.TARGET
                 });
             /* Target value in the table */
             svg.selectAll(".text")
@@ -313,7 +316,11 @@ angular.module('starter.directives',['d3'])
                 .attr("dy", ".71em")
                 .attr("transform", "translate(0," + height + ")")
                 .style("text-anchor", "middle")
-                .text(function(d){if(typeof d.ACTUAL==='undefined') return '';return d.ACTUAL});
+                .text(function(d){if(typeof d.ACTUAL==='undefined') {
+                    return '';
+                  }
+                  return isRate?(Math.ceil(parseFloat(d.ACTUAL)*10000)/100)+'%': d.ACTUAL
+                });
                 
             svg.selectAll(".chartBar")
                 .data(data)

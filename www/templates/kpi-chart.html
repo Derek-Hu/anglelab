@@ -38,16 +38,15 @@
         <div></div>
     </ion-header-bar>
     <ion-content scroll="false" class="bgFF padding kpiChart" style="background: #FFF;    margin-bottom: 3em;">
-        
-       <kao-qin-chart data="chart.data" isRate="chart.isRate" ylabel="{{chart.yLabel}}" title="{{chart.title}}"></kao-qin-chart>
+       <kao-qin-chart xlabel="{{chart.xlabel}}" data="chart.data" isRate="chart.isRate" ylabel="{{chart.yLabel}}" title="{{chart.title}}"></kao-qin-chart>
        <!-- DropDown -->
-       <div class="twrapper kpiDropType">
+       <div class="twrapper kpiDropType" ng-show="chartTypeDropdown.items.length>1">
             <div class="type an-dropdown clear" ng-class="{open: chartTypeDropdown.isOpen}">
                 <!-- <div class="name">库区</div> -->
                 <div class="value" 
                 ng-click="chartTypeDropdown.open()" >
                     <span ng-bind="chartTypeDropdown.option.value"></span>
-                    <span class="glyphicon glyphicon-chevron-up" style="    position: absolute; top: 0.65em; right: 0.5em;"></span>
+                    <span class="glyphicon glyphicon-chevron-up" style="position: absolute; top: 0.65em; right: 0.5em;"></span>
                 </div>
                 
                 <div class="an-select">

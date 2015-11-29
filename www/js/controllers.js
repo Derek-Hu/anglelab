@@ -13,7 +13,18 @@ angular.module('starter.controllers', [])
   }
   $scope.chart.isRate = ($scope.aspect == 'member' || $scope.aspect == 'cost' || $scope.aspect=='quality');
 
+  var ConstantTypes = {
+    'M': '月',
+    'W': '周',
+    'D': '天'
+  };
+  var xTypes = {
+    'M': '月',
+    'W': '周',
+    'D': '日'
+  };
   function renderData(key){
+    $scope.chart.xlabel = xTypes[key];
     $scope.chart.data = $scope.types[key].map(function(d){
       d.month = d.ID.match(/\d+/)[0];
       return d;
@@ -33,6 +44,9 @@ angular.module('starter.controllers', [])
       this.isOpen = !this.isOpen;
     }
     $scope[name].selectOption = function (option) {
+      if(!option){
+        return;
+      }
       $scope[name].option = option;
       renderData($scope[name].option.key);
       this.close();
@@ -63,11 +77,6 @@ angular.module('starter.controllers', [])
         return d;
       });
 
-      var ConstantTypes = {
-        'M': '月',
-        'W': '周',
-        'D': '天'
-      };
       var types = Object.keys(ConstantTypes);
       $scope.types = {};
       for(var dx=0, dlen=data.length; dx<dlen;dx++){
