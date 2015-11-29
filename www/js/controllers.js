@@ -178,6 +178,15 @@ angular.module('starter.controllers', [])
       $scope.metaData = data;
     });
     KPIItem($stateParams.BizType).then(function(data){
+      if(!data.length){
+        var data = [];
+        for(var i=0, len = DateUtil.getLastDay(); i<len;i++){
+          data.push({
+            ID: i+1,
+            STATE: ''
+          });
+        }
+      }
       generate(data);
       $scope.isLoading = false;
     }, function(){

@@ -20,10 +20,11 @@
 	  	<div></div>
 	</ion-header-bar>
     <ion-content scroll="false" on-double-tap="goHome('cross')">
-			<div class="content-wrapper green-calendar" style="height: calc(100% - 8em);padding:0;">
+    	<div style="height: 100%; padding-bottom: 6em; position: relative;">
+			<div class="content-wrapper green-calendar" style=";padding:0;">
 				<div style="height: 100%;padding: 2em;">
 				<p style="padding-top: 2em;" class="anji-theme" ng-if="isLoading">加载中...</p>
-				<table id="greenCrossTable" style="height: 100%; position: relative; width: {{tableWidth}}px">
+				<table ng-hide="isLoading" id="greenCrossTable" style="height: 100%; position: relative; width: {{tableWidth}}px">
 					<tbody>
 					<tr>
 						<td class="empty">&nbsp;</td>
@@ -91,6 +92,7 @@
 				</div></div>
 			</div>
 			<div class="clear"></div>
+		</div>
     </ion-content>
 	<ion-footer-bar>
     <div class="clear header tc color-menu-type">
