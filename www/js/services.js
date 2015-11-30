@@ -95,18 +95,18 @@ angular.module('starter.services', ['ngResource'])
         type: 'security'
       },{
         name: '质量',
-        PageType: 9,
+        PageType: 5,
         type: 'quality'
       },{
-        PageType: 6,
+        PageType: 5,
         name: '流程',
         type: 'flow'
       },{
-        PageType: 7,
+        PageType: 5,
         name: '人员',
         type: 'member'
       },{
-        PageType: 8,
+        PageType: 5,
         name: '成本',
         type: 'cost'
       }],

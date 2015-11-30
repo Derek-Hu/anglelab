@@ -126,6 +126,15 @@ angular.module('starter', ['ionic', 'LocalStorageModule', 'ngResource', 'starter
         }
       }
     })
+  .state('cost-wall', {
+      url: '/cost/view-all/:PageType',
+      views: {
+        'dash': {
+          templateUrl: 'templates/cost-view-wall.html',
+          controller: 'CostWallCtrl'
+        }
+      }
+    })
   .state('kpi-item', {
       url: '/kpi-item/:aspect/:PageType/:BizType',
       views: {

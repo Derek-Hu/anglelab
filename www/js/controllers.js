@@ -5,6 +5,7 @@ angular.module('starter.controllers', [])
   $scope.chart = {};
   var aspect = Constant.kpiMenus[$stateParams.aspect];
   $scope.aspect = $stateParams.aspect;
+
   var BizType = $stateParams.BizType;
   for(var i =0, len = aspect.length; i<len;i++){
     if(aspect[i].BizType == BizType){
@@ -45,6 +46,10 @@ angular.module('starter.controllers', [])
     }
     $scope[name].selectOption = function (option) {
       if(!option){
+        return;
+      }
+      if(option.isURL){
+        $state.go(option.key, option.param);
         return;
       }
       $scope[name].option = option;
@@ -99,6 +104,15 @@ angular.module('starter.controllers', [])
         $scope.typeDropdown.push({
           key: types[i],
           value: ConstantTypes[types[i]]
+        });
+      }
+      var BizTypeLen = $stateParams.BizType.length;
+      if($scope.aspect == 'flow' && $stateParams.BizType.charAt(BizTypeLen-1)=='1'){
+        $scope.typeDropdown.push({
+          key: 'cost-wall',
+          value: '目视墙',
+          isURL: true,
+          param: {PageType: $stateParams.PageType}
         });
       }
       generatorDropdown('chartTypeDropdown', $scope.typeDropdown);     
@@ -198,6 +212,17 @@ angular.module('starter.controllers', [])
     $scope.settings.serverURL = $scope.serverAddr;
     $scope.isModify = false;
 
+  });
+
+}])
+.controller('CostWallCtrl', ['$scope', 'Constant', 'localStorageService', 'MetaDataSvc', '$stateParams',
+  function($scope, Constant, localStorageService, MetaDataSvc, $stateParams) {
+  
+  $scope.$on('$ionicView.enter', function(e) {
+    $scope.selectedCriteria = localStorageService.get('criteria');
+    MetaDataSvc($stateParams.PageType).then(function(data){
+      $scope.metaData = data;
+    });
   });
 
 }])
