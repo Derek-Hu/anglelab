@@ -889,3 +889,14 @@ span.arrow-border-up span{
 .kpiDropType .an-select > .value:last-child {border-bottom: 0;}
 .kpiDropType .an-select{right: 0; bottom: 2.5em; top: inherit;border: 0.2em solid #A8BBC8; border-radius: 0.5em 0.5em 0 0;}
 .kpiDropType .an-dropdown.open > .value{border-radius: 0 0 0.5em 0.5em; border-top: 0;}
+
+.cst-t3{background-color: #C6F1F8; color: #385C76;}
+.cst-t15{background-color: #FEDFC3; color: #385D7A;}
+.cst-guide{background-color: #DBDBDB; color: #3B5A77;}
+.cst-swtich1{background-color: #E73334;color: #FFFFFF !important;}
+
+.cst-normal{color: #9FB64F;}
+.cst-ready{color: #F29539;}
+.cst-stop{color: #E52E30;}
+
+.kqhz table.cost-wall-table td, .kqhz table.cost-wall-table th{padding: 0.5em 0;}

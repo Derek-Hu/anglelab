@@ -1,0 +1,93 @@
+<ion-view hide-nav-bar="true" hide-back-button="true">
+	<ion-header-bar align-title="center">
+	  	<div></div>
+		<div class="title anji-theme">
+			<div class="title-wp">
+				<div class=" logo-left"><img class="fl" src="img/logo1.jpg"/></div>
+				<div class="fr logo-right-wp"><img src="img/LOG9.jpg"/></div>
+				<div>
+			  		<div class="bold-title single-line">
+			  			<span class="mainTitle">生产停线时间</span>
+						<div class="subTitle">
+							(<span ng-bind="selectedCriteria.kuqu.whse_code">仓库代码</span>-
+							<span ng-bind="selectedCriteria.banzu.description">班组</span>-
+							<span ng-bind="selectedCriteria.banci.shift_code">班次</span>)
+						</div>
+			  		</div>
+				</div>
+			</div>
+		</div>
+	  	<div></div>
+	</ion-header-bar>
+    <ion-content class="bgFF" style="background: #FFF">
+	    <div class="kqhz gwrx content-wrapper">
+	    <span class="anji-theme" style="font-size:0.9em"  </span>
+		<table>
+			<thead>
+			<tr>
+				<th ng-repeat="h in headers" ng-bind="h"></th>
+			</tr>
+			</thead>
+			<tbody ng-show="loadingStatus!=''">
+				<tr class="anji-theme"><td colspan="{{headers.length}}" ng-bind="loadingStatus">加载中</td></tr>
+			</tbody>
+			<tbody>
+				<tr ng-repeat="r in records">
+					<td ng-bind="$index+1"></td>
+					<td ng-bind="r.whse_code"></td>
+					<td ng-bind="r.dataweek"></td>
+					<td ng-bind="r.datadate"></td>
+					<td ng-bind="r.downtime_range"></td>
+					<td ng-bind=""></td> <!-- 停线起止时间 -->
+					<td ng-bind="r.part_number"></td>
+					<td ng-bind="r.comment"></td>
+					<td ng-bind="r.in_charge"></td>
+				</tr>
+			</tbody>
+		</table>
+		</div>
+    </ion-content>
+    <ion-footer-bar>
+	    <div class="clear header six tc color-menu-type">
+			<div class="twrapper">
+				<div class="type two clear">
+				<div class="name">编制</div>
+				<div class="value">&nbsp;<span ng-bind="metaData.bianzhi"></span></div>
+			</div>
+			</div>
+			<div class="twrapper"><div class="type two clear">
+				<div class="name">审核</div>
+				<div class="value">&nbsp;<span ng-bind="metaData.shenhe"></span></div>
+			</div></div>
+			<div class=" twrapper"><div class="type two clear">
+				<div class="name">批准</div>
+				<div class="value">&nbsp;<span ng-bind="metaData.pizhun"></span></div>
+			</div></div>
+			<div class=" twrapper"><div class="type two clear">
+				<div class="name">日期</div>
+				<div class="value">&nbsp;<span ng-bind="metaData.bianzhi_date"></span></div>
+			</div></div>
+
+			<!-- <div class=" twrapper"><div class="type two clear">
+				<div class="name">N</div>
+				<div class="value">&nbsp;<span>无相关证件</span></div>
+			</div></div> -->
+
+			<!-- <div class="twrapper"><div class="type clear">
+				<div class="value damage">&nbsp;</div>
+				<div class="name">新员工</div>
+			</div></div>
+
+			<div class="twrapper"><div class="type clear">
+				<div class="value damage">&nbsp;</div>
+				<div class="name">离职员工</div>
+			</div></div> -->
+
+		</div>
+		<div class="quickNav">
+			<a ng-click="historyBack()"><span class="glyphicon glyphicon-circle-arrow-left"></span></a>
+			<a href="#/entry"><span class="glyphicon glyphicon-home"></span></a>
+			<a href="#/settings"><span class="glyphicon glyphicon-cog"></span></a>
+		</div>
+	</ion-footer-bar>
+</ion-view>

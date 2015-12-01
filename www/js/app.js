@@ -126,8 +126,17 @@ angular.module('starter', ['ionic', 'LocalStorageModule', 'ngResource', 'starter
         }
       }
     })
+  .state('flow-wall', {
+      url: '/flow/view-all/:PageType/:BizType',
+      views: {
+        'dash': {
+          templateUrl: 'templates/flow-view-wall.html',
+          controller: 'FlowWallCtrl'
+        }
+      }
+    })
   .state('cost-wall', {
-      url: '/cost/view-all/:PageType',
+      url: '/cost/view-all/:PageType/:BizType',
       views: {
         'dash': {
           templateUrl: 'templates/cost-view-wall.html',

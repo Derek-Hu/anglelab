@@ -49,6 +49,7 @@ angular.module('starter.controllers', [])
         return;
       }
       if(option.isURL){
+        $scope[name].close();
         $state.go(option.key, option.param);
         return;
       }
@@ -109,10 +110,17 @@ angular.module('starter.controllers', [])
       var BizTypeLen = $stateParams.BizType.length;
       if($scope.aspect == 'flow' && $stateParams.BizType.charAt(BizTypeLen-1)=='1'){
         $scope.typeDropdown.push({
+          key: 'flow-wall',
+          value: '明细',
+          isURL: true,
+          param: {PageType: $stateParams.PageType, BizType: $stateParams.BizType+'-1'}
+        });
+      }else if($scope.aspect == 'cost' && $stateParams.BizType.charAt(BizTypeLen-1)=='2'){
+        $scope.typeDropdown.push({
           key: 'cost-wall',
           value: '目视墙',
           isURL: true,
-          param: {PageType: $stateParams.PageType}
+          param: {PageType: $stateParams.PageType, BizType: $stateParams.BizType+'-1'}
         });
       }
       generatorDropdown('chartTypeDropdown', $scope.typeDropdown);     
@@ -215,14 +223,114 @@ angular.module('starter.controllers', [])
   });
 
 }])
-.controller('CostWallCtrl', ['$scope', 'Constant', 'localStorageService', 'MetaDataSvc', '$stateParams',
-  function($scope, Constant, localStorageService, MetaDataSvc, $stateParams) {
+.controller('FlowWallCtrl', ['$scope', 'Constant', 'localStorageService', 'MetaDataSvc', '$stateParams', 'KPIItem',
+  function($scope, Constant, localStorageService, MetaDataSvc, $stateParams, KPIItem) {
   
+  $scope.loadingStatus = '加载中';
+  $scope.headers = ['序号', '厂区', '周数', '停线时间', '停线累计分钟(补装台数)', '停线起止时间', '停线零件名称', '停线零件号', '情况描述', '责任方'];  
+
   $scope.$on('$ionicView.enter', function(e) {
     $scope.selectedCriteria = localStorageService.get('criteria');
     MetaDataSvc($stateParams.PageType).then(function(data){
       $scope.metaData = data;
     });
+    $scope.loadingStatus = '加载中';
+    KPIItem($stateParams.BizType).then(function(data){
+      if(!data.length){
+        $scope.loadingStatus = '暂无数据';
+        return;
+      }
+      $scope.loadingStatus = '';
+      $scope.records = data;
+    }, function(){
+      $scope.loadingStatus = '加载失败';
+      $scope.records = [];
+    });
+
+  });
+
+}])
+.controller('CostWallCtrl', ['$scope', 'Constant', 'localStorageService', 'MetaDataSvc', '$stateParams', 'KPIItem',
+  function($scope, Constant, localStorageService, MetaDataSvc, $stateParams, KPIItem) {
+  
+  $scope.loadingStatus = '加载中';
+  $scope.$on('$ionicView.enter', function(e) {
+    $scope.selectedCriteria = localStorageService.get('criteria');
+    MetaDataSvc($stateParams.PageType).then(function(data){
+      $scope.metaData = data;
+    });
+    $scope.loadingStatus = '加载中';
+    KPIItem($stateParams.BizType).then(function(data){
+      data = [{
+        name: 'XTAXG001',
+        status: 'ready', 
+        type: 'T3'
+      },{
+        name: 'XTAXG002',
+        status: 'stop', 
+        type: 'T15'
+      },{
+        name: 'XTAXG003',
+        status: 'normal', 
+        type: 'GUIDE'
+      },{
+        name: 'XTAXG004',
+        status: 'ready', 
+        type: 'SWITCH1'
+      },{
+        name: 'XTAXG005',
+        status: 'normal', 
+        type: ''
+      },{
+        name: 'XTAXG006',
+        status: 'normal', 
+        type: ''
+      },{
+        name: 'XTAXG007',
+        status: 'stop', 
+        type: ''
+      },{
+        name: 'XTAXG008',
+        status: 'stop', 
+        type: ''
+      },{
+        name: 'XTAXG009',
+        status: 'ready', 
+        type: ''
+      },{
+        name: 'XTAXG010',
+        status: 'stop', 
+        type: ''
+      }];
+      if(!data.length){
+        $scope.loadingStatus = '暂无数据';
+        return;
+      }
+      $scope.loadingStatus = '';
+      
+      var len = data.length, mod = len%4;
+      if(mod){
+        while(mod<4){
+          data.push({});
+          mod++;
+        }
+        console.log('data.length='+data.length);
+      }
+      var res = [], tempRow=[];
+      for(var i=0, len = data.length;i<=len;i++){
+        if(i%4==0 && i!=0){
+          res.push(tempRow);
+          tempRow=[];
+        }
+        tempRow.push(data[i]);
+      }
+      console.log('res=', res);
+      $scope.records = res;
+    }, function(){
+      $scope.loadingStatus = '加载失败';
+      $scope.records = [];
+    });
+
   });
 
 }])

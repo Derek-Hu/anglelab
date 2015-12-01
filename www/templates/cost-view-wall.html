@@ -7,33 +7,104 @@
 				<div class="fr logo-right-wp"><img src="img/LOG9.jpg"/></div>
 				<div>
 			  		<div class="bold-title single-line">
-			  			<span><span ng-bind="selectedCriteria.kuqu.whse_code"></span>移动设备运行状态目视墙</span>
-						<!-- <div class="subTitle">
+			  			<span class="mainTitle">移动设备运行状态目视墙</span>
+						<div class="subTitle">
 							(<span ng-bind="selectedCriteria.kuqu.whse_code">仓库代码</span>-
 							<span ng-bind="selectedCriteria.banzu.description">班组</span>-
 							<span ng-bind="selectedCriteria.banci.shift_code">班次</span>)
-						</div> -->
+						</div>
 			  		</div>
 				</div>
 			</div>
 		</div>
 	  	<div></div>
 	</ion-header-bar>
-    <ion-content class="bgFF" style="background: #FFF">
-	    <div class="kqhz gwrx content-wrapper">
-	    <span class="anji-theme" style="font-size:0.9em" ng-show="loadingStatus!=''" ng-bind="loadingStatus">加载中</span>
-		<table>
-			<thead>
-			<tr>
-				<th ng-repeat="h in headers" ng-bind="h"></th>
-			</tr>
-			</thead>
-			<tbody>
-				<tr ng-repeat="r in records">
-					<td ng-repeat = "h in headers" ng-bind="r[h]"></td>
-				</tr>
-			</tbody>
-		</table>
+    <ion-content>
+    	<div style="height: 100%; padding-bottom: 6em; position: relative;">
+			<div class="content-wrapper" style=";padding:0;">
+				<div style="height: 100%;">
+					<div class="kqhz gwrx content-wrapper" style="padding: 1em 0;">
+						<table class="cost-wall-table">
+							<thead>
+							<tr>
+								<th>序号</th>
+								<th>设备号</th>
+								<th>运行状态</th>
+								<th>序号</th>
+								<th>设备号</th>
+								<th>运行状态</th>
+								<th>序号</th>
+								<th>设备号</th>
+								<th>运行状态</th>
+								<th>序号</th>
+								<th>设备号</th>
+								<th>运行状态</th>
+							</tr>
+							</thead>
+							<tbody ng-show="loadingStatus!=''">
+								<tr class="anji-theme"><td colspan="12" ng-bind="loadingStatus">加载中</td></tr>
+							</tbody>
+							<tbody >
+								<tr ng-repeat="r in records">
+									<td ng-bind="3*$index+1"></td>
+									<td ng-bind="r[0].name" ng-class="{'cst-t3': r[0].type=='T3', 'cst-t15': r[0].type=='T15', 'cst-guide':r[0].type=='GUIDE', 'cst-swtich1': r[0].type=='SWITCH1'}"></td>
+									<td><span ng-if="r[0].name" ng-class="{'cst-stop': r[0].status=='stop', 'cst-ready': r[0].status=='ready', 'cst-normal': r[0].status=='normal'}" class="circle"></span></td>
+
+									<td ng-bind="3*$index+2"></td>
+									<td ng-bind="r[1].name" ng-class="{'cst-t3': r[1].type=='T3', 'cst-t15': r[1].type=='T15', 'cst-guide':r[1].type=='GUIDE', 'cst-swtich1': r[1].type=='SWITCH1'}"></td>
+									<td><span ng-if="r[1].name" ng-class="{'cst-stop': r[1].status=='stop', 'cst-ready': r[1].status=='ready', 'cst-normal': r[1].status=='normal'}" class="circle"></span></td>
+
+									<td ng-bind="3*$index+3"></td>
+									<td ng-bind="r[2].name" ng-class="{'cst-t3': r[2].type=='T3', 'cst-t15': r[2].type=='T15', 'cst-guide':r[2].type=='GUIDE', 'cst-swtich1': r[2].type=='SWITCH1'}"></td>
+									<td><span ng-if="r[2].name" ng-class="{'cst-stop': r[2].status=='stop', 'cst-ready': r[2].status=='ready', 'cst-normal': r[2].status=='normal'}" class="circle"></span></td>
+
+									<td ng-bind="3*$index+4"></td>
+									<td ng-bind="r[3].name" ng-class="{'cst-t3': r[3].type=='T3', 'cst-t15': r[3].type=='T15', 'cst-guide':r[3].type=='GUIDE', 'cst-swtich1': r[3].type=='SWITCH1'}"></td>
+									<td><span ng-if="r[3].name" ng-class="{'cst-stop': r[3].status=='stop', 'cst-ready': r[3].status=='ready', 'cst-normal': r[3].status=='normal'}" class="circle"></span></td>
+								</tr>
+							</tbody>
+						</table>
+						</div>
+				</div>
+			</div>
+			<div class="clear footer green-cross color-menu-type" style="position: absolute; bottom: 2.5em;">
+				
+				<div class="twrapper"><div class="type indicator clear">
+					<div class="value"><span class="circle cst-stop">&nbsp;</span></div>
+					<div class="name">已点检停止运行</div>
+				</div></div>
+				
+				<div class="twrapper"><div class="type indicator clear">
+					<div class="value"><span class="circle cst-ready">&nbsp;</span></div>
+					<div class="name">已点检待运行</div>
+				</div></div>
+
+				<div class="twrapper"><div class="type indicator clear">
+					<div class="value"><span class="circle cst-normal">&nbsp;</span></div>
+					<div class="name">已点检待正常运行</div>
+				</div></div>
+
+				<div class="twrapper"><div class="type indicator clear">
+					<div class="value cst-t3">&nbsp;</div>
+					<div class="name">3T长铲</div>
+				</div></div>
+
+				<div class="twrapper"><div class="type indicator clear">
+					<div class="value cst-t15">&nbsp;</div>
+					<div class="name">1.5T短铲</div>
+				</div></div>
+
+				<div class="twrapper"><div class="type indicator clear">
+					<div class="value cst-guide">&nbsp;</div>
+					<div class="name">牵引车</div>
+				</div></div>
+
+				<div class="twrapper"><div class="type indicator clear">
+					<div class="value cst-swtich1">&nbsp;</div>
+					<div class="name">挑拨至一线</div>
+				</div></div>
+			</div>
+			<div class="clear"></div>
 		</div>
     </ion-content>
     <ion-footer-bar>
@@ -79,7 +150,7 @@
 
 		</div>
 		<div class="quickNav">
-			<a href="#/dash"><span class="glyphicon glyphicon-circle-arrow-left"></span></a>
+			<a ng-click="historyBack()"><span class="glyphicon glyphicon-circle-arrow-left"></span></a>
 			<a href="#/entry"><span class="glyphicon glyphicon-home"></span></a>
 			<a href="#/settings"><span class="glyphicon glyphicon-cog"></span></a>
 		</div>
