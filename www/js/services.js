@@ -92,30 +92,36 @@ angular.module('starter.services', ['ngResource'])
     kpis: [{
         name: '安全',
         PageType: 5,
+        id: 1,
         type: 'security'
       },{
         name: '质量',
         PageType: 5,
+        id: 5,
         type: 'quality'
       },{
         PageType: 5,
         name: '流程',
+        id: 2,
         type: 'flow'
       },{
         PageType: 5,
         name: '人员',
+        id: 3,
         type: 'member'
       },{
         PageType: 5,
         name: '成本',
+        id: 4,
         type: 'cost'
       }],
     kpiBizType:{
-      'security': '1-0',
-      'flow': '2-0',
-      'quality': '5-0',
+      'kpiHome': 'L-0-0',
+      'security': 'L-1-0',
+      'flow': 'L-2-0',
       'member': '3-0',
-      'cost': '4-0'
+      'cost': '4-0',
+      'quality': 'L-5-0'
     },
     kpiMenus: {
       'security': [{
@@ -397,6 +403,9 @@ angular.module('starter.services', ['ngResource'])
       var deferred = $q.defer();
       var selectedCriteria = localStorageService.get('criteria');
       var menus = Constant.kpiMenus[kpiType];
+      if(kpiType == 'kpiHome'){
+        menus = Constant.kpis;
+      }
       if(!selectedCriteria.kuqu || !selectedCriteria.banzu || !selectedCriteria.banci){
         deferred.resolve(menus);
         return deferred.promise;
@@ -412,6 +421,19 @@ angular.module('starter.services', ['ngResource'])
         if(!data){
           return;
         }
+        if(kpiType == 'kpiHome'){
+          for(var i=0, ilen = data.length; i<ilen;i++){
+            for(var j=0, jlen = menus.length; j<jlen;j++){
+              if(data[i].ID == menus[j].id){
+                menus[j].hatColor = Constant.hatImage[data[i].STATE];
+                break;
+              }
+            }
+          }
+          deferred.resolve(menus);
+          return;
+        }
+
         for(var i=0, len = data.length; i<len;i++){
 
           var idx = parseInt(data[i].ID.split('-')[1])-1;

@@ -775,12 +775,18 @@ angular.module('starter.controllers', [])
     });
   });
 }])
-.controller('KPICtrl', ['$scope', 'Constant', '$state', 'localStorageService',
- function($scope, Constant, $state, localStorageService) {
+.controller('KPICtrl', ['$scope', 'Constant', '$state', 'localStorageService', 'KPIDetail',
+ function($scope, Constant, $state, localStorageService, KPIDetail) {
 
   $scope.kpis=Constant.kpis;
   $scope.$on('$ionicView.enter', function(e) {
     $scope.selectedCriteria = localStorageService.get('criteria');
+
+    KPIDetail('kpiHome').then(function(menus){
+      $scope.menus = menus;
+
+    },function(){});
+
   });
   $scope.goDetail = function(kpiType, PageType){
     $state.go('kpi-detail',{"aspect": kpiType, "PageType": PageType});
