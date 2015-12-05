@@ -496,6 +496,8 @@ ion-footer-bar .color-menu-type.header div.twrapper:last-child{ float: left;}
 .color-menu-type.footer.green-cross .value.emmerge{background-color: #F2E439;}
 .color-menu-type.footer.green-cross .value.damage{ background-color: #E73334;}
 .color-menu-type.footer.green-cross .value.supplier{ background-color: #F5AA35;}
+.color-menu-type.footer.green-cross .value.traffic{ background-color: #800080;}
+.color-menu-type.footer.green-cross .value.other-accident{ background-color: #000;}
 
 /*.color-menu-type.footer{padding-bottom: 1em;}*/
 .color-menu-type.footer div.twrapper{ float: left;     margin-right: 1em;}
@@ -859,10 +861,10 @@ span.arrow-border-up span{
 	visibility: hidden;
 }
 
-.member-status.v0{background:#A2D329;}
+.member-status.v0{background: #E73334;}
 .member-status.v1{background: #12AAEB;}
 .member-status.v2{background: #F5AA35;}
-.member-status.v3{background: #E73334;}
+.member-status.v3{background: #A2D329;}
 .newOrOld{
     visibility: hidden;
 }
@@ -900,3 +902,4 @@ span.arrow-border-up span{
 .cst-stop{color: #E52E30;}
 
 .kqhz table.cost-wall-table td, .kqhz table.cost-wall-table th{padding: 0.5em 0;}
+.calenGray{color: #666 !important;}

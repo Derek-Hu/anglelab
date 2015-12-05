@@ -83,7 +83,9 @@ angular.module('starter.services', ['ngResource'])
       '绿': '#A2D329',
       '黄': '#F2E439',
       '蓝': '#12AAEB',
-      '橙': '#F5AA35'
+      '橙': '#F5AA35',
+      '紫': '#800080',
+      '黑': '#000'
     },
     hatImage: {
       '红': 'red',

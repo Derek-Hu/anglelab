@@ -29,35 +29,35 @@
 					<tr>
 						<td class="empty">&nbsp;</td>
 						<td class="empty">&nbsp;</td>
-						<td ng-repeat="elem in rows[0] track by $index" ng-style="{'background': colors[elem.STATE]}" ng-bind="elem.ID"></td>
+						<td ng-repeat="elem in rows[0] track by $index" ng-style="{'background': colors[elem.STATE]}" ng-class="{calenGray: !colors[elem.STATE]}" ng-bind="elem.ID"></td>
 						<td class="empty">&nbsp;</td>
 						<td class="empty">&nbsp;</td>
 					</tr>
 					<tr>
 						<td class="empty">&nbsp;</td>
 						<td class="empty">&nbsp;</td>
-						<td ng-repeat="elem in rows[1] track by $index" ng-style="{'background': colors[elem.STATE]}" ng-bind="elem.ID"></td>
+						<td ng-repeat="elem in rows[1] track by $index" ng-style="{'background': colors[elem.STATE]}" ng-class="{calenGray: !colors[elem.STATE]}" ng-bind="elem.ID"></td>
 						<td class="empty">&nbsp;</td>
 						<td class="empty">&nbsp;</td></tr>
 					<tr>
-						<td ng-repeat="elem in rows[2] track by $index" ng-style="{'background': colors[elem.STATE]}" ng-bind="elem.ID"></td>
+						<td ng-repeat="elem in rows[2] track by $index" ng-style="{'background': colors[elem.STATE]}" ng-class="{calenGray: !colors[elem.STATE]}" ng-bind="elem.ID"></td>
 					</tr>
 					<tr>
-						<td ng-repeat="elem in rows[3] track by $index" ng-style="{'background': colors[elem.STATE]}" ng-bind="elem.ID"></td>
+						<td ng-repeat="elem in rows[3] track by $index" ng-style="{'background': colors[elem.STATE]}" ng-class="{calenGray: !colors[elem.STATE]}" ng-bind="elem.ID"></td>
 					</tr>
 					<tr>
-						<td ng-repeat="elem in rows[4] track by $index" ng-style="{'background': colors[elem.STATE]}" ng-bind="elem.ID"></td>
+						<td ng-repeat="elem in rows[4] track by $index" ng-style="{'background': colors[elem.STATE]}" ng-class="{calenGray: !colors[elem.STATE]}" ng-bind="elem.ID"></td>
 					</tr>
 					<tr>
 						<td class="empty">&nbsp;</td>
 						<td class="empty">&nbsp;</td>
-						<td ng-repeat="elem in rows[5] track by $index" ng-style="{'background': colors[elem.STATE]}" ng-bind="elem.ID"></td>
+						<td ng-repeat="elem in rows[5] track by $index" ng-style="{'background': colors[elem.STATE]}" ng-class="{calenGray: !colors[elem.STATE]}" ng-bind="elem.ID"></td>
 						<td class="empty">&nbsp;</td>
 						<td class="empty">&nbsp;</td>
 					</tr>
 					<tr><td class="empty">&nbsp;</td>
 						<td class="empty">&nbsp;</td>
-						<td ng-repeat="elem in rows[6] track by $index" ng-style="{'background': colors[elem.STATE]}" ng-bind="elem.ID"></td>
+						<td ng-repeat="elem in rows[6] track by $index" ng-style="{'background': colors[elem.STATE]}" ng-class="{calenGray: !colors[elem.STATE]}" ng-bind="elem.ID"></td>
 						<td class="empty">&nbsp;</td>
 						<td class="empty">&nbsp;</td></tr>
 					</tbody>
@@ -89,6 +89,16 @@
 				<div class="twrapper"><div class="type indicator clear">
 					<div class="value supplier">&nbsp;</div>
 					<div class="name">供应商事故</div>
+				</div></div>
+
+				<div class="twrapper"><div class="type indicator clear">
+					<div class="value traffic">&nbsp;</div>
+					<div class="name">交通颜色</div>
+				</div></div>
+
+				<div class="twrapper"><div class="type indicator clear">
+					<div class="value other-accident">&nbsp;</div>
+					<div class="name">其他事故</div>
 				</div></div>
 			</div>
 			<div class="clear"></div>

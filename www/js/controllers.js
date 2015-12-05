@@ -337,6 +337,14 @@ angular.module('starter.controllers', [])
 .controller('GreenCrossCtrl', ['$scope', '$stateParams', '$state', '$ionicScrollDelegate', 'MetaDataSvc', 'KPIItem', 'Constant', 'DateUtil', 'localStorageService',
   function($scope, $stateParams, $state, $ionicScrollDelegate, MetaDataSvc, KPIItem, Constant, DateUtil, localStorageService) {
     function generate(data){
+      for(var i=0, len = DateUtil.getLastDay();i<len;i++){
+        if(!data[i]){
+          data.push({
+            ID: i+1,
+            STATE: ''
+          })
+        }
+      }
       $scope.rows = [];
       $scope.rows.push(data.filter(function(el){
         return parseInt(el.ID)<=3; 
