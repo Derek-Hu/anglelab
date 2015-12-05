@@ -20,7 +20,7 @@
 	  	<div></div>
 	</ion-header-bar>
     <ion-content>
-    	<div style="height: 100%; padding-bottom: 6em; position: relative;">
+    	<div style="padding-bottom: 6em; position: relative;">
 			<div class="content-wrapper" style=";padding:0;">
 				<div style="height: 100%;">
 					<div class="kqhz gwrx content-wrapper" style="padding: 1em 0;">
@@ -28,24 +28,65 @@
 							<thead>
 							<tr>
 								<th>序号</th>
-								<th>设备号</th>
-								<th>运行状态</th>
+								<th>类型</th>
 								<th>序号</th>
 								<th>设备号</th>
-								<th>运行状态</th>
+								<th>状态</th>
 								<th>序号</th>
 								<th>设备号</th>
-								<th>运行状态</th>
+								<th>状态</th>
 								<th>序号</th>
 								<th>设备号</th>
-								<th>运行状态</th>
+								<th>状态</th>
+
 							</tr>
 							</thead>
 							<tbody ng-show="loadingStatus!=''">
 								<tr class="anji-theme"><td colspan="12" ng-bind="loadingStatus">加载中</td></tr>
 							</tbody>
-							<tbody >
-								<tr ng-repeat="r in records">
+							<tbody ng-repeat="r in rows">
+								<!-- 
+									rows = [{
+							          name: 
+							          items: [{
+							            operator:,
+							            rotate: ,
+							            months: [1,0,0,1,1,0,0,1,1,0,0,1]
+							          }]
+							        }]
+								-->
+								<tr>
+									<td rowspan="{{r.items.length}}" ng-bind="$index+1"></td>
+									<td rowspan="{{r.items.length}}" ng-bind="r.name"></td>
+									<td ng-bind="1"></td>
+									<td ng-bind="r.items[0].CODE"></td>
+									<td><span ng-if="r.items[0].STATE" ng-class="{'cst-stop': r.items[0].STATE=='2', 'cst-ready': r.items[0].STATE=='3', 'cst-normal': r.items[0].STATE=='1'}" class="circle"></span></td>
+									<td ng-bind="2"></td>
+									<td ng-bind="r.items[1].CODE"></td>
+									<td><span ng-if="r.items[1].STATE" ng-class="{'cst-stop': r.items[1].STATE=='2', 'cst-ready': r.items[1].STATE=='3', 'cst-normal': r.items[1].STATE=='1'}" class="circle"></span></td>
+									<td ng-bind="3"></td>
+									<td ng-bind="r.items[2].CODE"></td>
+									<td><span ng-if="r.items[2].STATE" ng-class="{'cst-stop': r.items[2].STATE=='2', 'cst-ready': r.items[2].STATE=='3', 'cst-normal': r.items[2].STATE=='1'}" class="circle"></span></td>
+
+								</tr>
+								<tr ng-if="$index!=0" ng-repeat="sw in r.splitRows track by $index">
+									<td ng-bind="3*$index"></td>
+									<td ng-bind="r.items[3*$index].CODE"></td>
+									<td><span ng-if="r.items[3*$index].STATE" ng-class="{'cst-stop': r.items[3*$index].STATE=='2', 'cst-ready': r.items[3*$index].STATE=='3', 'cst-normal': r.items[3*$index].STATE=='1'}" class="circle"></span></td>
+
+									<td ng-bind="3*$index+1"></td>
+									<td ng-bind="r.items[3*$index+1].CODE"></td>
+									<td><span ng-if="r.items[3*$index+1].STATE" ng-class="{'cst-stop': r.items[3*$index+1].STATE=='2', 'cst-ready': r.items[3*$index+1].STATE=='3', 'cst-normal': r.items[3*$index+1].STATE=='1'}" class="circle"></span></td>
+									
+									<td ng-bind="3*$index+2"></td>
+									<td ng-bind="r.items[3*$index+2].CODE"></td>
+									<td><span ng-if="r.items[3*$index+2].STATE" ng-class="{'cst-stop': r.items[3*$index+2].STATE=='2', 'cst-ready': r.items[3*$index+2].STATE=='3', 'cst-normal': r.items[3*$index+2].STATE=='1'}" class="circle"></span></td>
+
+								</tr>								
+							</tbody>
+
+							<!-- <tbody >
+								<tr ng-repeat="r in rows">
 									<td ng-bind="3*$index+1"></td>
 									<td ng-bind="r[0].name" ng-class="{'cst-t3': r[0].type=='T3', 'cst-t15': r[0].type=='T15', 'cst-guide':r[0].type=='GUIDE', 'cst-swtich1': r[0].type=='SWITCH1'}"></td>
 									<td><span ng-if="r[0].name" ng-class="{'cst-stop': r[0].status=='stop', 'cst-ready': r[0].status=='ready', 'cst-normal': r[0].status=='normal'}" class="circle"></span></td>
@@ -62,7 +103,7 @@
 									<td ng-bind="r[3].name" ng-class="{'cst-t3': r[3].type=='T3', 'cst-t15': r[3].type=='T15', 'cst-guide':r[3].type=='GUIDE', 'cst-swtich1': r[3].type=='SWITCH1'}"></td>
 									<td><span ng-if="r[3].name" ng-class="{'cst-stop': r[3].status=='stop', 'cst-ready': r[3].status=='ready', 'cst-normal': r[3].status=='normal'}" class="circle"></span></td>
 								</tr>
-							</tbody>
+							</tbody> -->
 						</table>
 						</div>
 				</div>

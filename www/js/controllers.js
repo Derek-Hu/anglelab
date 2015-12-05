@@ -278,52 +278,179 @@ angular.module('starter.controllers', [])
     $scope.loadingStatus = '加载中';
     KPIItem($stateParams.BizType).then(function(data){
       data = [{
-        name: 'XTAXG001',
-        status: 'ready', 
-        type: 'T3'
+        CODE: 'XTAXG001',
+        STATE: '1', 
+        TYPE: 'T3',
+        OrderNumber: 1
       },{
-        name: 'XTAXG002',
-        status: 'stop', 
-        type: 'T15'
+        CODE: 'XTAXG002',
+        STATE: '2', 
+        TYPE: 'T3',
+        OrderNumber: 2
       },{
-        name: 'XTAXG003',
-        status: 'normal', 
-        type: 'GUIDE'
+        CODE: 'XTAXG003',
+        STATE: '3',
+        OrderNumber: 3, 
+        TYPE: 'T3'
       },{
-        name: 'XTAXG004',
-        status: 'ready', 
-        type: 'SWITCH1'
+        CODE: 'XTAXG004',
+        STATE: '2', 
+        OrderNumber: 4,
+        TYPE: 'T3'
       },{
-        name: 'XTAXG005',
-        status: 'normal', 
-        type: ''
+        CODE: 'XTAXG005',
+        STATE: '2', 
+        OrderNumber: 5,
+        TYPE: 'T3'
       },{
-        name: 'XTAXG006',
-        status: 'normal', 
-        type: ''
+        CODE: 'XTAXG006',
+        STATE: '3', 
+        OrderNumber: 6,
+        TYPE: 'T3'
       },{
-        name: 'XTAXG007',
-        status: 'stop', 
-        type: ''
+        CODE: 'XTAXG007',
+        STATE: '2', 
+        OrderNumber: 7,
+        TYPE: 'T3'
       },{
-        name: 'XTAXG008',
-        status: 'stop', 
-        type: ''
+        CODE: 'XTAXG008',
+        STATE: '3', 
+        OrderNumber: 8,
+        TYPE: 'T2'
       },{
-        name: 'XTAXG009',
-        status: 'ready', 
-        type: ''
+        CODE: 'XTAXG009',
+        STATE: '1', 
+        OrderNumber: 9,
+        TYPE: 'T2'
       },{
-        name: 'XTAXG010',
-        status: 'stop', 
-        type: ''
+        CODE: 'XTAXG010',
+        STATE: '3', 
+        OrderNumber: 10,
+        TYPE: 'T2'
+      },{
+        CODE: 'XTAXG011',
+        STATE: '3', 
+        OrderNumber: 11,
+        TYPE: 'T2'
+      },{
+        CODE: 'XTAXG012',
+        STATE: '1', 
+        OrderNumber: 12,
+        TYPE: 'T2'
+      },{
+        CODE: 'XTAXG013',
+        STATE: '3', 
+        OrderNumber: 13,
+        TYPE: 'T2'
+      },{
+        CODE: 'XTAXG014',
+        STATE: '3', 
+        OrderNumber: 14,
+        TYPE: 'T2'
+      },{
+        CODE: 'XTAXG015',
+        STATE: '1', 
+        OrderNumber: 15,
+        TYPE: 'T2'
+      },{
+        CODE: 'XTAXG016',
+        STATE: '3', 
+        OrderNumber: 16,
+        TYPE: 'T2'
+      },{
+        CODE: 'XTAXG017',
+        STATE: '3', 
+        OrderNumber: 17,
+        TYPE: 'T2'
+      },{
+        CODE: 'XTAXG018',
+        STATE: '1', 
+        OrderNumber: 18,
+        TYPE: 'T2'
+      },{
+        CODE: 'XTAXG019',
+        STATE: '3', 
+        OrderNumber: 19,
+        TYPE: 'T5'
+      },{
+        CODE: 'XTAXG020',
+        STATE: '3', 
+        OrderNumber: 20,
+        TYPE: 'T5'
+      },{
+        CODE: 'XTAXG021',
+        STATE: '1', 
+        OrderNumber: 21,
+        TYPE: 'T5'
+      },{
+        CODE: 'XTAXG022',
+        STATE: '3', 
+        OrderNumber: 22,
+        TYPE: 'T5'
       }];
+
       if(!data.length){
         $scope.loadingStatus = '暂无数据';
         return;
       }
       $scope.loadingStatus = '';
+      // ----------
+      data.sort(function(a, b){
+        return parseInt(a.OrderNumber)-parseInt(b.OrderNumber);
+      })
       
+      /*
+        rows = [{
+          name: 
+          items: [{
+            operator:,
+            rotate: ,
+            months: [1,0,0,1,1,0,0,1,1,0,0,1]
+          }]
+        }]
+      */
+
+      /*
+      {
+        CODE: 'XTAXG009',
+        STATE: '1', 
+        TYPE: 'T2'
+      }
+
+        {
+          "TYPE":"检验",
+          "month_r":"11",
+          "OrderNumber":7,
+          "Operate_Name":"张四",
+          "Rotation_Name":"张五"
+        }
+      */
+      var rows = [];
+      for(var i=0, len = data.length;i<len;i++){
+        // find job type
+        var jobType = {};
+        var record = data[i];
+        for(var j = 0, jl = rows.length; j < jl; j++){
+          if(rows[j] && rows[j].name == record.TYPE){
+            rows[j].items.push(data[i]);
+            break;
+          }
+        }
+        if(j==jl){
+          jobType.name = record.TYPE;
+          jobType.items = [data[i]];
+          rows.push(jobType);
+        }
+      }
+      $scope.rows = rows;
+
+      for(var i=0, len = rows.length;i<len;i++){
+        rows[i].splitRows = [];
+        rows[i].splitRows.length = Math.ceil(rows[i].items.length/3);
+      }
+      console.log(rows);
+
+      /*// ----------
       var len = data.length, mod = len%4;
       if(mod){
         while(mod<4){
@@ -341,10 +468,10 @@ angular.module('starter.controllers', [])
         tempRow.push(data[i]);
       }
       console.log('res=', res);
-      $scope.records = res;
+      $scope.records = res;*/
     }, function(){
       $scope.loadingStatus = '加载失败';
-      $scope.records = [];
+      $scope.rows = [];
     });
 
   });
