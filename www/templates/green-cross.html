@@ -9,9 +9,9 @@
 					<div class="bold-title single-line">
 			  			<span class="mainTitle">安全绿十字</span>
 						<div class="subTitle">
-							(<span ng-bind="selectedCriteria.kuqu.whse_code">仓库代码</span>-
-							<span ng-bind="selectedCriteria.banzu.description">班组</span>-
-							<span ng-bind="selectedCriteria.banci.shift_code">班次</span>)
+							(<span ng-bind="selectedCriteria.kuqu.whse_code">仓库代码</span>
+							<span ng-if="!isLine" ng-bind="'-'+selectedCriteria.banzu.description">班组</span>
+							<span ng-if="!isLine" ng-bind="'-'+selectedCriteria.banci.shift_code">班次</span>)
 						</div>
 			  		</div>
 				</div>
@@ -64,7 +64,12 @@
 				</table>
 				</div>
 			</div>
-			<div class="clear footer green-cross color-menu-type" style="position: absolute; bottom: 2.5em;">
+			<div class="clear"></div>
+		</div>
+    </ion-content>
+	<ion-footer-bar>
+		<div>
+			<div class="clear footer green-cross color-menu-type" style="">
 				
 				<div class="twrapper"><div class="type indicator clear">
 					<div class="value no-acc">&nbsp;</div>
@@ -101,10 +106,6 @@
 					<div class="name">其他事故</div>
 				</div></div>
 			</div>
-			<div class="clear"></div>
-		</div>
-    </ion-content>
-	<ion-footer-bar>
     <div class="clear header tc color-menu-type">
 		<div class="twrapper">
 			<div class="type two clear">
@@ -130,5 +131,6 @@
 		<a href="#/entry"><span class="glyphicon glyphicon-home"></span></a>
 		<a href="#/settings"><span class="glyphicon glyphicon-cog"></span></a>
 	</div>
+</div>
 	</ion-footer-bar>
 </ion-view>

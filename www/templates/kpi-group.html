@@ -9,10 +9,11 @@
 			  		<div class="bold-title single-line">
 			  			<span class="mainTitle">KPI跟踪</span>
 						<div class="subTitle">
-				  			(<span ng-bind="selectedCriteria.kuqu?selectedCriteria.kuqu.whse_code+'-':''"></span>
-				  			<span ng-bind="selectedCriteria.banzu?selectedCriteria.banzu.description+'-':''"></span>
-				  			<span ng-bind="selectedCriteria.banci?selectedCriteria.banci.shift_code:''"></span>)
+				  			(<span ng-bind="selectedCriteria.kuqu?selectedCriteria.kuqu.whse_code:''"></span>
+				  			<span ng-if="!isLine" ng-bind="'-'+selectedCriteria.banzu?selectedCriteria.banzu.description+'-':''"></span>
+				  			<span ng-if="!isLine" ng-bind="selectedCriteria.banci?selectedCriteria.banci.shift_code:''"></span>)
 				  		</div>
+
 						</div>
 						
 				</div>
@@ -37,7 +38,7 @@
 	    	</div>
 	    </div>
 		<div class="quickNav" style="bottom: 0;">
-			<a href="#/dash"><span class="glyphicon glyphicon-circle-arrow-left"></span></a>
+			<a ng-href="{{isLine? '#/view-board' :'#/dash'}}"><span class="glyphicon glyphicon-circle-arrow-left"></span></a>
 			<a href="#/entry"><span class="glyphicon glyphicon-home"></span></a>
 			<a href="#/settings"><span class="glyphicon glyphicon-cog"></span></a>
 		</div>

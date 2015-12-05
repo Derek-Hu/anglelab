@@ -9,9 +9,9 @@
 			  		<div class="bold-title single-line">
 			  			<span class="mainTitle">KPI跟踪-<span ng-bind="aspectTitle"></span></span>
 						<div class="subTitle">
-				  			(<span ng-bind="criteriaFromCache.kuqu?criteriaFromCache.kuqu.whse_code+'-':''"></span>
-				  			<span ng-bind="criteriaFromCache.banzu?criteriaFromCache.banzu.description+'-':''"></span>
-				  			<span ng-bind="criteriaFromCache.banci?criteriaFromCache.banci.shift_code:''"></span>)</div>
+				  			(<span ng-bind="criteriaFromCache.kuqu?criteriaFromCache.kuqu.whse_code:''"></span>
+				  			<span ng-if="!isLine" ng-bind="'-'+criteriaFromCache.banzu?criteriaFromCache.banzu.description:''"></span>
+				  			<span ng-if="!isLine" ng-bind="'-'+criteriaFromCache.banci?criteriaFromCache.banci.shift_code:''"></span>)</div>
 						</div>
 				</div>
 			</div>
@@ -83,7 +83,7 @@
 	</div>
 	<div class="clear"></div>
 	<div class="quickNav">
-		<a href="#/kpi"><span class="glyphicon glyphicon-circle-arrow-left"></span></a>
+		<a ng-href="{{isLine? '#/line/kpi' :'#/kpi'}}"><span class="glyphicon glyphicon-circle-arrow-left"></span></a>
 		<a href="#/entry"><span class="glyphicon glyphicon-home"></span></a>
 		<a href="#/settings"><span class="glyphicon glyphicon-cog"></span></a>
 	</div>

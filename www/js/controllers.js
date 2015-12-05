@@ -6,6 +6,7 @@ angular.module('starter.controllers', [])
   var aspect = Constant.kpiMenus[$stateParams.aspect];
   $scope.aspect = $stateParams.aspect;
 
+  $scope.isLine = $stateParams.isLine;
   var BizType = $stateParams.BizType;
   for(var i =0, len = aspect.length; i<len;i++){
     if(aspect[i].BizType == BizType){
@@ -89,7 +90,7 @@ angular.module('starter.controllers', [])
 
     var lastDay = DateUtil.getLastDay();
 
-    KPIItem($stateParams.BizType).then(function(data){
+    KPIItem($stateParams.BizType, $scope.isLine).then(function(data){
 
       data = data.map(function(d){
         if($scope.chart.isRate){
@@ -129,14 +130,14 @@ angular.module('starter.controllers', [])
           key: 'flow-wall',
           value: '明细',
           isURL: true,
-          param: {PageType: $stateParams.PageType, BizType: $stateParams.BizType+'-1'}
+          param: {PageType: $stateParams.PageType, BizType: $stateParams.BizType+'-1', isLine: $scope.isLine}
         });
       }else if($scope.aspect == 'cost' && $stateParams.BizType.charAt(BizTypeLen-1)=='2'){
         $scope.typeDropdown.push({
           key: 'cost-wall',
           value: '目视墙',
           isURL: true,
-          param: {PageType: $stateParams.PageType, BizType: $stateParams.BizType+'-1'}
+          param: {PageType: $stateParams.PageType, BizType: $stateParams.BizType+'-1', isLine: $scope.isLine}
         });
       }
       generatorDropdown('chartTypeDropdown', $scope.typeDropdown);     
@@ -153,7 +154,7 @@ angular.module('starter.controllers', [])
     "nm": "KPI跟踪", 
     "enm": "KPI Tracking",
     "fc": "#36CD14", 
-    "state": "",
+    "state": "line-kpi",
     "bg": 'img/svg/kpi-tracking.svg'
   },{
     'PageType': 11,
@@ -163,6 +164,14 @@ angular.module('starter.controllers', [])
     "state": "",
     "bg": 'img/svg/problem-tracking.svg'
   }];
+
+  $scope.goTo = function (menu) {
+    localStorageService.set('criteria', $scope.criteria);
+    if(!menu.state){
+      return;
+    }
+    $state.go(menu.state,{PageType : menu.PageType});
+  }
 
   $scope.kqDropdown = {
     isOpen : false,
@@ -244,14 +253,14 @@ angular.module('starter.controllers', [])
   
   $scope.loadingStatus = '加载中';
   $scope.headers = ['序号', '厂区', '周数', '停线时间', '停线累计分钟(补装台数)', '停线起止时间', '停线零件名称', '停线零件号', '情况描述', '责任方'];  
-
+  $scope.isLine = $stateParams.isLine;
   $scope.$on('$ionicView.enter', function(e) {
     $scope.selectedCriteria = localStorageService.get('criteria');
     MetaDataSvc($stateParams.PageType).then(function(data){
       $scope.metaData = data;
     });
     $scope.loadingStatus = '加载中';
-    KPIItem($stateParams.BizType).then(function(data){
+    KPIItem($stateParams.BizType, $scope.isLine).then(function(data){
       if(!data.length){
         $scope.loadingStatus = '暂无数据';
         return;
@@ -268,7 +277,7 @@ angular.module('starter.controllers', [])
 }])
 .controller('CostWallCtrl', ['$scope', 'Constant', 'localStorageService', 'MetaDataSvc', '$stateParams', 'KPIItem',
   function($scope, Constant, localStorageService, MetaDataSvc, $stateParams, KPIItem) {
-  
+  $scope.isLine = $stateParams.isLine;
   $scope.loadingStatus = '加载中';
   $scope.$on('$ionicView.enter', function(e) {
     $scope.selectedCriteria = localStorageService.get('criteria');
@@ -276,7 +285,7 @@ angular.module('starter.controllers', [])
       $scope.metaData = data;
     });
     $scope.loadingStatus = '加载中';
-    KPIItem($stateParams.BizType).then(function(data){
+    KPIItem($stateParams.BizType, $scope.isLine).then(function(data){
 
       if(!data.length){
         $scope.loadingStatus = '暂无数据';
@@ -414,6 +423,7 @@ angular.module('starter.controllers', [])
     }
   $scope.colors = Constant.kpiColor;
   $scope.isLoading = false;
+  $scope.isLine = $stateParams.isLine;
   $scope.$on('$ionicView.enter', function(e) {
     $scope.tableWidth = angular.element(document.getElementById('greenCrossTable')).height();
     $scope.isLoading = true;
@@ -421,7 +431,7 @@ angular.module('starter.controllers', [])
     MetaDataSvc($stateParams.PageType).then(function(data){
       $scope.metaData = data;
     });
-    KPIItem($stateParams.BizType).then(function(data){
+    KPIItem($stateParams.BizType, $scope.isLine).then(function(data){
       if(!data.length){
         var data = [];
         for(var i=0, len = DateUtil.getLastDay(); i<len;i++){
@@ -819,17 +829,18 @@ angular.module('starter.controllers', [])
  function($scope, Constant, $state, localStorageService, KPIDetail) {
 
   $scope.kpis=Constant.kpis;
+  $scope.isLine = true;
   $scope.$on('$ionicView.enter', function(e) {
     $scope.selectedCriteria = localStorageService.get('criteria');
 
-    KPIDetail('kpiHome').then(function(menus){
-      $scope.menus = menus;
+    KPIDetail('kpiHome', $scope.isLine).then(function(menus){
+      $scope.kpis = menus;
 
     },function(){});
 
   });
   $scope.goDetail = function(kpiType, PageType){
-    $state.go('kpi-detail',{"aspect": kpiType, "PageType": PageType});
+    $state.go('kpi-detail',{"aspect": kpiType, "PageType": PageType, isLine: true});
   }
 
 }])
@@ -860,9 +871,9 @@ angular.module('starter.controllers', [])
   function($scope, KPIDetail, Constant, $stateParams, MetaDataSvc, $state, localStorageService) {
 
     $scope.goKPIDetail = function(state, BizType){
-      $state.go(state?state:'kpi-item',{"aspect": $stateParams.aspect, "PageType": $stateParams.PageType, "BizType": BizType});
+      $state.go(state?state:'kpi-item',{"aspect": $stateParams.aspect, "PageType": $stateParams.PageType, "BizType": BizType, "isLine" : $stateParams.isLine});
     }
-
+    $scope.isLine = $stateParams.isLine;
     var type = $stateParams.aspect;
     for(var idx=0, idlen = Constant.kpis.length;idx<idlen;idx++){
       if(Constant.kpis[idx].type == type){
@@ -873,7 +884,7 @@ angular.module('starter.controllers', [])
     $scope.$on('$ionicView.enter', function(e) {
       $scope.criteriaFromCache = localStorageService.get('criteria');
       $scope.menus = Constant.kpiMenus[type];
-      KPIDetail(type).then(function(menus){
+      KPIDetail(type, $scope.isLine).then(function(menus){
         $scope.menus = menus;
 
         if(type == 'security'){

@@ -327,18 +327,26 @@ angular.module('starter.services', ['ngResource'])
 }])
 .service('KPIItem', [ 'Backend', 'Constant', 'localStorageService', '$q',
   function(Backend, Constant, localStorageService, $q) {
-    return function(kpiType){
+    return function(kpiType, isLine){
       var deferred = $q.defer();
       var selectedCriteria = localStorageService.get('criteria');
-      if(!selectedCriteria.kuqu || !selectedCriteria.banzu || !selectedCriteria.banci){
+
+      if(isLine){
+        if(!selectedCriteria.kuqu){
+          deferred.resolve([]);
+          return deferred.promise;
+        }
+      }
+
+      if(!isLine && (!selectedCriteria.kuqu || !selectedCriteria.banzu || !selectedCriteria.banci)){
         deferred.resolve([]);
         return deferred.promise;
       }
       Backend().kpi.query({
         'WareHouseId': selectedCriteria.kuqu.Id,
-        'ZoneId': selectedCriteria.banzu.Id,
-        'ShiftId': selectedCriteria.banci.ID,
-        'BizType': kpiType
+        'ZoneId': selectedCriteria.banzu?selectedCriteria.banzu.Id: '',
+        'ShiftId': selectedCriteria.banci?selectedCriteria.banci.ID: '',
+        'BizType': (isLine?'L-': '')+kpiType
       }, function(data){
         if(!data){
           data = [];
@@ -401,22 +409,28 @@ angular.module('starter.services', ['ngResource'])
 }])
 .service('KPIDetail', [ 'Backend', 'Constant', 'localStorageService', '$q',
   function(Backend, Constant, localStorageService, $q) {
-    return function(kpiType){
+    return function(kpiType, isLine){
       var deferred = $q.defer();
       var selectedCriteria = localStorageService.get('criteria');
-      var menus = Constant.kpiMenus[kpiType];
-      if(kpiType == 'kpiHome'){
-        menus = Constant.kpis;
+      var menus = angular.copy(Constant.kpiMenus[kpiType]);
+      if(isLine && kpiType=='kpiHome'){
+        menus = angular.copy(Constant.kpis);
+        if(!selectedCriteria.kuqu){
+          deferred.resolve(menus);
+          return deferred.promise;
+        }
       }
-      if(!selectedCriteria.kuqu || !selectedCriteria.banzu || !selectedCriteria.banci){
+
+      if(!isLine &&
+         (!selectedCriteria.kuqu || !selectedCriteria.banzu || !selectedCriteria.banci)){
         deferred.resolve(menus);
         return deferred.promise;
       }
       Backend().kpi.query({
         'WareHouseId': selectedCriteria.kuqu.Id,
-        'ZoneId': selectedCriteria.banzu.Id,
-        'ShiftId': selectedCriteria.banci.ID,
-        'BizType': Constant.kpiBizType[kpiType]
+        'ZoneId': selectedCriteria.banzu? selectedCriteria.banzu.Id: '',
+        'ShiftId': selectedCriteria.banci? selectedCriteria.banci.ID: '',
+        'BizType': (isLine?'L-': '')+Constant.kpiBizType[kpiType]
       }, function(data){
 
         var isRate = (kpiType == 'member' || kpiType == 'cost' || kpiType == 'quality')

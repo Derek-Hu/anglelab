@@ -118,7 +118,7 @@ angular.module('starter', ['ionic', 'LocalStorageModule', 'ngResource', 'starter
       }
     })
   .state('green-cross', {
-      url: '/green-cross/:aspect/:PageType/:BizType',
+      url: '/green-cross/:aspect/:PageType/:BizType/:isLine',
       views: {
         'dash': {
           templateUrl: 'templates/green-cross.html',
@@ -127,7 +127,7 @@ angular.module('starter', ['ionic', 'LocalStorageModule', 'ngResource', 'starter
       }
     })
   .state('flow-wall', {
-      url: '/flow/view-all/:PageType/:BizType',
+      url: '/flow/view-all/:PageType/:BizType/:isLine',
       views: {
         'dash': {
           templateUrl: 'templates/flow-view-wall.html',
@@ -136,7 +136,7 @@ angular.module('starter', ['ionic', 'LocalStorageModule', 'ngResource', 'starter
       }
     })
   .state('cost-wall', {
-      url: '/cost/view-all/:PageType/:BizType',
+      url: '/cost/view-all/:PageType/:BizType/:isLine',
       views: {
         'dash': {
           templateUrl: 'templates/cost-view-wall.html',
@@ -145,7 +145,7 @@ angular.module('starter', ['ionic', 'LocalStorageModule', 'ngResource', 'starter
       }
     })
   .state('kpi-item', {
-      url: '/kpi-item/:aspect/:PageType/:BizType',
+      url: '/kpi-item/:aspect/:PageType/:BizType/:isLine',
       views: {
         'dash': {
           templateUrl: 'templates/kpi-chart.html',
@@ -154,20 +154,11 @@ angular.module('starter', ['ionic', 'LocalStorageModule', 'ngResource', 'starter
       }
     })
   .state('kpi-detail', {
-      url: '/kpi/:aspect/:PageType',
+      url: '/kpi/:aspect/:PageType/:isLine',
       views: {
         'dash': {
           templateUrl: 'templates/kpi-detail.html',
           controller: 'KPIDetailCtrl'
-        }
-      }
-    })
-  .state('view-board', {
-      url: '/view-board',
-      views: {
-        'dash': {
-          templateUrl: 'templates/view-board.html',
-          controller: 'ViewBoardCtrl'
         }
       }
     })
@@ -185,7 +176,7 @@ angular.module('starter', ['ionic', 'LocalStorageModule', 'ngResource', 'starter
       url: '/line/kpi',
       views: {
         'dash': {
-          templateUrl: 'templates/line-kpi-group.html',
+          templateUrl: 'templates/kpi-group.html',
           controller: 'LineKPICtrl'
         }
       }
