@@ -75,7 +75,7 @@ angular.module('starter.services', ['ngResource'])
         "enm": "Team Garden",
         "fc": "#aaa", 
         "bg": 'img/svg/team-garden.svg',
-        "state": ""
+        "state": "bzGarden"
       }]
     },
     kpiColor: {

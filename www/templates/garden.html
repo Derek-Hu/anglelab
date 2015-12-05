@@ -1,0 +1,84 @@
+<ion-view hide-nav-bar="true" hide-back-button="true">
+
+  <ion-header-bar align-title="center">
+      <div></div>
+    <div class="title anji-theme">
+      <div class="title-wp">
+        <div class=" logo-left"><img class="fl" src="img/dazhong.svg"/></div>
+        <div class="fr logo-right-wp"><img src="img/LOG9.jpg"/></div>
+        <div class="bold-title single-line">
+            <span class="mainTitle">SFM现场管理信息系统</span>
+          <span class="subTitle">ShopFloor Management System</span>
+          </div>
+      </div>
+    </div>
+      <div></div>
+  </ion-header-bar>
+
+    <ion-content scroll="false">
+      <div class="entryWp">
+          <a href="#/dash">
+            <div class="entry" style="left: 15%;">
+              <div class="img tc">
+                <img src="img/svg/view-board.svg"/>
+              </div>
+              <span class="number">1</span>
+              <div class="group">
+                <div class="eng">TEAMTAFEL</div>
+                <div class="bold-title">小组信息看板</div>
+              </div>
+            </div>
+          </a>
+          <a href="#/view-board">
+            <div class="entry" style="right: 15%;">
+              <div class="img tc">
+                <img src="img/svg/line-board.svg"/>
+              </div>
+              <span class="number">2</span>
+              <div class="group">
+                <div class="eng">LINIENTAFEL</div>
+                <div class="bold-title">生产线信息看板</div>
+              </div>
+            </div>
+          </a>
+        </div>
+    </ion-content>
+</ion-view>
+<ion-view hide-nav-bar="true" hide-back-button="true">
+
+  <ion-header-bar align-title="center">
+      <div></div>
+    <div class="title anji-theme">
+      <div class="title-wp">
+        <div class=" logo-left"><img class="fl" src="img/dazhong.svg"/></div>
+        <div class="fr logo-right-wp"><img src="img/LOG9.jpg"/></div>
+        <div class="bold-title single-line">
+            <span class="mainTitle">SFM现场管理信息系统</span>
+          <span class="subTitle">ShopFloor Management System</span>
+          </div>
+      </div>
+    </div>
+      <div></div>
+  </ion-header-bar>
+
+    <ion-content scroll="false">
+      <div class="entryWp">
+          <a>
+            <div class="entry" style="left: 15%;width:70%">
+              <div style="height: 100%">
+                <carousel interval="myInterval">
+                  <slide ng-repeat="slide in slides" active="slide.active">
+                    <img ng-src="{{slide.image}}" style="margin:auto;">
+                    <div class="carousel-caption">
+                      <h4>Slide {{$index}}</h4>
+                      <p>{{slide.text}}</p>
+                    </div>
+                  </slide>
+                </carousel>
+              </div>
+            </div>
+          </a>
+          
+        </div>
+    </ion-content>
+</ion-view>
