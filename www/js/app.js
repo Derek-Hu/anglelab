@@ -180,6 +180,17 @@ angular.module('starter', ['ionic', 'LocalStorageModule', 'ngResource', 'starter
         }
       }
     })
+  // 线板
+  .state('line-kpi', {
+      url: '/line/kpi',
+      views: {
+        'dash': {
+          templateUrl: 'templates/line-kpi-group.html',
+          controller: 'LineKPICtrl'
+        }
+      }
+    })
+
   // if none of the above states are matched, use this as the fallback
   $urlRouterProvider.otherwise('/entry');
 

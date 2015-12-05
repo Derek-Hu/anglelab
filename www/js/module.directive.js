@@ -16,12 +16,13 @@ angular.module('starter.directives',['d3'])
         ylabel: '@',
         width: '=',
         height:'=',
-        xlabel: '@'
+        xlabel: '@',
+        isDouble: '='
       },
       link: function(scope, element, attrs) {
 
           var fontSize = parseInt(d3.select("body").style("font-size"));
-          var margin = {top: fontSize*3, right: fontSize*14, bottom: fontSize*10, left: fontSize*3};
+          var margin = {top: fontSize*3, right: fontSize*9, bottom: fontSize*10, left: fontSize*3};
           var data = scope.data, title=scope.title, yLabel=scope.ylabel;
 
           scope.$watch('data', function(n, o){
@@ -53,6 +54,7 @@ angular.module('starter.directives',['d3'])
             var kpiCharts = $('.kpiChart');
             var totalW = $(kpiCharts[0]).width();
             var totalH = $(kpiCharts[0]).height();
+            console.log('scope.isDouble='+scope.isDouble);
             for(var ki =0; ki<kpiCharts.length;ki++){
               if($(kpiCharts[ki]).width()>totalW){
                 totalW = $(kpiCharts[ki]).width();
@@ -60,6 +62,10 @@ angular.module('starter.directives',['d3'])
               if($(kpiCharts[ki]).height()>totalH){
                 totalH = $(kpiCharts[ki]).height();
               }
+            }
+            if(scope.isDouble){
+              //totalW = totalW/2;
+              totalH = totalH/2;
             }
             return [totalW - margin.left - margin.right, totalH - margin.top - margin.bottom];
           }

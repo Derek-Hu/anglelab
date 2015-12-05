@@ -1,0 +1,47 @@
+<ion-view hide-nav-bar="true" hide-back-button="true">
+	<ion-header-bar align-title="center">
+	  	<div></div>
+		<div class="title anji-theme">
+			<div class="title-wp">
+				<div class=" logo-left"><img class="fl" src="img/logo1.jpg"/></div>
+				<div class="fr logo-right-wp"><img src="img/LOG9.jpg"/></div>
+				<div>
+			  		<div class="bold-title single-line">
+			  			<span class="mainTitle">KPI跟踪</span>
+						<div class="subTitle">
+				  			(<span ng-bind="selectedCriteria.kuqu?selectedCriteria.kuqu.whse_code+'-':''"></span>
+				  			<span ng-bind="selectedCriteria.banzu?selectedCriteria.banzu.description+'-':''"></span>
+				  			<span ng-bind="selectedCriteria.banci?selectedCriteria.banci.shift_code:''"></span>)
+				  		</div>
+						</div>
+						
+				</div>
+			</div>
+
+		</div>
+	  	<div></div>
+	</ion-header-bar>
+    <ion-content scroll="false">
+	    <div class="kpiGroup tc" style="position: absolute; width: 100%; height: 100%;">
+	    	<div class="center">
+
+	    		<img src="img/3.svg">
+	        	<a ng-click="goDetail(kpi.type, kpi.PageType)" ng-repeat="kpi in kpis" class="kpi {{kpi.type}}">
+	        		<div style="position: relative;">
+		        		<span ng-bind="kpi.name"></span>
+		        		<div style="    width: 100%; position: absolute; height: 1em; text-align: center; top: 0; left: 0;" ng-if="kpi.hatColor && kpi.hatColor!=''" class="hat">
+				        	<img ng-src="img/{{kpi.hatColor}}.svg" style="    position: absolute; top: -1em; left: 50%; height: 100%; margin-left: -0.5em;"/>
+				        </div>
+	        		</div>
+	        	</a>
+	    	</div>
+	    </div>
+		<div class="quickNav" style="bottom: 0;">
+			<a href="#/dash"><span class="glyphicon glyphicon-circle-arrow-left"></span></a>
+			<a href="#/entry"><span class="glyphicon glyphicon-home"></span></a>
+			<a href="#/settings"><span class="glyphicon glyphicon-cog"></span></a>
+		</div>
+    </ion-content>
+    <ion-footer-bar>
+	</ion-footer-bar>
+</ion-view>

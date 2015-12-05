@@ -22,14 +22,30 @@ angular.module('starter.controllers', [])
   var xTypes = {
     'M': '月',
     'W': '周',
-    'D': '日'
+    'D': ''
   };
   function renderData(key){
     $scope.chart.xlabel = xTypes[key];
     $scope.chart.data = $scope.types[key].map(function(d){
       d.month = d.ID.match(/\d+/)[0];
       return d;
-    });;
+    });
+    $scope.chart1 = {data: []};
+    $scope.chart.isDouble = false;
+    if(key == 'W'){
+      $scope.chart.isDouble = true;
+      var total = $scope.chart.data;
+      $scope.chart.data = total.filter(function(d){
+        return d.month <27;
+      });
+      $scope.chart1 = {
+        data: total.filter(function(d){
+          return d.month >=27;
+        })
+      };
+    }else{
+      $scope.chart1.data = [];
+    }
   }
   function generatorDropdown(name, items, defaultOpt) {
     $scope[name] = {};
@@ -783,7 +799,7 @@ angular.module('starter.controllers', [])
     });
   });
 }])
-.controller('KPICtrl', ['$scope', 'Constant', '$state', 'localStorageService', 'KPIDetail',
+.controller('LineKPICtrl', ['$scope', 'Constant', '$state', 'localStorageService', 'KPIDetail',
  function($scope, Constant, $state, localStorageService, KPIDetail) {
 
   $scope.kpis=Constant.kpis;
@@ -794,6 +810,24 @@ angular.module('starter.controllers', [])
       $scope.menus = menus;
 
     },function(){});
+
+  });
+  $scope.goDetail = function(kpiType, PageType){
+    $state.go('kpi-detail',{"aspect": kpiType, "PageType": PageType});
+  }
+
+}])
+.controller('KPICtrl', ['$scope', 'Constant', '$state', 'localStorageService', 'KPIDetail',
+ function($scope, Constant, $state, localStorageService, KPIDetail) {
+
+  $scope.kpis=Constant.kpis;
+  $scope.$on('$ionicView.enter', function(e) {
+    $scope.selectedCriteria = localStorageService.get('criteria');
+
+    /*KPIDetail('kpiHome').then(function(menus){
+      $scope.menus = menus;
+
+    },function(){});*/
 
   });
   $scope.goDetail = function(kpiType, PageType){

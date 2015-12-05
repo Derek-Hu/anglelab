@@ -118,12 +118,12 @@ angular.module('starter.services', ['ngResource'])
         type: 'cost'
       }],
     kpiBizType:{
-      'kpiHome': 'L-0-0',
-      'security': 'L-1-0',
-      'flow': 'L-2-0',
+      'kpiHome': '0-0',
+      'security': '1-0',
+      'flow': '2-0',
       'member': '3-0',
       'cost': '4-0',
-      'quality': 'L-5-0'
+      'quality': '5-0'
     },
     kpiMenus: {
       'security': [{
