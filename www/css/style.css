@@ -500,7 +500,7 @@ ion-footer-bar .color-menu-type.header div.twrapper:last-child{ float: left;}
 .color-menu-type.footer.green-cross .value.other-accident{ background-color: #000;}
 
 /*.color-menu-type.footer{padding-bottom: 1em;}*/
-.color-menu-type.footer div.twrapper{ float: left;     margin-right: 1em;}
+.color-menu-type.footer div.twrapper{ float: left; margin-right: 0em;}
 
 .color-menu-type.footer .type div.value{ padding:0;margin: 0.5em;}
 .color-menu-type.footer .value{width: 4em;border: 0.2em solid; border-radius: 0.5em;}

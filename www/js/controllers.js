@@ -22,7 +22,7 @@ angular.module('starter.controllers', [])
   };
   var xTypes = {
     'M': '月',
-    'W': '周',
+    'W': '',
     'D': ''
   };
   function renderData(key){
