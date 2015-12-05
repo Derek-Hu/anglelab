@@ -861,10 +861,10 @@ span.arrow-border-up span{
 	visibility: hidden;
 }
 
-.member-status.v0{background: #E73334;}
-.member-status.v1{background: #12AAEB;}
-.member-status.v2{background: #F5AA35;}
-.member-status.v3{background: #A2D329;}
+.member-status.v0{background: #F5AA35;}
+.member-status.v1{background: #A2D329;}
+.member-status.v2{background: #12AAEB;}
+.member-status.v3{background: #E73334;}
 .newOrOld{
     visibility: hidden;
 }
