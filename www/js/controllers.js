@@ -955,7 +955,7 @@ angular.module('starter.controllers', [])
           items.months = [0,0,0,0,0,0,0,0,0,0,0,0];
           jobType.items.push(items);
         }
-        items.months[record.month_r] = 1;
+        items.months[record.month_r-1] = 1;
       }
       $scope.rows = rows;
       console.log(rows);
