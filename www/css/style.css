@@ -238,7 +238,7 @@ ion-view.view {
 }
 .org-chart img{
     height: 100%;
-    width: 100%;
+    max-width: 100%;
     border: 0;
     z-index: 3;
     background-color: #fff;
@@ -903,3 +903,9 @@ span.arrow-border-up span{
 
 .kqhz table.cost-wall-table td, .kqhz table.cost-wall-table th{padding: 0.5em 0;}
 .calenGray{color: #666 !important;}
+
+.bgYellow{background-color: yellow;}
+.bgBlue{background-color: #12AAEB; color: #fff !important;}
+.bgWhite{background-color: #FFF;}
+
+.kqhz table.gwrxTbl td > span{width: 4em;}

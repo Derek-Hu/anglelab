@@ -845,6 +845,28 @@ angular.module('starter.controllers', [])
 
   $scope.loadingStatus = '';
 
+  function convertObj(val){
+    var obj = {}
+    if(!val){
+      obj.isVal = true;
+      obj.val = '';
+      return obj;
+    }
+    var arr = val.split('/')
+    if(arr.length==1){
+      obj.isVal = true;
+      obj.val = val;
+    }else if(arr.length==2){
+      obj.isSkill = true;
+      obj.skill = arr[0];
+      obj.bg = arr[1];
+    }else if(arr.length==3){
+      obj.isCertificate = true;
+      obj.bg = arr[1];
+      obj.cert = arr[2];
+    }
+    return obj
+  }
   $scope.loadGwrx = function(WareHouseId, ZoneId, ShiftId){
     $scope.loadingStatus = '加载中';
     Backend().gwrx.query({
@@ -854,7 +876,14 @@ angular.module('starter.controllers', [])
     },function(data){
       $scope.loadingStatus = '';
       
-      $scope.records = data;
+      $scope.records = data.map(function(d){
+        for(var p in d){
+          if(d.hasOwnProperty(p)){
+            d[p] = convertObj(d[p]);
+          }
+        }
+        return d;
+      });
       if(!$scope.records || !$scope.records.length){
         $scope.loadingStatus = '暂无数据';
         return;

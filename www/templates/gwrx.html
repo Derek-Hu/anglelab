@@ -19,24 +19,93 @@
 		</div>
 	  	<div></div>
 	</ion-header-bar>
-    <ion-content class="bgFF" style="background: #FFF">
-	    <div class="kqhz gwrx content-wrapper">
-	    <span class="anji-theme" style="font-size:0.9em" ng-show="loadingStatus!=''" ng-bind="loadingStatus">加载中</span>
-		<table>
-			<thead>
-			<tr>
-				<th ng-repeat="h in headers" ng-bind="h"></th>
-			</tr>
-			</thead>
-			<tbody>
-				<tr ng-repeat="r in records">
-					<td ng-repeat = "h in headers" ng-bind="r[h]"></td>
+    <ion-content overflow-scroll>
+    	<div style="height: 100%; padding-bottom: 6em; position: relative;">
+		    <div class="kqhz gwrx content-wrapper">
+		    <span class="anji-theme" style="font-size:0.9em" ng-show="loadingStatus!=''" ng-bind="loadingStatus">加载中</span>
+			<table class="gwrxTbl">
+				<thead>
+				<tr>
+					<th ng-repeat="h in headers" ng-bind="h"></th>
 				</tr>
-			</tbody>
-		</table>
-		</div>
+				</thead>
+				<tbody>
+					<tr ng-repeat="r in records track by $index">
+						<td ng-repeat = "h in headers track by $index" ng-class="{'bgYellow': r[h].bg=='1', 'bgWhite': r[h].bg=='2', 'bgBlue': r[h].bg=='3'}">
+							<span ng-if="r[h].isCertificate" ng-bind="r[h].cert=='1'? 'YES': 'NO'"></span>
+							<span ng-if="r[h].isSkill">
+								<span ng-if="r[h].skill == '1'">#</span>
+								<span ng-if="r[h].skill == '2'"><span class="glyphicon glyphicon-star"></span></span>
+								<span ng-if="r[h].skill == '3'"><span class="glyphicon glyphicon-star"></span><span class="glyphicon glyphicon-star"></span></span>
+								<span ng-if="r[h].skill == '4'"><span class="glyphicon glyphicon-star"></span><span class="glyphicon glyphicon-star"></span><span class="glyphicon glyphicon-star"></span></span>
+							</span>
+							<span ng-if="r[h].isVal" ng-bind="r[h].val"></span>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+			</div>
+			<div>
+				
+			</div>
+    	</div>
     </ion-content>
     <ion-footer-bar>
+    	<div>
+    		<div class="clear footer green-cross color-menu-type" style="">
+				<div class="twrapper"><div class="type indicator clear">
+					<div class="value">#</div>
+					<div class="name">不需要掌握</div>
+				</div></div>
+				
+				<div class="twrapper"><div class="type indicator clear">
+					<div class="value "><span class="glyphicon glyphicon-star"></span></div>
+					<div class="name">需指导完成</div>
+				</div></div>
+
+				<div class="twrapper"><div class="type indicator clear">
+					<div class="value "><span class="glyphicon glyphicon-star"></span><span class="glyphicon glyphicon-star"></span></div>
+					<div class="name">能独立完成</div>
+				</div></div>
+
+				<div class="twrapper"><div class="type indicator clear">
+					<div class="value "><span class="glyphicon glyphicon-star"></span><span class="glyphicon glyphicon-star"></span><span class="glyphicon glyphicon-star"></span></div>
+					<div class="name">能培训他人</div>
+				</div></div>
+
+				<div class="twrapper"><div class="type indicator clear">
+					<div class="value">YES</div>
+					<div class="name">有相关证件</div>
+				</div></div>
+
+				<div class="twrapper"><div class="type indicator clear">
+					<div class="value">No</div>
+					<div class="name">无相关证件</div>
+				</div></div>
+
+			</div>
+
+			<div class="clear footer green-cross color-menu-type" style="">
+
+				<div class="twrapper"><div class="type indicator clear">
+					<div class="value bgWhite" style="border: 0.2em solid;">&nbsp;</div>
+					<div class="name tc">满足岗位要求</div>
+				</div></div>
+
+				<div class="twrapper"><div class="type indicator clear">
+					<div class="value bgYellow" >&nbsp;</div>
+					<div class="name tc">低于岗位要求</div>
+				</div></div>
+
+				<div class="twrapper"><div class="type indicator clear">
+					<div class="value bgBlue">&nbsp;</div>
+					<div class="name tc">超出岗位要求</div>
+				</div></div>
+
+			</div>
+
+			<div style="clear:both;"></div>
+    	
 	    <div class="clear header six tc color-menu-type">
 			<div class="twrapper">
 				<div class="type two clear">
@@ -57,7 +126,7 @@
 				<div class="value">&nbsp;<span ng-bind="metaData.bianzhi_date"></span></div>
 			</div></div>
 
-			<div class=" twrapper"><div class="type two clear">
+			<!-- <div class=" twrapper"><div class="type two clear">
 				<div class="name">Y</div>
 				<div class="value">&nbsp;<span>有相关证件</span></div>
 			</div></div>
@@ -65,7 +134,7 @@
 			<div class=" twrapper"><div class="type two clear">
 				<div class="name">N</div>
 				<div class="value">&nbsp;<span>无相关证件</span></div>
-			</div></div>
+			</div></div> -->
 
 			<!-- <div class="twrapper"><div class="type clear">
 				<div class="value damage">&nbsp;</div>
@@ -82,6 +151,7 @@
 			<a href="#/dash"><span class="glyphicon glyphicon-circle-arrow-left"></span></a>
 			<a href="#/entry"><span class="glyphicon glyphicon-home"></span></a>
 			<a href="#/settings"><span class="glyphicon glyphicon-cog"></span></a>
+		</div>
 		</div>
 	</ion-footer-bar>
 </ion-view>
