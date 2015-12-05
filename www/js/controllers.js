@@ -774,7 +774,9 @@ angular.module('starter.controllers', [])
     'glyphicon glyphicon-triangle-top',
     'glyphicon glyphicon-asterisk',
     'arrow-border-up',
-    'hurt'
+    'hurt',
+    'glyphicon-triangle-bottom',
+    'glyphicon glyphicon-star'
   ]
   var headerCols = ['工号', '姓名'];
   $scope.loadingStatus = '';
