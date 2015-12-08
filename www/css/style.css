@@ -909,3 +909,47 @@ span.arrow-border-up span{
 .bgWhite{background-color: #FFF;}
 
 /*.kqhz table.gwrxTbl td > span{width: 4em;}*/
+.kq-date-picker span.kq-cancel, .kq-date-picker span.kq-sure{
+    display: inline-block;
+    text-align: center;
+}
+.kq-date-picker span.kq-sure{
+    color: #FFF;
+    /*padding: 0.1em 1.5em; */
+    background-color: #1378E4;
+    margin-right: 1.5em
+}
+.kq-cancel{
+    display: inline-block;
+    text-align: center;
+    color: #FFF;
+    background-color: #424446;
+}
+.kq-date-picker span.email{
+    font-size: 2.5em;
+    /*border: 0.1em solid #7DA9D8;*/
+    padding: 0.1em 0.5em;
+    vertical-align: middle;
+}
+.kq-date-picker span{
+    padding: 0.2em 1em;
+}
+.kq-date-picker.active{
+    border: 0.2em solid #A9BCC9;
+}
+.kq-date-picker{
+    background: #FFF;
+    
+    padding: 0.2em 1em;
+    border: 0;
+}
+
+.kq-date-picker > div, .kq-date-picker > label {
+    display: none;
+}
+.kq-date-picker.active > div, .kq-date-picker.active > label {
+    display: block;
+}
+.kq-date-picker.active > span{
+    display: none;
+}

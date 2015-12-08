@@ -762,6 +762,32 @@ angular.module('starter.controllers', [])
       scrollDelegate.zoomTo(1, true, 0, 0);
     }
   }*/
+  $scope.selectPickerOpen = false;
+  $scope.openPicker = function(){
+    $scope.selectPickerOpen = true;
+  }
+  $scope.closePicker = function(){
+    $scope.selectPickerOpen = false;
+  }
+  $scope.sendPicker = function(isSendEmail){
+    try{
+      var values = angular.element(document.getElementById('selectedMonth')).val().match(/(\d{4}).*(\d{2})/);
+      if(values){
+        $scope.selectedYear = values[1];
+        $scope.selectedMonth = values[2];
+
+        $scope.loadData(
+          $scope.selectedCriteria.kuqu.Id, 
+          $scope.selectedCriteria.banzu.Id, 
+          $scope.selectedCriteria.banci.ID, 
+          $scope.selectedYear+'-'+$scope.selectedMonth, 
+          isSendEmail?1:0);
+      }
+    }catch(e){
+      $scope.closePicker();
+    }
+    $scope.closePicker();
+  }
   $scope.clzMap = [
     'absent',
     'glyphicon glyphicon-ok',
@@ -783,6 +809,7 @@ angular.module('starter.controllers', [])
   //var tailCols = ['迟到', '早退', '正班', '加班', '旷工', '请假', '休假','调休','签名'];
   $scope.loadData = function(WareHouseId, ZoneId, ShiftId, Date, IsSendEmail){
     $scope.loadingStatus = '加载中';
+    $scope.data=[];
     Backend().kaoqin.query({
       'WareHouseId': WareHouseId,
       'ZoneId': ZoneId,

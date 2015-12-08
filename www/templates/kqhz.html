@@ -1,18 +1,33 @@
 <ion-view hide-nav-bar="true" hide-back-button="true">
 	<ion-header-bar align-title="center">
 	  	<div></div>
-		<div class="title anji-theme">
+		<div class="title anji-theme" style="overflow: visible">
 			<div class="title-wp">
 				<div class=" logo-left"><img class="fl" src="img/dazhong.svg"/></div>
 				<div class="fr logo-right-wp"><img src="img/LOG9.jpg"/></div>
 				<div>
 			  		<div class="bold-title single-line">
-			  			<span class="mainTitle">考勤汇总</span>
-						<span class="subTitle">
-							(<span ng-bind="selectedCriteria.kuqu.whse_code">仓库代码</span>-
-							<span ng-bind="selectedCriteria.banzu.description">班组</span>-
-							<span ng-bind="selectedCriteria.banci.shift_code">班次</span>)
-						</span>
+			  			<div style="height: 100%; display: inline-block; position: relative;">
+				  			<span class="mainTitle">考勤汇总<br/>
+				  				<span class="subTitle">
+									(<span ng-bind="selectedCriteria.kuqu.whse_code">仓库代码</span>-
+									<span ng-bind="selectedCriteria.banzu.description">班组</span>-
+									<span ng-bind="selectedCriteria.banci.shift_code">班次</span>)
+								</span>
+				  			</span>
+				  			<div class="kq-date-picker" ng-class="{active: selectPickerOpen}" style=" position: absolute; top: 0; left: 120%; font-size: 0.8em;">
+							<span ng-click="openPicker()" style=" width: 100%; text-align: center;" ng-bind="selectedYear+' 年 '+selectedMonth+' 月 '"></span>
+							<label class="item item-input">
+							  <!-- <span class="input-label">Month</span> -->
+							  <input style="padding: 0;" class="text-align: center;" type="month" id="selectedMonth" value="{{selectedYear+'-'+selectedMonth}}"/>
+							</label>
+							<div style="font-size: 0.6em; margin-top: 0.5em;">
+								<span class="email glyphicon glyphicon-envelope" ng-click="sendPicker(true)"></span>
+								<span class="kq-sure" ng-click="sendPicker()">确定</span>
+								<span class="kq-cancel" ng-click="closePicker()">取消</span>
+							</div>
+						</div>
+						</div>
 			  		</div>
 				</div>
 			</div>
@@ -21,6 +36,7 @@
 	  	<div></div>
 	</ion-header-bar>
     <ion-content class="bgFF" on-double-tap="goHome('kqhz')" style="    background: #fff; margin: 0 0.5em; border-radius: 0.5em;">
+    	
 		<div class="kqhz content-wrapper" style="padding-bottom: 8em;">
 			<table>
 				<thead><th class="tc" ng-repeat="h in headers track by $index" ng-bind="h"></th></thead>
