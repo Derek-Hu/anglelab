@@ -178,7 +178,8 @@ angular.module('starter.services', ['ngResource'])
           "fc": "#aaa", 
           "bc": "#049BF4", 
           "bg": 'img/svg/non-normative-operation.svg'
-        },{
+        }
+        /*,{
           "nm": "物流清洁度", 
           "BizType": '5-5',
           "enm": "Logistics Cleanliness",
@@ -199,7 +200,8 @@ angular.module('starter.services', ['ngResource'])
           "fc": "#aaa", 
           "bc": "#049BF4", 
           "bg": 'img/svg/industry-waste-claims.svg'
-        }],
+        }*/
+        ],
       'member': [{
           "nm": "离职率", 
           "BizType": '3-1',
