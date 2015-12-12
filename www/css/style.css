@@ -560,13 +560,12 @@ ion-footer-bar .color-menu-type.header div.twrapper:last-child{ float: left;}
     opacity: 0.4;
 }
 .bold-title.single-line{
-	
-    /*line-height: 2em;*/
+    line-height: 1em;
 }
 .bold-title{
     font-weight: bold;
-    font-size: 1.5em;
-    line-height: 1.5em;
+    /*font-size: 1.5em;
+    line-height: 1.5em;*/
     color: #19426E;
 }
 .entry .group .eng{
@@ -952,4 +951,11 @@ span.arrow-border-up span{
 }
 .kq-date-picker.active > span{
     display: none;
+}
+.pageTitle{
+    position: relative;
+    top: 0.5em;
+}
+.subPageTitle{
+    font-size: 0.75em;
 }

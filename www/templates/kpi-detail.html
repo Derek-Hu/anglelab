@@ -6,13 +6,14 @@
 				<div class=" logo-left"><img class="fl" src="img/dazhong.svg"/></div>
 				<div class="fr logo-right-wp"><img src="img/LOG9.jpg"/></div>
 				<div>
-			  		<div class="bold-title single-line">
-			  			<span class="mainTitle">KPI跟踪-<span ng-bind="aspectTitle"></span></span>
-						<div class="subTitle">
-				  			(<span ng-bind="criteriaFromCache.kuqu?criteriaFromCache.kuqu.whse_code:''"></span>
-				  			<span ng-if="!isLine" ng-bind="'-'+(criteriaFromCache.banzu?criteriaFromCache.banzu.description+'-':'')"></span>
-				  			<span ng-if="!isLine" ng-bind="criteriaFromCache.banci?criteriaFromCache.banci.shift_code:''"></span>)</div>
-						</div>
+					<div class="bold-title single-line">
+                        <span class="pageTitle">
+                            <span>KPI跟踪-<span ng-bind="aspectTitle"></span></span><br>
+                            ( <span class="subPageTitle" ng-bind="criteriaFromCache.kuqu?criteriaFromCache.kuqu.whse_code:''"></span>
+				  			<span class="subPageTitle" ng-if="!isLine" ng-bind="'-'+(criteriaFromCache.banzu?criteriaFromCache.banzu.description+'-':'')"></span>
+				  			<span ng-if="!isLine" style="font-size:0.75em" ng-bind="criteriaFromCache.banci?criteriaFromCache.banci.shift_code:''"></span>)
+                        </span>
+                    </div>
 				</div>
 			</div>
 

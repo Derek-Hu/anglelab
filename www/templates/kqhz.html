@@ -8,13 +8,12 @@
 				<div>
 			  		<div class="bold-title single-line">
 			  			<div style="height: 100%; display: inline-block; position: relative;">
-				  			<span class="mainTitle">考勤汇总<br/>
-				  				<span class="subTitle">
-									(<span ng-bind="selectedCriteria.kuqu.whse_code">仓库代码</span>
-									<span ng-bind="'-'+selectedCriteria.banzu.description+'-'">班组</span>
-									<span ng-bind="selectedCriteria.banci.shift_code">班次</span>)
-								</span>
-				  			</span>
+				  			<span class="pageTitle">
+	                            <span>考勤汇总</span><br>
+	                            ( <span class="subPageTitle" ng-bind="selectedCriteria.kuqu.whse_code">仓库代码</span>
+								<span class="subPageTitle" ng-bind="'-'+selectedCriteria.banzu.description+'-'">班组</span>
+								<span class="subPageTitle" ng-bind="selectedCriteria.banci.shift_code">班次</span> )
+	                        </span>
 				  			<div class="kq-date-picker" ng-class="{active: selectPickerOpen}" style=" position: absolute; top: 0; left: 120%; font-size: 0.8em;">
 							<span ng-click="openPicker()" style=" width: 100%; text-align: center;" ng-bind="selectedYear+' 年 '+selectedMonth+' 月 '"></span>
 							<label class="item item-input">
