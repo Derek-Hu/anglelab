@@ -882,10 +882,10 @@ angular.module('starter.controllers', [])
   $scope.$on('$ionicView.enter', function(e) {
     $scope.selectedCriteria = localStorageService.get('criteria');
 
-
+    $scope.myInterval = Constant.getInterval()*1000;
   });
 
-  $scope.myInterval = 5000;
+  $scope.myInterval = Constant.getInterval()*1000;
   $scope.noWrapSlides = false;
   var slides = $scope.slides = [];
   $scope.addSlide = function() {
