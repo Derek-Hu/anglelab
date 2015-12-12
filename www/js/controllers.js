@@ -857,6 +857,13 @@ angular.module('starter.controllers', [])
 .controller('GardenCtrl', ['$scope', 'Constant', '$state', 'localStorageService', 'KPIDetail',
  function($scope, Constant, $state, localStorageService, KPIDetail) {
 
+  $scope.$on('$ionicView.enter', function(e) {
+    $scope.selectedCriteria = localStorageService.get('criteria');
+
+ 
+
+  });
+
   $scope.myInterval = 5000;
   $scope.noWrapSlides = false;
   var slides = $scope.slides = [];
