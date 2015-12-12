@@ -179,21 +179,22 @@ angular.module('starter.services', ['ngResource'])
           "bc": "#049BF4", 
           "bg": 'img/svg/non-normative-operation.svg'
         }
-        /*,{
-          "nm": "物流清洁度", 
+        ,{
+          "nm": "清洁度", 
           "BizType": '5-5',
           "enm": "Logistics Cleanliness",
           "fc": "#aaa", 
           "bc": "#049BF4", 
           "bg": 'img/svg/logistics-cleanliness.svg'
         },{
-          "nm": "料箱清洁度", 
+          "nm": "工位器具", 
           "BizType": '5-6',
           "enm": "Material Box Cleanness",
           "fc": "#aaa", 
           "bc": "#049BF4", 
           "bg": 'img/svg/material-box-cleanness.svg'
-        },{
+        }
+        /*,{
           "nm": "物流工废索赔额", 
           "BizType": '5-7',
           "enm": "Industry Waste Claims",
