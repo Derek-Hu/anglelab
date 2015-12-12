@@ -603,15 +603,22 @@ ion-footer-bar .color-menu-type.header div.twrapper:last-child{ float: left;}
     position: relative;
     height: 100%;
     padding: 0.5em;
+
+    background-image: url(img/LOG9.jpg);
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-origin: content-box;
+    background-position: 100%;
 }
 .bold-title, .title-wp > div {height: 100%;}
+
 .title .logo-right-wp{
-    position: absolute;
+    /*position: absolute;
     top: 0.5em;
     bottom: 0.5em;
     right: 0.5em;
-    height: initial;
-    float: none;
+    height: initial;*/
+    float: right;
 }
 .logo-left{
     position: absolute;
@@ -624,6 +631,7 @@ ion-footer-bar .color-menu-type.header div.twrapper:last-child{ float: left;}
 }
 .title img{height: 100%;}
 
+.logo-right-wp img{    display: none;}
 
 /* Footer */
 .bar.bar-footer{
@@ -966,5 +974,4 @@ span.arrow-border-up span{
 }
 .carousel-inner >.item{background-color: #FFF;height: 100%;border: 0; padding: 0;}
 .carousel-inner img{height: 100% !important;}
-.title.anji-theme{    position: static; width: 100%;}
 a.entry-home:hover{text-decoration: none;}
