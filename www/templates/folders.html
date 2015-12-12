@@ -21,8 +21,9 @@
       返回上一级
     </button>
     <div class="folder" ng-click="beginBrowseForFiles(f.fullPath)" ng-repeat="f in folders">
-      <i class="glyphicon glyphicon-folder-open"></i><span ng-bind="f"></span>
+      <i class="glyphicon glyphicon-folder-open"></i><span ng-bind="f.name"></span>
     </div>
+    <div ng-bind="msg"></div>
     <!-- <ul class="list">
         <li class="item" ng-repeat="f in folders">
           <span ng-bind="f"></span>

@@ -996,11 +996,9 @@ a.entry-home:hover{text-decoration: none;}
     background-repeat: repeat-x;
 }
 .folder{
-    display: inline-block;
     height: 3em;
     line-height: 3em;
-    font-size: 2em;
-    margin-right: 3em;
+    font-size: 1.5em;
     color: #FFF;
 }
 .folder span{margin-left: 1em; }

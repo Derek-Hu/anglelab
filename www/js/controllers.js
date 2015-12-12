@@ -932,11 +932,12 @@ angular.module('starter.controllers', [])
 }])
 .controller('FolderCtrl', ['$scope', 'Constant', '$state', 'localStorageService', 'KPIDetail',
  function($scope, Constant, $state, localStorageService, KPIDetail) {
-
+  $scope.msg = '';
   $scope.$on('$ionicView.enter', function(e) {
     document.addEventListener('deviceready', function () {
-    }, false);
+      $scope.msg += 'deviceready';
       $scope.beginBrowseForFiles();
+    }, false);    
   });
 
   $scope.doDirectoryUp = function(){
@@ -958,12 +959,24 @@ angular.module('starter.controllers', [])
       }
     );
   }
-
+ 
   $scope.beginBrowseForFiles = function(path){
+
     // check subscription type
     if (!path){ // start load root folder
         $scope.msg = 'LocalFileSystem.PERSISTENT='+LocalFileSystem.PERSISTENT;
-        window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, requestFileSystemSuccess, null);
+        $scope.msg += 'requestFileSystem='+window.requestFileSystem;
+        $scope.msg += 'resolveLocalFileSystemURI='+window.resolveLocalFileSystemURI;
+
+        window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, requestFileSystemSuccess, 
+          function(evt) {
+            try{
+              $scope.msg += JSON.stringify(evt);
+            }catch(e){
+              alert('979'+ JSON.stringify(e));
+            }
+          
+        });
         return;
     }
     $scope.msg += '加载目录'+path+'中...';
@@ -974,8 +987,12 @@ angular.module('starter.controllers', [])
         requestFileSystemSuccess({root:filesystem});
       },
       function(err){
-        $scope.folders = 'Error';
-        $scope.msg += '加载目录'+path+'失败:'+JSON.stringify(err);
+        try{
+          $scope.folders = 'Error';
+          $scope.msg += '加载目录'+path+'失败:'+JSON.stringify(err);
+        }catch(e){
+          alert('989'+ JSON.stringify(e));
+        }
       }
     );
   }
@@ -989,6 +1006,12 @@ angular.module('starter.controllers', [])
   }
   */
   function directoryReaderSuccess(entries){
+    try{
+      $scope.msg += '目录列表遍历中...';
+      if(!entries){
+        $scope.msg += '目录列表为空';
+        return;
+      }
       // again, Eclipse doesn't allow object inspection, thus the stringify
       $scope.folders = entries.filter(function(entry){
         return entry.name.indexOf('.') != 0 && entry.isDirectory;
@@ -997,23 +1020,30 @@ angular.module('starter.controllers', [])
         return (a.name.toLowerCase() < b.name.toLowerCase() ? -1 : 1);
       })
       $scope.msg += '目录列表为：'+JSON.stringify($scope.folders);
+    }catch(e){
+      alert(1024 + JSON.stringify(e));
+    }
+      
   }
   function requestFileSystemSuccess(fileSystem){
-    $scope.msg += '加载目录'+path+'成功';
-    // lets insert the current path into our UI
-    $scope.folderName = fileSystem.root.fullPath;
-    // save this location for future use
-    $scope._currentFileSystem = fileSystem;
-    // create a directory reader
-    var directoryReader = fileSystem.root.createReader();
-    // Get a list of all the entries in the directory
-    directoryReader.readEntries(directoryReaderSuccess,function(err){
-      $scope.folders = 'Error';
-      $scope.msg += '加载目录'+path+'失败:'+JSON.stringify(err);
-    });
+    try{
+      $scope.msg += '加载目录'+fileSystem+'成功';
+      // lets insert the current path into our UI
+      $scope.folderName = fileSystem.root.fullPath;
+      // save this location for future use
+      $scope._currentFileSystem = fileSystem;
+      // create a directory reader
+      var directoryReader = fileSystem.root.createReader();
+      // Get a list of all the entries in the directory
+      directoryReader.readEntries(directoryReaderSuccess,function(err){
+        $scope.folders = 'Error';
+        $scope.msg += '加载目录'+path+'失败:'+JSON.stringify(err);
+      });
+    }catch(e){
+      alert(1028 + JSON.stringify(e));
+    }
   }
 
-  
 
 }])
 .controller('LineKPICtrl', ['$scope', 'Constant', '$state', 'localStorageService', 'KPIDetail',
