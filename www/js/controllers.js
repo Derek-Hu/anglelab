@@ -220,10 +220,12 @@ angular.module('starter.controllers', [])
   })
 
 }])
-.controller('SettingsCtrl', ['$scope', 'Constant',
-  function($scope, Constant) {
+.controller('SettingsCtrl', ['$scope', 'Constant', '$state',
+  function($scope, Constant, $state) {
   $scope.settings = {};
-
+  $scope.goToFolderSelector = function(){
+    $state.go('folderPath');
+  }
   $scope.openModify = function(){
     $scope.isModify = true;
     $scope.settings.serverURL = $scope.serverAddr;
@@ -926,6 +928,85 @@ angular.module('starter.controllers', [])
       }
     }
   }
+
+}])
+.controller('FolderCtrl', ['$scope', 'Constant', '$state', 'localStorageService', 'KPIDetail',
+ function($scope, Constant, $state, localStorageService, KPIDetail) {
+
+  $scope.$on('$ionicView.enter', function(e) {
+    $scope.beginBrowseForFiles();
+  });
+
+  $scope.doDirectoryUp = function(){
+    var path = $scope._currentFileSystem.root.fullPath;
+    
+    window.resolveLocalFileSystemURI(path, function(entry){
+        entry.getParent( 
+          function(filesystem){
+            requestFileSystemSuccess({root:filesystem});
+          },
+          function(err){
+                  // once again Eclipse is not Chrome, so I stringify the objects so I can see them in the console
+            $scope.folders = 'Error';
+          }
+        );
+      },
+      function(err){
+        $scope.folders = 'Error';
+      }
+    );
+  }
+  
+  $scope.beginBrowseForFiles = function(path){
+    // check subscription type
+    if (!path){ // start load root folder
+        window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, requestFileSystemSuccess, null);
+        return;
+    }
+
+    // this is used to get subdirectories
+    window.resolveLocalFileSystemURI(path, function(filesystem){
+        // we must pass what the PhoneGap API doc examples call an "entry" to the reader
+        // which appears to take the form constructed below.
+        requestFileSystemSuccess({root:filesystem});
+      },
+      function(err){
+        $scope.folders = 'Error';
+      }
+    );
+  }
+  /*
+  {
+    isFile:false,
+    isDirectory:true,
+    name:'backups',
+    fullPath:'file:///storage/sdcard0',
+    filesystem:null
+  }
+  */
+  function directoryReaderSuccess(entries){
+      // again, Eclipse doesn't allow object inspection, thus the stringify
+      $scope.folders = entries.filter(function(entry){
+        return entry.name.indexOf('.') != 0 && entry.isDirectory;
+      }).sort(function(a,b){
+        // alphabetically sort the entries based on the entry's name
+        return (a.name.toLowerCase() < b.name.toLowerCase() ? -1 : 1);
+      })
+  }
+  function requestFileSystemSuccess(fileSystem){
+    // lets insert the current path into our UI
+    $scope.folderName = fileSystem.root.fullPath;
+    // save this location for future use
+    $scope._currentFileSystem = fileSystem;
+    // create a directory reader
+    var directoryReader = fileSystem.root.createReader();
+    // Get a list of all the entries in the directory
+    directoryReader.readEntries(directoryReaderSuccess,function(){
+      $scope.folders = 'Error';
+    });
+  }
+
+  
 
 }])
 .controller('LineKPICtrl', ['$scope', 'Constant', '$state', 'localStorageService', 'KPIDetail',

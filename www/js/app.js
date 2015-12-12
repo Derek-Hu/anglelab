@@ -62,6 +62,15 @@ angular.module('starter', ['ionic', 'ui.bootstrap', 'LocalStorageModule', 'ngRes
         }
       }
     })
+  .state('folderPath', {
+      url: '/folder-selector',
+      views: {
+        'dash': {
+          templateUrl: 'templates/folders.html',
+          controller: 'FolderCtrl'
+        }
+      }
+    })
   .state('settings', {
     url: '/settings',
     views: {

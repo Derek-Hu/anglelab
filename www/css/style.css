@@ -995,3 +995,12 @@ a.entry-home:hover{text-decoration: none;}
     filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#00000000', endColorstr='#30000000', GradientType=1);
     background-repeat: repeat-x;
 }
+.folder{
+    display: inline-block;
+    height: 3em;
+    line-height: 3em;
+    font-size: 2em;
+    margin-right: 3em;
+    color: #FFF;
+}
+.folder span{margin-left: 1em; }
