@@ -24,15 +24,15 @@
     <ion-content scroll="false">
       <div class="entryWp">
           <a>
-            <div class="entry" style="left: 15%;width:70%">
-              <div style="height: 100%">
-                <carousel interval="myInterval">
+            <div class="entry" style="left: 12%; width: 76%; padding: 1em; height: 76%; top: 12%;">
+              <div style="height: 100%" class="carousel-anji-wrapper">
+                <carousel interval="myInterval" style="height: 100%;">
                   <slide ng-repeat="slide in slides" active="slide.active">
                     <img ng-src="{{slide.image}}" style="margin:auto;">
-                    <div class="carousel-caption">
+                    <!-- <div class="carousel-caption">
                       <h4>Slide {{$index}}</h4>
                       <p>{{slide.text}}</p>
-                    </div>
+                    </div> -->
                   </slide>
                 </carousel>
               </div>
@@ -40,5 +40,15 @@
           </a>
           
         </div>
+      
     </ion-content>
+    <ion-footer-bar>
+      <div style="width:100%;">
+        <div class="quickNav" style="bottom: 0;">
+          <a ng-href="{{isLine? '#/view-board' :'#/dash'}}"><span class="glyphicon glyphicon-circle-arrow-left"></span></a>
+          <a href="#/entry"><span class="glyphicon glyphicon-home"></span></a>
+          <a href="#/settings"><span class="glyphicon glyphicon-cog"></span></a>
+        </div>
+      </div>
+  </ion-footer-bar>
 </ion-view>

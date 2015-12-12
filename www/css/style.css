@@ -907,7 +907,7 @@ span.arrow-border-up span{
 .bgBlue{background-color: #12AAEB; color: #fff !important;}
 .bgWhite{background-color: #FFF;}
 
-/*.kqhz table.gwrxTbl td > span{width: 4em;}*/
+.kqhz table.gwrxTbl td > span{width: 4em;}
 .kq-date-picker span.kq-cancel, .kq-date-picker span.kq-sure{
     display: inline-block;
     text-align: center;
@@ -959,3 +959,8 @@ span.arrow-border-up span{
 .subPageTitle{
     font-size: 0.75em;
 }
+.carousel-anji-wrapper > div, .carousel-inner{
+    height: 100%;
+}
+.carousel-inner >.item{background-color: #FFF;height: 100%;border: 0; padding: 0;}
+.carousel-inner img{height: 100% !important;}
