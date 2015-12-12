@@ -33,6 +33,22 @@
                 <input ng-show="isModify" value="{{getURL()}}" ng-model="settings.serverURL" style="width: 100%;padding: 0.5em;" type="text" />
             </p>
         </div>
+        <div style="color: #FFF;">
+            <p>
+                <h3>图片轮播时间
+                    <button ng-hide="isIntervalModify" class="btn btn-default" ng-click="openIntervalModify()" type="submit">点击修改</button>
+                    <button ng-show="isIntervalModify" ng-click="modifyInterval(settings.editInterval)" class="btn btn-danger" type="submit">保存</button>
+                    <button ng-show="isIntervalModify" class="btn btn-default" ng-click="cancelIntervalModify()" type="submit">取消</button>
+                </h3>
+                <span ng-bind="settings.editInterval+'秒'"></span>
+                <div ng-show="isIntervalModify" class="item range">
+                  <i class="icon ion-clock" style="color: gray;"></i>
+                  <input type="range" name="timeInterval" value="{{getInterval()}}" ng-model="settings.editInterval" min="2" max="60">
+                  <i class="icon ion-clock"></i>
+                </div>
+            </p>
+        </div>
+
     </ion-content>
     <ion-footer-bar style="height: 4em;">
     

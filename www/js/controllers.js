@@ -223,6 +223,7 @@ angular.module('starter.controllers', [])
 .controller('SettingsCtrl', ['$scope', 'Constant',
   function($scope, Constant) {
   $scope.settings = {};
+
   $scope.openModify = function(){
     $scope.isModify = true;
     $scope.settings.serverURL = $scope.serverAddr;
@@ -240,10 +241,31 @@ angular.module('starter.controllers', [])
     $scope.isModify = false;
     $scope.settings.serverURL = $scope.serverAddr;
   }
+
+  $scope.openIntervalModify = function(){
+    $scope.isIntervalModify = true;
+    $scope.settings.editInterval = $scope.settings.timeInterval;
+  }
+  $scope.modifyInterval = function(time){
+    Constant.updateInterval(time);
+    $scope.settings.timeInterval = time;
+    $scope.isIntervalModify = false;
+  }
+  $scope.cancelIntervalModify = function(){
+    $scope.isIntervalModify = false;
+    $scope.settings.editInterval = $scope.settings.timeInterval;
+  }
+  $scope.getInterval = function(){
+    return $scope.settings.timeInterval;
+  }
+
   $scope.$on('$ionicView.enter', function(e) {
+    $scope.settings.timeInterval = Constant.getInterval();
+    $scope.settings.editInterval = $scope.settings.timeInterval;
     $scope.serverAddr = Constant.baseURL();
     $scope.settings.serverURL = $scope.serverAddr;
     $scope.isModify = false;
+    $scope.isIntervalModify = false;
 
   });
 

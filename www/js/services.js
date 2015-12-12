@@ -2,11 +2,18 @@ angular.module('starter.services', ['ngResource'])
 
 .service('Constant', function(){
   var settings = {
-    cacheURL : 'http://221.181.71.171:8082'
+    cacheURL : 'http://221.181.71.171:8082',
+    timeInterval: 10
   };
   return {
     baseURL : function(){
       return settings.cacheURL;
+    },
+    getInterval : function(){
+      return settings.timeInterval
+    },
+    updateInterval : function(timeInterval){
+      settings.timeInterval = timeInterval;
     },
     updateServerURL : function(url){
       settings.cacheURL = url;
