@@ -933,6 +933,7 @@ angular.module('starter.controllers', [])
 .controller('FolderCtrl', ['$scope', 'Constant', '$state', 'localStorageService', 'KPIDetail',
  function($scope, Constant, $state, localStorageService, KPIDetail) {
   $scope.msg = '';
+
   $scope.$on('$ionicView.enter', function(e) {
     document.addEventListener('deviceready', function () {
       $scope.msg += 'deviceready';
@@ -942,20 +943,22 @@ angular.module('starter.controllers', [])
 
   $scope.doDirectoryUp = function(){
     var path = $scope._currentFileSystem.root.fullPath;
-    $scope.msg += '正在返回上级目录'+path+'...';
-    window.resolveLocalFileSystemURI(path, function(entry){
+    $scope.loading = Constant.loading;
+    window.resolveLocalFileSystemURL(path, function(entry){
         entry.getParent(function(filesystem){
             requestFileSystemSuccess({root:filesystem});
           },
           function(err){
+            $scope.loading = Constant.loadingError;
             $scope.folders = 'Error';
-            $scope.msg += '1-返回上级目录'+path+'失败:'+JSON.stringify(err);
+            //$scope.msg += '1-返回上级目录'+path+'失败:'+JSON.stringify(err);
           }
         );
       },
       function(err){
+        $scope.loading = Constant.loadingError;
         $scope.folders = 'Error';
-        $scope.msg += '2-返回上级目录'+path+'失败:'+JSON.stringify(err);
+        //$scope.msg += '2-返回上级目录'+path+'失败:'+JSON.stringify(err);
       }
     );
   }
@@ -964,35 +967,26 @@ angular.module('starter.controllers', [])
 
     // check subscription type
     if (!path){ // start load root folder
-        $scope.msg = 'LocalFileSystem.PERSISTENT='+LocalFileSystem.PERSISTENT;
-        $scope.msg += 'requestFileSystem='+window.requestFileSystem;
-        $scope.msg += 'resolveLocalFileSystemURI='+window.resolveLocalFileSystemURI;
-
+        $scope.loading = Constant.loading;
         window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, requestFileSystemSuccess, 
           function(evt) {
-            try{
-              $scope.msg += JSON.stringify(evt);
-            }catch(e){
-              alert('979'+ JSON.stringify(e));
-            }
-          
+            $scope.loading = Constant.loadingError;
+            $scope.msg += JSON.stringify(evt);
         });
         return;
     }
-    $scope.msg += '加载目录'+path+'中...';
+    //$scope.msg += '加载目录'+path+'中...';
     // this is used to get subdirectories
-    window.resolveLocalFileSystemURI(path, function(filesystem){
+    $scope.loading = Constant.loading;
+    window.resolveLocalFileSystemURL(path, function(filesystem){
         // we must pass what the PhoneGap API doc examples call an "entry" to the reader
         // which appears to take the form constructed below.
         requestFileSystemSuccess({root:filesystem});
       },
       function(err){
-        try{
-          $scope.folders = 'Error';
-          $scope.msg += '加载目录'+path+'失败:'+JSON.stringify(err);
-        }catch(e){
-          alert('989'+ JSON.stringify(e));
-        }
+        $scope.loading = Constant.loadingError;
+        $scope.folders = 'Error';
+        //$scope.msg += '加载目录'+path+'失败:'+JSON.stringify(err);
       }
     );
   }
@@ -1006,7 +1000,7 @@ angular.module('starter.controllers', [])
   }
   */
   function directoryReaderSuccess(entries){
-    try{
+      $scope.loading = '';
       $scope.msg += '目录列表遍历中...';
       if(!entries){
         $scope.msg += '目录列表为空';
@@ -1019,15 +1013,15 @@ angular.module('starter.controllers', [])
         // alphabetically sort the entries based on the entry's name
         return (a.name.toLowerCase() < b.name.toLowerCase() ? -1 : 1);
       })
-      $scope.msg += '目录列表为：'+JSON.stringify($scope.folders);
-    }catch(e){
-      alert(1024 + JSON.stringify(e));
-    }
-      
+      $scope.msg += '<br/>'+$scope.folders.map(function(d){
+        return d.name;
+      });
+      if(!$scope.folders || !$scope.folders.length){
+        
+      }
   }
   function requestFileSystemSuccess(fileSystem){
-    try{
-      $scope.msg += '加载目录'+fileSystem+'成功';
+      //$scope.msg += '加载目录'+fileSystem+'成功';
       // lets insert the current path into our UI
       $scope.folderName = fileSystem.root.fullPath;
       // save this location for future use
@@ -1035,13 +1029,12 @@ angular.module('starter.controllers', [])
       // create a directory reader
       var directoryReader = fileSystem.root.createReader();
       // Get a list of all the entries in the directory
+      $scope.loading = Constant.loading;
       directoryReader.readEntries(directoryReaderSuccess,function(err){
+        $scope.loading = Constant.loadingError;
         $scope.folders = 'Error';
         $scope.msg += '加载目录'+path+'失败:'+JSON.stringify(err);
       });
-    }catch(e){
-      alert(1028 + JSON.stringify(e));
-    }
   }
 
 

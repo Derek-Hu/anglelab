@@ -18,6 +18,8 @@ angular.module('starter.services', ['ngResource'])
     updateServerURL : function(url){
       settings.cacheURL = url;
     },
+    loading: '加载中',
+    loadingError: '加载失败',
     viewBoard: {
 
       menus: [{
