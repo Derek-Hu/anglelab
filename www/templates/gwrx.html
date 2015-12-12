@@ -26,7 +26,7 @@
 		</div>
 	  	<div></div>
 	</ion-header-bar>
-    <ion-content>
+    <ion-content class="bgFF" style="background: #fff; margin: 0 0.5em; border-radius: 0.5em;">
     	<div style="height: 100%; padding-bottom: 6em; position: relative;">
 		    <div class="kqhz gwrx content-wrapper">
 		    <span class="anji-theme" style="font-size:0.9em" ng-show="loadingStatus!=''" ng-bind="loadingStatus">加载中</span>
@@ -58,59 +58,35 @@
     	</div>
     </ion-content>
     <ion-footer-bar>
-	 	<div>
-    		<div class="clear footer green-cross color-menu-type" style="">
-				<div class="twrapper"><div class="type indicator clear">
-					<div class="value">#</div>
-					<div class="name">不需要掌握</div>
-				</div></div>
-				
-				<div class="twrapper"><div class="type indicator clear">
-					<div class="value "><span class="glyphicon glyphicon-star"></span></div>
-					<div class="name">需指导完成</div>
-				</div></div>
+	 	<div style="width:100%;">
+	 		<div class="clear tl anji-font-color mg-tp-1" style="height: 4em;position: absolute; top: -4em; padding-top: 0.5em; right: 1em; margin-top: 0; background: #fff; left: 1em;">
+				<span class="fl">说明</span>
+				<ol class="fl mg-lf-1">
+					<li>1. 各类表示符号：不需要掌握<span>#</span>、需指导完成<span class="glyphicon glyphicon-star"></span>、能独立完成<span class="glyphicon glyphicon-star"></span><span class="glyphicon glyphicon-star"></span>、能培训他人<span class="glyphicon glyphicon-star"></span><span class="glyphicon glyphicon-star"></span><span class="glyphicon glyphicon-star"></span>、有相关证件<span class="">YES</span>、无相关证件<span class="">NO</span></li>
+					<li><span>2. </span>
 
-				<div class="twrapper"><div class="type indicator clear">
-					<div class="value "><span class="glyphicon glyphicon-star"></span><span class="glyphicon glyphicon-star"></span></div>
-					<div class="name">能独立完成</div>
-				</div></div>
+					<div class="twrapper" style="display: inline-block;margin-right:1em;    vertical-align: bottom;"><div class="type two clear">
+						<div class="name" >
+							<span class="fl mg-rt-1 green-indicator" style="border-radius: 0.5em;background: #fff; border: 0.2em solid;">&nbsp;</span>
+							<span class="fl value damage">满足岗位要求</span>
+						</div>
+					</div></div>
 
-				<div class="twrapper"><div class="type indicator clear">
-					<div class="value "><span class="glyphicon glyphicon-star"></span><span class="glyphicon glyphicon-star"></span><span class="glyphicon glyphicon-star"></span></div>
-					<div class="name">能培训他人</div>
-				</div></div>
+					<div class="twrapper" style="display: inline-block;margin-right:1em;    vertical-align: bottom;"><div class="type two clear">
+						<div class="name" >
+							<span class="fl mg-rt-1 green-indicator" style="border-radius: 0.5em;background-color: yellow;">&nbsp;</span>
+							<span class="fl value damage">低于岗位要求</span>
+						</div>
+					</div></div>
 
-				<div class="twrapper"><div class="type indicator clear">
-					<div class="value">YES</div>
-					<div class="name">有相关证件</div>
-				</div></div>
-
-				<div class="twrapper"><div class="type indicator clear">
-					<div class="value">No</div>
-					<div class="name">无相关证件</div>
-				</div></div>
-
+					<div class="twrapper" style="display: inline-block;vertical-align: bottom;"><div class="type two clear">
+						<div class="name red">
+							<span class="fl mg-rt-1 red-indicator" style="border-radius: 0.5em;background-color: #12AAEB;">&nbsp;</span>
+							<span class="fl value damage">超出岗位要求</span>
+						</div>
+					</div></div></li>
+				</ol>
 			</div>
-
-			<div class="clear footer green-cross color-menu-type" style="">
-
-				<div class="twrapper"><div class="type indicator clear">
-					<div class="value bgWhite" style="border: 0.2em solid;">&nbsp;</div>
-					<div class="name tc">满足岗位要求</div>
-				</div></div>
-
-				<div class="twrapper"><div class="type indicator clear">
-					<div class="value bgYellow" >&nbsp;</div>
-					<div class="name tc">低于岗位要求</div>
-				</div></div>
-
-				<div class="twrapper"><div class="type indicator clear">
-					<div class="value bgBlue">&nbsp;</div>
-					<div class="name tc">超出岗位要求</div>
-				</div></div>
-
-			</div>
-
 			<div style="clear:both;"></div>
     	
 	    <div class="clear header six tc color-menu-type">
