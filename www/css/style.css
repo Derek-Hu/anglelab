@@ -966,3 +966,4 @@ span.arrow-border-up span{
 }
 .carousel-inner >.item{background-color: #FFF;height: 100%;border: 0; padding: 0;}
 .carousel-inner img{height: 100% !important;}
+.title.anji-theme{    position: static; width: 100%;}
