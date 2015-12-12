@@ -607,14 +607,17 @@ ion-footer-bar .color-menu-type.header div.twrapper:last-child{ float: left;}
 }
 .bold-title, .title-wp > div {height: 100%;}
 .title .logo-right-wp{
-	/*position: absolute;
-    right: 0;
-    top: 0;*/
-    height: 100%;
+    position: absolute;
+    top: 0.5em;
+    bottom: 0.5em;
+    right: 0.5em;
+    height: initial;
 }
 .logo-left{
-	height: 100%;
-    float: left;
+    position: absolute;
+    top: 0.5em;
+    bottom: 0.5em;
+    height: initial !important;
 }
 .title .title-eng{
 	line-height: 0.8em;
@@ -622,9 +625,6 @@ ion-footer-bar .color-menu-type.header div.twrapper:last-child{ float: left;}
 .title img{height: 100%;}
 
 
-.logo-right-wp img{
-    margin-right: 1em;
-}
 /* Footer */
 .bar.bar-footer{
     padding: 0em;
