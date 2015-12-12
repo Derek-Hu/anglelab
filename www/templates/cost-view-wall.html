@@ -9,8 +9,8 @@
 			  		<div class="bold-title single-line">
 			  			<span class="mainTitle">移动设备运行状态目视墙</span>
 						<div class="subTitle">
-							(<span ng-bind="selectedCriteria.kuqu.whse_code">仓库代码</span>-
-							<span ng-bind="selectedCriteria.banzu.description">班组</span>-
+							(<span ng-bind="selectedCriteria.kuqu.whse_code+'-'">仓库代码</span>
+							<span ng-bind="selectedCriteria.banzu.description+'-'">班组</span>
 							<span ng-bind="selectedCriteria.banci.shift_code">班次</span>)
 						</div>
 			  		</div>
@@ -70,15 +70,15 @@
 
 								</tr>
 								<tr ng-if="$index!=0" ng-repeat="sw in r.splitRows track by $index">
-									<td ng-bind="3*$index"></td>
+									<td ng-bind="3*$index+1"></td>
 									<td ng-bind="r.items[3*$index].CODE"></td>
 									<td><span ng-if="r.items[3*$index].STATE" ng-class="{'cst-stop': r.items[3*$index].STATE=='2', 'cst-ready': r.items[3*$index].STATE=='3', 'cst-normal': r.items[3*$index].STATE=='1'}" class="circle"></span></td>
 
-									<td ng-bind="3*$index+1"></td>
+									<td ng-bind="3*$index+2"></td>
 									<td ng-bind="r.items[3*$index+1].CODE"></td>
 									<td><span ng-if="r.items[3*$index+1].STATE" ng-class="{'cst-stop': r.items[3*$index+1].STATE=='2', 'cst-ready': r.items[3*$index+1].STATE=='3', 'cst-normal': r.items[3*$index+1].STATE=='1'}" class="circle"></span></td>
 
-									<td ng-bind="3*$index+2"></td>
+									<td ng-bind="3*$index+3"></td>
 									<td ng-bind="r.items[3*$index+2].CODE"></td>
 									<td><span ng-if="r.items[3*$index+2].STATE" ng-class="{'cst-stop': r.items[3*$index+2].STATE=='2', 'cst-ready': r.items[3*$index+2].STATE=='3', 'cst-normal': r.items[3*$index+2].STATE=='1'}" class="circle"></span></td>
 
