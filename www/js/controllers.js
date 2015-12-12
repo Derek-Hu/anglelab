@@ -925,6 +925,8 @@ angular.module('starter.controllers', [])
 .controller('KPIDetailCtrl', ['$scope', 'KPIDetail', 'Constant', '$stateParams', 'MetaDataSvc', '$state', 'localStorageService',
   function($scope, KPIDetail, Constant, $stateParams, MetaDataSvc, $state, localStorageService) {
 
+    $scope.aspect = $stateParams.aspect;
+    
     $scope.goKPIDetail = function(state, BizType){
       $state.go(state?state:'kpi-item',{"aspect": $stateParams.aspect, "PageType": $stateParams.PageType, "BizType": BizType, "isLine" : $stateParams.isLine});
     }
