@@ -23,49 +23,37 @@
 
     <ion-content scroll="false">
       <div class="entryWp">
-        <a>
           <div class="entry" style="left: 12%; width: 76%; padding: 1em; height: 76%; top: 12%;">
+
             <div style="height: 100%" class="carousel-anji-wrapper">
+              <uib-carousel interval="myInterval" no-wrap="noWrapSlides">
+                <uib-slide ng-repeat="slide in slides" active="slide.active">
+                  <img ng-src="{{slide.image}}" style="margin:auto;">
+                </uib-slide>
+              </uib-carousel>
+            </div>
+            <a role="button" href="" style="z-index: 9;" class="left carousel-control" ng-click="prev()" ng-show="slides.length > 1">
+              <span aria-hidden="true" class="glyphicon glyphicon-chevron-left"></span>
+              <span class="sr-only">previous</span>
+            </a>
+            <a role="button" href="" style="z-index: 9;" class="right carousel-control ng-hide" ng-click="next()" ng-show="slides.length > 1">
+              <span aria-hidden="true" class="glyphicon glyphicon-chevron-right"></span>
+              <span class="sr-only">next</span>
+            </a>
+
+            <!-- <div style="height: 100%" class="carousel-anji-wrapper">
               <carousel interval="myInterval" style="height: 100%;">
                 <slide ng-repeat="slide in slides" active="slide.active">
                   <img ng-src="{{slide.image}}" style="margin:auto;">
                 </slide>
               </carousel>
-            </div>
+            </div> -->
           </div>
-        </a>
-        {{slides.length}}
       </div>
 
-
-        <!-- <div>
-          <div style="height: 305px">
-            <uib-carousel interval="myInterval" no-wrap="noWrapSlides">
-              <uib-slide ng-repeat="slide in slides" active="slide.active">
-                <img ng-src="{{slide.image}}" style="margin:auto;">
-                <div class="carousel-caption">
-                  <h4>Slide {{$index}}</h4>
-                  <p>{{slide.text}}</p>
-                </div>
-              </uib-slide>
-            </uib-carousel>
-          </div>
-          <div class="row">
-            <div class="col-md-6">
-              <button type="button" class="btn btn-info" ng-click="addSlide()">Add Slide</button>
-              <div class="checkbox">
-                <label>
-                  <input type="checkbox" ng-model="noWrapSlides">
-                  Disable Slide Looping
-                </label>
-              </div>
-            </div>
-            <div class="col-md-6">
-              Interval, in milliseconds: <input type="number" class="form-control" ng-model="myInterval">
-              <br />Enter a negative number or 0 to stop the interval.
-            </div>
-          </div>
-        </div> -->
+        <div>
+          
+        </div>
 
     </ion-content>
     <ion-footer-bar>
