@@ -15,10 +15,10 @@
 								<span class="subPageTitle" ng-bind="selectedCriteria.banci.shift_code">班次</span> )
 	                        </span>
 				  			<div class="kq-date-picker" ng-class="{active: selectPickerOpen}" style=" position: absolute; top: 0; left: 120%; font-size: 0.8em;">
-							<span ng-click="openPicker()" style=" width: 100%; text-align: center;" ng-bind="selectedYear+' 年 '+selectedMonth+' 月 '"></span>
+							<span ng-click="openPicker()" style="    width: 100%; height: 3em; text-align: center; line-height: 3em; display: inline-block;" ng-bind="selectedYear+' 年 '+selectedMonth+' 月 '"></span>
 							<label class="item item-input">
-							  <!-- <span class="input-label">Month</span> -->
-							  <input style="padding: 0;" class="text-align: center;" type="month" id="selectedMonth" value="{{selectedYear+'-'+selectedMonth}}"/>
+							  <span class="input-label" style="padding:0;">选择日期</span>
+							  <input style="padding: 0;" class="text-align: center;" type="month" id="selectedMonth" value="{{selectedYear+'-'+selectedMonth}} "/>
 							</label>
 							<div style="font-size: 0.6em; margin-top: 0.5em;">
 								<span class="email glyphicon glyphicon-envelope" ng-click="sendPicker(true)"></span>
@@ -54,7 +54,7 @@
 		</div>
     </ion-content>
     <ion-footer-bar>
-		<div class="clear tl anji-font-color mg-tp-1" style="height: 6em;position: absolute; top: -6em; padding-top: 0.5em; right: 1em; margin-top: 0; background: #fff; left: 1em;">
+		<div class="clear tl anji-font-color mg-tp-1" style="height: 8em;position: absolute; top: -8em; padding-top: 0.5em; right: 1em; margin-top: 0; background: #fff; left: 1em;">
 			<span class="fl">说明</span>
 			<ol class="fl mg-lf-1">
 				<li>1. 部门考勤员应认真做好考勤统计工作，如实反映情况，不得弄虚作假</li>

@@ -1008,7 +1008,7 @@ angular.module('starter.controllers', [])
         return;
       }
       $scope.headers = Object.keys(data[0]).filter(function(data){
-        return data != '序号';
+        return data != '序号' && data != '班组' && data != '班次';
       });
     }, function(){
       $scope.loadingStatus = '加载失败';
