@@ -20,6 +20,21 @@ angular.module('starter.services', ['ngResource'])
     },
     loading: '加载中',
     loadingError: '加载失败',
+    supportedExt: ['.jpg', '.jpeg', '.bmp', '.png', '.gif', '.tif'],
+    isExtSupport: function(name){
+      if(!name){
+        return false;
+      }
+      var nameLen = name.length;
+      for(var i=0, len = this.supportedExt.length;i<len;i++){
+        var extName = this.supportedExt[i];
+        if(name.substring(nameLen - extName.length, nameLen) == extName){
+          return true;
+        }
+      }
+      return false;
+    },
+
     viewBoard: {
 
       menus: [{

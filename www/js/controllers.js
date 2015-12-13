@@ -1014,7 +1014,7 @@ angular.module('starter.controllers', [])
       }
       // again, Eclipse doesn't allow object inspection, thus the stringify
       $scope.folders = entries.filter(function(entry){
-        return entry.name.indexOf('.') != 0 && entry.isDirectory;
+        return entry.name.indexOf('.') != 0 && (entry.isDirectory || Constant.isExtSupport(entry.name));
       }).sort(function(a,b){
         // alphabetically sort the entries based on the entry's name
         return (a.name.toLowerCase() < b.name.toLowerCase() ? -1 : 1);
