@@ -18,12 +18,13 @@
 
     <ion-content style="padding: .5em;">
     <button class="button button-block" ng-click="doDirectoryUp()">
-      返回上一级
+      <span ng-bind="folderName"></span>返回上一级
     </button>
-    <div class="folder" ng-click="beginBrowseForFiles(f.fullPath)" ng-repeat="f in folders">
+    <div ng-bind="loading" style="color: #FFF;"></div>
+    <!-- <div ng-bind="msg" style="color: #FFF;"></div> -->
+    <div class="folder" ng-click="beginBrowseForFiles(f)" ng-repeat="f in folders">
       <i class="glyphicon glyphicon-folder-open"></i><span ng-bind="f.name"></span>
     </div>
-    <div ng-bind="loading"></div>
     <!-- <ul class="list">
         <li class="item" ng-repeat="f in folders">
           <span ng-bind="f"></span>
