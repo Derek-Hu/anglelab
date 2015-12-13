@@ -30,7 +30,7 @@
     <div ng-bind="loading" style="color: #FFF;"></div>
     <!-- <div ng-bind="msg" style="color: #FFF;"></div> -->
     <div class="folder" ng-click="beginBrowseForFiles(f)" ng-repeat="f in folders">
-      <i class="glyphicon glyphicon-folder-open" ng-class="{'ion-image': f.isFile, 'glyphicon-folder-open': f.isDirectory}"></i><span ng-bind="f.name"></span>
+      <i class="glyphicon" ng-class="{'glyphicon-list-alt': f.isFile, 'glyphicon-folder-open': f.isDirectory}"></i><span ng-bind="f.name"></span>
     </div>
     <!-- <ul class="list">
         <li class="item" ng-repeat="f in folders">

@@ -943,6 +943,7 @@ angular.module('starter.controllers', [])
 
   $scope.setImageFolder = function(){
     Constant.setImagePath($scope.folderName);
+    $state.go('settings');
   }
   $scope.doDirectoryUp = function(){
     //var path = $scope._currentFileSystem.root.fullPath;
