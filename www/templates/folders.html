@@ -17,13 +17,20 @@
   </ion-header-bar>
 
     <ion-content style="padding: .5em;">
-    <button class="button button-block" ng-click="doDirectoryUp()">
+    <div style="background:#FFF; overflow: hidden; height: 3em; position: relative; line-height: 3em;">
+      <span ng-click="doDirectoryUp()" style="position: absolute; left: 0; width: 8em; top: 0; height: 3em; text-align: center;">&nbsp;&nbsp;返回上一级&nbsp;&nbsp;</span>
+      <label class="item item-input" style="    position: absolute; left: 8em; top: 0; right: 6em; height: 3em; border: 0;">
+        <input type="text" readonly style="background: #FFF;" value="{{folderName}}"></input>
+      </label>
+      <button ng-click="setImageFolder()" class="button button-stable" style="position: absolute; right: 0; top: 0; height: 3em; width: 6em; text-align: center; ">确定</button>
+    </div>
+    <!-- <button class="button button-block" ng-click="doDirectoryUp()">
       <span ng-bind="folderName"></span>返回上一级
-    </button>
+    </button> -->
     <div ng-bind="loading" style="color: #FFF;"></div>
     <!-- <div ng-bind="msg" style="color: #FFF;"></div> -->
     <div class="folder" ng-click="beginBrowseForFiles(f)" ng-repeat="f in folders">
-      <i class="glyphicon glyphicon-folder-open"></i><span ng-bind="f.name"></span>
+      <i class="glyphicon glyphicon-folder-open" ng-class="{'ion-image': f.isFile, 'glyphicon-folder-open': f.isDirectory}"></i><span ng-bind="f.name"></span>
     </div>
     <!-- <ul class="list">
         <li class="item" ng-repeat="f in folders">

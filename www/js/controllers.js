@@ -268,6 +268,7 @@ angular.module('starter.controllers', [])
     $scope.settings.serverURL = $scope.serverAddr;
     $scope.isModify = false;
     $scope.isIntervalModify = false;
+    $scope.settings.imagePath = Constant.getImagePath();
 
   });
 
@@ -940,6 +941,9 @@ angular.module('starter.controllers', [])
     }, false);    
   });
 
+  $scope.setImageFolder = function(){
+    Constant.setImagePath($scope.folderName);
+  }
   $scope.doDirectoryUp = function(){
     //var path = $scope._currentFileSystem.root.fullPath;
     $scope.msg += '----doDirectoryUp'+path;

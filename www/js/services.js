@@ -3,7 +3,8 @@ angular.module('starter.services', ['ngResource'])
 .service('Constant', function(){
   var settings = {
     cacheURL : 'http://221.181.71.171:8082',
-    timeInterval: 10
+    timeInterval: 10,
+    imagePath: '目录暂未选择'
   };
   return {
     baseURL : function(){
@@ -17,6 +18,12 @@ angular.module('starter.services', ['ngResource'])
     },
     updateServerURL : function(url){
       settings.cacheURL = url;
+    },
+    getImagePath : function(){
+      return settings.imagePath;
+    },
+    setImagePath : function(imagePath){
+      settings.imagePath = imagePath;
     },
     loading: '加载中',
     loadingError: '加载失败',
