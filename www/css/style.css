@@ -1002,3 +1002,4 @@ a.entry-home:hover{text-decoration: none;}
     color: #FFF;
 }
 .folder span{margin-left: 1em; }
+.carousel-indicators{display: none;}
