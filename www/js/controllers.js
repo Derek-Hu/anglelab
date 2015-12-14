@@ -887,6 +887,7 @@ angular.module('starter.controllers', [])
     $scope.selectedCriteria = localStorageService.get('criteria');
     $scope.myInterval = Constant.getInterval()*1000;
     //$scope.msg = '';
+    $scope.slides = [];
     var imagePath = Constant.getImagePath();
     if(imagePath && !imagePath.nativeURL){
       window.resolveLocalFileSystemURL(Constant.getImagePath().nativeURL, function(filesystem){
@@ -898,21 +899,23 @@ angular.module('starter.controllers', [])
           directoryReader.readEntries(function(entries){
             $scope.loading = '';
             //$scope.msg += '目录列表遍历中...';
-            if(!entries){
+            if(!entries || !entries.length){
               //$scope.msg += '目录列表为空';
               return;
             }
             // again, Eclipse doesn't allow object inspection, thus the stringify
-            $scope.images = entries.filter(function(entry){
+            $scope.slides = entries.filter(function(entry){
               return entry.name.indexOf('.') != 0 && entry.isFile && Constant.isExtSupport(entry.name);
             }).sort(function(a,b){
               // alphabetically sort the entries based on the entry's name
               return (a.name.toLowerCase() < b.name.toLowerCase() ? -1 : 1);
-            })
+            }).map(function(d){
+              return {image: d.nativeURL};
+            });
             //$scope.msg += 'images============='+JSON.stringify($scope.images);
-            if(!$scope.images || !$scope.images.length){
+            /*if(!$scope.slides || !$scope.slides.length){
               
-            }
+            }*/
             $scope.$apply();
           },function(err){
             $scope.loading = Constant.loadingError;
@@ -930,19 +933,16 @@ angular.module('starter.controllers', [])
   });
 
   $scope.myInterval = Constant.getInterval()*1000;
+
   $scope.noWrapSlides = false;
-  var slides = $scope.slides = [];
-  $scope.addSlide = function() {
-    var newWidth = 600 + slides.length + 1;
-    slides.push({
-      image: '//placekitten.com/' + newWidth + '/300',
-      text: ['More','Extra','Lots of','Surplus'][slides.length % 4] + ' ' +
-        ['Cats', 'Kittys', 'Felines', 'Cutes'][slides.length % 4]
+  $scope.slides = [];
+
+  /*$scope.addSlide = function(imageURL) {
+    //var newWidth = 600 + slides.length + 1;
+    $scope.slides.push({
+      image: imageURL
     });
-  };
-  for (var i=0; i<4; i++) {
-    $scope.addSlide();
-  }
+  };*/
 
   $scope.next = function(){
     for(var i=0, len = $scope.slides.length;i<len;i++){
