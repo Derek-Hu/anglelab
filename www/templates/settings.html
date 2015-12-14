@@ -42,9 +42,16 @@
                 </h3>
                 <span ng-bind="settings.editInterval+'秒'"></span>
                 <div ng-show="isIntervalModify" class="item range">
-                  <i class="icon ion-clock" style="color: gray;"></i>
+                  <!-- <i class="icon ion-clock" style="color: gray;"></i>
                   <input type="range" name="timeInterval" value="{{getInterval()}}" ng-model="settings.editInterval" min="2" max="60">
-                  <i class="icon ion-clock"></i>
+                  <i class="icon ion-clock"></i> -->
+
+                  <label class="item item-input" style="border: 0;width: 100%;">
+                      <!-- <span class="input-label">Number</span> -->
+                      <input name="timeInterval" value="{{getInterval()}}" 
+                        ng-model="settings.editInterval" type="number">
+                  </label>
+
                 </div>
             </p>
         </div>
