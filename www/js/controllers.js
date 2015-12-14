@@ -254,6 +254,9 @@ angular.module('starter.controllers', [])
     $scope.settings.editInterval = $scope.settings.timeInterval;
   }
   $scope.modifyInterval = function(time){
+    if(!time){
+      time = 1;
+    }
     Constant.updateInterval(time);
     $scope.settings.timeInterval = time;
     $scope.isIntervalModify = false;
