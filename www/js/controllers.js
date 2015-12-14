@@ -889,7 +889,7 @@ angular.module('starter.controllers', [])
     $scope.msg = '';
     $scope.slides = [];
     var imagePath = Constant.getImagePath();
-    if(imagePath && !imagePath.nativeURL){
+    if(imagePath && imagePath.nativeURL){
       window.resolveLocalFileSystemURL(Constant.getImagePath().nativeURL, function(filesystem){
           // we must pass what the PhoneGap API doc examples call an "entry" to the reader
           // which appears to take the form constructed below.
