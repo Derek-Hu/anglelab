@@ -829,7 +829,7 @@ angular.module('starter.controllers', [])
     'glyphicon glyphicon-record',
     'glyphicon glyphicon-triangle-top',
     'glyphicon glyphicon-asterisk',
-    'year-holiday',
+    'rect half',
     'hurt',
     'glyphicon-triangle-bottom',
     'glyphicon glyphicon-star'
