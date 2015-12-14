@@ -220,11 +220,12 @@ angular.module('starter.controllers', [])
   })
 
 }])
-.controller('SettingsCtrl', ['$scope', 'Constant', '$state',
-  function($scope, Constant, $state) {
+.controller('SettingsCtrl', ['$scope', 'Constant', '$state', '$window',
+  function($scope, Constant, $state, $window) {
   $scope.settings = {};
+
   $scope.goToFolderSelector = function(){
-    $state.go('folderPath');
+    $state.go('folderPath', {select : true});
   }
   $scope.openModify = function(){
     $scope.isModify = true;
@@ -941,8 +942,12 @@ angular.module('starter.controllers', [])
     }, false);    
   });
 
+  $scope.goToSettings = function(){
+    $state.go('settings', {fromSelect : true});
+  }
+
   $scope.setImageFolder = function(){
-    Constant.setImagePath($scope.folderName);
+    Constant.setImagePath({name: $scope.folderName.fullPath, nativeURL: $scope.folderName.nativeURL});
     $state.go('settings');
   }
   $scope.doDirectoryUp = function(){
@@ -1033,7 +1038,7 @@ angular.module('starter.controllers', [])
   function requestFileSystemSuccess(fileSystem){
       $scope.msg += '加载目录'+JSON.stringify(fileSystem)+'成功';
       // lets insert the current path into our UI
-      $scope.folderName = fileSystem.root.fullPath;
+      $scope.folderName = fileSystem.root;
       // save this location for future use
       //$scope._currentFileSystem = fileSystem;
       // create a directory reader

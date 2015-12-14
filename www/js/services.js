@@ -4,7 +4,7 @@ angular.module('starter.services', ['ngResource'])
   var settings = {
     cacheURL : 'http://221.181.71.171:8082',
     timeInterval: 10,
-    imagePath: '目录暂未选择'
+    imagePath: {name: '录暂未选择', nativeURL: null}
   };
   return {
     baseURL : function(){
