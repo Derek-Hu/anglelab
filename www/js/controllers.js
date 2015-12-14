@@ -220,10 +220,14 @@ angular.module('starter.controllers', [])
   })
 
 }])
-.controller('SettingsCtrl', ['$scope', 'Constant', '$state', '$window',
-  function($scope, Constant, $state, $window) {
+.controller('SettingsCtrl', ['$scope', 'Constant', '$state', '$window', '$stateParams',
+  function($scope, Constant, $state, $window, $stateParams) {
   $scope.settings = {};
 
+  var isBackFromFolder = !!$stateParams.fromSelect;
+  $scope.back = function(){
+    $window.history.go(isBackFromFolder?-3:-1);
+  };
   $scope.goToFolderSelector = function(){
     $state.go('folderPath', {select : true});
   }

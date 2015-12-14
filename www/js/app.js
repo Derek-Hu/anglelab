@@ -12,15 +12,6 @@ angular.module('starter', ['ionic', 'ui.bootstrap', 'LocalStorageModule', 'ngRes
     $window.history.back();
   }
 
-  $rootScope.$on('$stateChangeStart', function (evt, toState, toParams, fromState, fromParams) {
-    console.log(fromState, toState, toParams);
-    console.log(fromState, toState, toParams);
-    if(fromState && fromState.url=='/settings' && fromParams.fromSelect && toState && toState.url=="/folder-selector" && !toParams.select){
-      console.log('folder-selector');
-      //$window.history.go(-2);
-    }
-  })
-
   $ionicPlatform.ready(function() {
     // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
     // for form inputs)
@@ -81,7 +72,7 @@ angular.module('starter', ['ionic', 'ui.bootstrap', 'LocalStorageModule', 'ngRes
       }
     })
   .state('settings', {
-    url: '/settings',
+    url: '/settings/:fromSelect',
     views: {
       'dash': {
         templateUrl: 'templates/settings.html',
