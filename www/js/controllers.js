@@ -886,7 +886,7 @@ angular.module('starter.controllers', [])
   $scope.$on('$ionicView.enter', function(e) {
     $scope.selectedCriteria = localStorageService.get('criteria');
     $scope.myInterval = Constant.getInterval()*1000;
-    //$scope.msg = '';
+    $scope.msg = '';
     $scope.slides = [];
     var imagePath = Constant.getImagePath();
     if(imagePath && !imagePath.nativeURL){
@@ -898,9 +898,9 @@ angular.module('starter.controllers', [])
           $scope.loading = Constant.loading;
           directoryReader.readEntries(function(entries){
             $scope.loading = '';
-            //$scope.msg += '目录列表遍历中...';
-            if(!entries || !entries.length){
-              //$scope.msg += '目录列表为空';
+            $scope.msg += '目录列表遍历中...';
+            if(!entries){
+              $scope.msg += '目录列表为空';
               return;
             }
             // again, Eclipse doesn't allow object inspection, thus the stringify
@@ -912,20 +912,20 @@ angular.module('starter.controllers', [])
             }).map(function(d){
               return {image: d.nativeURL};
             });
-            //$scope.msg += 'images============='+JSON.stringify($scope.images);
+            $scope.msg += 'images============='+JSON.stringify($scope.images);
             /*if(!$scope.slides || !$scope.slides.length){
               
             }*/
             $scope.$apply();
           },function(err){
             $scope.loading = Constant.loadingError;
-            //$scope.msg += 'requestFileSystemSuccess目录'+path+'失败:'+JSON.stringify(err);
+            $scope.msg += 'requestFileSystemSuccess目录'+path+'失败:'+JSON.stringify(err);
           });
 
         },
         function(err){
           $scope.loading = Constant.loadingError;
-          //$scope.msg += 'beginBrowseForFiles目录失败:'+JSON.stringify(err);
+          $scope.msg += 'beginBrowseForFiles目录失败:'+JSON.stringify(err);
         }
       );
     }
