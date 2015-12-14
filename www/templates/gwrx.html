@@ -26,9 +26,13 @@
 		</div>
 	  	<div></div>
 	</ion-header-bar>
-    <ion-content class="bgFF" style="background: #fff; margin: 0 0.5em; border-radius: 0.5em;">
+    <ion-content class="bgFF" style="background: #fff; margin: 0 0.5em;
+    border-radius: 0.5em;
+    border-radius: 0.5em 0.5em 0 0;
+    padding-bottom: 1em;
+    margin-bottom: 3.2em;bottom: 4em;">
 	    <ion-scroll zooming="true" direction="xy" style="width: 100% ; height: 100%">
-    	<div style="height: 100%; padding-bottom: 6em; position: relative;">
+    	<div style="height: 100%;  position: relative;">
 		    <div class="kqhz gwrx content-wrapper">
 		    <span class="anji-theme" style="font-size:0.9em" ng-show="loadingStatus!=''" ng-bind="loadingStatus">加载中</span>
 			<table class="gwrxTbl">
@@ -39,6 +43,86 @@
 				</thead>
 				<tbody>
 					<tr ng-repeat="r in records track by $index">
+						<td ng-repeat = "h in headers track by $index" ng-class="{'bgYellow': r[h].bg=='1', 'bgWhite': r[h].bg=='2', 'bgBlue': r[h].bg=='3'}">
+							<span ng-if="r[h].isCertificate" ng-bind="r[h].cert=='1'? 'YES': 'NO'"></span>
+							<span ng-if="r[h].isSkill">
+								<span ng-if="r[h].skill == '1'">#</span>
+								<span ng-if="r[h].skill == '2'"><span class="glyphicon glyphicon-star"></span></span>
+								<span ng-if="r[h].skill == '3'"><span class="glyphicon glyphicon-star"></span><span class="glyphicon glyphicon-star"></span></span>
+								<span ng-if="r[h].skill == '4'"><span class="glyphicon glyphicon-star"></span><span class="glyphicon glyphicon-star"></span><span class="glyphicon glyphicon-star"></span></span>
+							</span>
+							<span ng-if="r[h].isVal" ng-bind="r[h].val"></span>
+						</td>
+					</tr>
+
+					<tr ng-repeat="r in records track by $index">
+						<td ng-repeat = "h in headers track by $index" ng-class="{'bgYellow': r[h].bg=='1', 'bgWhite': r[h].bg=='2', 'bgBlue': r[h].bg=='3'}">
+							<span ng-if="r[h].isCertificate" ng-bind="r[h].cert=='1'? 'YES': 'NO'"></span>
+							<span ng-if="r[h].isSkill">
+								<span ng-if="r[h].skill == '1'">#</span>
+								<span ng-if="r[h].skill == '2'"><span class="glyphicon glyphicon-star"></span></span>
+								<span ng-if="r[h].skill == '3'"><span class="glyphicon glyphicon-star"></span><span class="glyphicon glyphicon-star"></span></span>
+								<span ng-if="r[h].skill == '4'"><span class="glyphicon glyphicon-star"></span><span class="glyphicon glyphicon-star"></span><span class="glyphicon glyphicon-star"></span></span>
+							</span>
+							<span ng-if="r[h].isVal" ng-bind="r[h].val"></span>
+						</td>
+					</tr>
+					<tr ng-repeat="r in records track by $index">
+						<td ng-repeat = "h in headers track by $index" ng-class="{'bgYellow': r[h].bg=='1', 'bgWhite': r[h].bg=='2', 'bgBlue': r[h].bg=='3'}">
+							<span ng-if="r[h].isCertificate" ng-bind="r[h].cert=='1'? 'YES': 'NO'"></span>
+							<span ng-if="r[h].isSkill">
+								<span ng-if="r[h].skill == '1'">#</span>
+								<span ng-if="r[h].skill == '2'"><span class="glyphicon glyphicon-star"></span></span>
+								<span ng-if="r[h].skill == '3'"><span class="glyphicon glyphicon-star"></span><span class="glyphicon glyphicon-star"></span></span>
+								<span ng-if="r[h].skill == '4'"><span class="glyphicon glyphicon-star"></span><span class="glyphicon glyphicon-star"></span><span class="glyphicon glyphicon-star"></span></span>
+							</span>
+							<span ng-if="r[h].isVal" ng-bind="r[h].val"></span>
+						</td>
+					</tr><tr ng-repeat="r in records track by $index">
+						<td ng-repeat = "h in headers track by $index" ng-class="{'bgYellow': r[h].bg=='1', 'bgWhite': r[h].bg=='2', 'bgBlue': r[h].bg=='3'}">
+							<span ng-if="r[h].isCertificate" ng-bind="r[h].cert=='1'? 'YES': 'NO'"></span>
+							<span ng-if="r[h].isSkill">
+								<span ng-if="r[h].skill == '1'">#</span>
+								<span ng-if="r[h].skill == '2'"><span class="glyphicon glyphicon-star"></span></span>
+								<span ng-if="r[h].skill == '3'"><span class="glyphicon glyphicon-star"></span><span class="glyphicon glyphicon-star"></span></span>
+								<span ng-if="r[h].skill == '4'"><span class="glyphicon glyphicon-star"></span><span class="glyphicon glyphicon-star"></span><span class="glyphicon glyphicon-star"></span></span>
+							</span>
+							<span ng-if="r[h].isVal" ng-bind="r[h].val"></span>
+						</td>
+					</tr><tr ng-repeat="r in records track by $index">
+						<td ng-repeat = "h in headers track by $index" ng-class="{'bgYellow': r[h].bg=='1', 'bgWhite': r[h].bg=='2', 'bgBlue': r[h].bg=='3'}">
+							<span ng-if="r[h].isCertificate" ng-bind="r[h].cert=='1'? 'YES': 'NO'"></span>
+							<span ng-if="r[h].isSkill">
+								<span ng-if="r[h].skill == '1'">#</span>
+								<span ng-if="r[h].skill == '2'"><span class="glyphicon glyphicon-star"></span></span>
+								<span ng-if="r[h].skill == '3'"><span class="glyphicon glyphicon-star"></span><span class="glyphicon glyphicon-star"></span></span>
+								<span ng-if="r[h].skill == '4'"><span class="glyphicon glyphicon-star"></span><span class="glyphicon glyphicon-star"></span><span class="glyphicon glyphicon-star"></span></span>
+							</span>
+							<span ng-if="r[h].isVal" ng-bind="r[h].val"></span>
+						</td>
+					</tr><tr ng-repeat="r in records track by $index">
+						<td ng-repeat = "h in headers track by $index" ng-class="{'bgYellow': r[h].bg=='1', 'bgWhite': r[h].bg=='2', 'bgBlue': r[h].bg=='3'}">
+							<span ng-if="r[h].isCertificate" ng-bind="r[h].cert=='1'? 'YES': 'NO'"></span>
+							<span ng-if="r[h].isSkill">
+								<span ng-if="r[h].skill == '1'">#</span>
+								<span ng-if="r[h].skill == '2'"><span class="glyphicon glyphicon-star"></span></span>
+								<span ng-if="r[h].skill == '3'"><span class="glyphicon glyphicon-star"></span><span class="glyphicon glyphicon-star"></span></span>
+								<span ng-if="r[h].skill == '4'"><span class="glyphicon glyphicon-star"></span><span class="glyphicon glyphicon-star"></span><span class="glyphicon glyphicon-star"></span></span>
+							</span>
+							<span ng-if="r[h].isVal" ng-bind="r[h].val"></span>
+						</td>
+					</tr><tr ng-repeat="r in records track by $index">
+						<td ng-repeat = "h in headers track by $index" ng-class="{'bgYellow': r[h].bg=='1', 'bgWhite': r[h].bg=='2', 'bgBlue': r[h].bg=='3'}">
+							<span ng-if="r[h].isCertificate" ng-bind="r[h].cert=='1'? 'YES': 'NO'"></span>
+							<span ng-if="r[h].isSkill">
+								<span ng-if="r[h].skill == '1'">#</span>
+								<span ng-if="r[h].skill == '2'"><span class="glyphicon glyphicon-star"></span></span>
+								<span ng-if="r[h].skill == '3'"><span class="glyphicon glyphicon-star"></span><span class="glyphicon glyphicon-star"></span></span>
+								<span ng-if="r[h].skill == '4'"><span class="glyphicon glyphicon-star"></span><span class="glyphicon glyphicon-star"></span><span class="glyphicon glyphicon-star"></span></span>
+							</span>
+							<span ng-if="r[h].isVal" ng-bind="r[h].val"></span>
+						</td>
+					</tr><tr ng-repeat="r in records track by $index">
 						<td ng-repeat = "h in headers track by $index" ng-class="{'bgYellow': r[h].bg=='1', 'bgWhite': r[h].bg=='2', 'bgBlue': r[h].bg=='3'}">
 							<span ng-if="r[h].isCertificate" ng-bind="r[h].cert=='1'? 'YES': 'NO'"></span>
 							<span ng-if="r[h].isSkill">
@@ -61,7 +145,7 @@
     </ion-content>
     <ion-footer-bar>
 	 	<div style="width:100%;">
-	 		<div class="clear tl anji-font-color mg-tp-1" style="height: 4em;position: absolute; top: -4em; padding-top: 0.5em; right: 1em; margin-top: 0; background: #fff; left: 1em;">
+	 		<div class="clear tl anji-font-color mg-tp-1" style="height: 4em;position: absolute; top: -4em; padding-top: 0.5em; right: 0.5em; margin-top: 0; background: #fff; left: 0.5em;">
 				<span class="fl">说明</span>
 				<ol class="fl mg-lf-1">
 					<li>1. 各类表示符号：不需要掌握<span>#</span>、需指导完成<span class="glyphicon glyphicon-star"></span>、能独立完成<span class="glyphicon glyphicon-star"></span><span class="glyphicon glyphicon-star"></span>、能培训他人<span class="glyphicon glyphicon-star"></span><span class="glyphicon glyphicon-star"></span><span class="glyphicon glyphicon-star"></span>、有相关证件<span class="">YES</span>、无相关证件<span class="">NO</span></li>

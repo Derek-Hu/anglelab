@@ -34,9 +34,10 @@
 		</div>
 	  	<div></div>
 	</ion-header-bar>
-    <ion-content class="bgFF" style="    background: #fff; margin: 0 0.5em; border-radius: 0.5em;">
+    <ion-content class="bgFF" style=" border-radius: 0.5em 0.5em 0 0;
+    bottom: 11.3em;background: #fff; margin: 0 0.5em;">
     	
-		<div class="kqhz content-wrapper" style="padding-bottom: 8em;">
+		<div class="kqhz content-wrapper" style="">
 			<table>
 				<thead><th class="tc" ng-repeat="h in headers track by $index" ng-bind="h"></th></thead>
 				<tbody><tr ng-repeat="r in data">
@@ -54,7 +55,7 @@
 		</div>
     </ion-content>
     <ion-footer-bar>
-		<div class="clear tl anji-font-color mg-tp-1" style="height: 8em;position: absolute; top: -8em; padding-top: 0.5em; right: 1em; margin-top: 0; background: #fff; left: 1em;">
+		<div class="clear tl anji-font-color mg-tp-1" style="height: 8em;position: absolute; top: -8em; padding-top: 0.5em; right: 0.5em; margin-top: 0; background: #fff; left: 0.5em;">
 			<span class="fl">说明</span>
 			<ol class="fl mg-lf-1">
 				<li>1. 部门考勤员应认真做好考勤统计工作，如实反映情况，不得弄虚作假</li>
