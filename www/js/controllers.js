@@ -809,6 +809,14 @@ angular.module('starter.controllers', [])
         $scope.selectedYear = values[1];
         $scope.selectedMonth = values[2];
 
+        var daysNum = DateUtil.getLastDay($scope.selectedYear, $scope.selectedMonth);
+        $scope.headers = headerCols;
+        $scope.daysArr = [];
+        for(var i =1, len = daysNum; i<=len;i++){
+          $scope.daysArr.push(i);
+        }
+        $scope.headers = $scope.headers.concat($scope.daysArr);
+
         $scope.loadData(
           $scope.selectedCriteria.kuqu.Id, 
           $scope.selectedCriteria.banzu.Id, 
