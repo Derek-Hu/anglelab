@@ -1004,3 +1004,11 @@ a.entry-home:hover{text-decoration: none;}
 .folder span{margin-left: 1em; }
 .carousel-indicators{display: none;}
 .rect.half{height: 0.5em;}
+
+.chargerName{    position: absolute;
+    bottom: -1.5em;
+    font-size: 0.75em;
+    width: 100%;
+    /* height: 1em; */
+    line-height: 1em;
+    left: 0;}

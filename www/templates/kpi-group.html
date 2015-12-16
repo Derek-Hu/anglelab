@@ -31,6 +31,7 @@
 		        		<div style="    width: 100%; position: absolute; height: 1em; text-align: center; top: 0; left: 0;" ng-if="kpi.hatColor && kpi.hatColor!=''" class="hat">
 				        	<img ng-src="img/{{kpi.hatColor}}.svg" style="    position: absolute; top: -1em; left: 50%; height: 100%; margin-left: -0.5em;"/>
 				        </div>
+				        <span ng-if="isLine" class="chargerName" ng-bind="metaData.LiablePerson"></span>
 	        		</div>
 	        	</a>
 	    	</div>

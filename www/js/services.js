@@ -25,6 +25,7 @@ angular.module('starter.services', ['ngResource'])
     setImagePath : function(imagePath){
       settings.imagePath = imagePath;
     },
+    lineKpiPageType: 10,
     loading: '加载中',
     loadingError: '加载失败',
     supportedExt: ['.jpg', '.jpeg', '.bmp', '.png', '.gif', '.tif'],

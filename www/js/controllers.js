@@ -1109,13 +1109,17 @@ angular.module('starter.controllers', [])
 
 
 }])
-.controller('LineKPICtrl', ['$scope', 'Constant', '$state', 'localStorageService', 'KPIDetail',
- function($scope, Constant, $state, localStorageService, KPIDetail) {
+.controller('LineKPICtrl', ['$scope', 'Constant', '$state', 'localStorageService', 'KPIDetail', 'MetaDataSvc',
+ function($scope, Constant, $state, localStorageService, KPIDetail, MetaDataSvc) {
 
   $scope.kpis=Constant.kpis;
   $scope.isLine = true;
   $scope.$on('$ionicView.enter', function(e) {
     $scope.selectedCriteria = localStorageService.get('criteria');
+
+    MetaDataSvc(Constant.lineKpiPageType, $scope.isLine).then(function(data){
+      $scope.metaData = data;
+    });
 
     KPIDetail('kpiHome', $scope.isLine).then(function(menus){
       $scope.kpis = menus;
@@ -1123,9 +1127,8 @@ angular.module('starter.controllers', [])
     },function(){});
 
   });
-  var lineKpiPageType = 10;
   $scope.goDetail = function(kpiType, PageType){
-    $state.go('kpi-detail',{"aspect": kpiType, "PageType": lineKpiPageType, isLine: true});
+    $state.go('kpi-detail',{"aspect": kpiType, "PageType": Constant.lineKpiPageType, isLine: true});
   }
 
 }])
