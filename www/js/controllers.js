@@ -289,7 +289,7 @@ angular.module('starter.controllers', [])
   $scope.isLine = $stateParams.isLine;
   $scope.$on('$ionicView.enter', function(e) {
     $scope.selectedCriteria = localStorageService.get('criteria');
-    MetaDataSvc($stateParams.PageType).then(function(data){
+    MetaDataSvc($stateParams.PageType, $scope.isLine).then(function(data){
       $scope.metaData = data;
     });
     $scope.loadingStatus = '加载中';
@@ -314,7 +314,7 @@ angular.module('starter.controllers', [])
   $scope.loadingStatus = '加载中';
   $scope.$on('$ionicView.enter', function(e) {
     $scope.selectedCriteria = localStorageService.get('criteria');
-    MetaDataSvc($stateParams.PageType).then(function(data){
+    MetaDataSvc($stateParams.PageType, $scope.isLine).then(function(data){
       $scope.metaData = data;
     });
     $scope.loadingStatus = '加载中';
