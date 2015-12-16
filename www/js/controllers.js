@@ -84,7 +84,7 @@ angular.module('starter.controllers', [])
 
   $scope.$on('$ionicView.enter', function(e) {
     $scope.selectedCriteria = localStorageService.get('criteria');
-    MetaDataSvc($stateParams.PageType).then(function(data){
+    MetaDataSvc($stateParams.PageType, $scope.isLine).then(function(data){
       $scope.metaData = data;
     });
 
@@ -1123,8 +1123,9 @@ angular.module('starter.controllers', [])
     },function(){});
 
   });
+  var lineKpiPageType = 10;
   $scope.goDetail = function(kpiType, PageType){
-    $state.go('kpi-detail',{"aspect": kpiType, "PageType": PageType, isLine: true});
+    $state.go('kpi-detail',{"aspect": kpiType, "PageType": lineKpiPageType, isLine: true});
   }
 
 }])

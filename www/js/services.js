@@ -332,17 +332,25 @@ angular.module('starter.services', ['ngResource'])
           "shenhe":"N/A",
           "pizhun":"N/A"
         };
-    return function(menuId){
+    return function(menuId, isLine){
       var deferred = $q.defer();
       var selectedCriteria = localStorageService.get('criteria');
-      if(!selectedCriteria.kuqu || !selectedCriteria.banzu || !selectedCriteria.banci){
+
+      if(isLine){
+        if(!selectedCriteria.kuqu){
+          deferred.resolve([]);
+          return deferred.promise;
+        }
+      }
+
+      if(!isLine && (!selectedCriteria.kuqu || !selectedCriteria.banzu || !selectedCriteria.banci)){
         deferred.resolve(empty);
         return deferred.promise;
       }
       Backend().metaData.query({
         'WareHouseId': selectedCriteria.kuqu.Id,
-        'ZoneId': selectedCriteria.banzu.Id,
-        'ShiftId': selectedCriteria.banci.ID,
+        'ZoneId': selectedCriteria.banzu?selectedCriteria.banzu.Id: '',
+        'ShiftId': selectedCriteria.banci?selectedCriteria.banci.ID: '',
         // 底部数据
         'BizType': 2,
         // 考勤汇总
