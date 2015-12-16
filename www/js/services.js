@@ -213,14 +213,14 @@ angular.module('starter.services', ['ngResource'])
         ,{
           "nm": "清洁度", 
           "BizType": '5-5',
-          "enm": "Logistics Cleanliness",
+          "enm": "Cleanliness",
           "fc": "#aaa", 
           "bc": "#049BF4", 
           "bg": 'img/svg/logistics-cleanliness.svg'
         },{
           "nm": "工位器具", 
           "BizType": '5-6',
-          "enm": "Material Box Cleanness",
+          "enm": "Working Position Apparatus",
           "fc": "#aaa", 
           "bc": "#049BF4", 
           "bg": 'img/svg/material-box-cleanness.svg'
