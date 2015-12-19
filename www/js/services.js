@@ -488,7 +488,7 @@ angular.module('starter.services', ['ngResource'])
         'BizType': (isLine?'L-': '')+Constant.kpiBizType[kpiType]
       }, function(data){
 
-        var isRate = (kpiType == 'member' || kpiType == 'cost' || kpiType == 'quality')
+        //var isRate = (kpiType == 'member' || kpiType == 'cost' || kpiType == 'quality')
         if(!data){
           return;
         }
@@ -510,7 +510,7 @@ angular.module('starter.services', ['ngResource'])
           var idx = parseInt(data[i].ID.split('-')[1])-1;
           if(menus[idx]){
             if(data[i].ACTUAL || data[i].TARGET){
-              if(isRate){
+              if(menus[idx].isPercentage){
                   menus[idx].rate = Math.ceil(100*data[i].ACTUAL)+'% / '+ Math.ceil(100*data[i].TARGET)+'%';
               }else{
                   menus[idx].rate = data[i].ACTUAL+' / '+data[i].TARGET;
