@@ -163,7 +163,7 @@ angular.module('starter', ['ionic', 'ui.bootstrap', 'LocalStorageModule', 'ngRes
       }
     })
   .state('kpi-item', {
-      url: '/kpi-item/:aspect/:PageType/:BizType/:isLine',
+      url: '/kpi-item/:aspect/:PageType/:BizType/:isPercentage/:isLine',
       views: {
         'dash': {
           templateUrl: 'templates/kpi-chart.html',

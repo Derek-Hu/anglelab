@@ -13,7 +13,8 @@ angular.module('starter.controllers', [])
       $scope.KPITitle = aspect[i].nm;
     }
   }
-  $scope.chart.isRate = ($scope.aspect == 'member' || $scope.aspect == 'cost' || $scope.aspect=='quality');
+  $scope.chart.isRate = $stateParams.isPercentage == 'true';
+  //$scope.chart.isRate = ($scope.aspect == 'member' || $scope.aspect == 'cost' || $scope.aspect=='quality');
 
   var ConstantTypes = {
     'M': '月',
@@ -92,13 +93,13 @@ angular.module('starter.controllers', [])
 
     KPIItem($stateParams.BizType, $scope.isLine).then(function(data){
 
-      data = data.map(function(d){
+      /*data = data.map(function(d){
         if($scope.chart.isRate){
           d.ACTUAL =  d.ACTUAL + '%';
           d.TARGET =  d.TARGET + '%';
         }
         return d;
-      });
+      });*/
 
       var types = Object.keys(ConstantTypes);
       $scope.types = {};
@@ -1160,8 +1161,13 @@ angular.module('starter.controllers', [])
 
     $scope.aspect = $stateParams.aspect;
     
-    $scope.goKPIDetail = function(state, BizType){
-      $state.go(state?state:'kpi-item',{"aspect": $stateParams.aspect, "PageType": $stateParams.PageType, "BizType": BizType, "isLine" : $stateParams.isLine});
+    $scope.goKPIDetail = function(state, BizType, isPercentage){
+      $state.go(state?state:'kpi-item',{
+        "isPercentage": isPercentage+'',
+        "aspect": $stateParams.aspect, 
+        "PageType": $stateParams.PageType, 
+        "BizType": BizType, 
+        "isLine" : $stateParams.isLine});
     }
     $scope.isLine = $stateParams.isLine;
     var type = $stateParams.aspect;

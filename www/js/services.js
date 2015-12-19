@@ -188,28 +188,32 @@ angular.module('starter.services', ['ngResource'])
           "enm": "Inventory Accuracy",
           "fc": "#aaa", 
           "bc": "#049BF4", 
-          "bg": 'img/svg/inventory-accuracy.svg'
+          "bg": 'img/svg/inventory-accuracy.svg',
+          "isPercentage": true
         },{
           "nm": "FIFO符合率", 
           "BizType": '5-2',
           "enm": "FIFO Coincidence Rate",
           "fc": "#aaa", 
           "bg": 'img/svg/FIFO-coincidence-rate.svg',
-          "bc": "#049BF4"
+          "bc": "#049BF4",
+          "isPercentage": true
         },{
           "nm": "库位一致性", 
           "BizType": '5-3',
           "enm": "Library Level Consistency",
           "fc": "#aaa", 
           "bc": "#049BF4", 
-          "bg": 'img/svg/library-level-consistency.svg'
+          "bg": 'img/svg/library-level-consistency.svg',
+          "isPercentage": true
         },{
           "nm": "非规范性操作", 
           "BizType": '5-4',
           "enm": "Non Normative Operation",
           "fc": "#aaa", 
           "bc": "#049BF4", 
-          "bg": 'img/svg/non-normative-operation.svg'
+          "bg": 'img/svg/non-normative-operation.svg',
+          "isPercentage": false
         }
         ,{
           "nm": "清洁度", 
@@ -217,14 +221,16 @@ angular.module('starter.services', ['ngResource'])
           "enm": "Cleanliness",
           "fc": "#aaa", 
           "bc": "#049BF4", 
-          "bg": 'img/svg/logistics-cleanliness.svg'
+          "bg": 'img/svg/logistics-cleanliness.svg',
+          "isPercentage": false
         },{
           "nm": "工位器具", 
           "BizType": '5-6',
           "enm": "Working Position Apparatus",
           "fc": "#aaa", 
           "bc": "#049BF4", 
-          "bg": 'img/svg/material-box-cleanness.svg'
+          "bg": 'img/svg/material-box-cleanness.svg',
+          "isPercentage": false
         }
         /*,{
           "nm": "物流工废索赔额", 
@@ -241,14 +247,16 @@ angular.module('starter.services', ['ngResource'])
           "enm": "Turnover Rate",
           "fc": "#aaa", 
           "bc": "#049BF4", 
-          "bg": 'img/svg/turnover-rate.svg'
+          "bg": 'img/svg/turnover-rate.svg',
+          "isPercentage": true
         },{
           "nm": "缺勤率", 
           "BizType": '3-2',
           "enm": "AbsentTeeism Rate",
           "fc": "#aaa", 
           "bg": 'img/svg/absent-teeism-rate.svg',
-          "bc": "#049BF4"
+          "bc": "#049BF4",
+          "isPercentage": true
         }],
       'cost': [{
           "nm": "AGV开动率", 
@@ -256,28 +264,32 @@ angular.module('starter.services', ['ngResource'])
           "enm": "AGV Development Rate",
           "fc": "#aaa", 
           "bc": "#049BF4", 
-          "bg": 'img//svg/avg-development-rate.svg'
+          "bg": 'img//svg/avg-development-rate.svg',
+          "isPercentage": true
         },{
           "nm": "移动设备开动率", 
           "BizType": '4-2',
           "enm": "Mobile Device Starting Rate",
           "fc": "#aaa", 
           "bg": 'img/svg/mobile-device-starting-rate.svg',
-          "bc": "#049BF4"
+          "bc": "#049BF4",
+          "isPercentage": true
         },{
           "nm": "移动设备完好率", 
           "BizType": '4-3',
           "enm": "Mobile Device Integrity",
           "fc": "#aaa", 
           "bc": "#049BF4", 
-          "bg": 'img/svg/mobile-device-integrity.svg'
+          "bg": 'img/svg/mobile-device-integrity.svg',
+          "isPercentage": true
         },{
           "nm": "劳动生产率VBZ", 
           "BizType": '4-4',
           "enm": "Labor Productivity VBZ",
           "fc": "#aaa", 
           "bc": "#049BF4", 
-          "bg": 'img/svg/labor-productivity-VBZ.svg'
+          "bg": 'img/svg/labor-productivity-VBZ.svg',
+          "isPercentage": true
         }]
     }
   };

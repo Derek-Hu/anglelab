@@ -17,7 +17,8 @@ angular.module('starter.directives',['d3'])
         width: '=',
         height:'=',
         xlabel: '@',
-        isDouble: '='
+        isDouble: '=',
+        isRate: '='
       },
       link: function(scope, element, attrs) {
 
@@ -25,6 +26,7 @@ angular.module('starter.directives',['d3'])
           var margin = {top: fontSize*3, right: fontSize*9, bottom: fontSize*10, left: fontSize*3};
           var data = scope.data, title=scope.title, yLabel=scope.ylabel;
 
+          
           scope.$watch('data', function(n, o){
             
             var data = scope.data;
@@ -34,12 +36,13 @@ angular.module('starter.directives',['d3'])
             if(n===o){
               return;
             }
-            var isRate = data && !!data.filter(function(d){
+            var isRate = scope.isRate;
+            /*var isRate = data && !!data.filter(function(d){
               if(d.TARGET){
                 return (d.TARGET).toString().indexOf('%')!=-1;
               }
               return false;
-            }).length;
+            }).length;*/
             var dimension = getDimension();
             var width = dimension[0], height = dimension[1];
 
