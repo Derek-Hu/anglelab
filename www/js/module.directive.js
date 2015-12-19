@@ -36,7 +36,7 @@ angular.module('starter.directives',['d3'])
             }
             var isRate = data && !!data.filter(function(d){
               if(d.TARGET){
-                return d.TARGET.indexOf('%')!=-1;
+                return (d.TARGET).toString().indexOf('%')!=-1;
               }
               return false;
             }).length;

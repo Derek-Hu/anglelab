@@ -31,7 +31,7 @@ angular.module('starter.controllers', [])
       d.month = d.ID.match(/\d+/)[0];
       return d;
     });
-    $scope.chart1 = {data: []};
+    $scope.chart1 = {data: null};
     $scope.chart.isDouble = false;
     if(key == 'W'){
       $scope.chart.isDouble = true;
@@ -45,7 +45,7 @@ angular.module('starter.controllers', [])
         })
       };
     }else{
-      $scope.chart1.data = [];
+      $scope.chart1.data = null;
     }
   }
   function generatorDropdown(name, items, defaultOpt) {
