@@ -131,11 +131,11 @@ ion-view.view {
 }
 .bz-menu .hat{
     position: absolute;
-    left: 50%;
-    top: 0em;
-    width: 1em;
+    left: 2em;
+    top: 1.5em;
+    width: 2em;
     margin-left: -0.5em;
-    height: 1em;
+    height: 2em;
 }
 .bz-menu .rate{
     position: absolute;
