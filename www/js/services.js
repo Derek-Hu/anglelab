@@ -181,6 +181,13 @@ angular.module('starter.services', ['ngResource'])
           "fc": "#aaa", 
           "bc": "#049BF4", 
           "bg": 'img/svg/turnover-rate.svg'
+        },{
+          "nm": "收发货及时率", 
+          "BizType": '2-2',
+          "enm": "Timely Delivery Rate",
+          "fc": "#aaa", 
+          "bc": "#049BF4", 
+          "bg": 'img/svg/timely-delivery-rate.svg'
         }],
       'quality': [{
           "nm": "库存准确率", 
