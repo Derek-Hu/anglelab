@@ -121,6 +121,9 @@ ion-view.view {
 	font-size: 1.5em;
 	color: #F5AA35;
 }
+.bz-menu .card .item-body .menu-name.notValid{
+    color: #5682B1;
+}
 .bz-menu .card .item-body .menu-desc{
     position: absolute;
     left: 3em;

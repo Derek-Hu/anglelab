@@ -69,13 +69,13 @@
         <div class="rate">
         	<span ng-bind="m.rate"></span>
         </div>
-	      <a ng-click="goKPIDetail(m.url, m.BizType, m.isPercentage)" ng-style="{'color': m.fc}">
+	      <a ng-click="goKPIDetail(m.url, m.BizType, m.isPercentage, m.invalid)" ng-style="{'color': m.fc}">
 	        <div class="list card" ng-style="{'border-color': m.bc, 'background-image': 'url('+m.bg+')'}">
 	          <div class="item item-body">
 	          	<div ng-bind="$index+1" class="number"></div>
 	            <div class="menu-desc">
 		            <span class="menu-eng" ng-bind="m.enm"></span>
-	            	<span class="menu-name" ng-bind="m.nm"></span>
+	            	<span class="menu-name {{m.invalid?'notValid': ''}}" ng-bind="m.nm"></span>
 		        </div>
 	          </div>
 	        </div>

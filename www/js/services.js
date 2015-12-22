@@ -187,7 +187,8 @@ angular.module('starter.services', ['ngResource'])
           "enm": "Timely Delivery Rate",
           "fc": "#aaa", 
           "bc": "#049BF4", 
-          "bg": 'img/svg/timely-delivery-rate.svg'
+          "bg": 'img/svg/timely-delivery-rate.svg',
+          "invalid": true
         }],
       'quality': [{
           "nm": "库存准确率", 

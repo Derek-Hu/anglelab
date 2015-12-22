@@ -1161,7 +1161,10 @@ angular.module('starter.controllers', [])
 
     $scope.aspect = $stateParams.aspect;
     
-    $scope.goKPIDetail = function(state, BizType, isPercentage){
+    $scope.goKPIDetail = function(state, BizType, isPercentage, isInvalid){
+      if(isInvalid){
+        return;
+      }
       $state.go(state?state:'kpi-item',{
         "isPercentage": isPercentage+'',
         "aspect": $stateParams.aspect, 

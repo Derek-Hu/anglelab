@@ -70,7 +70,7 @@
 			          	<div ng-bind="$index+1" class="number"></div>
 			            <div class="menu-desc">
 				            <span class="menu-eng" ng-bind="m.enm"></span>
-			            	<span class="menu-name" ng-bind="m.nm"></span>
+			            	<span class="menu-name {{m.state?'':'notValid'}}" ng-bind="m.nm"></span>
 				        </div>
 			          </div>
 			        </div>
