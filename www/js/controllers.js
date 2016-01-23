@@ -298,6 +298,7 @@ angular.module('starter.controllers', [])
         if(resp && resp[0] && resp[0].NeedUpdate && resp[0].NeedUpdate.length){
           $scope.hasNewVersion = true;
           $scope.checkVersionText = '检查更新';
+          $scope.newVersion = resp[0].NeedUpdate;
           $scope.apkURL = encodeURI(Constant.baseURL()+'/Version/SFM.apk');
           $scope.apkName = 'SFM-'+resp[0].NeedUpdate+'.apk';
         }
