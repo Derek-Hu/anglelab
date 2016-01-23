@@ -240,8 +240,8 @@ angular.module('starter.controllers', [])
   })
 
 }])
-.controller('SettingsCtrl', ['$scope', 'Constant', '$state', '$window', '$stateParams', 'Backend',
-  function($scope, Constant, $state, $window, $stateParams, Backend) {
+.controller('SettingsCtrl', ['$scope', 'Constant', '$state', '$window', '$stateParams', 'Backend', '$cordovaInAppBrowser',
+  function($scope, Constant, $state, $window, $stateParams, Backend, $cordovaInAppBrowser) {
   $scope.settings = {};
 
   var isBackFromFolder = !!$stateParams.fromSelect;
@@ -312,6 +312,15 @@ angular.module('starter.controllers', [])
   cordova.getAppVersion.getVersionNumber().then(function (version) {
     $scope.appVersion = version;
   });
+  $scope.launchNavigator = function(url) {
+    $cordovaInAppBrowser.open(url, '_system', {
+      location: 'no',
+      clearcache: 'no',
+      toolbar: 'no'
+    }).then(function(event) {}).catch(function(event) {
+      alert('Open Browser Failed');
+    });
+  };
   $scope.downloadVersion = function(){
     window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, function gotFS(fileSystem) {
            fileSystem.root.getDirectory("SFMDownload", {create: true}, function fileSystemSuccess(fileSystem){
@@ -341,6 +350,7 @@ angular.module('starter.controllers', [])
     }, function(){alert("App Not Ready to Load SDK");});
   };
   $scope.checkVersionText = '检查更新';
+  $scope.hasNewVersion = false;
   $scope.$on('$ionicView.enter', function(e) {
     $scope.hasNewVersion = false;
     $scope.settings.timeInterval = Constant.getInterval();
