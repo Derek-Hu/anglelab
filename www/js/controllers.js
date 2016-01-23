@@ -226,6 +226,14 @@ angular.module('starter.controllers', [])
     if(!$scope.criteria || !$scope.criteria.kuqu){
       return;
     }
+
+    MenuList.getList($scope.lineMenus, true, {
+      WareHouseId: $scope.criteria.kuqu.Id,
+      ZoneId: -1
+    }).then(function(menus){
+      $scope.menus=menus;
+    });
+
     MenuBorder.lineBoard($scope.criteria.kuqu.Id).then(function(data){
       $scope.menuBorders = data;
     });
@@ -734,7 +742,14 @@ angular.module('starter.controllers', [])
     var type = $stateParams.aspect;
     if(type){
       KPIDetail(type).then(function(menus){
-        $scope.menus = menus;
+        
+        MenuList.getList(menus, false, {
+          WareHouseId: $scope.criteria.kuqu?$scope.criteria.kuqu.Id:-1,
+          ZoneId: $scope.criteria.banzu?$scope.criteria.banzu.Id: -1
+        }).then(function(menus){
+          $scope.menus=menus;
+        });
+
         if(type == 'security'){
           // Green Cross
           $scope.menus[0].hatColor = ''; 
@@ -1180,10 +1195,10 @@ angular.module('starter.controllers', [])
 
 
 }])
-.controller('LineKPICtrl', ['$scope', 'Constant', '$state', 'localStorageService', 'KPIDetail', 'MetaDataSvc',
- function($scope, Constant, $state, localStorageService, KPIDetail, MetaDataSvc) {
+.controller('LineKPICtrl', ['$scope', 'Constant', '$state', 'localStorageService', 'KPIDetail', 'MetaDataSvc', 'MenuList',
+ function($scope, Constant, $state, localStorageService, KPIDetail, MetaDataSvc, MenuList) {
 
-  $scope.kpis=Constant.kpis;
+  //$scope.kpis=Constant.kpis;
   $scope.isLine = true;
   $scope.$on('$ionicView.enter', function(e) {
     $scope.selectedCriteria = localStorageService.get('criteria');
@@ -1193,7 +1208,12 @@ angular.module('starter.controllers', [])
     });
 
     KPIDetail('kpiHome', $scope.isLine).then(function(menus){
-      $scope.kpis = menus;
+      MenuList.getList(menus, $scope.isLine, {
+        WareHouseId: $scope.selectedCriteria.kuqu?$scope.selectedCriteria.kuqu.Id:-1,
+        ZoneId: $scope.selectedCriteria.banzu?$scope.selectedCriteria.banzu.Id:-1
+      }).then(function(menus){
+        $scope.kpis=menus;
+      });
 
     },function(){});
 
@@ -1209,8 +1229,8 @@ angular.module('starter.controllers', [])
   $scope.$on('$ionicView.enter', function(e) {
     $scope.selectedCriteria = localStorageService.get('criteria');
     MenuList.getList(Constant.kpis, false, {
-      WareHouseId: $scope.selectedCriteria.kuqu.Id,
-      ZoneId: $scope.selectedCriteria.banzu.Id
+      WareHouseId: $scope.selectedCriteria.kuqu?$scope.selectedCriteria.kuqu.Id: -1,
+      ZoneId: $scope.selectedCriteria.banzu?$scope.selectedCriteria.banzu.Id:-1
     }).then(function(menus){
       $scope.kpis=menus;
     });
