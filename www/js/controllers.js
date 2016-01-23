@@ -274,40 +274,41 @@ angular.module('starter.controllers', [])
     setTimeout(function(){
       $scope.hasNewVersion = true;
       $scope.checkVersionText = '检查更新';
-      $scope.apkURL = 'http://gdown.baidu.com/data/wisegame/7a681c9f73237b2e/jingdong_23599.apk';
+      $scope.apkURL = encodeURI('http://gdown.baidu.com/data/wisegame/7a681c9f73237b2e/jingdong_23599.apk');
+      $scope.apkName = 'jingdong_23599.apk';
       $scope.$apply();
     },2000);
   }
   $scope.downloadVersion = function(){
-    
-    window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, function(fileSystem){
-      fileSystem.root.getFile('download/filename.apk', {
-          create: true, 
-          exclusive: false
-        }, function(fileEntry) {
-          var localPath = fileEntry.fullPath,
-          fileTransfer = new FileTransfer();
-          fileTransfer.download($scope.apkURL, localPath, function(entry) {
-              window.plugins.webintent.startActivity({
-                  action: window.plugins.webintent.ACTION_VIEW,
-                  url: 'file://' + entry.fullPath,
-                  type: 'application/vnd.android.package-archive'
-                  },
-                  function(){},
-                  function(e){
-                      alert('Error launching app update');
-                  }
-              );                              
-          }, function (error) {
-              alert("Error downloading APK: " + error.code);
-        });
-        }, function(evt){
-            alert("Error downloading apk: " + evt.target.error.code);                                               
-        });
-      }, function(evt){
-      alert("Error preparing to download apk: " + evt.target.error.code);
-      });
-  }
+    window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, function gotFS(fileSystem) {
+           fileSystem.root.getDirectory("SFMDownload", {create: true}, function fileSystemSuccess(fileSystem){
+            $scope.dbgMsg= 'SFMDownload';
+                fileSystem.getFile($scope.apkName,{create: true,exclusive:false},function gotFileEntry(fileEntry){
+                    var path = fileEntry.fullPath.replace($scope.apkName,"");
+                    $scope.dbgMsg= 'getFile';
+                    try{
+                      fileEntry.remove();
+                    }catch(e){};
+                    $scope.dbgMsg= 'after move';
+                    var fileTransfer = new FileTransfer();
+                    $scope.dbgMsg= path+""+$scope.apkName;
+                    fileTransfer.download($scope.apkURL, path+""+$scope.apkName,function(theFile){
+                        alert("File Downloaded Successfully " + theFile.toURI());
+                        window.plugins.webintent.startActivity({
+                            action: window.plugins.webintent.ACTION_VIEW,
+                            url: 'file://' + entry.fullPath,
+                            type: 'application/vnd.android.package-archive'
+                            },
+                            function(){},
+                            function(e){alert('Error launching app update');}
+                        );
+                    },function(error){
+                        alert("Download APK Error" + error.message);
+                    });
+                },function(){alert("Read SDK Error");});
+            });
+    }, function(){alert("App Not Ready to Load SDK");});
+  };
   $scope.checkVersionText = '检查更新';
   $scope.$on('$ionicView.enter', function(e) {
     $scope.hasNewVersion = false;
