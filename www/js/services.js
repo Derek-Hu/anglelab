@@ -46,6 +46,7 @@ angular.module('starter.services', ['ngResource'])
     viewBoard: {
 
       menus: [{
+        'MenuId': '1',
         'PageType': 1,
         "nm": "班组结构图", 
         "enm": "Team Structure",
@@ -53,6 +54,7 @@ angular.module('starter.services', ['ngResource'])
         "state": "org",
         "bg": 'img/svg/team-structure.svg'
       },{
+        'MenuId': '2',
         'PageType': 2,
         "nm": "考勤汇总", 
         "enm": "Attendance Summary",
@@ -60,6 +62,7 @@ angular.module('starter.services', ['ngResource'])
         "state": "kqhz",
         "bg": 'img/svg/attendance-summary.svg'
       },{
+        'MenuId': '3',
         'PageType': 3,
         "nm": "岗位柔性表", 
         "enm": "Flexible Job List",
@@ -67,6 +70,7 @@ angular.module('starter.services', ['ngResource'])
         "bg": 'img/svg/flexible-job-list.svg',
         "state": "gwrx"
       },{
+        'MenuId': '4',
         'PageType': 4,
         "nm": "轮岗计划", 
         "enm": "Rotation Plan",
@@ -74,6 +78,7 @@ angular.module('starter.services', ['ngResource'])
         "bg": 'img/svg/rotation-plan.svg',
         "state": "lgjh"
       },{
+        'MenuId': '5',
         'PageType': 5,
         "nm": "KPI跟踪", 
         "enm": "KPI Tracking",
@@ -81,6 +86,7 @@ angular.module('starter.services', ['ngResource'])
         "state": "kpi",
         "bg": 'img/svg/kpi-tracking.svg'
       },{
+        'MenuId': '6',
         'PageType': 6,
         "nm": "问题跟踪推进", 
         "enm": "Problem Tracking",
@@ -88,6 +94,7 @@ angular.module('starter.services', ['ngResource'])
         "bg": 'img/svg/problem-tracking.svg',
         "state": ""
       },{
+        'MenuId': '7',
         'PageType': 7,
         "nm": "变更点管理", 
         "enm": "Change Point Management",
@@ -95,6 +102,7 @@ angular.module('starter.services', ['ngResource'])
         "bg": 'img/svg/change-point-management.svg',
         "state": ""
       },{
+        'MenuId': '8',
         'PageType': 8,
         "nm": "岗位工时平衡墙", 
         "enm": "Job Time Balance Wall",
@@ -102,6 +110,7 @@ angular.module('starter.services', ['ngResource'])
         "bg": 'img/svg/job-time-balance-wall.svg',
         "state": ""
       },{
+        'MenuId': '9',
         'PageType': 9,
         "nm": "班组园地", 
         "enm": "Team Garden",
@@ -124,26 +133,31 @@ angular.module('starter.services', ['ngResource'])
       '绿': 'green'
     },
     kpis: [{
+        'MenuId': '5-1-0',
         name: '安全',
         PageType: 5,
         id: 1,
         type: 'security'
       },{
+        'MenuId': '5-5-0',
         name: '质量',
         PageType: 5,
         id: 5,
         type: 'quality'
       },{
+        'MenuId': '5-2-0',
         PageType: 5,
         name: '流程',
         id: 2,
         type: 'flow'
       },{
+        'MenuId': '5-3-0',
         PageType: 5,
         name: '人员',
         id: 3,
         type: 'member'
       },{
+        'MenuId': '5-4-0',
         PageType: 5,
         name: '成本',
         id: 4,
@@ -160,6 +174,7 @@ angular.module('starter.services', ['ngResource'])
     kpiMenus: {
       'security': [{
           "nm": "安全绿十字", 
+          'MenuId': '5-1-1',
           "BizType": '1-1',
           "enm": "Green Cross",
           "fc": "#aaa", 
@@ -168,6 +183,7 @@ angular.module('starter.services', ['ngResource'])
           "url": "green-cross"
         },{
           "nm": "实时工伤次数率", 
+          'MenuId': '5-1-2',
           "BizType": '1-2',
           "enm": "Frequency of Injury",
           "fc": "#aaa", 
@@ -176,6 +192,7 @@ angular.module('starter.services', ['ngResource'])
         }],
       'flow': [{
           "nm": "生产停线时间", 
+          'MenuId': '5-2-1',
           "BizType": '2-1',
           "enm": "Turnover Rate",
           "fc": "#aaa", 
@@ -183,6 +200,7 @@ angular.module('starter.services', ['ngResource'])
           "bg": 'img/svg/turnover-rate.svg'
         },{
           "nm": "收发货及时率", 
+          'MenuId': '5-2-2',
           "BizType": '2-2',
           "enm": "Timely Delivery Rate",
           "fc": "#aaa", 
@@ -192,6 +210,7 @@ angular.module('starter.services', ['ngResource'])
         }],
       'quality': [{
           "nm": "库存准确率", 
+          'MenuId': '5-5-1',
           "BizType": '5-1',
           "enm": "Inventory Accuracy",
           "fc": "#aaa", 
@@ -200,6 +219,7 @@ angular.module('starter.services', ['ngResource'])
           "isPercentage": true
         },{
           "nm": "FIFO符合率", 
+          'MenuId': '5-5-2',
           "BizType": '5-2',
           "enm": "FIFO Coincidence Rate",
           "fc": "#aaa", 
@@ -208,6 +228,7 @@ angular.module('starter.services', ['ngResource'])
           "isPercentage": true
         },{
           "nm": "库位一致性", 
+          'MenuId': '5-5-3',
           "BizType": '5-3',
           "enm": "Library Level Consistency",
           "fc": "#aaa", 
@@ -216,6 +237,7 @@ angular.module('starter.services', ['ngResource'])
           "isPercentage": true
         },{
           "nm": "非规范性操作", 
+          'MenuId': '5-5-4',
           "BizType": '5-4',
           "enm": "Non Normative Operation",
           "fc": "#aaa", 
@@ -225,6 +247,7 @@ angular.module('starter.services', ['ngResource'])
         }
         ,{
           "nm": "清洁度", 
+          'MenuId': '5-5-5',
           "BizType": '5-5',
           "enm": "Cleanliness",
           "fc": "#aaa", 
@@ -233,6 +256,7 @@ angular.module('starter.services', ['ngResource'])
           "isPercentage": false
         },{
           "nm": "工位器具", 
+          'MenuId': '5-5-6',
           "BizType": '5-6',
           "enm": "Working Position Apparatus",
           "fc": "#aaa", 
@@ -242,6 +266,7 @@ angular.module('starter.services', ['ngResource'])
         }
         /*,{
           "nm": "物流工废索赔额", 
+          'MenuId': '5-5-7',
           "BizType": '5-7',
           "enm": "Industry Waste Claims",
           "fc": "#aaa", 
@@ -251,6 +276,7 @@ angular.module('starter.services', ['ngResource'])
         ],
       'member': [{
           "nm": "离职率", 
+          'MenuId': '5-3-1',
           "BizType": '3-1',
           "enm": "Turnover Rate",
           "fc": "#aaa", 
@@ -259,6 +285,7 @@ angular.module('starter.services', ['ngResource'])
           "isPercentage": true
         },{
           "nm": "缺勤率", 
+          'MenuId': '5-3-2',
           "BizType": '3-2',
           "enm": "AbsentTeeism Rate",
           "fc": "#aaa", 
@@ -268,6 +295,7 @@ angular.module('starter.services', ['ngResource'])
         }],
       'cost': [{
           "nm": "AGV开动率", 
+          'MenuId': '5-4-1',
           "BizType": '4-1',
           "enm": "AGV Development Rate",
           "fc": "#aaa", 
@@ -276,6 +304,7 @@ angular.module('starter.services', ['ngResource'])
           "isPercentage": true
         },{
           "nm": "移动设备开动率", 
+          'MenuId': '5-4-2',
           "BizType": '4-2',
           "enm": "Mobile Device Starting Rate",
           "fc": "#aaa", 
@@ -284,6 +313,7 @@ angular.module('starter.services', ['ngResource'])
           "isPercentage": true
         },{
           "nm": "移动设备完好率", 
+          'MenuId': '5-4-3',
           "BizType": '4-3',
           "enm": "Mobile Device Integrity",
           "fc": "#aaa", 
@@ -292,6 +322,7 @@ angular.module('starter.services', ['ngResource'])
           "isPercentage": true
         },{
           "nm": "劳动生产率VBZ", 
+          'MenuId': '5-4-4',
           "BizType": '4-4',
           "enm": "Labor Productivity VBZ",
           "fc": "#aaa", 
@@ -435,6 +466,32 @@ angular.module('starter.services', ['ngResource'])
         }
         return '';
       }
+    }
+}])
+.service('MenuList', [ 'Backend', 'Constant', 'localStorageService', '$q',
+  function(Backend, Constant, localStorageService, $q) {
+    return {
+      getList: function(originalMenus, isLine, params){
+          var deferred = $q.defer();
+          if(!params || !params.WareHouseId){
+            deferred.resolve(originalMenus);
+            return deferred.promise;
+          }
+          Backend().metaData.query({
+            'WareHouseId': params.WareHouseId,
+            'BizType': 4,
+            'ZoneId': isLine? -1:params.ZoneId
+          }, function(data){
+            if(!data || !data[0] || data[0].ErrorCode!==undefined){
+              deferred.resolve(originalMenus);
+            }else{
+              deferred.resolve(data);
+            }
+          }, function(){
+            deferred.resolve(originalMenus);
+          });
+          return deferred.promise;
+        }
     }
 }])
 .service('MenuBorder', [ 'Backend', 'Constant', 'localStorageService', '$q',

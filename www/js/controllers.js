@@ -151,6 +151,7 @@ angular.module('starter.controllers', [])
   
   $scope.getBorderFreq = Util.getBorderFreq;
   $scope.menus = [{
+    'MenuId': '10',
     'PageType': 10,
     "nm": "KPI跟踪", 
     "enm": "KPI Tracking",
@@ -158,6 +159,7 @@ angular.module('starter.controllers', [])
     "state": "line-kpi",
     "bg": 'img/svg/kpi-tracking.svg'
   },{
+    'MenuId': '11',
     'PageType': 11,
     "nm": "问题跟踪推进", 
     "enm": "Problem Tracking",
