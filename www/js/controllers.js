@@ -546,8 +546,8 @@ angular.module('starter.controllers', [])
   });
 
 }])
-.controller('DashCtrl', ['$scope', '$state', 'localStorageService', 'Constant', 'Warehouse', 'Zone', 'Shift', 'Charge', '$stateParams', 'KPIDetail', 'MetaDataSvc', 'MenuBorder', 'Util',
-  function($scope, $state, localStorageService, Constant, Warehouse, Zone, Shift, Charge, $stateParams, KPIDetail, MetaDataSvc, MenuBorder, Util) {
+.controller('DashCtrl', ['$scope', '$state', 'localStorageService', 'Constant', 'Warehouse', 'Zone', 'Shift', 'Charge', '$stateParams', 'KPIDetail', 'MetaDataSvc', 'MenuBorder', 'Util', 'MenuList',
+  function($scope, $state, localStorageService, Constant, Warehouse, Zone, Shift, Charge, $stateParams, KPIDetail, MetaDataSvc, MenuBorder, Util, MenuList) {
 
   $scope.getBorderFreq = Util.getBorderFreq;
   $scope.criteria = {
@@ -632,7 +632,7 @@ angular.module('starter.controllers', [])
   }
 
   if(!type){
-    $scope.menus=Constant.viewBoard.menus;
+    //$scope.menus=Constant.viewBoard.menus;
   }else{
       $scope.menus = Constant.kpiMenus[type];
       KPIDetail(type).then(function(menus){
@@ -696,6 +696,12 @@ angular.module('starter.controllers', [])
       return;
     }
     $scope.criteria.banci = '';
+    MenuList.getList(Constant.viewBoard.menus, false, {
+      WareHouseId: $scope.criteria.kuqu.Id,
+      ZoneId: $scope.criteria.banzu.Id
+    }).then(function(menus){
+      $scope.menus=menus;
+    });
     Shift.getShift($scope.criteria.kuqu.Id, $scope.criteria.banzu.Id).then(function(shifts){
       $scope.bancis = shifts;
       var isExist = selectedCriteria && selectedCriteria.banci && !!$scope.bancis.filter(function(bc){
