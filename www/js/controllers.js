@@ -269,8 +269,48 @@ angular.module('starter.controllers', [])
   $scope.getInterval = function(){
     return $scope.settings.timeInterval;
   }
-
+  $scope.checkVersion = function(){
+    $scope.checkVersionText = '版本检查中...';
+    setTimeout(function(){
+      $scope.hasNewVersion = true;
+      $scope.checkVersionText = '检查更新';
+      $scope.apkURL = 'http://gdown.baidu.com/data/wisegame/7a681c9f73237b2e/jingdong_23599.apk';
+      $scope.$apply();
+    },2000);
+  }
+  $scope.downloadVersion = function(){
+    
+    window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, function(fileSystem){
+      fileSystem.root.getFile('download/filename.apk', {
+          create: true, 
+          exclusive: false
+        }, function(fileEntry) {
+          var localPath = fileEntry.fullPath,
+          fileTransfer = new FileTransfer();
+          fileTransfer.download($scope.apkURL, localPath, function(entry) {
+              window.plugins.webintent.startActivity({
+                  action: window.plugins.webintent.ACTION_VIEW,
+                  url: 'file://' + entry.fullPath,
+                  type: 'application/vnd.android.package-archive'
+                  },
+                  function(){},
+                  function(e){
+                      alert('Error launching app update');
+                  }
+              );                              
+          }, function (error) {
+              alert("Error downloading APK: " + error.code);
+        });
+        }, function(evt){
+            alert("Error downloading apk: " + evt.target.error.code);                                               
+        });
+      }, function(evt){
+      alert("Error preparing to download apk: " + evt.target.error.code);
+      });
+  }
+  $scope.checkVersionText = '检查更新';
   $scope.$on('$ionicView.enter', function(e) {
+    $scope.hasNewVersion = false;
     $scope.settings.timeInterval = Constant.getInterval();
     $scope.settings.editInterval = $scope.settings.timeInterval;
     $scope.serverAddr = Constant.baseURL();

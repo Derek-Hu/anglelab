@@ -65,6 +65,14 @@
             </p>
         </div>
 
+        <div style="color: #FFF;">
+            <p>
+                <h3>版本更新<span></span></h3>
+                <button ng-hide="hasNewVersion" ng-bind="checkVersionText" class="btn btn-default" ng-click="checkVersion()">检查更新</button>
+            </p>
+            <span ng-show="hasNewVersion">有新的版本，<a href="" style="color: #18E586;text-decoration: underline;" ng-click="downloadVersion()">点击下载</a></span>
+        </div>
+
     </ion-content>
     <ion-footer-bar style="height: 4em;">
     
