@@ -1194,12 +1194,17 @@ angular.module('starter.controllers', [])
   }
 
 }])
-.controller('KPICtrl', ['$scope', 'Constant', '$state', 'localStorageService', 'KPIDetail',
- function($scope, Constant, $state, localStorageService, KPIDetail) {
+.controller('KPICtrl', ['$scope', 'Constant', '$state', 'localStorageService', 'KPIDetail', 'MenuList',
+ function($scope, Constant, $state, localStorageService, KPIDetail, MenuList) {
 
-  $scope.kpis=Constant.kpis;
   $scope.$on('$ionicView.enter', function(e) {
     $scope.selectedCriteria = localStorageService.get('criteria');
+    MenuList.getList(Constant.kpis, false, {
+      WareHouseId: $scope.selectedCriteria.kuqu.Id,
+      ZoneId: $scope.selectedCriteria.banzu.Id
+    }).then(function(menus){
+      $scope.kpis=menus;
+    });
 
     /*KPIDetail('kpiHome').then(function(menus){
       $scope.menus = menus;
