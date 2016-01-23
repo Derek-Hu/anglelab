@@ -146,11 +146,12 @@ angular.module('starter.controllers', [])
   });
 
 }])
-.controller('ViewBoardCtrl', ['$scope', '$stateParams', '$state', '$ionicScrollDelegate', 'MetaDataSvc', 'KPIItem', 'Constant', 'DateUtil', 'localStorageService', 'Warehouse', 'MenuBorder', 'Util',
-  function($scope, $stateParams, $state, $ionicScrollDelegate, MetaDataSvc, KPIItem, Constant, DateUtil, localStorageService, Warehouse, MenuBorder, Util) {
+.controller('ViewBoardCtrl', ['$scope', '$stateParams', '$state', '$ionicScrollDelegate', 'MetaDataSvc', 'KPIItem', 'Constant', 'DateUtil', 'localStorageService', 'Warehouse', 'MenuBorder', 'Util', 'MenuList',
+  function($scope, $stateParams, $state, $ionicScrollDelegate, MetaDataSvc, KPIItem, Constant, DateUtil, localStorageService, Warehouse, MenuBorder, Util, MenuList) {
   
   $scope.getBorderFreq = Util.getBorderFreq;
-  $scope.menus = [{
+
+  $scope.lineMenus = [{
     'MenuId': '10',
     'PageType': 10,
     "nm": "KPI跟踪", 
@@ -197,6 +198,14 @@ angular.module('starter.controllers', [])
   $scope.criteria = {};
   $scope.$on('$ionicView.enter', function(e) {
     var selectedCriteria = localStorageService.get('criteria');
+
+    MenuList.getList($scope.lineMenus, true, {
+      WareHouseId: selectedCriteria.kuqu?selectedCriteria.kuqu.Id:-1,
+      ZoneId: selectedCriteria.banzu?selectedCriteria.banzu.Id: -1
+    }).then(function(menus){
+      $scope.menus=menus;
+    });
+
     Warehouse.getWareHouse().then(function(Warehouse){
       $scope.kuqus = Warehouse;
       var isExist = selectedCriteria && selectedCriteria.kuqu && !!$scope.kuqus.filter(function(kq){
@@ -697,8 +706,8 @@ angular.module('starter.controllers', [])
     }
     $scope.criteria.banci = '';
     MenuList.getList(Constant.viewBoard.menus, false, {
-      WareHouseId: $scope.criteria.kuqu.Id,
-      ZoneId: $scope.criteria.banzu.Id
+      WareHouseId: $scope.criteria.kuqu?$scope.criteria.kuqu.Id:-1,
+      ZoneId: $scope.criteria.banzu?$scope.criteria.banzu.Id: -1
     }).then(function(menus){
       $scope.menus=menus;
     });
