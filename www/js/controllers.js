@@ -296,15 +296,17 @@ angular.module('starter.controllers', [])
         'Version': version
       }, function(resp){
         if(resp && resp[0] && resp[0].NeedUpdate && resp[0].NeedUpdate.length){
-          $scope.hasNewVersion = true;
+          $scope.hasNewVersion = 'update';
           $scope.checkVersionText = '检查更新';
           $scope.newVersion = resp[0].NeedUpdate;
           $scope.apkURL = encodeURI(Constant.baseURL()+'/Version/SFM.apk');
           $scope.apkName = 'SFM-'+resp[0].NeedUpdate+'.apk';
+        }else{
+          $scope.hasNewVersion = 'noUpdate';
         }
       }, function(){
         $scope.checkVersionText = '检查更新';
-        $scope.hasNewVersion = false;
+        $scope.hasNewVersion = '';
       })
     });
   };
@@ -319,7 +321,7 @@ angular.module('starter.controllers', [])
     });
   };
   $scope.downloadVersion = function(){
-    $scope.downloading = true;
+    $scope.hasNewVersion = 'download';
     window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, function gotFS(fileSystem) {
            fileSystem.root.getDirectory("SFMDownload", {create: true}, function fileSystemSuccess(fileSystem){
                 fileSystem.getFile($scope.apkName,{create: true,exclusive:false},function gotFileEntry(fileEntry){
@@ -354,11 +356,9 @@ angular.module('starter.controllers', [])
     }, function(){alert("App Not Ready to Load SDK");});
   };
   $scope.checkVersionText = '检查更新';
-  $scope.hasNewVersion = false;
-  $scope.downloading = false;
+  $scope.hasNewVersion = '';
   $scope.$on('$ionicView.enter', function(e) {
-    $scope.downloading = false;
-    $scope.hasNewVersion = false;
+    $scope.hasNewVersion = '';
     $scope.settings.timeInterval = Constant.getInterval();
     $scope.settings.editInterval = $scope.settings.timeInterval;
     $scope.serverAddr = Constant.baseURL();
