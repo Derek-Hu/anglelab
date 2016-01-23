@@ -221,8 +221,8 @@ angular.module('starter.controllers', [])
   })
 
 }])
-.controller('SettingsCtrl', ['$scope', 'Constant', '$state', '$window', '$stateParams',
-  function($scope, Constant, $state, $window, $stateParams) {
+.controller('SettingsCtrl', ['$scope', 'Constant', '$state', '$window', '$stateParams', 'Backend',
+  function($scope, Constant, $state, $window, $stateParams, Backend) {
   $scope.settings = {};
 
   var isBackFromFolder = !!$stateParams.fromSelect;
@@ -271,27 +271,41 @@ angular.module('starter.controllers', [])
   }
   $scope.checkVersion = function(){
     $scope.checkVersionText = '版本检查中...';
-    setTimeout(function(){
-      $scope.hasNewVersion = true;
-      $scope.checkVersionText = '检查更新';
-      $scope.apkURL = encodeURI('http://gdown.baidu.com/data/wisegame/7a681c9f73237b2e/jingdong_23599.apk');
-      $scope.apkName = 'jingdong_23599.apk';
-      $scope.$apply();
-    },2000);
-  }
+    cordova.getAppVersion.getVersionNumber().then(function (version) {
+      Backend().metaData.query({
+        'BizType': 5,
+        'Version': version
+      }, function(resp){
+        if(resp && resp[0] && resp[0].NeedUpdate && resp[0].NeedUpdate.length){
+          $scope.hasNewVersion = true;
+          $scope.checkVersionText = '检查更新';
+          $scope.apkURL = encodeURI(Constant.baseURL()+'/Version/SFM.apk');
+          $scope.apkName = 'SFM-'+resp[0].NeedUpdate;
+          alert($scope.apkName+'---'+ $scope.apkURL);
+        }
+      }, function(){
+        $scope.checkVersionText = '检查更新';
+        $scope.hasNewVersion = false;
+      })
+    });
+  };
+  cordova.getAppVersion.getVersionNumber().then(function (version) {
+    $scope.appVersion = version;
+  });
   $scope.downloadVersion = function(){
     window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, function gotFS(fileSystem) {
            fileSystem.root.getDirectory("SFMDownload", {create: true}, function fileSystemSuccess(fileSystem){
             $scope.dbgMsg= 'SFMDownload';
                 fileSystem.getFile($scope.apkName,{create: true,exclusive:false},function gotFileEntry(fileEntry){
                     var path = fileEntry.fullPath.replace($scope.apkName,"");
-                    $scope.dbgMsg= 'getFile';
+                    $scope.dbgMsg += fileEntry.fullPath;
+                    $scope.dbgMsg += 'getFile';
                     try{
                       fileEntry.remove();
                     }catch(e){};
-                    $scope.dbgMsg= 'after move';
+                    $scope.dbgMsg += 'after move';
                     var fileTransfer = new FileTransfer();
-                    $scope.dbgMsg= path+""+$scope.apkName;
+                    $scope.dbgMsg += path+""+$scope.apkName;
                     fileTransfer.download($scope.apkURL, path+""+$scope.apkName,function(theFile){
                         alert("File Downloaded Successfully " + theFile.toURI());
                         window.plugins.webintent.startActivity({
