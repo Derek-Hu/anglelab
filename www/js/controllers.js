@@ -301,7 +301,7 @@ angular.module('starter.controllers', [])
           $scope.apkURL = encodeURI(Constant.baseURL()+'/Version/SFM.apk');
           $scope.apkName = 'SFM-'+resp[0].NeedUpdate+'.apk';
           // test
-          $scope.apkURL = encodeURI('http://gdown.baidu.com/data/wisegame/7a681c9f73237b2e/jingdong_23599.apk');
+          //$scope.apkURL = encodeURI('http://gdown.baidu.com/data/wisegame/7a681c9f73237b2e/jingdong_23599.apk');
         }
       }, function(){
         $scope.checkVersionText = '检查更新';
