@@ -496,7 +496,7 @@ angular.module('starter.services', ['ngResource'])
                 var cMenu = originalMenus[i];
                 var shouldShow = true;
                 for(var j=0;j<data.length;j++){
-                  if(data[j] == cMenu.MenuId){
+                  if(data[j].show_code == cMenu.MenuId){
                     shouldShow = false;
                     break;
                   }

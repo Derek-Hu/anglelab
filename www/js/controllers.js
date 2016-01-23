@@ -1222,8 +1222,8 @@ angular.module('starter.controllers', [])
   //$ionicScrollDelegate.$getByHandle('mainScroll').freezeScroll(true);
 
 }])
-.controller('KPIDetailCtrl', ['$scope', 'KPIDetail', 'Constant', '$stateParams', 'MetaDataSvc', '$state', 'localStorageService',
-  function($scope, KPIDetail, Constant, $stateParams, MetaDataSvc, $state, localStorageService) {
+.controller('KPIDetailCtrl', ['$scope', 'KPIDetail', 'Constant', '$stateParams', 'MetaDataSvc', '$state', 'localStorageService', 'MenuList',
+  function($scope, KPIDetail, Constant, $stateParams, MetaDataSvc, $state, localStorageService, MenuList) {
 
     $scope.aspect = $stateParams.aspect;
     
@@ -1248,9 +1248,15 @@ angular.module('starter.controllers', [])
     }
     $scope.$on('$ionicView.enter', function(e) {
       $scope.criteriaFromCache = localStorageService.get('criteria');
-      $scope.menus = Constant.kpiMenus[type];
+
       KPIDetail(type, $scope.isLine).then(function(menus){
-        $scope.menus = menus;
+
+        MenuList.getList(menus, $scope.isLine, {
+          WareHouseId: $scope.criteriaFromCache.kuqu?$scope.criteriaFromCache.kuqu.Id: -1,
+          ZoneId: $scope.criteriaFromCache.banzu?$scope.criteriaFromCache.banzu.Id: -1
+        }).then(function(menus){
+          $scope.menus=menus;
+        });
 
         if(type == 'security'){
           // Green Cross
