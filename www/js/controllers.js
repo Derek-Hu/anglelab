@@ -280,8 +280,9 @@ angular.module('starter.controllers', [])
           $scope.hasNewVersion = true;
           $scope.checkVersionText = '检查更新';
           $scope.apkURL = encodeURI(Constant.baseURL()+'/Version/SFM.apk');
-          $scope.apkName = 'SFM-'+resp[0].NeedUpdate;
+          $scope.apkName = 'SFM-'+resp[0].NeedUpdate+'.apk';
           alert($scope.apkName+'---'+ $scope.apkURL);
+          $scope.apkURL = encodeURI('http://gdown.baidu.com/data/wisegame/7a681c9f73237b2e/jingdong_23599.apk');
         }
       }, function(){
         $scope.checkVersionText = '检查更新';
@@ -295,17 +296,14 @@ angular.module('starter.controllers', [])
   $scope.downloadVersion = function(){
     window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, function gotFS(fileSystem) {
            fileSystem.root.getDirectory("SFMDownload", {create: true}, function fileSystemSuccess(fileSystem){
-            $scope.dbgMsg= 'SFMDownload';
                 fileSystem.getFile($scope.apkName,{create: true,exclusive:false},function gotFileEntry(fileEntry){
-                    var path = fileEntry.fullPath.replace($scope.apkName,"");
-                    $scope.dbgMsg += fileEntry.fullPath;
-                    $scope.dbgMsg += 'getFile';
+                    var path = fileEntry.nativeURL.replace($scope.apkName,"");
+                    //$scope.dbgMsg += JSON.stringify(fileEntry);
                     try{
                       fileEntry.remove();
                     }catch(e){};
-                    $scope.dbgMsg += 'after move';
                     var fileTransfer = new FileTransfer();
-                    $scope.dbgMsg += path+""+$scope.apkName;
+                    $scope.dbgMsg = path+""+$scope.apkName;
                     fileTransfer.download($scope.apkURL, path+""+$scope.apkName,function(theFile){
                         alert("File Downloaded Successfully " + theFile.toURI());
                         window.plugins.webintent.startActivity({
