@@ -328,17 +328,15 @@ angular.module('starter.controllers', [])
                       fileEntry.remove();
                     }catch(e){};
                     var fileTransfer = new FileTransfer();
-                    alert(path+""+$scope.apkName + JSON.stringify($cordovaFileTransfer));
                     $cordovaFileTransfer.download($scope.apkURL, path+""+$scope.apkName, {}, true)
                       .then(function(result) {
-                        alert('DownLoad Success'+ JSON.stringify(result));
                         window.plugins.webintent.startActivity({
                             action: window.plugins.webintent.ACTION_VIEW,
                             //url: 'file://' + entry.fullPath,
                             url: path+""+$scope.apkName,
                             type: 'application/vnd.android.package-archive'
                             },
-                            function(){alert('launching app Success');},
+                            function(){},
                             function(e){alert('Error launching app update');}
                         );
                       }, function(err) {
@@ -346,7 +344,7 @@ angular.module('starter.controllers', [])
                       }, function (progress) {
                         //alert(progress);
                         $timeout(function () {
-                          $scope.downloadProgress = (progress.loaded / progress.total) * 100;
+                          $scope.downloadProgress = parseInt((progress.loaded / progress.total) * 100)+'%';
                         });
                       });
 

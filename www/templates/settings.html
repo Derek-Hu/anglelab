@@ -70,7 +70,7 @@
                 <h3>版本更新<span style="font-size:0.55em" ng-bind="'   当前版本'+appVersion"></span></h3>
                 <button ng-hide="hasNewVersion" ng-bind="checkVersionText" class="btn btn-default" ng-click="checkVersion()">检查更新</button>
             </p>
-            <span ng-show="hasNewVersion">有新的版本，
+            <span ng-show="hasNewVersion && !downloading">有新的版本，
             <a href="#" ng-click="downloadVersion()"
                 style="color: #18E586;text-decoration: underline;">点击下载{{apkURL}}</a>
             <span ng-show="downloading" ng-bind="'已下载'+downloadProgress"></span>
