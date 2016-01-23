@@ -298,7 +298,8 @@ angular.module('starter.controllers', [])
         if(resp && resp[0] && resp[0].NeedUpdate && resp[0].NeedUpdate.length){
           $scope.hasNewVersion = true;
           $scope.checkVersionText = '检查更新';
-          $scope.apkURL = encodeURI(Constant.baseURL()+'/Version/SFM.apk');
+          //$scope.apkURL = encodeURI(Constant.baseURL()+'/Version/SFM.apk');
+          $scope.apkURL =Constant.baseURL()+'/DownLoad.aspx';
           $scope.apkName = 'SFM-'+resp[0].NeedUpdate+'.apk';
           // test
           //$scope.apkURL = encodeURI('http://gdown.baidu.com/data/wisegame/7a681c9f73237b2e/jingdong_23599.apk');
@@ -312,13 +313,11 @@ angular.module('starter.controllers', [])
   cordova.getAppVersion.getVersionNumber().then(function (version) {
     $scope.appVersion = version;
   });
-  $scope.launchNavigator = function(url) {
-    $cordovaInAppBrowser.open(url, '_system', {
+  $scope.launchNavigator = function() {
+    $cordovaInAppBrowser.open(Constant.baseURL()+'/DownLoad.aspx', '_system', {
       location: 'no',
       clearcache: 'no',
       toolbar: 'no'
-    }).then(function(event) {}).catch(function(event) {
-      alert('Open Browser Failed');
     });
   };
   $scope.downloadVersion = function(){
