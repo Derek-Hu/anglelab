@@ -281,7 +281,7 @@ angular.module('starter.controllers', [])
           $scope.checkVersionText = '检查更新';
           $scope.apkURL = encodeURI(Constant.baseURL()+'/Version/SFM.apk');
           $scope.apkName = 'SFM-'+resp[0].NeedUpdate+'.apk';
-          alert($scope.apkName+'---'+ $scope.apkURL);
+          // test
           $scope.apkURL = encodeURI('http://gdown.baidu.com/data/wisegame/7a681c9f73237b2e/jingdong_23599.apk');
         }
       }, function(){
@@ -315,7 +315,7 @@ angular.module('starter.controllers', [])
                             function(e){alert('Error launching app update');}
                         );
                     },function(error){
-                        alert("Download APK Error" + error.message);
+                        alert("Download APK Error" + JSON.stringify(error));
                     });
                 },function(){alert("Read SDK Error");});
             });
