@@ -240,8 +240,8 @@ angular.module('starter.controllers', [])
   })
 
 }])
-.controller('SettingsCtrl', ['$scope', 'Constant', '$state', '$window', '$stateParams', 'Backend', '$cordovaInAppBrowser',
-  function($scope, Constant, $state, $window, $stateParams, Backend, $cordovaInAppBrowser) {
+.controller('SettingsCtrl', ['$scope', 'Constant', '$state', '$window', '$stateParams', 'Backend', '$cordovaInAppBrowser','$cordovaFileTransfer', '$timeout',
+  function($scope, Constant, $state, $window, $stateParams, Backend, $cordovaInAppBrowser, $cordovaFileTransfer, $timeout) {
   $scope.settings = {};
 
   var isBackFromFolder = !!$stateParams.fromSelect;
@@ -298,11 +298,8 @@ angular.module('starter.controllers', [])
         if(resp && resp[0] && resp[0].NeedUpdate && resp[0].NeedUpdate.length){
           $scope.hasNewVersion = true;
           $scope.checkVersionText = '检查更新';
-          //$scope.apkURL = encodeURI(Constant.baseURL()+'/Version/SFM.apk');
-          $scope.apkURL =Constant.baseURL()+'/DownLoad.aspx';
+          $scope.apkURL = encodeURI(Constant.baseURL()+'/Version/SFM.apk');
           $scope.apkName = 'SFM-'+resp[0].NeedUpdate+'.apk';
-          // test
-          //$scope.apkURL = encodeURI('http://gdown.baidu.com/data/wisegame/7a681c9f73237b2e/jingdong_23599.apk');
         }
       }, function(){
         $scope.checkVersionText = '检查更新';
@@ -321,6 +318,7 @@ angular.module('starter.controllers', [])
     });
   };
   $scope.downloadVersion = function(){
+    $scope.downloading = true;
     window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, function gotFS(fileSystem) {
            fileSystem.root.getDirectory("SFMDownload", {create: true}, function fileSystemSuccess(fileSystem){
                 fileSystem.getFile($scope.apkName,{create: true,exclusive:false},function gotFileEntry(fileEntry){
@@ -330,27 +328,37 @@ angular.module('starter.controllers', [])
                       fileEntry.remove();
                     }catch(e){};
                     var fileTransfer = new FileTransfer();
-                    $scope.dbgMsg = path+""+$scope.apkName;
-                    fileTransfer.download($scope.apkURL, path+""+$scope.apkName,function(theFile){
-                        alert("File Downloaded Successfully " + theFile.toURI());
+                    alert(path+""+$scope.apkName + JSON.stringify($cordovaFileTransfer));
+                    $cordovaFileTransfer.download($scope.apkURL, path+""+$scope.apkName, {}, true)
+                      .then(function(result) {
+                        alert('DownLoad Success'+ JSON.stringify(result));
                         window.plugins.webintent.startActivity({
                             action: window.plugins.webintent.ACTION_VIEW,
-                            url: 'file://' + entry.fullPath,
+                            //url: 'file://' + entry.fullPath,
+                            url: path+""+$scope.apkName,
                             type: 'application/vnd.android.package-archive'
                             },
-                            function(){},
+                            function(){alert('launching app Success');},
                             function(e){alert('Error launching app update');}
                         );
-                    },function(error){
-                        alert("Download APK Error" + JSON.stringify(error));
-                    });
+                      }, function(err) {
+                        alert('DownLoad Error');
+                      }, function (progress) {
+                        //alert(progress);
+                        $timeout(function () {
+                          $scope.downloadProgress = (progress.loaded / progress.total) * 100;
+                        });
+                      });
+
                 },function(){alert("Read SDK Error");});
             });
     }, function(){alert("App Not Ready to Load SDK");});
   };
   $scope.checkVersionText = '检查更新';
   $scope.hasNewVersion = false;
+  $scope.downloading = false;
   $scope.$on('$ionicView.enter', function(e) {
+    $scope.downloading = false;
     $scope.hasNewVersion = false;
     $scope.settings.timeInterval = Constant.getInterval();
     $scope.settings.editInterval = $scope.settings.timeInterval;
