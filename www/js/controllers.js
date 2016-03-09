@@ -302,6 +302,7 @@ angular.module('starter.controllers', [])
           $scope.apkURL = encodeURI(Constant.baseURL()+'/Version/SFM.apk');
           $scope.apkName = 'SFM-'+resp[0].NeedUpdate+'.apk';
         }else{
+          $scope.checkVersionText = '检查更新';
           $scope.hasNewVersion = 'noUpdate';
         }
       }, function(){
