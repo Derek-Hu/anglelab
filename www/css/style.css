@@ -511,7 +511,7 @@ ion-footer-bar .color-menu-type.header div.twrapper:last-child{ float: left;}
 .color-menu-type.footer.green-cross .value{border: 0;}
 
 .color-menu-type.footer .value.daily{border-color: #95C730;}
-.color-menu-type.footer .value.weekly{border-color: #049BF4; }
+.color-menu-type.footer .value.weekly{border-color: #F5AA35; }
 .color-menu-type.footer .value.not-sure{border-color: #CCD1D5;}
 
 .content-wrapper {background-color: #FFF;     height: 100%;    margin: 0 0.6em;    padding: 2em 1em;
@@ -894,7 +894,7 @@ span.arrow-border-up span{
     display: inline-block;
     min-width: 3em;}
 .freDay .list.card{border-color: #CCD1D5;}
-.freWeek .list.card{border-color: #049BF4;}
+.freWeek .list.card{border-color: #F5AA35;}
 .freNotSure .list.card{border-color: #95C730;}
 .kpiDropType{position: absolute; right: 0.5em; bottom: 0.5em; width: 5em; text-align: center;}
 .kpiDropType .an-dropdown > .value{ padding: 0.5em 0; border: 0.2em solid #A8BBC8; border-radius: 0.5em;position: relative;}
