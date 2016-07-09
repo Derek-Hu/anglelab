@@ -35,16 +35,18 @@ angular.module('starter.controllers', [])
     $scope.chart1 = {data: null};
     $scope.chart.isDouble = false;
     if(key == 'W'){
-      $scope.chart.isDouble = true;
       var total = $scope.chart.data;
-      $scope.chart.data = total.filter(function(d){
+      /*$scope.chart.data = total.filter(function(d){
         return d.month <27;
       });
+      $scope.chart.isDouble = true;
       $scope.chart1 = {
         data: total.filter(function(d){
           return d.month >=27;
         })
-      };
+      };*/
+      $scope.chart1.data = null;
+      $scope.chart.isDouble = false;
     }else{
       $scope.chart1.data = null;
     }
