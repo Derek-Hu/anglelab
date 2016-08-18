@@ -204,3 +204,16 @@ angular.module('starter', ['ionic', 'ngCordova', 'ui.bootstrap', 'LocalStorageMo
   $urlRouterProvider.otherwise('/entry');
 
 });
+
+
+        (function() {
+          document.addEventListener("deviceready", function () {
+              var initInjector = angular.injector(["starter.services"]);
+              var Constant = initInjector.get("Constant");
+              Constant.initBackendURL().then(function(){
+                 angular.element(document).ready(function () {
+                  angular.bootstrap(document, ['starter']);
+                });
+              });
+          }, false);
+        })();

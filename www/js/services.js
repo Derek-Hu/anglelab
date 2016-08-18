@@ -1,6 +1,6 @@
-angular.module('starter.services', ['ngResource'])
-
-.service('Constant', function(){
+var URLKey = 'backendURL', Dict = 'SFM-Dict';
+angular.module('starter.services', ['ngResource', 'ngCordova'])
+.service('Constant', ['$q', '$cordovaPreferences', function($q, $cordovaPreferences){
   var settings = {
     //cacheURL : 'http://221.181.71.171:8082',
     // Private
@@ -9,6 +9,20 @@ angular.module('starter.services', ['ngResource'])
     imagePath: {name: '目录暂未选择', nativeURL: null}
   };
   return {
+    initBackendURL: function(){
+        var defer = $q.defer();
+        $cordovaPreferences.fetch(URLKey)
+        .success(function(value) {
+          settings.cacheURL = value;
+          alert('From Preferences', value);
+          defer.resolve(value);
+        })
+        .error(function(error) {
+          alert('Erro: From Preferences', error);
+          defer.resolve(settings.cacheURL);
+        });
+        return defer.promise;
+    },
     baseURL : function(){
       return settings.cacheURL;
     },
@@ -18,8 +32,20 @@ angular.module('starter.services', ['ngResource'])
     updateInterval : function(timeInterval){
       settings.timeInterval = timeInterval;
     },
-    updateServerURL : function(url){
-      settings.cacheURL = url;
+    updateServerURL : function(url, callback, errorCallback){
+      $cordovaPreferences.store(URLKey, url)
+      .success(function(value) {
+        settings.cacheURL = url;
+        if(callback){
+          callback();
+        }
+      })
+      .error(function(error) {
+        if(errorCallback){
+          errorCallback();
+        }
+      });
+      
     },
     getImagePath : function(){
       return settings.imagePath;
@@ -334,7 +360,7 @@ angular.module('starter.services', ['ngResource'])
         }]
     }
   };
-})
+}])
 .service('Backend', ['$resource', 'Constant', function($resource, Constant) {
   // Might use a resource here that returns a JSON array
   var baseURL = '', kaoqin, kuqu, banzu, banci, metaData, org, gwrx, lgjh, kpi;

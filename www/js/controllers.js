@@ -242,8 +242,8 @@ angular.module('starter.controllers', [])
   })
 
 }])
-.controller('SettingsCtrl', ['$scope', 'Constant', '$state', '$window', '$stateParams', 'Backend', '$cordovaInAppBrowser','$cordovaFileTransfer', '$timeout',
-  function($scope, Constant, $state, $window, $stateParams, Backend, $cordovaInAppBrowser, $cordovaFileTransfer, $timeout) {
+.controller('SettingsCtrl', ['$scope', 'Constant', '$state', '$window', '$stateParams', 'Backend', '$cordovaInAppBrowser','$cordovaFileTransfer', '$timeout', '$cordovaPreferences',
+  function($scope, Constant, $state, $window, $stateParams, Backend, $cordovaInAppBrowser, $cordovaFileTransfer, $timeout, $cordovaPreferences) {
   $scope.settings = {};
 
   var isBackFromFolder = !!$stateParams.fromSelect;
@@ -258,10 +258,24 @@ angular.module('starter.controllers', [])
     $scope.settings.serverURL = $scope.serverAddr;
   }
   $scope.modify = function(serverURL){
-    $scope.isModify = false;
-    Constant.updateServerURL(serverURL)
-    $scope.serverAddr = serverURL;
-    $scope.settings.serverURL = serverURL;
+    Constant.updateServerURL(serverURL, function(){
+      $scope.isModify = false;
+      $scope.serverAddr = serverURL;
+      $scope.settings.serverURL = serverURL;  
+
+      $cordovaPreferences.show()
+      .success(function(value) {
+        alert("Success: " + value);
+      })
+      .error(function(error) {
+        alert("Error: " + error);
+      });
+
+    }, function(){
+      $scope.isModify = true;
+      alert("修改失败!" );
+    })
+    
   }
   $scope.getURL = function(){
     return $scope.settings.serverURL;
