@@ -1,25 +1,27 @@
 var URLKey = 'backendURL', Dict = 'SFM-Dict', ConfigFileName = 'SFM-cfg.properties';
+var settings = {
+  //cacheURL : 'http://221.181.71.171:8082',
+  // Private
+  cacheURL : 'http://10.102.10.207:8082',
+  timeInterval: 10,
+  imagePath: {name: '目录暂未选择', nativeURL: null}
+};
 angular.module('starter.services', ['ngResource', 'ngCordova'])
 .service('Constant', ['$q', '$cordovaFile', function($q, $cordovaFile){
-  var settings = {
-    //cacheURL : 'http://221.181.71.171:8082',
-    // Private
-    cacheURL : 'http://10.102.10.207:8082',
-    timeInterval: 10,
-    imagePath: {name: '目录暂未选择', nativeURL: null}
-  };
   return {
     initBackendURL: function(){
         var defer = $q.defer();
             $cordovaFile.checkFile(cordova.file.dataDirectory, ConfigFileName)
               .then(function (success) {
                 // success
-                 $cordovaFile.readAsText(cordova.file.dataDirectory, $scope.inputs.readFile)
+                alert('Find File ', JSON.stringify(success));
+                 $cordovaFile.readAsText(cordova.file.dataDirectory, ConfigFileName)
                   .then(function (value) {
                     // success
-                    alert('Read From File ', value);
-                    settings.cacheURL = value;
-                    defer.resolve(value);
+                    alert('Read From File = '+ JSON.stringify(value));
+                    settings.cacheURL = JSON.stringify(value);
+                    alert('Get settings.cacheURL = '+ settings.cacheURL);
+                    defer.resolve(settings.cacheURL);
                   }, function (error) {
                     // error
                     alert('Read File Error', error);
@@ -30,19 +32,10 @@ angular.module('starter.services', ['ngResource', 'ngCordova'])
                 alert('File Not Exists');
                 defer.resolve(settings.cacheURL);
               });
-        $cordovaPreferences.fetch(URLKey)
-        .success(function(value) {
-          settings.cacheURL = value;
-          alert('From Preferences', value);
-          defer.resolve(value);
-        })
-        .error(function(error) {
-          alert('Erro: From Preferences', error);
-          defer.resolve(settings.cacheURL);
-        });
         return defer.promise;
     },
     baseURL : function(){
+      alert('Get settings.cacheURL = '+ settings.cacheURL);
       return settings.cacheURL;
     },
     getInterval : function(){
@@ -55,10 +48,13 @@ angular.module('starter.services', ['ngResource', 'ngCordova'])
       $cordovaFile.createFile(cordova.file.dataDirectory, ConfigFileName, true)
       .then(function () {
         // success
+        alert("Create File Success = " + JSON.stringify(cordova.file));
           $cordovaFile.writeFile(cordova.file.dataDirectory, ConfigFileName, url, true)
           .then(function (success) {
             // success
             settings.cacheURL = url;
+            alert('settings.cacheURL = '+ settings.cacheURL);
+            alert("Save Success: ", JSON.stringify(success));
             if(callback){
               callback();
             }
