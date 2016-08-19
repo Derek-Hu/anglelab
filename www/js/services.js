@@ -1,6 +1,6 @@
-var URLKey = 'backendURL', Dict = 'SFM-Dict';
+var URLKey = 'backendURL', Dict = 'SFM-Dict', ConfigFileName = 'SFM-cfg.properties';
 angular.module('starter.services', ['ngResource', 'ngCordova'])
-.service('Constant', ['$q', '$cordovaPreferences', function($q, $cordovaPreferences){
+.service('Constant', ['$q', '$cordovaFile', function($q, $cordovaFile){
   var settings = {
     //cacheURL : 'http://221.181.71.171:8082',
     // Private
@@ -11,6 +11,25 @@ angular.module('starter.services', ['ngResource', 'ngCordova'])
   return {
     initBackendURL: function(){
         var defer = $q.defer();
+            $cordovaFile.checkFile(cordova.file.dataDirectory, ConfigFileName)
+              .then(function (success) {
+                // success
+                 $cordovaFile.readAsText(cordova.file.dataDirectory, $scope.inputs.readFile)
+                  .then(function (value) {
+                    // success
+                    alert('Read From File ', value);
+                    settings.cacheURL = value;
+                    defer.resolve(value);
+                  }, function (error) {
+                    // error
+                    alert('Read File Error', error);
+                    defer.resolve(settings.cacheURL);
+                  });
+              }, function (error) {
+                // error
+                alert('File Not Exists');
+                defer.resolve(settings.cacheURL);
+              });
         $cordovaPreferences.fetch(URLKey)
         .success(function(value) {
           settings.cacheURL = value;
@@ -33,19 +52,31 @@ angular.module('starter.services', ['ngResource', 'ngCordova'])
       settings.timeInterval = timeInterval;
     },
     updateServerURL : function(url, callback, errorCallback){
-      $cordovaPreferences.store(URLKey, url)
-      .success(function(value) {
-        settings.cacheURL = url;
-        if(callback){
-          callback();
-        }
-      })
-      .error(function(error) {
+      $cordovaFile.createFile(cordova.file.dataDirectory, ConfigFileName, true)
+      .then(function () {
+        // success
+          $cordovaFile.writeFile(cordova.file.dataDirectory, ConfigFileName, url, true)
+          .then(function (success) {
+            // success
+            settings.cacheURL = url;
+            if(callback){
+              callback();
+            }
+          }, function (error) {
+            // error
+            alert("Save URL Error: ", error);
+            if(errorCallback){
+              errorCallback();
+            }
+          });
+
+      }, function (error) {
+        // error
+        alert("Create File Error: ", error);
         if(errorCallback){
           errorCallback();
         }
-      });
-      
+      });  
     },
     getImagePath : function(){
       return settings.imagePath;
@@ -272,8 +303,7 @@ angular.module('starter.services', ['ngResource', 'ngCordova'])
           "bc": "#049BF4", 
           "bg": 'img/svg/non-normative-operation.svg',
           "isPercentage": false
-        }
-        ,{
+        },{
           "nm": "清洁度", 
           'MenuId': '5-5-5',
           "BizType": '5-5',

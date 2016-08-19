@@ -57,13 +57,13 @@ angular.module('starter.controllers', [])
     $scope[name].items = items;
     $scope[name].close = function () {
       $scope[name].isOpen = false;
-    }
+    };
     $scope[name].open = function () {
       if(!$scope[name].items || $scope[name].items.length<=1){
         return;
       }
       this.isOpen = !this.isOpen;
-    }
+    };
     $scope[name].selectOption = function (option) {
       if(!option){
         return;
@@ -76,7 +76,7 @@ angular.module('starter.controllers', [])
       $scope[name].option = option;
       renderData($scope[name].option.key);
       this.close();
-    }
+    };
     if (!defaultOpt && items.length) {
      $scope[name].selectOption(items[0]);
     } else {
@@ -177,7 +177,7 @@ angular.module('starter.controllers', [])
       return;
     }
     $state.go(menu.state,{PageType : menu.PageType});
-  }
+  };
 
   $scope.kqDropdown = {
     isOpen : false,
@@ -196,7 +196,7 @@ angular.module('starter.controllers', [])
       $scope.criteria.kuqu = option;
       this.close();
     }
-  }
+  };
   $scope.criteria = {};
   $scope.$on('$ionicView.enter', function(e) {
     var selectedCriteria = localStorageService.get('criteria');
@@ -239,11 +239,11 @@ angular.module('starter.controllers', [])
     MenuBorder.lineBoard($scope.criteria.kuqu.Id).then(function(data){
       $scope.menuBorders = data;
     });
-  })
+  });
 
 }])
-.controller('SettingsCtrl', ['$scope', 'Constant', '$state', '$window', '$stateParams', 'Backend', '$cordovaInAppBrowser','$cordovaFileTransfer', '$timeout', '$cordovaPreferences',
-  function($scope, Constant, $state, $window, $stateParams, Backend, $cordovaInAppBrowser, $cordovaFileTransfer, $timeout, $cordovaPreferences) {
+.controller('SettingsCtrl', ['$scope', 'Constant', '$state', '$window', '$stateParams', 'Backend', '$cordovaInAppBrowser','$cordovaFileTransfer', '$timeout',
+  function($scope, Constant, $state, $window, $stateParams, Backend, $cordovaInAppBrowser, $cordovaFileTransfer, $timeout) {
   $scope.settings = {};
 
   var isBackFromFolder = !!$stateParams.fromSelect;
@@ -252,25 +252,16 @@ angular.module('starter.controllers', [])
   };
   $scope.goToFolderSelector = function(){
     $state.go('folderPath', {select : true});
-  }
+  };
   $scope.openModify = function(){
     $scope.isModify = true;
     $scope.settings.serverURL = $scope.serverAddr;
-  }
+  };
   $scope.modify = function(serverURL){
     Constant.updateServerURL(serverURL, function(){
       $scope.isModify = false;
       $scope.serverAddr = serverURL;
       $scope.settings.serverURL = serverURL;  
-
-      $cordovaPreferences.show()
-      .success(function(value) {
-        alert("Success: " + value);
-      })
-      .error(function(error) {
-        alert("Error: " + error);
-      });
-
     }, function(){
       $scope.isModify = true;
       alert("修改失败!" );
@@ -346,7 +337,7 @@ angular.module('starter.controllers', [])
                     //$scope.dbgMsg += JSON.stringify(fileEntry);
                     try{
                       fileEntry.remove();
-                    }catch(e){};
+                    }catch(e){}
                     var fileTransfer = new FileTransfer();
                     $cordovaFileTransfer.download($scope.apkURL, path+""+$scope.apkName, {}, true)
                       .then(function(result) {
