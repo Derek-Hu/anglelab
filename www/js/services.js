@@ -1,4 +1,5 @@
-var URLKey = 'backendURL', Dict = 'SFM-Dict', ConfigFileName = 'SFM-cfg.properties';
+var URLKey = 'backendURL', Dict = 'SFM-Dict';
+var ConfigFileName = 'SFM-cfg-url.properties', ConfigIntervalName = 'SFM-cfg-interval.properties', ConfigImgPathName = 'SFM-cfg-img-path.properties' ;
 var settings = {
   //cacheURL : 'http://221.181.71.171:8082',
   // Private
@@ -8,77 +9,100 @@ var settings = {
 };
 angular.module('starter.services', ['ngResource', 'ngCordova'])
 .service('Constant', ['$q', '$cordovaFile', function($q, $cordovaFile){
-  return {
-    initBackendURL: function(){
-        var defer = $q.defer();
-            $cordovaFile.checkFile(cordova.file.dataDirectory, ConfigFileName)
-              .then(function (success) {
-                // success
-                alert('Find File ', JSON.stringify(success));
-                 $cordovaFile.readAsText(cordova.file.dataDirectory, ConfigFileName)
+  function readFromFile (fileName){
+           var defer = $q.defer();
+            $cordovaFile.checkFile(cordova.file.dataDirectory, fileName)
+              .then(function () {
+                 $cordovaFile.readAsText(cordova.file.dataDirectory, fileName)
                   .then(function (value) {
-                    // success
-                    alert('Read From File = '+ JSON.stringify(value));
-                    settings.cacheURL = JSON.stringify(value);
-                    alert('Get settings.cacheURL = '+ settings.cacheURL);
-                    defer.resolve(settings.cacheURL);
-                  }, function (error) {
-                    // error
-                    alert('Read File Error', error);
-                    defer.resolve(settings.cacheURL);
+                    //alert('Fetch ' + fileName + ' value = '+ value);
+                    defer.resolve(value);
+                  }, function () {
+                    defer.resolve(null);
                   });
-              }, function (error) {
-                // error
-                alert('File Not Exists');
-                defer.resolve(settings.cacheURL);
+              }, function () {
+                defer.resolve(null);
               });
         return defer.promise;
+  }
+  function saveToFile(fileName, value){
+    var defer = $q.defer();
+      $cordovaFile.createFile(cordova.file.dataDirectory, fileName, true)
+      .then(function () {
+          $cordovaFile.writeFile(cordova.file.dataDirectory, fileName, value, true)
+          .then(function () {
+            //alert('save to ' + fileName + ' value = '+ value);
+            defer.resolve(value);
+          }, function () {
+            defer.resolve(null);    
+          });
+      }, function () {
+        defer.resolve(null);
+      });  
+      return defer.promise;
+  }
+  return {
+    initBackendURL: function(){
+        return $q.all([readFromFile (ConfigFileName), 
+          readFromFile (ConfigIntervalName), 
+          readFromFile (ConfigImgPathName)]).then(function(values){
+            if(values){
+              if(values[0]){
+                  settings.cacheURL = values[0];
+              }
+              if(values[1]){
+                  settings.timeInterval = values[1];
+              }
+              if(values[2]){
+                  try{
+                      settings.imagePath = JSON.parse(values[2]);
+                  }catch(e){}
+              }
+            }
+          });
     },
     baseURL : function(){
-      alert('Get settings.cacheURL = '+ settings.cacheURL);
+      //alert('Get settings.cacheURL = '+ settings.cacheURL);
       return settings.cacheURL;
     },
     getInterval : function(){
+      //alert('Get settings.timeInterval = '+ settings.timeInterval);
       return settings.timeInterval
     },
-    updateInterval : function(timeInterval){
-      settings.timeInterval = timeInterval;
-    },
-    updateServerURL : function(url, callback, errorCallback){
-      $cordovaFile.createFile(cordova.file.dataDirectory, ConfigFileName, true)
-      .then(function () {
-        // success
-        alert("Create File Success = " + JSON.stringify(cordova.file));
-          $cordovaFile.writeFile(cordova.file.dataDirectory, ConfigFileName, url, true)
-          .then(function (success) {
-            // success
-            settings.cacheURL = url;
-            alert('settings.cacheURL = '+ settings.cacheURL);
-            alert("Save Success: ", JSON.stringify(success));
-            if(callback){
-              callback();
-            }
-          }, function (error) {
-            // error
-            alert("Save URL Error: ", error);
-            if(errorCallback){
-              errorCallback();
-            }
-          });
-
-      }, function (error) {
-        // error
-        alert("Create File Error: ", error);
-        if(errorCallback){
-          errorCallback();
+    updateInterval : function(timeInterval, callback){
+    return saveToFile(ConfigIntervalName, timeInterval).then(function(time){
+      if(time){
+          settings.timeInterval = time;
+      }
+        if(callback){
+          callback();
         }
-      });  
+      });
+    },
+    updateServerURL : function(url, callback){
+      return saveToFile(ConfigFileName, url).then(function(backendURL){
+        if(backendURL){
+          settings.cacheURL = url;
+        }
+        if(callback){
+          callback();
+        }
+      });
     },
     getImagePath : function(){
+      //alert('Get settings.imagePath = '+ settings.imagePath);
       return settings.imagePath;
     },
-    setImagePath : function(imagePath){
-      settings.imagePath = imagePath;
+    setImagePath : function(imagePath, callback){
+      return saveToFile(ConfigImgPathName, JSON.stringify(imagePath)).then(function(path){
+        if(path){
+          // path is string, imagePath is the original object
+          settings.imagePath = imagePath;
+        }
+        if(callback){
+          callback();
+        }
+      });
     },
     lineKpiPageType: 10,
     loading: '加载中',

@@ -262,9 +262,6 @@ angular.module('starter.controllers', [])
       $scope.isModify = false;
       $scope.serverAddr = serverURL;
       $scope.settings.serverURL = serverURL;  
-    }, function(){
-      $scope.isModify = true;
-      alert("修改失败!" );
     })
     
   }
@@ -284,9 +281,10 @@ angular.module('starter.controllers', [])
     if(!time){
       time = 1;
     }
-    Constant.updateInterval(time);
-    $scope.settings.timeInterval = time;
-    $scope.isIntervalModify = false;
+    Constant.updateInterval(time, function(){
+      $scope.settings.timeInterval = time;
+      $scope.isIntervalModify = false;
+    });
   }
   $scope.cancelIntervalModify = function(){
     $scope.isIntervalModify = false;
@@ -1112,8 +1110,9 @@ angular.module('starter.controllers', [])
   }
 
   $scope.setImageFolder = function(){
-    Constant.setImagePath({name: $scope.folderName.fullPath, nativeURL: $scope.folderName.nativeURL});
-    $state.go('settings');
+    Constant.setImagePath({name: $scope.folderName.fullPath, nativeURL: $scope.folderName.nativeURL}, function(){
+        $state.go('settings');
+    });
   }
   $scope.doDirectoryUp = function(){
     //var path = $scope._currentFileSystem.root.fullPath;
