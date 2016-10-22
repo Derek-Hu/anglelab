@@ -737,6 +737,8 @@ ion-content.bgFF{
 .blue{
 	color: blue;
 }
+.quickNav span.refresh{
+}
 .quickNav span{
 	padding-right: 0.5em;
     font-size: 1.3em;
@@ -1034,4 +1036,35 @@ a.entry-home:hover{text-decoration: none;}
     bottom: 2em;
     opacity: 1;
     color: #3b5a7a;
+}
+.xiajia.content-wrapper{
+    width: 100%;
+    font-size: 0.9em;
+}
+.xiajia.content-wrapper table td{
+    padding: 2em 0.2em;
+}
+.xiajia.content-wrapper table td.operation span a{
+    color: #FFF;
+}
+.xiajia.content-wrapper table td.operation span:first-child{
+        background: #C2C2C2;
+}
+.xiajia.content-wrapper table td.operation span:last-child{
+        background: #149fdd;
+}
+.xiajia.content-wrapper table td.operation span{
+    display: inline-block;
+    width: 45%;
+    height: 3em;
+    color: #FFF;
+    border-radius: 0.2em;
+    line-height: 3em;
+}
+.xiajia.content-wrapper table th.operation{
+    width: 12em;
+}
+.xiajia.content-wrapper table th{
+    padding: 1em;
+    font-size: 1.2em;
 }

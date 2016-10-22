@@ -209,6 +209,16 @@ angular.module('starter', ['ionic', 'ngCordova', 'ui.bootstrap', 'LocalStorageMo
         }
       }
     })
+    // login dashboard
+  .state('ad-xiajia', {
+      url: '/ad/xiajia',
+      views: {
+        'dash': {
+          templateUrl: 'templates/ad/xiajia.html',
+          controller: 'XiaJiaCtrl'
+        }
+      }
+    })
 
   // if none of the above states are matched, use this as the fallback
   $urlRouterProvider.otherwise('/entry');

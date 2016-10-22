@@ -363,6 +363,10 @@ angular.module('starter.services', ['ngResource'])
      gwrx = $resource(baseURL+'/PositionFlexible.aspx');
      lgjh = $resource(baseURL+'/DutyRotation.aspx');
      kpi = $resource(baseURL+'/KPI.aspx');
+     // ad
+     xiajiaList = $resource(baseURL+'/xiajia-list.aspx');
+     xiajiaAction = $resource(baseURL+'/xiajia-action.aspx');
+     kucunList = $resource(baseURL+'/kucun.aspx');
     }
 
     return{
@@ -374,8 +378,49 @@ angular.module('starter.services', ['ngResource'])
       gwrx: gwrx,
       lgjh: lgjh,
       org: org,
-      kpi: kpi
+      kpi: kpi,
+      xiajiaList: xiajiaList,
+      xiajiaAction: xiajiaAction,
+      kucunList: kucunList
     }
+  }
+}])
+.service('XiaJia', ['Backend', 'Constant', '$q', function(Backend, Constant, $q){
+  function getList(params) {
+    var deferred = $q.defer();
+    Backend().xiajiaList.query(params, function(data){
+      if(!data || !data.length){
+        deferred.resolve([]);
+        return;
+      }else if(data.length ==1 && data[0].ErrorCode!==undefined){
+          deferred.reject(null);
+        }else{
+          deferred.resolve(data);
+        }
+    }, function () {
+      deferred.reject(null);
+    });
+    return deferred.promise;
+  }
+  function xiajia(params) {
+    var deferred = $q.defer();
+    Backend().xiajiaAction.query(params, function(data){
+      if(!data || !data.length){
+        deferred.resolve([]);
+        return;
+      }else if(data.length ==1 && data[0].ErrorCode!==undefined){
+          deferred.reject(null);
+        }else{
+          deferred.resolve(data);
+        }
+    }, function () {
+      deferred.reject(null);
+    });
+    return deferred.promise;
+  }
+  return {
+    getList: getList,
+    xiajia: xiajia
   }
 }])
 .service('MetaDataSvc', [ 'Backend', 'Constant', 'localStorageService', '$q',
