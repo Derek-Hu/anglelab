@@ -199,6 +199,16 @@ angular.module('starter', ['ionic', 'ngCordova', 'ui.bootstrap', 'LocalStorageMo
         }
       }
     })
+  // login dashboard
+  .state('login-dashboard', {
+      url: '/login-dashboard',
+      views: {
+        'dash': {
+          templateUrl: 'templates/ad/login-dashboard.html',
+          controller: 'LoginDashboard'
+        }
+      }
+    })
 
   // if none of the above states are matched, use this as the fallback
   $urlRouterProvider.otherwise('/entry');

@@ -673,39 +673,40 @@ ion-content.bgFF{
     border-radius: 0.5em;
 }
 .kpiGroup .kpi{
-	display: block;
-    width: 6em;
+    display: block;
+    width: 10em;
     position: absolute;
     display: block;
-    height: 6em;
+    height: 10em;
     color: #fff;
-    border-radius: 6em;
     line-height: 6em;
     text-decoration: none;
-
+    border-radius: 1em;
+    border: 3px solid;
+    background-color: #FFF;
 }
 .kpiGroup .security{
-	background-color: #F5AA35;
-	top: -8em;
+	border-color: #F5AA35;
+	bottom: -6em;
 	left: 4.5em;
 }
 .kpiGroup .quality{
-	background-color: #F7DD3E;
+	border-color: #F7DD3E;
     bottom: -6em;
-    left: -4em;
+    left: -12em;
 }
 .kpiGroup .flow{
-	background-color: #A2D329;
+	border-color: #A2D329;
 	left: -8em;
 	top: 0em;
 }
 .kpiGroup .member{
-	background-color: #DE6744;
+	border-color: #DE6744;
 	bottom: -6em;
-    right: -4em;
+    right: -12em;
 }
 .kpiGroup .cost{
-	background-color: #12AAEB;
+	border-color: #12AAEB;
 	top: 0em;
 	right: -8em;
 }
@@ -1022,4 +1023,15 @@ a.entry-home:hover{text-decoration: none;}
 .oneLineTitle{
     font-size: 1.2em;
     line-height: 2.5em;
+}
+.login-dashboard.entryWp div.entry{
+        text-align: center;
+}
+.login-dashboard.entryWp div.entry .number{
+    position: relative;
+    left: 0;
+    font-size: 2em;
+    bottom: 2em;
+    opacity: 1;
+    color: #3b5a7a;
 }

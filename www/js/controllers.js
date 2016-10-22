@@ -1319,7 +1319,8 @@ angular.module('starter.controllers', [])
     });
 
 }])
-
+.controller('LoginDashboard', ['$scope', function ($scope) {
+}])
 .controller('GwrxCtrl', ['localStorageService', '$scope', 'Backend', '$stateParams', 'MetaDataSvc',
   function(localStorageService, $scope, Backend, $stateParams, MetaDataSvc) {
 
