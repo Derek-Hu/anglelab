@@ -423,6 +423,27 @@ angular.module('starter.services', ['ngResource'])
     xiajia: xiajia
   }
 }])
+.service('Kucun', ['Backend', 'Constant', '$q', function(Backend, Constant, $q){
+  function getList(params) {
+    var deferred = $q.defer();
+    Backend().kucunList.query(params, function(data){
+      if(!data || !data.length){
+        deferred.resolve([]);
+        return;
+      }else if(data.length ==1 && data[0].ErrorCode!==undefined){
+          deferred.reject(null);
+        }else{
+          deferred.resolve(data);
+        }
+    }, function () {
+      deferred.reject(null);
+    });
+    return deferred.promise;
+  }
+  return {
+    getList: getList
+  };
+}])
 .service('MetaDataSvc', [ 'Backend', 'Constant', 'localStorageService', '$q',
   function(Backend, Constant, localStorageService, $q) {
     var empty = {

@@ -1319,6 +1319,46 @@ angular.module('starter.controllers', [])
     });
 
 }])
+.controller('KucunCtrl', ['$scope', 'Kucun', function ($scope, Kucun) {
+  function loadList() {
+    if($scope.firstTime){
+      $scope.loadingStatus = '加载中';
+    }
+    Kucun.getList().then(function (data) {
+      $scope.loadingStatus = '';
+      $scope.data = data;
+      $scope.firstTime = false;
+      if(!$scope.data.length){
+        $scope.loadingStatus = '暂无数据';
+      }
+    }, function(){
+      $scope.loadingStatus = $scope.firstTime?'加载失败': '刷新失败';
+      $scope.data = [];
+      // 
+      $scope.data = [{
+        // 零件号
+        id: '154S4dDHU4',
+        // 库位
+        kuId: 'AFA4-A4-D01L',
+        // 箱号
+        boxId: 'Q285B654',
+        // 供应商
+        supplier: 'ISO1547',
+        // 数量
+        amount: 'ISO1547',
+        // 批次
+        shift: 'ISO1547',
+        // 入库时间
+        time: '2016-09-28'
+      }];
+    });
+  };
+  $scope.loadList = loadList;
+  $scope.$on('$ionicView.enter', function(e) {
+    $scope.firstTime = true;
+    loadList();
+  });
+}])
 .controller('LoginDashboard', ['$scope', function ($scope) {
 }])
 .controller('XiaJiaCtrl', ['$scope', 'XiaJia', function ($scope, XiaJia) {
@@ -1327,9 +1367,12 @@ angular.module('starter.controllers', [])
       $scope.loadingStatus = '加载中';
     }
     XiaJia.getList().then(function (data) {
+      $scope.firstTime = false;
       $scope.loadingStatus = '';
       $scope.data = data;
-      $scope.firstTime = false;
+      if(!$scope.data.length){
+        $scope.loadingStatus = '暂无数据';
+      }
     }, function(){
       $scope.loadingStatus = $scope.firstTime?'加载失败': '刷新失败';
       $scope.data = [];

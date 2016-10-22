@@ -209,13 +209,23 @@ angular.module('starter', ['ionic', 'ngCordova', 'ui.bootstrap', 'LocalStorageMo
         }
       }
     })
-    // login dashboard
+    // 零件下架
   .state('ad-xiajia', {
       url: '/ad/xiajia',
       views: {
         'dash': {
           templateUrl: 'templates/ad/xiajia.html',
           controller: 'XiaJiaCtrl'
+        }
+      }
+    })
+      // 零件下架
+  .state('ad-kucun', {
+      url: '/ad/kucun',
+      views: {
+        'dash': {
+          templateUrl: 'templates/ad/kucun.html',
+          controller: 'KucunCtrl'
         }
       }
     })

@@ -1,6 +1,6 @@
 <ion-view hide-nav-bar="true" hide-back-button="true">
   <ion-header-bar align-title="center">
-        <single-title title="零件下架"></single-title>
+        <single-title title="零件库存"></single-title>
     </ion-header-bar>
     <ion-content class="bgFF" style="background: #FFF;bottom: 4em;" on-double-tap="goHome('kqhz')">
         <div class="kqhz gwrx xiajia content-wrapper">
@@ -8,12 +8,12 @@
             <thead>
             <tr>
                 <th>零件号</th>
-                <th>线路号</th>
-                <th>推荐库位</th>
-                <th>推荐箱号</th>
-                <th>编组区域</th>
-                <th>最晚下架时间</th>
-                <th class="operation">操作</th>
+                <th>库位</th>
+                <th>箱号</th>
+                <th>供应商</th>
+                <th>批次</th>
+                <th>数量</th>
+                <th>入库时间</th>
             </tr>
             </thead>
             <tbody ng-show="loadingStatus!=''" >
@@ -24,15 +24,12 @@
             <tbody ng-repeat="r in data">
                 <tr>
                     <td ng-bind="r.id"></td>
-                    <td ng-bind="r.lineId"></td>
-                    <td ng-bind="r.recomKu"></td>
-                    <td ng-bind="r.recomBox"></td>
-                    <td ng-bind="r.groupArea"></td>
-                    <td ng-bind="r.lastTime"></td>
-                    <td class="operation">
-                        <span>下&nbsp;架</span>
-                        <span><a href="#">库&nbsp;存</a></span>
-                    </td>
+                    <td ng-bind="r.kuId"></td>
+                    <td ng-bind="r.boxId"></td>
+                    <td ng-bind="r.supplier"></td>
+                    <td ng-bind="r.amount"></td>
+                    <td ng-bind="r.shift"></td>
+                    <td ng-bind="r.time"></td>
                 </tr>
             </tbody>
         </table>
