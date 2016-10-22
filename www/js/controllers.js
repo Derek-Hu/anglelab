@@ -1359,6 +1359,9 @@ angular.module('starter.controllers', [])
     loadList();
   });
 }])
+.controller('LoginCtrl', ['$scope', function ($scope) {
+  
+}])
 .controller('LoginDashboard', ['$scope', function ($scope) {
 }])
 .controller('XiaJiaCtrl', ['$scope', 'XiaJia', function ($scope, XiaJia) {

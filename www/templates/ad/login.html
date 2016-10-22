@@ -1,0 +1,41 @@
+<ion-view hide-nav-bar="true" hide-back-button="true">
+    <ion-header-bar align-title="center">
+        <single-title title="INHOUSE在线拉动系统"></single-title>
+    </ion-header-bar>
+    <ion-content scroll="false">
+        <div class="entryWp login-dashboard">
+            <div>
+                <div class="login">
+                    <div class="form-wpr">
+                        <form>
+                            <table>
+                                <tr><td style="width: 5em;" class="tl">
+                                    <label>用户名</label>
+                                </td><td>
+                                    <div class="field-wpr">
+                                        <div class="input-wpr">
+                                            <input type="text" placeholder="请输入用户名" ng-model="params.identity">
+                                        </div>
+                                    </div>
+                                </td></tr>
+                                <tr><td class="tl">
+                                    <label>密码</label>
+                                </td><td>
+                                    <div class="field-wpr">
+                                        <div class="input-wpr">
+                                            <input type="password" placeholder="请输入登录密码" ng-model="params.password">
+                                        </div>
+                                    </div>
+                                </td></tr>
+                                <tr><td colspan="2">
+                                    <div class="msg error" ng-if="errorMsg" ng-bind="errorMsg"></div>
+                                    <button ng-click="login()" type="submit" ng-disabled="!params.identity || !params.password" id="submit" class="btn btn-primary">登录</button>
+                                </td></tr>
+                            </table>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </ion-content>
+</ion-view>

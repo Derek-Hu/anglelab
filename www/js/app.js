@@ -229,6 +229,16 @@ angular.module('starter', ['ionic', 'ngCordova', 'ui.bootstrap', 'LocalStorageMo
         }
       }
     })
+  // 登录页面
+  .state('ad-login', {
+      url: '/ad/login',
+      views: {
+        'dash': {
+          templateUrl: 'templates/ad/login.html',
+          controller: 'LoginCtrl'
+        }
+      }
+    })
 
   // if none of the above states are matched, use this as the fallback
   $urlRouterProvider.otherwise('/entry');
