@@ -2,7 +2,8 @@ angular.module('starter.services', ['ngResource'])
 
 .service('Constant', function(){
   var settings = {
-    cacheURL : 'http://221.181.71.171:8082',
+    cacheURL : 'http://192.168.0.147:8083',
+    // cacheURL : 'http://221.181.71.171:8082',
     // Private
     //cacheURL : 'http://10.102.10.207:8082',
     timeInterval: 10,
@@ -363,19 +364,17 @@ angular.module('starter.services', ['ngResource'])
      gwrx = $resource(baseURL+'/PositionFlexible.aspx');
      lgjh = $resource(baseURL+'/DutyRotation.aspx');
      kpi = $resource(baseURL+'/KPI.aspx');
-     // ad
-     xiajiaList = $resource(baseURL+'/xiajia-list.aspx');
-     xiajiaAction = $resource(baseURL+'/xiajia-action.aspx');
-     kucunList = $resource(baseURL+'/kucun.aspx');
+
+     // http://localhost:1460/AdPull/GetDownList.aspx?whseId=1
+     xiajiaList = $resource(baseURL+'/AdPull/GetDownList.aspx?whseId=1');
+     // http://localhost:1460/AdPull/DownShelves.aspx?epsSupplyId=1&userName=2
+     xiajiaAction = $resource(baseURL+'/AdPull/DownShelves.aspx?epsSupplyId=1&userName=2');
+     // http://localhost:1460/AdPull/SelectStock.aspx?itemCode=1&whseId=2
+     kucunList = $resource(baseURL+'/AdPull/SelectStock.aspx');
      adMember = $resource(baseURL+'/member.aspx');
-     login = $resource(baseURL+'/login.aspx', null , {
-        login: {
-          method: 'POST',
-          params: {
-            category: 'login'
-          }
-        },
-     });
+     // http://192.168.0.147:8083/AdPull/Login.aspx?name=wmh&pwd=1111
+     login = $resource(baseURL+'/AdPull/Login.aspx');
+     userAuth = $resource(baseURL+'/AdPull/UserAuthority.aspx');
     }
 
     return{
@@ -392,7 +391,8 @@ angular.module('starter.services', ['ngResource'])
       xiajiaAction: xiajiaAction,
       kucunList: kucunList,
       adMember: adMember,
-      login: login
+      login: login,
+      userAuth: userAuth
     }
   }
 }])
@@ -416,15 +416,41 @@ angular.module('starter.services', ['ngResource'])
     },
     login: function(params){
       var deferred = $q.defer();
-      Backend()['login'].login(params, function(data){
-        if(!data || !data.length){
-          deferred.resolve([]);
-          return;
-        }else if(data.length ==1 && data[0].ErrorCode!==undefined){
-            deferred.reject(null);
-          }else{
+      Backend().login.query(params, function(data){
+        if(!data || data.respCode!=='success' || !data.userId){
+          deferred.reject({
+            respCode: true
+          });
+        }else{
+          Backend().userAuth.query({
+            userId: data.userId
+          }, function (auth) {
+            if(!auth || auth.respCode!=='success'){
+              deferred.reject({
+                respCode: true
+              });  
+              return;
+            }
+            data.permissions = [{
+              id: 'SFM',
+              list: [{}],
+            }, {
+              id: 'AD',
+              list: [{
+                id: 'pull'
+              },{
+                id: 'start'
+              },{
+                id: 'off'
+              },{
+                id: 'member'
+              }]
+            }]
             deferred.resolve(data);
-          }
+          }, function () {
+            deferred.reject(null);
+          });
+        }
       }, function () {
         deferred.reject(null);
       });

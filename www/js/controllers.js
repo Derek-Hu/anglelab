@@ -1362,19 +1362,31 @@ angular.module('starter.controllers', [])
 .controller('LoginCtrl', ['$scope', 'AD', '$state', function ($scope, AD, $state) {
     $scope.params = {};
     $scope.login = function () {
-      if(!$scope.params.identity || !$scope.params.password){
+      $scope.errorMsg = '';
+      if(!$scope.params.name || !$scope.params.pwd){
         return;
       }
-      AD.login($scope.params).then(function (error, data) {
-        if(error){
+      AD.login($scope.params).then(function (data) {
+          if(data.permissions.length === 1){
+              if(data.permissions[0].id === 'SFM'){
+                $state.go('entry'); 
+              }else if(data.permissions[0].id === 'AD'){
+                $state.go('ad-sub-permssion');    
+              }
+          }else{
+            $state.go('login-dashboard');
+          }
+      }, function (error) {
+        if(error && error.respCode){
           $scope.errorMsg = '用户名或密码错误';
+        }else{
+          $scope.errorMsg = '服务器异常';
         }
-        $state.go('login-dashboard');
-      }, function () {
-        $state.go('login-dashboard');
-        $scope.errorMsg = '服务器异常';
       })
     };
+    $scope.$on('$ionicView.enter', function(e) {
+      $scope.errorMsg = '';
+    });
 }])
 .controller('AdMemberCtrl', ['AD', '$scope', function (AD, $scope) {
   function loadList(params) {
@@ -1424,6 +1436,7 @@ angular.module('starter.controllers', [])
     });
   }
   $scope.$on('$ionicView.enter', function(e) {
+    $scope.errorMsg = '';
     loadList();
   });
 }])
