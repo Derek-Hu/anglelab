@@ -1528,17 +1528,31 @@ a.entry-home:hover {
     line-height: 2.5em;
 }
 
-.login-dashboard.entryWp div.entry {
+.ad-sub-permission.login-dashboard.entryWp > div {
+    position: relative;
+    top: 20%;
+}
+.ad-sub-permission.login-dashboard.entryWp a {
+    width: 50%;
+}
+.ad-sub-permission.login-dashboard.entryWp a div.entry {
     text-align: center;
+    width: 70%;
 }
 
-.login-dashboard.entryWp div.entry .number {
+.ad-sub-permission.login-dashboard.entryWp a div.entry .group {
+        padding-bottom: 1em;
+}
+.ad-sub-permission.login-dashboard.entryWp div.entry img {
+    opacity: 1;
+}
+
+.ad-sub-permission.login-dashboard.entryWp div.entry .number {
     position: relative;
     left: 0;
-    font-size: 2em;
-    bottom: 2em;
+    font-size: 1.8em;
     opacity: 1;
-    color: #3b5a7a;
+    color: #587A96;
 }
 
 .xiajia.content-wrapper {
@@ -1594,9 +1608,11 @@ a.entry-home:hover {
     padding: 1.5em 2em;
     width: 40%;
 }
+
 .login table {
     width: 100%;
 }
+
 .login button[type='submit'] {
     font-size: 18px
 }
@@ -1647,4 +1663,80 @@ a.entry-home:hover {
     font-size: 1.4em;
     padding: 0;
     border-color: #14a8ea;
+}
+
+.ad-member.content-wrapper td.check {
+    padding: 2em 0;
+}
+
+.ad-member.content-wrapper td.check input {
+    display: none;
+}
+
+.ad-member.content-wrapper td.check label span {
+    font-size: 2em;
+    line-height: 1.5em;
+    position: absolute;
+    width: 1.5em;
+    left: 0;
+}
+
+.ad-member.content-wrapper td.check label {
+    position: relative;
+    display: inline-block;
+    width: 3em;
+    height: 3em;
+    padding: 0;
+    margin: 0;
+    border: 1px solid;
+}
+
+.ad-sub-permission > div {
+    position: relative;
+    top: 20%;
+}
+
+.ad-sub-permission {
+    padding: 2em;
+}
+
+.ad-sub-permission a {
+    display: block;
+    width: 25%;
+    float: left;
+    padding: 2em;
+}
+
+.ad-sub-permission a .entry div.img {
+    padding: 2em;
+}
+.ad-sub-permission a .entry div.img img {
+    width: 100px;
+    height: 100px;
+}
+
+.ad-sub-permission a .entry div.group p {
+    color: #587995;
+    font-size: 1.6em;
+    font-weight: bold;
+}
+
+.ad-sub-permission a .entry div.group h2 {
+    text-transform: uppercase;
+    font-size: 1em;
+    color: #27AFEC;
+    font-weight: bold;
+}
+
+.ad-sub-permission a .entry div.group {
+    position: static;
+    border-top: 1px dashed #DDE3E8;
+    text-align: center;
+    padding-top: 1em;
+}
+
+.ad-sub-permission a .entry {
+    width: 100%;
+    position: relative;
+    padding: 0;
 }

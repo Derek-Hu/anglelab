@@ -367,6 +367,15 @@ angular.module('starter.services', ['ngResource'])
      xiajiaList = $resource(baseURL+'/xiajia-list.aspx');
      xiajiaAction = $resource(baseURL+'/xiajia-action.aspx');
      kucunList = $resource(baseURL+'/kucun.aspx');
+     adMember = $resource(baseURL+'/member.aspx');
+     login = $resource(baseURL+'/login.aspx', null , {
+        login: {
+          method: 'POST',
+          params: {
+            category: 'login'
+          }
+        },
+     });
     }
 
     return{
@@ -381,7 +390,45 @@ angular.module('starter.services', ['ngResource'])
       kpi: kpi,
       xiajiaList: xiajiaList,
       xiajiaAction: xiajiaAction,
-      kucunList: kucunList
+      kucunList: kucunList,
+      adMember: adMember,
+      login: login
+    }
+  }
+}])
+.service('AD', ['Backend', 'Constant', '$q', function(Backend, Constant, $q){
+  return {
+    getList: function (sender, params){
+      var deferred = $q.defer();
+      Backend()[sender].query(params, function(data){
+        if(!data || !data.length){
+          deferred.resolve([]);
+          return;
+        }else if(data.length ==1 && data[0].ErrorCode!==undefined){
+            deferred.reject(null);
+          }else{
+            deferred.resolve(data);
+          }
+      }, function () {
+        deferred.reject(null);
+      });
+      return deferred.promise;
+    },
+    login: function(params){
+      var deferred = $q.defer();
+      Backend()['login'].login(params, function(data){
+        if(!data || !data.length){
+          deferred.resolve([]);
+          return;
+        }else if(data.length ==1 && data[0].ErrorCode!==undefined){
+            deferred.reject(null);
+          }else{
+            deferred.resolve(data);
+          }
+      }, function () {
+        deferred.reject(null);
+      });
+      return deferred.promise;
     }
   }
 }])

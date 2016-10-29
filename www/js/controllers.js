@@ -1359,8 +1359,73 @@ angular.module('starter.controllers', [])
     loadList();
   });
 }])
-.controller('LoginCtrl', ['$scope', function ($scope) {
-  
+.controller('LoginCtrl', ['$scope', 'AD', '$state', function ($scope, AD, $state) {
+    $scope.params = {};
+    $scope.login = function () {
+      if(!$scope.params.identity || !$scope.params.password){
+        return;
+      }
+      AD.login($scope.params).then(function (error, data) {
+        if(error){
+          $scope.errorMsg = '用户名或密码错误';
+        }
+        $state.go('login-dashboard');
+      }, function () {
+        $state.go('login-dashboard');
+        $scope.errorMsg = '服务器异常';
+      })
+    };
+}])
+.controller('AdMemberCtrl', ['AD', '$scope', function (AD, $scope) {
+  function loadList(params) {
+    AD.getList('adMember', params).then(function () {
+      $scope.loadingStatus = '';
+      $scope.data = data;
+      if(!$scope.data.length){
+        $scope.loadingStatus = '暂无数据';
+      }
+    }, function () {
+      $scope.loadingStatus = '加载失败';
+      $scope.data = [];
+      $scope.data = [{
+        // 零件号
+        id: '154S4dDHU4',
+        // 线路号
+        banzu: 'AFA4-A4-D01L',
+        // 推荐库位
+        name: 'Q285B654',
+        // 推荐箱号
+        member: 'ISO1547',
+        // 编组区域
+        lastUpdateTime: '2016-09-28'
+      },{
+        // 零件号
+        id: '154S4dDHU4',
+        // 线路号
+        banzu: 'AFA4-A4-D01L',
+        // 推荐库位
+        name: 'Q285B654',
+        // 推荐箱号
+        member: 'ISO1547',
+        // 编组区域
+        lastUpdateTime: '2016-09-28'
+      },{
+        // 零件号
+        id: '154S4dDHU4',
+        // 线路号
+        banzu: 'AFA4-A4-D01L',
+        // 推荐库位
+        name: 'Q285B654',
+        // 推荐箱号
+        member: 'ISO1547',
+        // 编组区域
+        lastUpdateTime: '2016-09-28'
+      }];
+    });
+  }
+  $scope.$on('$ionicView.enter', function(e) {
+    loadList();
+  });
 }])
 .controller('LoginDashboard', ['$scope', function ($scope) {
 }])

@@ -199,7 +199,7 @@ angular.module('starter', ['ionic', 'ngCordova', 'ui.bootstrap', 'LocalStorageMo
         }
       }
     })
-  // login dashboard
+  // 登录权限: SFM - AD
   .state('login-dashboard', {
       url: '/login-dashboard',
       views: {
@@ -219,7 +219,17 @@ angular.module('starter', ['ionic', 'ngCordova', 'ui.bootstrap', 'LocalStorageMo
         }
       }
     })
-      // 零件下架
+   // 人员调整
+  .state('ad-member', {
+      url: '/ad/member',
+      views: {
+        'dash': {
+          templateUrl: 'templates/ad/member.html',
+          controller: 'AdMemberCtrl'
+        }
+      }
+    })
+      // 零件库存
   .state('ad-kucun', {
       url: '/ad/kucun',
       views: {
@@ -239,7 +249,26 @@ angular.module('starter', ['ionic', 'ngCordova', 'ui.bootstrap', 'LocalStorageMo
         }
       }
     })
-
+  // AD 权限选择
+  .state('ad-sub-permssion', {
+      url: '/ad/sub-permssion',
+      views: {
+        'dash': {
+          templateUrl: 'templates/ad/ad-sub-permission.html',
+          controller: 'LoginCtrl'
+        }
+      }
+    })
+  // AD 权限选择
+  .state('ad-sub-permssion-img', {
+      url: '/ad/img',
+      views: {
+        'dash': {
+          templateUrl: 'templates/ad/img.html',
+          controller: 'LoginCtrl'
+        }
+      }
+    })
   // if none of the above states are matched, use this as the fallback
   $urlRouterProvider.otherwise('/entry');
 
