@@ -1532,17 +1532,20 @@ a.entry-home:hover {
     position: relative;
     top: 20%;
 }
+
 .ad-sub-permission.login-dashboard.entryWp a {
     width: 50%;
 }
+
 .ad-sub-permission.login-dashboard.entryWp a div.entry {
     text-align: center;
     width: 70%;
 }
 
 .ad-sub-permission.login-dashboard.entryWp a div.entry .group {
-        padding-bottom: 1em;
+    padding-bottom: 1em;
 }
+
 .ad-sub-permission.login-dashboard.entryWp div.entry img {
     opacity: 1;
 }
@@ -1602,11 +1605,20 @@ a.entry-home:hover {
 
 .login {
     display: inline-block;
-    background: #FFF;
+    background: #F2F6F7;
     margin-top: 3em;
     border-radius: 0.5em;
     padding: 1.5em 2em;
     width: 40%;
+}
+
+.login table td.input-lable label {
+    font-size: 1.2em;
+}
+
+.login table td.input-lable {
+    color: #66849D;
+    height: 4em;
 }
 
 .login table {
@@ -1623,7 +1635,7 @@ a.entry-home:hover {
 
 .login div.form-wpr form div.input-wpr {
     border: 1px solid #EBEBEB;
-    border-radius: 2px
+    border-radius: 2px;
 }
 
 .login div.form-wpr form div.input-wpr input {
@@ -1632,13 +1644,12 @@ a.entry-home:hover {
 
 .login div.form-wpr form div.field-wpr {
     position: relative;
-    margin-top: 15px
 }
 
 .login div.form-wpr form div.field-wpr input {
     width: 100%;
-    padding: 1em;
-    height: 4em;
+    padding: 0 1em;
+    height: 3em;
 }
 
 .login div.form-wpr form div.field-wpr button::-moz-focus-inner,
@@ -1653,9 +1664,9 @@ a.entry-home:hover {
 }
 
 .login div.form-wpr form button.btn {
-    margin-bottom: 20px;
+    margin-bottom: 1em;
     width: 100%;
-    margin-top: 2em;
+    margin-top: 1em;
     background: #14a8ea;
     opacity: 1;
     height: 2em;
@@ -1663,6 +1674,7 @@ a.entry-home:hover {
     font-size: 1.4em;
     padding: 0;
     border-color: #14a8ea;
+    border-radius: 0.4em;
 }
 
 .ad-member.content-wrapper td.check {
@@ -1710,6 +1722,7 @@ a.entry-home:hover {
 .ad-sub-permission a .entry div.img {
     padding: 2em;
 }
+
 .ad-sub-permission a .entry div.img img {
     width: 100px;
     height: 100px;
