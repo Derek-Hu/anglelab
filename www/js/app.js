@@ -210,8 +210,28 @@ angular.module('starter', ['ionic', 'ngCordova', 'ui.bootstrap', 'LocalStorageMo
       }
     })
     // 零件下架
-  .state('ad-xiajia', {
-      url: '/ad/xiajia',
+  .state('ad-off', {
+      url: '/ad/off',
+      views: {
+        'dash': {
+          templateUrl: 'templates/ad/xiajia.html',
+          controller: 'XiaJiaCtrl'
+        }
+      }
+    })
+      // 零件上线
+  .state('ad-start', {
+      url: '/ad/start',
+      views: {
+        'dash': {
+          templateUrl: 'templates/ad/xiajia.html',
+          controller: 'XiaJiaCtrl'
+        }
+      }
+    })
+      // 零件拉动
+  .state('ad-pull', {
+      url: '/ad/pull',
       views: {
         'dash': {
           templateUrl: 'templates/ad/xiajia.html',
@@ -251,11 +271,11 @@ angular.module('starter', ['ionic', 'ngCordova', 'ui.bootstrap', 'LocalStorageMo
     })
   // AD 权限选择
   .state('ad-sub-permssion', {
-      url: '/ad/sub-permssion',
+      url: '/ad/sub-permssion/:menus',
       views: {
         'dash': {
           templateUrl: 'templates/ad/ad-sub-permission.html',
-          controller: 'LoginCtrl'
+          controller: 'AdSubMenuCtrl'
         }
       }
     })

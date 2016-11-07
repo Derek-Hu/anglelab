@@ -2,7 +2,7 @@ angular.module('starter.services', ['ngResource'])
 
 .service('Constant', function(){
   var settings = {
-    cacheURL : 'http://192.168.0.147:8083',
+    cacheURL : 'http://58.246.227.27:83',
     // cacheURL : 'http://221.181.71.171:8082',
     // Private
     //cacheURL : 'http://10.102.10.207:8082',
@@ -416,43 +416,81 @@ angular.module('starter.services', ['ngResource'])
     },
     login: function(params){
       var deferred = $q.defer();
+      /*
+        
+        {
+          "factoryCode":"1600",
+          "fullNme":"金士平",
+          "isSpecial":"1",
+          "loginNme":"jsp",
+          "pwd":"1111",
+          "userId":"1102",
+          "whseCode":"L2-CP3",
+          "whseId":"1055",
+          "zoneCode":"B1",
+          "zoneId":"1159"
+          }
+
+       */
       Backend().login.query(params, function(data){
-        if(!data || data.respCode!=='success' || !data.userId){
-          deferred.reject({
-            respCode: true
-          });
-        }else{
+        if(data && data.userId){
           Backend().userAuth.query({
             userId: data.userId
           }, function (auth) {
-            if(!auth || auth.respCode!=='success'){
+            if(auth && auth.length){
+/*              data.permissions = [{
+                id: 'SFM',
+                list: [{}],
+              }, {
+                id: 'AD',
+                list: [{
+                  id: 'pull'
+                },{
+                  id: 'start'
+                },{
+                  id: 'off'
+                },{
+                  id: 'member'
+                }]
+              }];*/
+              data.permssionMap = {
+                SFM: ['line', 'board'],
+                // SFM: null if no SFM permission
+                AD: ['pull', 'start', 'off', 'member']
+              };
+              deferred.resolve(data);
+            }else{
               deferred.reject({
-                respCode: true
-              });  
-              return;
+                respCode: 403
+              });
             }
-            data.permissions = [{
-              id: 'SFM',
-              list: [{}],
-            }, {
-              id: 'AD',
-              list: [{
-                id: 'pull'
-              },{
-                id: 'start'
-              },{
-                id: 'off'
-              },{
-                id: 'member'
-              }]
-            }]
-            deferred.resolve(data);
           }, function () {
-            deferred.reject(null);
+            deferred.reject({
+              respCode: 500
+            });
+          });
+        }else {
+          deferred.reject({
+            respCode: 'unknow',
+            errorMsg: (data && data.respCode) || '服务器异常'
           });
         }
       }, function () {
-        deferred.reject(null);
+        /*// for test
+        var data = {};
+         data.permssionMap = {
+                SFM: ['line', 'board'],
+                // SFM: ['board'],
+                // SFM: null if no SFM permission
+                AD: ['member']
+                // AD: ['pull', 'start', 'off', 'member']
+              };
+        deferred.resolve(data);
+        // for test end*/
+
+        deferred.reject({
+          respCode: 500
+        });
       });
       return deferred.promise;
     }
