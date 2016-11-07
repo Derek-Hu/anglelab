@@ -4,48 +4,15 @@
     </ion-header-bar>
     <ion-content scroll="false">
         <div class="entryWp ad-sub-permission">
-            <div>
-                <a href="#/ad/xiajia" class="entry-home">
+            <div class="tc">
+                <a ng-repeat="m in menus" ng-if="menuConfig[m].show" ng-href="#/ad/{{m}}" class="entry-home">
                     <div class="entry">
                         <div class="img tc">
-                            <img src="img/ad/ad-permission-off.png" />
+                            <img ng-src="img/ad/ad-permission-{{m}}.png" />
                         </div>
                         <div class="group">
-                            <h2>off the shelf</h2>
-                            <p>下架</p>
-                        </div>
-                    </div>
-                </a>
-                <a href="#/dash" class="entry-home">
-                    <div class="entry">
-                        <div class="img tc">
-                            <img src="img/ad/ad-permission-start.png" />
-                        </div>
-                        <div class="group">
-                            <h2>on-line</h2>
-                            <p>上线</p>
-                        </div>
-                    </div>
-                </a>
-                <a href="#/dash" class="entry-home">
-                    <div class="entry">
-                        <div class="img tc">
-                            <img src="img/ad/ad-permission-pull.png" />
-                        </div>
-                        <div class="group">
-                            <h2>kick-start</h2>
-                            <p>拉动</p>
-                        </div>
-                    </div>
-                </a>
-                <a href="#/ad/member" class="entry-home">
-                    <div class="entry">
-                        <div class="img tc">
-                            <img src="img/ad/ad-permission-member.png" />
-                        </div>
-                        <div class="group">
-                            <h2>turnover</h2>
-                            <p>人员调整</p>
+                            <h2 ng-bind="menuConfig[m].enName"></h2>
+                            <p ng-bind="menuConfig[m].name"></p>
                         </div>
                     </div>
                 </a>

@@ -1535,6 +1535,8 @@ a.entry-home:hover {
 
 .ad-sub-permission.login-dashboard.entryWp a {
     width: 50%;
+    display: block;
+    float: left;
 }
 
 .ad-sub-permission.login-dashboard.entryWp a div.entry {
@@ -1714,9 +1716,8 @@ a.entry-home:hover {
 }
 
 .ad-sub-permission a {
-    display: block;
+    display: inline-block;
     width: 25%;
-    float: left;
     padding: 2em;
 }
 

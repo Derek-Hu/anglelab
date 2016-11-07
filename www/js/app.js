@@ -271,7 +271,7 @@ angular.module('starter', ['ionic', 'ngCordova', 'ui.bootstrap', 'LocalStorageMo
     })
   // AD 权限选择
   .state('ad-sub-permssion', {
-      url: '/ad/sub-permssion/:menus',
+      url: '/ad/sub-permssion',
       views: {
         'dash': {
           templateUrl: 'templates/ad/ad-sub-permission.html',

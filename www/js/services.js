@@ -396,7 +396,7 @@ angular.module('starter.services', ['ngResource'])
     }
   }
 }])
-.service('AD', ['Backend', 'Constant', '$q', function(Backend, Constant, $q){
+.service('AD', ['Backend', 'Constant', '$q', 'localStorageService', function(Backend, Constant, $q, localStorageService){
   return {
     getList: function (sender, params){
       var deferred = $q.defer();
@@ -458,6 +458,7 @@ angular.module('starter.services', ['ngResource'])
                 // SFM: null if no SFM permission
                 AD: ['pull', 'start', 'off', 'member']
               };
+              localStorageService.set('loginUser', data);
               deferred.resolve(data);
             }else{
               deferred.reject({
@@ -476,17 +477,18 @@ angular.module('starter.services', ['ngResource'])
           });
         }
       }, function () {
-        /*// for test
+        // for test
         var data = {};
          data.permssionMap = {
                 SFM: ['line', 'board'],
                 // SFM: ['board'],
                 // SFM: null if no SFM permission
-                AD: ['member']
+                AD: ['off', 'pull']
                 // AD: ['pull', 'start', 'off', 'member']
               };
+              localStorageService.set('loginUser', data);
         deferred.resolve(data);
-        // for test end*/
+        // for test end
 
         deferred.reject({
           respCode: 500
