@@ -366,7 +366,11 @@ angular.module('starter.services', ['ngResource'])
      kpi = $resource(baseURL+'/KPI.aspx');
 
      // http://localhost:1460/AdPull/GetDownList.aspx?whseId=1
-     xiajiaList = $resource(baseURL+'/AdPull/GetDownList.aspx?whseId=1');
+     xiajiaList = $resource(baseURL+'/AdPull/GetDownList.aspx', null, {
+      getAll: {
+        method: 'GET'
+      }
+     });
      // http://localhost:1460/AdPull/DownShelves.aspx?epsSupplyId=1&userName=2
      xiajiaAction = $resource(baseURL+'/AdPull/DownShelves.aspx?epsSupplyId=1&userName=2');
      // http://localhost:1460/AdPull/SelectStock.aspx?itemCode=1&whseId=2
@@ -478,16 +482,16 @@ angular.module('starter.services', ['ngResource'])
         }
       }, function () {
         // for test
-        var data = {};
+/*        var data = {"factoryCode":"1600","fullNme":"金士平","isSpecial":"1","loginNme":"jsp","pwd":"1111","userId":"1102","whseCode":"L2-CP3","whseId":"1055","zoneCode":"B1","zoneId":"1159"};
          data.permssionMap = {
                 SFM: ['line', 'board'],
                 // SFM: ['board'],
                 // SFM: null if no SFM permission
-                AD: ['off', 'pull']
-                // AD: ['pull', 'start', 'off', 'member']
+                //AD: ['off', 'pull']
+                AD: ['pull', 'start', 'off', 'member']
               };
               localStorageService.set('loginUser', data);
-        deferred.resolve(data);
+        deferred.resolve(data);*/
         // for test end
 
         deferred.reject({
@@ -501,7 +505,7 @@ angular.module('starter.services', ['ngResource'])
 .service('XiaJia', ['Backend', 'Constant', '$q', function(Backend, Constant, $q){
   function getList(params) {
     var deferred = $q.defer();
-    Backend().xiajiaList.query(params, function(data){
+    Backend().xiajiaList.getAll(params, function(data){
       if(!data || !data.length){
         deferred.resolve([]);
         return;

@@ -1499,12 +1499,12 @@ angular.module('starter.controllers', [])
     }
   });
 }])
-.controller('XiaJiaCtrl', ['$scope', 'XiaJia', function ($scope, XiaJia) {
-  function loadList() {
+.controller('XiaJiaCtrl', ['$scope', 'XiaJia', 'localStorageService', '$state', function ($scope, XiaJia, localStorageService, $state) {
+  function loadList(params) {
     if($scope.firstTime){
       $scope.loadingStatus = '加载中';
     }
-    XiaJia.getList().then(function (data) {
+    XiaJia.getList(params).then(function (data) {
       $scope.firstTime = false;
       $scope.loadingStatus = '';
       $scope.data = data;
@@ -1514,118 +1514,19 @@ angular.module('starter.controllers', [])
     }, function(){
       $scope.loadingStatus = $scope.firstTime?'加载失败': '刷新失败';
       $scope.data = [];
-      // 
-      $scope.data = [{
-        // 零件号
-        id: '154S4dDHU4',
-        // 线路号
-        lineId: 'AFA4-A4-D01L',
-        // 推荐库位
-        recomKu: 'Q285B654',
-        // 推荐箱号
-        recomBox: 'ISO1547',
-        // 编组区域
-        groupArea: 'ISO1547',
-        // 最晚下架时间
-        lastTime: '2016-09-28'
-      },{
-        // 零件号
-        id: '154S4dDHU4',
-        // 线路号
-        lineId: 'AFA4-A4-D01L',
-        // 推荐库位
-        recomKu: 'Q285B654',
-        // 推荐箱号
-        recomBox: 'ISO1547',
-        // 编组区域
-        groupArea: 'ISO1547',
-        // 最晚下架时间
-        lastTime: '2016-09-28'
-      },{
-        // 零件号
-        id: '154S4dDHU4',
-        // 线路号
-        lineId: 'AFA4-A4-D01L',
-        // 推荐库位
-        recomKu: 'Q285B654',
-        // 推荐箱号
-        recomBox: 'ISO1547',
-        // 编组区域
-        groupArea: 'ISO1547',
-        // 最晚下架时间
-        lastTime: '2016-09-28'
-      },{
-        // 零件号
-        id: '154S4dDHU4',
-        // 线路号
-        lineId: 'AFA4-A4-D01L',
-        // 推荐库位
-        recomKu: 'Q285B654',
-        // 推荐箱号
-        recomBox: 'ISO1547',
-        // 编组区域
-        groupArea: 'ISO1547',
-        // 最晚下架时间
-        lastTime: '2016-09-28'
-      },{
-        // 零件号
-        id: '154S4dDHU4',
-        // 线路号
-        lineId: 'AFA4-A4-D01L',
-        // 推荐库位
-        recomKu: 'Q285B654',
-        // 推荐箱号
-        recomBox: 'ISO1547',
-        // 编组区域
-        groupArea: 'ISO1547',
-        // 最晚下架时间
-        lastTime: '2016-09-28'
-      },{
-        // 零件号
-        id: '154S4dDHU4',
-        // 线路号
-        lineId: 'AFA4-A4-D01L',
-        // 推荐库位
-        recomKu: 'Q285B654',
-        // 推荐箱号
-        recomBox: 'ISO1547',
-        // 编组区域
-        groupArea: 'ISO1547',
-        // 最晚下架时间
-        lastTime: '2016-09-28'
-      },{
-        // 零件号
-        id: '154S4dDHU4',
-        // 线路号
-        lineId: 'AFA4-A4-D01L',
-        // 推荐库位
-        recomKu: 'Q285B654',
-        // 推荐箱号
-        recomBox: 'ISO1547',
-        // 编组区域
-        groupArea: 'ISO1547',
-        // 最晚下架时间
-        lastTime: '2016-09-28'
-      },{
-        // 零件号
-        id: '154S4dDHU4',
-        // 线路号
-        lineId: 'AFA4-A4-D01L',
-        // 推荐库位
-        recomKu: 'Q285B654',
-        // 推荐箱号
-        recomBox: 'ISO1547',
-        // 编组区域
-        groupArea: 'ISO1547',
-        // 最晚下架时间
-        lastTime: '2016-12-28'
-      }];
     });
   };
   $scope.loadList = loadList;
   $scope.$on('$ionicView.enter', function(e) {
+    var loginUser = localStorageService.get('loginUser');
+    if(!loginUser){
+      $state.go('ad-login');
+      return;
+    }
     $scope.firstTime = true;
-    loadList();
+    loadList({
+      whseId: loginUser.whseId
+    });
   });
 }])
 .controller('GwrxCtrl', ['localStorageService', '$scope', 'Backend', '$stateParams', 'MetaDataSvc',
