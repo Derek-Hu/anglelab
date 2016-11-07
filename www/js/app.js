@@ -251,7 +251,7 @@ angular.module('starter', ['ionic', 'ngCordova', 'ui.bootstrap', 'LocalStorageMo
     })
       // 零件库存
   .state('ad-kucun', {
-      url: '/ad/kucun',
+      url: '/ad/kucun/:itemCode',
       views: {
         'dash': {
           templateUrl: 'templates/ad/kucun.html',
