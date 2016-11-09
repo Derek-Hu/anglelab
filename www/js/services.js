@@ -366,11 +366,7 @@ angular.module('starter.services', ['ngResource'])
      kpi = $resource(baseURL+'/KPI.aspx');
 
      // http://localhost:1460/AdPull/GetDownList.aspx?whseId=1
-     xiajiaList = $resource(baseURL+'/AdPull/GetDownList.aspx', null, {
-      getAll: {
-        method: 'GET'
-      }
-     });
+     xiajiaList = $resource(baseURL+'/AdPull/GetDownList.aspx');
      // http://localhost:1460/AdPull/DownShelves.aspx?epsSupplyId=1&userName=2
      xiajiaAction = $resource(baseURL+'/AdPull/DownShelves.aspx?epsSupplyId=1&userName=2');
      // http://localhost:1460/AdPull/SelectStock.aspx?itemCode=1&whseId=2
@@ -505,7 +501,7 @@ angular.module('starter.services', ['ngResource'])
 .service('XiaJia', ['Backend', 'Constant', '$q', function(Backend, Constant, $q){
   function getList(params) {
     var deferred = $q.defer();
-    Backend().xiajiaList.getAll(params, function(data){
+    Backend().xiajiaList.query(params, function(data){
       if(!data || !data.length){
         deferred.resolve([]);
         return;
