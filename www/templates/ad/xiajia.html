@@ -30,7 +30,7 @@
                     <td ng-bind="r.groupArea"></td>
                     <td ng-bind="r.lastTime"></td>
                     <td class="operation">
-                        <span>下&nbsp;架</span>
+                        <span ng-bind="r.txt" ng-click="off(r)">下&nbsp;架</span>
                         <a ng-href="#/ad/kucun/{{r.itemCode}}"><span>库&nbsp;存</span></a>
                     </td>
                 </tr>

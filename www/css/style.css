@@ -1755,3 +1755,37 @@ a.entry-home:hover {
     position: relative;
     padding: 0;
 }
+
+.popup-container .popup div.xiajia span {
+    display: block;
+    font-size: 0.8em;
+    color: #BDC3CC;
+    margin-top: 0.5em;
+}
+
+.popup-container .popup div.xiajia img {
+    display: block;
+    margin: 0 auto;
+    height: 2em;
+    margin-bottom: 1em;
+}
+
+.popup-container .popup div.xiajia {}
+
+.popup-container .popup .popup-buttons button {
+    background-color: #E6EBEF;
+    border-color: #E6EBEF;
+}
+
+.popup-container .popup .popup-head {
+    display: none;
+}
+
+.popup-container .popup {
+    border-radius: 0.5em;
+    width: 14em;
+    text-align: center;
+    font-size: 1.5em;
+    padding: 1em;
+    background: #FFF;
+}

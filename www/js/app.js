@@ -7,7 +7,12 @@
 // 'starter.controllers' is found in controllers.js
 angular.module('starter', ['ionic', 'ngCordova', 'ui.bootstrap', 'LocalStorageModule', 'ngResource', 'starter.controllers', 'starter.services','d3', 'starter.directives'])
 
-.run(function($ionicPlatform, $rootScope, $window) {
+.run(function($ionicPlatform, $rootScope, $window, localStorageService) {
+
+  $rootScope.$on('$stateChangeSuccess', function (event, routeData) {
+    var loginUser = localStorageService.get('loginUser');
+    $rootScope.loginUser = loginUser;
+  });
   $rootScope.historyBack = function(){
     $window.history.back();
   }
