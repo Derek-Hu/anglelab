@@ -1474,6 +1474,9 @@ angular.module('starter.controllers', [])
         });
     }])
     .controller('LoginDashboard', ['$scope', function($scope) {}])
+    .controller('AdPullCtrl', ['$scope', function($scope) {
+      
+    }])
     .controller('AdSubMenuCtrl', ['$scope', 'localStorageService', '$state', function($scope, localStorageService, $state) {
         $scope.menuConfig = {
             off: {
