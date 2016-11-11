@@ -1475,7 +1475,34 @@ angular.module('starter.controllers', [])
     }])
     .controller('LoginDashboard', ['$scope', function($scope) {}])
     .controller('AdPullCtrl', ['$scope', function($scope) {
-      
+      $scope.menus = [{
+        itemCode: 'fdsfadsfdsfda',
+        routeCode: '323233432432'
+      },{
+        itemCode: 'fdsfadsfdsfda',
+        routeCode: '323233432432'
+      },{
+        itemCode: 'fdsfadsfdsfda',
+        routeCode: '323233432432'
+      },{
+        itemCode: 'fdsfadsfdsfda',
+        routeCode: '323233432432'
+      },{
+        itemCode: 'fdsfadsfdsfda',
+        routeCode: '323233432432'
+      },{
+        itemCode: 'fdsfadsfdsfda',
+        routeCode: '323233432432'
+      },{
+        itemCode: 'fdsfadsfdsfda',
+        routeCode: '323233432432'
+      },{
+        itemCode: 'fdsfadsfdsfda',
+        routeCode: '323233432432'
+      },{
+        itemCode: 'fdsfadsfdsfda',
+        routeCode: '323233432432'
+      }]
     }])
     .controller('AdSubMenuCtrl', ['$scope', 'localStorageService', '$state', function($scope, localStorageService, $state) {
         $scope.menuConfig = {
