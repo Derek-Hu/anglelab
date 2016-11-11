@@ -15,12 +15,12 @@
                 <th>拉动人</th>
             </tr>
             </thead>
-            <tbody ng-show="loadingStatus!=''" >
-                <tr><td colspan="7">
-                    <span ng-bind="loadingStatus" style="display: inline;">加载中</span>
+            <tbody ng-show="errorMsg!=''" >
+                <tr><td colspan="6">
+                    <span ng-bind="errorMsg" style="display: inline;">加载中</span>
                 </td></tr>
             </tbody>
-            <tbody ng-repeat="r in data">
+            <tbody ng-repeat="r in menus">
                 <tr>
                     <td ng-bind="r.itemCode"></td>
                     <td ng-bind="r.lsa"></td>
@@ -55,8 +55,8 @@
             </div></div>
         </div> -->
         <div class="quickNav">
-            <a ng-click="loadList()"><span class="glyphicon glyphicon glyphicon-repeat"></span></a>
-            <a href="#/ad/off"><span class="glyphicon glyphicon-circle-arrow-left"></span></a>
+            <a ng-click="getList()"><span class="glyphicon glyphicon glyphicon-repeat"></span></a>
+            <a href="#/ad/pull"><span class="glyphicon glyphicon-circle-arrow-left"></span></a>
             <a href="#/ad/sub-permssion"><span class="glyphicon glyphicon-home"></span></a>
             <!-- <a href="#/settings/"><span class="glyphicon glyphicon-cog"></span></a> -->
         </div>

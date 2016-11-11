@@ -1474,8 +1474,33 @@ angular.module('starter.controllers', [])
         });
     }])
     .controller('LoginDashboard', ['$scope', function($scope) {}])
-    .controller('AdPullHisotryCtrl', ['$scope', function($scope) {
-
+    .controller('AdPullHisotryCtrl', ['$scope', '$http', 'Backend', '$rootScope', function($scope, $http, Backend, $rootScope) {
+        $scope.getList = function() {
+            $scope.errorMsg = '加载中';
+            $http({
+                method: 'GET',
+                url: Backend().pullListURL + '?whseId='+$rootScope.loginUser.whseId+'&userName=' + $rootScope.loginUser.userId
+            }).
+            success(function(data, status, headers, config) {
+                if (data && Object.prototype.toString.call(data) === '[object Array]') {
+                    $scope.menus = data;
+                    $scope.errorMsg = null;
+                    if (!data.length) {
+                        $scope.errorMsg = '暂无数据';
+                    }
+                } else {
+                    $scope.menus = [];
+                    $scope.errorMsg = (data && data.respCode) ? data.respCode : '暂无数据';
+                }
+            }).
+            error(function(data, status, headers, config) {
+                $scope.menus = [];
+                $scope.errorMsg = '加载失败';
+            });
+        };
+        $scope.$on('$ionicView.enter', function(e) {
+            $scope.getList();
+        });
     }])
     .controller('AdStartCtrl', ['$scope', function($scope) {
         $scope.menus = [{
@@ -1512,13 +1537,10 @@ angular.module('starter.controllers', [])
             $state.go('ad-pull-hisotry');
         };
         $scope.getList = function() {
-            var params = {
-                userId: $rootScope.loginUser.userId
-            };
             $scope.errorMsg = '加载中';
             $http({
                 method: 'GET',
-                url: Backend().pullListURL+'?userId='+$rootScope.loginUser.userId
+                url: Backend().pullListURL + '?userId=' + $rootScope.loginUser.userId
             }).
             success(function(data, status, headers, config) {
                 if (data && Object.prototype.toString.call(data) === '[object Array]') {
@@ -1596,7 +1618,7 @@ angular.module('starter.controllers', [])
 
             $scope.off = function(item) {
                 item.txt = '下架中';
-                XiaJia.xiajia('?epsSupplyId='+item.epsSupplyId+'&userName='+$scope.loginUser.userId).then(function() {
+                XiaJia.xiajia('?epsSupplyId=' + item.epsSupplyId + '&userName=' + $scope.loginUser.userId).then(function() {
                     $scope.showAlert('下架成功', true);
                 }).catch(function(errorMsg) {
                     $scope.showAlert('下架失败', false, errorMsg);
