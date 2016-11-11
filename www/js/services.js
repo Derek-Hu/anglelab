@@ -370,6 +370,8 @@ angular.module('starter.services', ['ngResource'])
                 // http://localhost:1460/AdPull/DownShelves.aspx?epsSupplyId=1&userName=2
                 xiajiaURL = baseURL + '/AdPull/DownShelves.aspx';
                 pullListURL = baseURL + '/AdPull/GetItemPullInfo.aspx';
+                startListURL = baseURL + '/AdPull/SelectGroupNos.aspx';
+                startActionURL = baseURL + '/AdPull/GroupOnline.aspx';
                 pullActionURL = baseURL + '/AdPull/LinePull.aspx';
                 pullHistoryURL = baseURL + '/AdPull/GetPullHis.aspx';
                 // http://localhost:1460/AdPull/SelectStock.aspx?itemCode=1&whseId=2
@@ -398,6 +400,8 @@ angular.module('starter.services', ['ngResource'])
                 userAuth: userAuth,
                 pullListURL: pullListURL,
                 pullActionURL: pullActionURL,
+                startListURL: startListURL,
+                startActionURL: startActionURL,
                 pullHistoryURL: pullHistoryURL
             }
         }

@@ -4,10 +4,11 @@
     </ion-header-bar>
     <ion-content>
         <div style="width: 100%; display: block; position: absolute; left: 0; top: 0.5em; bottom: 3.5em;width: 100%;">
-            <div class="clear pull start" style="height: 100%; padding-top: 2em;">
+            <div class="clear pull" style="height: 100%; padding-top: 2em;">
+                <p ng-if="errorMsg" ng-bind="errorMsg"></p>
                 <div ng-repeat="m in menus" class="bz-menu col-3">
-                    <a ng-click="goTo(m)">
-                        <div class="list card">
+                    <a ng-click="pull(m)">
+                        <div class="list card"  ng-class="{active: m.isPulling}">
                             <div>
                                 <div>
                                     <span class="itemCode" ng-bind="m.itemCode"></span>
@@ -23,6 +24,7 @@
         <div class="clear"></div>
     </ion-content>
     <ion-footer-bar>
+        <div class="pull-histroy"><button ng-click="goPullHistory()" class="button button-light">拉动历史</button></div>
         <!-- <div class="clear header six tc color-menu-type">
             <div class="twrapper">
                 <div class="type two clear">

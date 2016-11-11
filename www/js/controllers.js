@@ -1432,40 +1432,6 @@ angular.module('starter.controllers', [])
             }, function() {
                 $scope.loadingStatus = '加载失败';
                 $scope.data = [];
-                $scope.data = [{
-                    // 零件号
-                    id: '154S4dDHU4',
-                    // 线路号
-                    banzu: 'AFA4-A4-D01L',
-                    // 推荐库位
-                    name: 'Q285B654',
-                    // 推荐箱号
-                    member: 'ISO1547',
-                    // 编组区域
-                    lastUpdateTime: '2016-09-28'
-                }, {
-                    // 零件号
-                    id: '154S4dDHU4',
-                    // 线路号
-                    banzu: 'AFA4-A4-D01L',
-                    // 推荐库位
-                    name: 'Q285B654',
-                    // 推荐箱号
-                    member: 'ISO1547',
-                    // 编组区域
-                    lastUpdateTime: '2016-09-28'
-                }, {
-                    // 零件号
-                    id: '154S4dDHU4',
-                    // 线路号
-                    banzu: 'AFA4-A4-D01L',
-                    // 推荐库位
-                    name: 'Q285B654',
-                    // 推荐箱号
-                    member: 'ISO1547',
-                    // 编组区域
-                    lastUpdateTime: '2016-09-28'
-                }];
             });
         }
         $scope.$on('$ionicView.enter', function(e) {
@@ -1502,35 +1468,76 @@ angular.module('starter.controllers', [])
             $scope.getList();
         });
     }])
-    .controller('AdStartCtrl', ['$scope', function($scope) {
-        $scope.menus = [{
-            itemCode: 'fdsfadsfdsfda',
-            routeCode: '323233432432'
-        }, {
-            itemCode: 'fdsfadsfdsfda',
-            routeCode: '323233432432'
-        }, {
-            itemCode: 'fdsfadsfdsfda',
-            routeCode: '323233432432'
-        }, {
-            itemCode: 'fdsfadsfdsfda',
-            routeCode: '323233432432'
-        }, {
-            itemCode: 'fdsfadsfdsfda',
-            routeCode: '323233432432'
-        }, {
-            itemCode: 'fdsfadsfdsfda',
-            routeCode: '323233432432'
-        }, {
-            itemCode: 'fdsfadsfdsfda',
-            routeCode: '323233432432'
-        }, {
-            itemCode: 'fdsfadsfdsfda',
-            routeCode: '323233432432'
-        }, {
-            itemCode: 'fdsfadsfdsfda',
-            routeCode: '323233432432'
-        }];
+    .controller('AdStartCtrl', ['$scope', '$state', '$http', 'Backend', '$rootScope', '$ionicPopup', 
+      function($scope, $state, $http, Backend, $rootScope, $ionicPopup) {
+        // An alert dialog
+        $scope.showAlert = function(msg, isSuccess, errorMsg) {
+            var alertPopup = $ionicPopup.alert({
+                template: '<div class="xiajia"><img src="./img/ad/off-' + isSuccess + '.jpg" />' + msg + '<span>' + (errorMsg ? errorMsg : '') + '</span></div>',
+                okText: '知道了'
+            });
+            alertPopup.then(function(res) {
+                $scope.getList();
+            });
+        };
+        $scope.pull = function(item) {
+            if($scope.isPulling){
+              return;
+            }
+            item.isPulling = $scope.isPulling = true;
+            $http({
+                method: 'GET',
+                url: Backend().startActionURL +
+                    '?groupNo=' + item.groupNo +
+                    '&whseId=' + $rootScope.loginUser.whseId +
+                    '&whseName=' + $rootScope.loginUser.whseCode +
+                    '&userName=' + $rootScope.loginUser.userId +
+                    '&factoryCode=' + $rootScope.loginUser.factoryCode +
+                    '&zoneId=' + $rootScope.loginUser.zoneId
+            }).
+            success(function(data, status, headers, config) {
+                item.isPulling = $scope.isPulling = false;
+                if (data && data.respCode !== 'success') {
+                  $scope.showAlert('上线失败', false, data.respCode);
+                } else {
+                  $scope.showAlert('上线成功', true);
+                }
+            }).
+            error(function(data, status, headers, config) {
+                item.isPulling = $scope.isPulling = false;
+                $scope.showAlert('上线失败', false, '服务器异常');
+            });
+        };
+        $scope.getList = function() {
+            $scope.errorMsg = '加载中';
+            $http({
+                method: 'GET',
+                url: Backend().startListURL + '?whseId=' + $rootScope.loginUser.whseId
+            }).
+            success(function(data, status, headers, config) {
+                if (data && Object.prototype.toString.call(data) === '[object Array]') {
+                    $scope.menus = data;
+                    $scope.errorMsg = null;
+                    if (!data.length) {
+                        $scope.errorMsg = '暂无数据';
+                    }
+                } else {
+                    $scope.menus = [];
+                    $scope.errorMsg = (data && data.respCode) ? data.respCode : '暂无数据';
+                }
+            }).
+            error(function(data, status, headers, config) {
+                $scope.menus = [{
+                  itemCode: 'i',
+                  routeCode: 'routeCode',
+                  lsa: 'l322'
+                }];
+                $scope.errorMsg = '加载失败';
+            });
+        };
+        $scope.$on('$ionicView.enter', function(e) {
+            $scope.getList();
+        });
     }])
     .controller('AdPullCtrl', ['$scope', '$state', '$http', 'Backend', '$rootScope', '$ionicPopup', 
       function($scope, $state, $http, Backend, $rootScope, $ionicPopup) {
@@ -1594,11 +1601,7 @@ angular.module('starter.controllers', [])
                 }
             }).
             error(function(data, status, headers, config) {
-                $scope.menus = [{
-                  itemCode: 'i',
-                  routeCode: 'routeCode',
-                  lsa: 'l322'
-                }];
+                $scope.menus = [];
                 $scope.errorMsg = '加载失败';
             });
         };
