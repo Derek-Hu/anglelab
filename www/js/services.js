@@ -2,8 +2,8 @@ angular.module('starter.services', ['ngResource'])
 
 .service('Constant', function() {
         var settings = {
-            // cacheURL: 'http://58.246.227.27:83',
-            cacheURL : 'http://221.181.71.171:8082',
+            cacheURL: 'http://58.246.227.27:83',
+            // cacheURL: 'http://221.181.71.171:8082',
             // Private
             //cacheURL : 'http://10.102.10.207:8082',
             timeInterval: 10,
@@ -378,8 +378,8 @@ angular.module('starter.services', ['ngResource'])
                 kucunList = $resource(baseURL + '/AdPull/SelectStock.aspx');
                 adMember = $resource(baseURL + '/member.aspx');
                 // http://192.168.0.147:8083/AdPull/Login.aspx?name=wmh&pwd=1111
-                login = $resource(baseURL + '/AdPull/Login.aspx');
-                userAuth = $resource(baseURL + '/AdPull/UserAuthority.aspx');
+                login = baseURL + '/AdPull/Login.aspx';
+                userAuth = baseURL + '/AdPull/UserAuthority.aspx';
             }
 
             return {
@@ -406,7 +406,7 @@ angular.module('starter.services', ['ngResource'])
             }
         }
     }])
-    .service('AD', ['Backend', 'Constant', '$q', 'localStorageService', function(Backend, Constant, $q, localStorageService) {
+    .service('AD', ['Backend', 'Constant', '$q', 'localStorageService', '$http', function(Backend, Constant, $q, localStorageService, $http) {
         return {
             getList: function(sender, params) {
                 var deferred = $q.defer();
@@ -442,32 +442,42 @@ angular.module('starter.services', ['ngResource'])
                     }
 
                  */
-                Backend().login.query(params, function(data) {
+                $http({
+                    method: 'GET',
+                    url: Backend().login + '?name=' + params.name + '&pwd=' + params.pwd
+                }).
+                success(function(data, status, headers, config) {
                     if (data && data.userId) {
-                        Backend().userAuth.query({
-                            userId: data.userId
-                        }, function(auth) {
+                        $http({
+                            method: 'GET',
+                            url: Backend().userAuth + '?userId=' + data.userId
+                        }).
+                        success(function(auth, status, headers, config) {
                             if (auth && auth.length) {
-                                /*              data.permissions = [{
-                                                id: 'SFM',
-                                                list: [{}],
-                                              }, {
-                                                id: 'AD',
-                                                list: [{
-                                                  id: 'pull'
-                                                },{
-                                                  id: 'start'
-                                                },{
-                                                  id: 'off'
-                                                },{
-                                                  id: 'member'
-                                                }]
-                                              }];*/
                                 data.permssionMap = {
-                                    SFM: ['line', 'board'],
+                                    SFM: [],
                                     // SFM: null if no SFM permission
-                                    AD: ['pull', 'start', 'off', 'member']
+                                    AD: []
                                 };
+                                for (var i = 0, len = auth.length; i < len; i++) {
+                                    if (auth[i].name === 'SFM') {
+                                        data.permssionMap.SFM = ['line', 'board'];
+                                    } else if (auth[i].name === '拉动') {
+                                      data.permssionMap.AD.push('pull');
+                                    } else if (auth[i].name === '上线') {
+                                      data.permssionMap.AD.push('start');
+                                    } else if (auth[i].name === '下架') {
+                                      data.permssionMap.AD.push('off');
+                                    } else if (auth[i].name === '班组') {
+                                      data.permssionMap.AD.push('member');
+                                    }
+                                }
+                                if(!data.permssionMap.SFM.length){
+                                  data.permssionMap.SFM = null;
+                                }
+                                if(!data.permssionMap.AD.length){
+                                  data.permssionMap.AD = null;
+                                }
                                 localStorageService.set('loginUser', data);
                                 deferred.resolve(data);
                             } else {
@@ -475,7 +485,8 @@ angular.module('starter.services', ['ngResource'])
                                     respCode: 403
                                 });
                             }
-                        }, function() {
+                        }).
+                        error(function(data, status, headers, config) {
                             deferred.reject({
                                 respCode: 500
                             });
@@ -486,20 +497,8 @@ angular.module('starter.services', ['ngResource'])
                             errorMsg: (data && data.respCode) || '服务器异常'
                         });
                     }
-                }, function() {
-                    // for test
-                    /*        var data = {"factoryCode":"1600","fullNme":"金士平","isSpecial":"1","loginNme":"jsp","pwd":"1111","userId":"1102","whseCode":"L2-CP3","whseId":"1055","zoneCode":"B1","zoneId":"1159"};
-                             data.permssionMap = {
-                                    SFM: ['line', 'board'],
-                                    // SFM: ['board'],
-                                    // SFM: null if no SFM permission
-                                    //AD: ['off', 'pull']
-                                    AD: ['pull', 'start', 'off', 'member']
-                                  };
-                                  localStorageService.set('loginUser', data);
-                            deferred.resolve(data);*/
-                    // for test end
-
+                }).
+                error(function(data, status, headers, config) {
                     deferred.reject({
                         respCode: 500
                     });
@@ -528,12 +527,12 @@ angular.module('starter.services', ['ngResource'])
 
         function xiajia(params) {
             var deferred = $q.defer();
-            $http({ method: 'GET', url: Backend().xiajiaURL+params }).
+            $http({ method: 'GET', url: Backend().xiajiaURL + params }).
             success(function(data, status, headers, config) {
-                if(data && data.respCode==='success'){
-                  deferred.resolve();
-                }else{
-                  deferred.reject((data && data.respCode)?data.respCode: null);
+                if (data && data.respCode === 'success') {
+                    deferred.resolve();
+                } else {
+                    deferred.reject((data && data.respCode) ? data.respCode : null);
                 }
             }).
             error(function(data, status, headers, config) {
