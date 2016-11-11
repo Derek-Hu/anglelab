@@ -1515,6 +1515,7 @@ angular.module('starter.controllers', [])
             var params = {
                 userId: $rootScope.loginUser.userId
             };
+            $scope.errorMsg = '加载中';
             $http({
                 method: 'GET',
                 url: Backend().pullListURL+'?userId='+$rootScope.loginUser.userId
@@ -1539,34 +1540,6 @@ angular.module('starter.controllers', [])
         $scope.$on('$ionicView.enter', function(e) {
             $scope.getList();
         });
-        $scope.menus = [{
-            itemCode: 'fdsfadsfdsfda',
-            routeCode: '323233432432'
-        }, {
-            itemCode: 'fdsfadsfdsfda',
-            routeCode: '323233432432'
-        }, {
-            itemCode: 'fdsfadsfdsfda',
-            routeCode: '323233432432'
-        }, {
-            itemCode: 'fdsfadsfdsfda',
-            routeCode: '323233432432'
-        }, {
-            itemCode: 'fdsfadsfdsfda',
-            routeCode: '323233432432'
-        }, {
-            itemCode: 'fdsfadsfdsfda',
-            routeCode: '323233432432'
-        }, {
-            itemCode: 'fdsfadsfdsfda',
-            routeCode: '323233432432'
-        }, {
-            itemCode: 'fdsfadsfdsfda',
-            routeCode: '323233432432'
-        }, {
-            itemCode: 'fdsfadsfdsfda',
-            routeCode: '323233432432'
-        }];
     }])
     .controller('AdSubMenuCtrl', ['$scope', 'localStorageService', '$state', function($scope, localStorageService, $state) {
         $scope.menuConfig = {

@@ -1790,6 +1790,12 @@ a.entry-home:hover {
     background: #FFF;
 }
 
+div.pull p{
+    color: #FFF;
+    text-align: center;
+    font-size: 1.2em;
+}
+
 div.pull .bz-menu.active {
     background: #159FDD;
 }

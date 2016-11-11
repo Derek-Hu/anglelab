@@ -5,6 +5,7 @@
     <ion-content>
         <div style="width: 100%; display: block; position: absolute; left: 0; top: 0.5em; bottom: 3.5em;width: 100%;">
             <div class="clear pull" style="height: 100%; padding-top: 2em;">
+                <p ng-if="errorMsg" ng-bind="errorMsg"></p>
                 <div ng-repeat="m in menus" class="bz-menu col-3">
                     <a ng-click="goTo(m)">
                         <div class="list card">
