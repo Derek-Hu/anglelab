@@ -2,8 +2,8 @@ angular.module('starter.services', ['ngResource'])
 
 .service('Constant', function() {
         var settings = {
-            cacheURL: 'http://58.246.227.27:83',
-            // cacheURL : 'http://221.181.71.171:8082',
+            // cacheURL: 'http://58.246.227.27:83',
+            cacheURL : 'http://221.181.71.171:8082',
             // Private
             //cacheURL : 'http://10.102.10.207:8082',
             timeInterval: 10,
@@ -370,6 +370,8 @@ angular.module('starter.services', ['ngResource'])
                 // http://localhost:1460/AdPull/DownShelves.aspx?epsSupplyId=1&userName=2
                 xiajiaURL = baseURL + '/AdPull/DownShelves.aspx';
                 pullListURL = baseURL + '/AdPull/GetItemPullInfo.aspx';
+                pullActionURL = baseURL + '/AdPull/LinePull.aspx';
+                pullHistoryURL = baseURL + '/AdPull/GetPullHis.aspx';
                 // http://localhost:1460/AdPull/SelectStock.aspx?itemCode=1&whseId=2
                 kucunList = $resource(baseURL + '/AdPull/SelectStock.aspx');
                 adMember = $resource(baseURL + '/member.aspx');
@@ -394,7 +396,9 @@ angular.module('starter.services', ['ngResource'])
                 adMember: adMember,
                 login: login,
                 userAuth: userAuth,
-                pullListURL: pullListURL
+                pullListURL: pullListURL,
+                pullActionURL: pullActionURL,
+                pullHistoryURL: pullHistoryURL
             }
         }
     }])

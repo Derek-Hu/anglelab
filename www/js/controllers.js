@@ -1479,7 +1479,7 @@ angular.module('starter.controllers', [])
             $scope.errorMsg = '加载中';
             $http({
                 method: 'GET',
-                url: Backend().pullListURL + '?whseId='+$rootScope.loginUser.whseId+'&userName=' + $rootScope.loginUser.userId
+                url: Backend().pullHistoryURL + '?whseId=' + $rootScope.loginUser.whseId + '&userName=' + $rootScope.loginUser.userId
             }).
             success(function(data, status, headers, config) {
                 if (data && Object.prototype.toString.call(data) === '[object Array]') {
@@ -1532,9 +1532,48 @@ angular.module('starter.controllers', [])
             routeCode: '323233432432'
         }];
     }])
-    .controller('AdPullCtrl', ['$scope', '$state', '$http', 'Backend', '$rootScope', function($scope, $state, $http, Backend, $rootScope) {
+    .controller('AdPullCtrl', ['$scope', '$state', '$http', 'Backend', '$rootScope', '$ionicPopup', 
+      function($scope, $state, $http, Backend, $rootScope, $ionicPopup) {
         $scope.goPullHistory = function() {
             $state.go('ad-pull-hisotry');
+        };
+        // An alert dialog
+        $scope.showAlert = function(msg, isSuccess, errorMsg) {
+            var alertPopup = $ionicPopup.alert({
+                template: '<div class="xiajia"><img src="./img/ad/off-' + isSuccess + '.jpg" />' + msg + '<span>' + (errorMsg ? errorMsg : '') + '</span></div>',
+                okText: '知道了'
+            });
+            alertPopup.then(function(res) {
+                $scope.getList();
+            });
+        };
+        $scope.pull = function(item) {
+            if($scope.isPulling){
+              return;
+            }
+            item.isPulling = $scope.isPulling = true;
+            $http({
+                method: 'GET',
+                url: Backend().pullActionURL +
+                    '?itemCode=' + item.itemCode +
+                    '&routeCode=' + item.routeCode +
+                    '&lsa=' + item.lsa +
+                    '&whseId=' + $rootScope.loginUser.whseId +
+                    '&zoneId=' + $rootScope.loginUser.zoneId +
+                    '&userName=' + $rootScope.loginUser.userId
+            }).
+            success(function(data, status, headers, config) {
+                item.isPulling = $scope.isPulling = false;
+                if (data && data.respCode !== 'success') {
+                  $scope.showAlert('拉动失败', false, data.respCode);
+                } else {
+                  $scope.showAlert('拉动成功', true);
+                }
+            }).
+            error(function(data, status, headers, config) {
+                item.isPulling = $scope.isPulling = false;
+                $scope.showAlert('拉动失败', false, '服务器异常');
+            });
         };
         $scope.getList = function() {
             $scope.errorMsg = '加载中';
@@ -1555,7 +1594,11 @@ angular.module('starter.controllers', [])
                 }
             }).
             error(function(data, status, headers, config) {
-                $scope.menus = [];
+                $scope.menus = [{
+                  itemCode: 'i',
+                  routeCode: 'routeCode',
+                  lsa: 'l322'
+                }];
                 $scope.errorMsg = '加载失败';
             });
         };

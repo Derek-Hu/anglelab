@@ -1796,10 +1796,6 @@ div.pull p{
     font-size: 1.2em;
 }
 
-div.pull .bz-menu.active {
-    background: #159FDD;
-}
-
 div.pull .bz-menu {
     padding: 1.5em;
 }
@@ -1813,15 +1809,20 @@ div.pull .bz-menu .routeCode {
     color: #5B7B97;
 }
 
-div.pull .bz-menu.active .routeCode {
+div.pull .bz-menu .list.card.active .routeCode {
     color: #FFF;
 }
 
-div.pull .bz-menu.active .itemCode {
+div.pull .bz-menu .list.card.active .itemCode {
     color: #FFF;
 }
 
 div.pull .bz-menu .lsa {}
+
+div.pull .bz-menu .list.card.active {
+    background: #159FDD;
+    border-color: #159FDD;
+}
 
 div.pull .bz-menu .list.card {
     background: #FFF;
