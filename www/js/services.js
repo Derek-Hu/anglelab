@@ -2,8 +2,8 @@ angular.module('starter.services', ['ngResource'])
 
 .service('Constant', function() {
         var settings = {
-            // cacheURL: 'http://58.246.227.27:83',
-            cacheURL : 'http://221.181.71.171:8082',
+            cacheURL: 'http://58.246.227.27:83',
+            // cacheURL : 'http://221.181.71.171:8082',
             // Private
             //cacheURL : 'http://10.102.10.207:8082',
             timeInterval: 10,
@@ -369,6 +369,7 @@ angular.module('starter.services', ['ngResource'])
                 xiajiaList = $resource(baseURL + '/AdPull/GetDownList.aspx');
                 // http://localhost:1460/AdPull/DownShelves.aspx?epsSupplyId=1&userName=2
                 xiajiaURL = baseURL + '/AdPull/DownShelves.aspx';
+                pullListURL = baseURL + '/AdPull/GetItemPullInfo.aspx';
                 // http://localhost:1460/AdPull/SelectStock.aspx?itemCode=1&whseId=2
                 kucunList = $resource(baseURL + '/AdPull/SelectStock.aspx');
                 adMember = $resource(baseURL + '/member.aspx');
@@ -392,7 +393,8 @@ angular.module('starter.services', ['ngResource'])
                 kucunList: kucunList,
                 adMember: adMember,
                 login: login,
-                userAuth: userAuth
+                userAuth: userAuth,
+                pullListURL: pullListURL
             }
         }
     }])
@@ -518,7 +520,7 @@ angular.module('starter.services', ['ngResource'])
 
         function xiajia(params) {
             var deferred = $q.defer();
-            $http({ method: 'GET', url: Backend().xiajiaURL, data: params }).
+            $http({ method: 'GET', url: Backend().xiajiaURL+params }).
             success(function(data, status, headers, config) {
                 if(data && data.respCode==='success'){
                   deferred.resolve();

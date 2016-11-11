@@ -1478,67 +1478,95 @@ angular.module('starter.controllers', [])
 
     }])
     .controller('AdStartCtrl', ['$scope', function($scope) {
-      $scope.menus = [{
-        itemCode: 'fdsfadsfdsfda',
-        routeCode: '323233432432'
-      },{
-        itemCode: 'fdsfadsfdsfda',
-        routeCode: '323233432432'
-      },{
-        itemCode: 'fdsfadsfdsfda',
-        routeCode: '323233432432'
-      },{
-        itemCode: 'fdsfadsfdsfda',
-        routeCode: '323233432432'
-      },{
-        itemCode: 'fdsfadsfdsfda',
-        routeCode: '323233432432'
-      },{
-        itemCode: 'fdsfadsfdsfda',
-        routeCode: '323233432432'
-      },{
-        itemCode: 'fdsfadsfdsfda',
-        routeCode: '323233432432'
-      },{
-        itemCode: 'fdsfadsfdsfda',
-        routeCode: '323233432432'
-      },{
-        itemCode: 'fdsfadsfdsfda',
-        routeCode: '323233432432'
-      }];
+        $scope.menus = [{
+            itemCode: 'fdsfadsfdsfda',
+            routeCode: '323233432432'
+        }, {
+            itemCode: 'fdsfadsfdsfda',
+            routeCode: '323233432432'
+        }, {
+            itemCode: 'fdsfadsfdsfda',
+            routeCode: '323233432432'
+        }, {
+            itemCode: 'fdsfadsfdsfda',
+            routeCode: '323233432432'
+        }, {
+            itemCode: 'fdsfadsfdsfda',
+            routeCode: '323233432432'
+        }, {
+            itemCode: 'fdsfadsfdsfda',
+            routeCode: '323233432432'
+        }, {
+            itemCode: 'fdsfadsfdsfda',
+            routeCode: '323233432432'
+        }, {
+            itemCode: 'fdsfadsfdsfda',
+            routeCode: '323233432432'
+        }, {
+            itemCode: 'fdsfadsfdsfda',
+            routeCode: '323233432432'
+        }];
     }])
-    .controller('AdPullCtrl', ['$scope', '$state', function($scope, $state) {
-      $scope.goPullHistory = function () {
-        $state.go('ad-pull-hisotry');
-      };
-      $scope.menus = [{
-        itemCode: 'fdsfadsfdsfda',
-        routeCode: '323233432432'
-      },{
-        itemCode: 'fdsfadsfdsfda',
-        routeCode: '323233432432'
-      },{
-        itemCode: 'fdsfadsfdsfda',
-        routeCode: '323233432432'
-      },{
-        itemCode: 'fdsfadsfdsfda',
-        routeCode: '323233432432'
-      },{
-        itemCode: 'fdsfadsfdsfda',
-        routeCode: '323233432432'
-      },{
-        itemCode: 'fdsfadsfdsfda',
-        routeCode: '323233432432'
-      },{
-        itemCode: 'fdsfadsfdsfda',
-        routeCode: '323233432432'
-      },{
-        itemCode: 'fdsfadsfdsfda',
-        routeCode: '323233432432'
-      },{
-        itemCode: 'fdsfadsfdsfda',
-        routeCode: '323233432432'
-      }];
+    .controller('AdPullCtrl', ['$scope', '$state', '$http', 'Backend', '$rootScope', function($scope, $state, $http, Backend, $rootScope) {
+        $scope.goPullHistory = function() {
+            $state.go('ad-pull-hisotry');
+        };
+        $scope.getList = function() {
+            var params = {
+                userId: $rootScope.loginUser.userId
+            };
+            $http({
+                method: 'GET',
+                url: Backend().pullListURL+'?userId='+$rootScope.loginUser.userId
+            }).
+            success(function(data, status, headers, config) {
+                if (data && Object.prototype.toString.call(data) === '[object Array]') {
+                    $scope.menus = data;
+                    $scope.errorMsg = null;
+                    if (!data.length) {
+                        $scope.errorMsg = '暂无数据';
+                    }
+                } else {
+                    $scope.menus = [];
+                    $scope.errorMsg = (data && data.respCode) ? data.respCode : '暂无数据';
+                }
+            }).
+            error(function(data, status, headers, config) {
+                $scope.menus = [];
+                $scope.errorMsg = '加载失败';
+            });
+        };
+        $scope.$on('$ionicView.enter', function(e) {
+            $scope.getList();
+        });
+        $scope.menus = [{
+            itemCode: 'fdsfadsfdsfda',
+            routeCode: '323233432432'
+        }, {
+            itemCode: 'fdsfadsfdsfda',
+            routeCode: '323233432432'
+        }, {
+            itemCode: 'fdsfadsfdsfda',
+            routeCode: '323233432432'
+        }, {
+            itemCode: 'fdsfadsfdsfda',
+            routeCode: '323233432432'
+        }, {
+            itemCode: 'fdsfadsfdsfda',
+            routeCode: '323233432432'
+        }, {
+            itemCode: 'fdsfadsfdsfda',
+            routeCode: '323233432432'
+        }, {
+            itemCode: 'fdsfadsfdsfda',
+            routeCode: '323233432432'
+        }, {
+            itemCode: 'fdsfadsfdsfda',
+            routeCode: '323233432432'
+        }, {
+            itemCode: 'fdsfadsfdsfda',
+            routeCode: '323233432432'
+        }];
     }])
     .controller('AdSubMenuCtrl', ['$scope', 'localStorageService', '$state', function($scope, localStorageService, $state) {
         $scope.menuConfig = {
@@ -1583,7 +1611,7 @@ angular.module('starter.controllers', [])
             // An alert dialog
             $scope.showAlert = function(msg, isSuccess, errorMsg) {
                 var alertPopup = $ionicPopup.alert({
-                    template: '<div class="xiajia"><img src="./img/ad/off-'+isSuccess+ '.jpg" />'+msg + '<span>'+(errorMsg?errorMsg: '')+'</span></div>',
+                    template: '<div class="xiajia"><img src="./img/ad/off-' + isSuccess + '.jpg" />' + msg + '<span>' + (errorMsg ? errorMsg : '') + '</span></div>',
                     okText: '知道了'
                 });
                 alertPopup.then(function(res) {
@@ -1595,12 +1623,9 @@ angular.module('starter.controllers', [])
 
             $scope.off = function(item) {
                 item.txt = '下架中';
-                XiaJia.xiajia({
-                    epsSupplyId: item.epsSupplyId,
-                    userName: $scope.loginUser.userId
-                }).then(function() {
+                XiaJia.xiajia('?epsSupplyId='+item.epsSupplyId+'&userName='+$scope.loginUser.userId).then(function() {
                     $scope.showAlert('下架成功', true);
-                }).catch(function (errorMsg) {
+                }).catch(function(errorMsg) {
                     $scope.showAlert('下架失败', false, errorMsg);
                     item.txt = '下架';
                 })
@@ -1619,9 +1644,9 @@ angular.module('starter.controllers', [])
                         return;
                     }
 
-                    $scope.data = $scope.data.map(function (d) {
-                      d.txt = '下架';
-                      return d;
+                    $scope.data = $scope.data.map(function(d) {
+                        d.txt = '下架';
+                        return d;
                     });
                 }, function() {
                     $scope.loadingStatus = $scope.firstTime ? '加载失败' : '刷新失败';
