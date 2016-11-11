@@ -229,8 +229,8 @@ angular.module('starter', ['ionic', 'ngCordova', 'ui.bootstrap', 'LocalStorageMo
       url: '/ad/start',
       views: {
         'dash': {
-          templateUrl: 'templates/ad/xiajia.html',
-          controller: 'XiaJiaCtrl'
+          templateUrl: 'templates/ad/start.html',
+          controller: 'AdStartCtrl'
         }
       }
     })

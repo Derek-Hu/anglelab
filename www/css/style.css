@@ -1835,3 +1835,11 @@ div.pull .bz-menu .list.card > div > div {
     text-align: center;
     height: 100%;
 }
+
+.pull-histroy button.button.button-light {
+    font-size: 1.5em;
+    margin-left: 1em;
+    line-height: 2em;
+    margin-bottom: 0.5em;
+    border-radius: 0.2em;
+}
