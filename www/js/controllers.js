@@ -1474,6 +1474,9 @@ angular.module('starter.controllers', [])
         });
     }])
     .controller('LoginDashboard', ['$scope', function($scope) {}])
+    .controller('AdPullHisotryCtrl', ['$scope', function($scope) {
+
+    }])
     .controller('AdStartCtrl', ['$scope', function($scope) {
       $scope.menus = [{
         itemCode: 'fdsfadsfdsfda',
@@ -1504,7 +1507,10 @@ angular.module('starter.controllers', [])
         routeCode: '323233432432'
       }];
     }])
-    .controller('AdPullCtrl', ['$scope', function($scope) {
+    .controller('AdPullCtrl', ['$scope', '$state', function($scope, $state) {
+      $scope.goPullHistory = function () {
+        $state.go('ad-pull-hisotry');
+      };
       $scope.menus = [{
         itemCode: 'fdsfadsfdsfda',
         routeCode: '323233432432'

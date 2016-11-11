@@ -244,6 +244,16 @@ angular.module('starter', ['ionic', 'ngCordova', 'ui.bootstrap', 'LocalStorageMo
         }
       }
     })
+     // 拉动历史
+  .state('ad-pull-hisotry', {
+      url: '/ad/pull-hisotry',
+      views: {
+        'dash': {
+          templateUrl: 'templates/ad/pull-hisotry.html',
+          controller: 'AdPullHisotryCtrl'
+        }
+      }
+    })
    // 人员调整
   .state('ad-member', {
       url: '/ad/member',
