@@ -376,7 +376,7 @@ angular.module('starter.services', ['ngResource'])
                 pullActionURL = baseURL + '/AdPull/LinePull.aspx';
                 pullHistoryURL = baseURL + '/AdPull/GetPullHis.aspx';
                 // http://localhost:1460/AdPull/SelectStock.aspx?itemCode=1&whseId=2
-                kucunList = $resource(baseURL + '/AdPull/SelectStock.aspx');
+                kucunListURL = baseURL + '/AdPull/SelectStock.aspx';
                 adMember = $resource(baseURL + '/member.aspx');
                 // http://192.168.0.147:8083/AdPull/Login.aspx?name=wmh&pwd=1111
                 login = baseURL + '/AdPull/Login.aspx';
@@ -395,7 +395,7 @@ angular.module('starter.services', ['ngResource'])
                 kpi: kpi,
                 xiajiaListURL: xiajiaListURL,
                 xiajiaURL: xiajiaURL,
-                kucunList: kucunList,
+                kucunListURL: kucunListURL,
                 adMember: adMember,
                 login: login,
                 userAuth: userAuth,
@@ -552,27 +552,6 @@ angular.module('starter.services', ['ngResource'])
             getList: getList,
             xiajia: xiajia
         }
-    }])
-    .service('Kucun', ['Backend', 'Constant', '$q', function(Backend, Constant, $q) {
-        function getList(params) {
-            var deferred = $q.defer();
-            Backend().kucunList.query(params, function(data) {
-                if (!data || !data.length) {
-                    deferred.resolve([]);
-                    return;
-                } else if (data.length == 1 && data[0].ErrorCode !== undefined) {
-                    deferred.reject(null);
-                } else {
-                    deferred.resolve(data);
-                }
-            }, function() {
-                deferred.reject(null);
-            });
-            return deferred.promise;
-        }
-        return {
-            getList: getList
-        };
     }])
     .service('MetaDataSvc', ['Backend', 'Constant', 'localStorageService', '$q',
         function(Backend, Constant, localStorageService, $q) {

@@ -1338,36 +1338,37 @@ angular.module('starter.controllers', [])
 
         }
     ])
-    .controller('KucunCtrl', ['$scope', 'Kucun', 'localStorageService', '$state', '$stateParams',
-        function($scope, Kucun, localStorageService, $state, $stateParams) {
+    .controller('KucunCtrl', ['$scope', 'localStorageService', '$state', '$stateParams', '$http', '$rootScope', 'Backend', 
+        function($scope, localStorageService, $state, $stateParams, $http, $rootScope, Backend) {
+            $scope.itemCode = $stateParams.itemCode;
+
             function loadList(params) {
-                if ($scope.firstTime) {
-                    $scope.loadingStatus = '加载中';
-                }
-                Kucun.getList(params).then(function(data) {
+                $scope.loadingStatus = '加载中';
+                $scope.data = [];
+                $http({
+                    method: 'GET',
+                    url: Backend().kucunListURL + '?itemCode=' + $scope.itemCode + '&whseId=' + $rootScope.loginUser.whseId
+                }).
+                success(function(data, status, headers, config) {
                     $scope.loadingStatus = '';
-                    $scope.data = data;
-                    $scope.firstTime = false;
-                    if (!$scope.data.length) {
-                        $scope.loadingStatus = '暂无数据';
+                    if (data && Object.prototype.toString.call(data) === '[object Array]') {
+                        $scope.data = data;
+                        if (!$scope.data.length) {
+                            $scope.loadingStatus = '暂无数据';
+                        }
+                    } else {
+                        $scope.data = [];
+                        $scope.loadingStatus = (data && data.respCode) ? data.respCode : '加载失败';
                     }
-                }, function() {
-                    $scope.loadingStatus = $scope.firstTime ? '加载失败' : '刷新失败';
+                }).
+                error(function(data, status, headers, config) {
+                    $scope.loadingStatus = '加载失败';
                     $scope.data = [];
                 });
             };
             $scope.loadList = loadList;
             $scope.$on('$ionicView.enter', function(e) {
-                $scope.firstTime = true;
-                var loginUser = localStorageService.get('loginUser');
-                if (!loginUser) {
-                    $state.go('ad-login');
-                    return;
-                }
-                loadList({
-                    itemCode: $stateParams.itemCode,
-                    whseId: loginUser.whseId
-                });
+                loadList();
             });
         }
     ])
@@ -1681,6 +1682,7 @@ angular.module('starter.controllers', [])
 
             function loadList() {
                 $scope.loadingStatus = '加载中';
+                $scope.data = [];
                 XiaJia.getList('?whseId=' + $rootScope.loginUser.whseId).then(function(data) {
                     $scope.loadingStatus = '';
                     $scope.data = data;
