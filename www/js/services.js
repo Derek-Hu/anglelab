@@ -2,6 +2,7 @@ angular.module('starter.services', ['ngResource'])
 
 .service('Constant', function() {
         var settings = {
+            // cacheURL: 'http://192.168.0.147:8083',
             cacheURL: 'http://58.246.227.27:83',
             // cacheURL: 'http://221.181.71.171:8082',
             // Private
@@ -463,20 +464,20 @@ angular.module('starter.services', ['ngResource'])
                                     if (auth[i].name === 'SFM') {
                                         data.permssionMap.SFM = ['line', 'board'];
                                     } else if (auth[i].name === '拉动') {
-                                      data.permssionMap.AD.push('pull');
+                                        data.permssionMap.AD.push('pull');
                                     } else if (auth[i].name === '上线') {
-                                      data.permssionMap.AD.push('start');
+                                        data.permssionMap.AD.push('start');
                                     } else if (auth[i].name === '下架') {
-                                      data.permssionMap.AD.push('off');
-                                    } else if (auth[i].name === '班组') {
-                                      data.permssionMap.AD.push('member');
+                                        data.permssionMap.AD.push('off');
+                                    } else if (auth[i].name === '人员调整') {
+                                        data.permssionMap.AD.push('member');
                                     }
                                 }
-                                if(!data.permssionMap.SFM.length){
-                                  data.permssionMap.SFM = null;
+                                if (!data.permssionMap.SFM.length) {
+                                    data.permssionMap.SFM = null;
                                 }
-                                if(!data.permssionMap.AD.length){
-                                  data.permssionMap.AD = null;
+                                if (!data.permssionMap.AD.length) {
+                                    data.permssionMap.AD = null;
                                 }
                                 localStorageService.set('loginUser', data);
                                 deferred.resolve(data);
@@ -492,9 +493,17 @@ angular.module('starter.services', ['ngResource'])
                             });
                         });
                     } else {
+                        var msg = '服务器异常';
+                        if(data){
+                            if('userId' in data){
+                                msg = '用户名或密码错误';
+                            }else if(data.respCode){
+                                msg = data.respCode;
+                            }
+                        }
                         deferred.reject({
                             respCode: 'unknow',
-                            errorMsg: (data && data.respCode) || '服务器异常'
+                            errorMsg: msg
                         });
                     }
                 }).

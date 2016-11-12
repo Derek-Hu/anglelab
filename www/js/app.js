@@ -305,6 +305,6 @@ angular.module('starter', ['ionic', 'ngCordova', 'ui.bootstrap', 'LocalStorageMo
       }
     })
   // if none of the above states are matched, use this as the fallback
-  $urlRouterProvider.otherwise('/entry');
+  $urlRouterProvider.otherwise('/ad/login');
 
 });

@@ -3,53 +3,14 @@
         <single-title title="线边上线"></single-title>
     </ion-header-bar>
     <ion-content>
-        <div style="width: 100%; display: block; position: absolute; left: 0; top: 0.5em; bottom: 3.5em;width: 100%;">
-            <div class="clear pull" style="height: 100%; padding-top: 2em;">
-                <p ng-if="errorMsg" ng-bind="errorMsg"></p>
-                <div ng-repeat="m in menus" class="bz-menu col-3">
-                    <a ng-click="pull(m)">
-                        <div class="list card"  ng-class="{active: m.isPulling}">
-                            <div>
-                                <div>
-                                    <span class="itemCode" ng-bind="m.itemCode"></span>
-                                    <span class="routeCode" ng-bind="m.routeCode"></span>
-                                    <span class="lsa" ng-bind="m.lsa"></span>
-                                </div>
-                            </div>
-                        </div>
-                    </a>
-                </div>
-            </div>
-        </div>
-        <div class="clear"></div>
+        
     </ion-content>
     <ion-footer-bar>
-        <div class="pull-histroy"><button ng-click="goPullHistory()" class="button button-light">拉动历史</button></div>
-        <!-- <div class="clear header six tc color-menu-type">
-            <div class="twrapper">
-                <div class="type two clear">
-                <div class="name">编制</div>
-                <div class="value">&nbsp;<span ng-bind="metaData.bianzhi"></span></div>
-            </div>
-            </div>
-            <div class="twrapper"><div class="type two clear">
-                <div class="name">审核</div>
-                <div class="value">&nbsp;<span ng-bind="metaData.shenhe"></span></div>
-            </div></div>
-            <div class=" twrapper"><div class="type two clear">
-                <div class="name">批准</div>
-                <div class="value">&nbsp;<span ng-bind="metaData.pizhun"></span></div>
-            </div></div>
-            <div class=" twrapper" style="width:20%"><div class="type two clear">
-                <div class="name">日期</div>
-                <div class="value">&nbsp;<span ng-bind="metaData.bianzhi_date"></span></div>
-            </div></div>
-        </div> -->
         <div class="quickNav">
-            <!-- <a ng-click="loadList()"><span class="glyphicon glyphicon glyphicon-repeat"></span></a> -->
+            <a ng-click="loadList()"><span class="glyphicon glyphicon glyphicon-repeat"></span></a>
             <a href="#/ad/sub-permssion"><span class="glyphicon glyphicon-circle-arrow-left"></span></a>
             <a href="#/login-dashboard"><span class="glyphicon glyphicon-home"></span></a>
-            <!-- <a href="#/settings/"><span class="glyphicon glyphicon-cog"></span></a> -->
+            <a href="#/ad/login"><span class="glyphicon glyphicon-log-out"></span></a>
         </div>
     </ion-footer-bar>
 </ion-view>
