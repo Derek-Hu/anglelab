@@ -1476,6 +1476,7 @@ angular.module('starter.controllers', [])
     }])
     .controller('AdStartCtrl', ['$scope', '$state', '$http', 'Backend', '$rootScope', '$ionicPopup',
         function($scope, $state, $http, Backend, $rootScope, $ionicPopup) {
+            
             // An alert dialog
             $scope.showAlert = function(msg, isSuccess, errorMsg) {
                 var alertPopup = $ionicPopup.alert({
@@ -1486,58 +1487,59 @@ angular.module('starter.controllers', [])
                     $scope.getList();
                 });
             };
-            $scope.pull = function(item) {
-                if ($scope.isPulling) {
+
+            $scope.start = function(item) {
+                if (item.txt === '上线中') {
                     return;
                 }
-                item.isPulling = $scope.isPulling = true;
+                item.txt = '上线中';
+
                 $http({
                     method: 'GET',
                     url: Backend().startActionURL +
                         '?groupNo=' + item.groupNo +
                         '&whseId=' + $rootScope.loginUser.whseId +
                         '&whseName=' + $rootScope.loginUser.whseCode +
-                        '&userName=' + $rootScope.loginUser.userId +
+                        '&userName=' + $rootScope.loginUser.loginNme +
                         '&factoryCode=' + $rootScope.loginUser.factoryCode +
                         '&zoneId=' + $rootScope.loginUser.zoneId
                 }).
                 success(function(data, status, headers, config) {
-                    item.isPulling = $scope.isPulling = false;
-                    if (data && data.respCode !== 'success') {
-                        $scope.showAlert('上线失败', false, data.respCode);
-                    } else {
+                    if (data && data.respCode === 'success') {
                         $scope.showAlert('上线成功', true);
+                    } else {
+                        $scope.showAlert('上线失败', false, (data && data.respCode)?data.respCode: null);
                     }
                 }).
                 error(function(data, status, headers, config) {
-                    item.isPulling = $scope.isPulling = false;
                     $scope.showAlert('上线失败', false, '服务器异常');
                 });
             };
             $scope.getList = function() {
                 $scope.errorMsg = '加载中';
+                $scope.menus = [];
                 $http({
                     method: 'GET',
                     url: Backend().startListURL + '?whseId=' + $rootScope.loginUser.whseId
                 }).
                 success(function(data, status, headers, config) {
+                    $scope.errorMsg = null;
                     if (data && Object.prototype.toString.call(data) === '[object Array]') {
                         $scope.menus = data;
-                        $scope.errorMsg = null;
                         if (!data.length) {
                             $scope.errorMsg = '暂无数据';
                         }
+                        $scope.menus = $scope.menus.map(function(d) {
+                            d.txt = '上线';
+                            return d;
+                        });
                     } else {
                         $scope.menus = [];
-                        $scope.errorMsg = (data && data.respCode) ? data.respCode : '暂无数据';
+                        $scope.errorMsg = (data && data.respCode) ? data.respCode : '加载失败';
                     }
                 }).
                 error(function(data, status, headers, config) {
-                    $scope.menus = [{
-                        itemCode: 'i',
-                        routeCode: 'routeCode',
-                        lsa: 'l322'
-                    }];
+                    $scope.menus = [];
                     $scope.errorMsg = '加载失败';
                 });
             };
@@ -1578,10 +1580,10 @@ angular.module('starter.controllers', [])
                 }).
                 success(function(data, status, headers, config) {
                     item.isPulling = $scope.isPulling = false;
-                    if (data && data.respCode !== 'success') {
-                        $scope.showAlert('拉动失败', false, data.respCode);
-                    } else {
+                    if (data && data.respCode === 'success') {
                         $scope.showAlert('拉动成功', true);
+                    } else {
+                        $scope.showAlert('拉动失败', false, data.respCode);
                     }
                 }).
                 error(function(data, status, headers, config) {

@@ -1,37 +1,34 @@
 <ion-view hide-nav-bar="true" hide-back-button="true">
     <ion-header-bar align-title="center">
-        <single-title title="线边上线"></single-title>
+        <single-title title="编组单上线"></single-title>
     </ion-header-bar>
     <ion-content class="bgFF" style="background: #FFF;bottom: 4em;">
         <div class="kqhz gwrx xiajia content-wrapper">
         <table>
             <thead>
             <tr>
-                <th>零件号</th>
-                <th>线路号</th>
-                <th>推荐库位</th>
-                <th>推荐箱号</th>
-                <th>拉动时间</th>
+                <th>编组单号</th>
+                <th>线路</th>
+                <th>DOLLY</th>
+                <th>数量</th>
                 <th> 预计上线时间</th>
                 <th class="operation">操作</th>
             </tr>
             </thead>
-            <tbody ng-show="loadingStatus!=''" >
-                <tr><td colspan="7">
-                    <span ng-bind="loadingStatus" style="display: inline;">加载中</span>
+            <tbody ng-show="errorMsg" >
+                <tr><td colspan="6">
+                    <span ng-bind="errorMsg" style="display: inline;">加载中</span>
                 </td></tr>
             </tbody>
-            <tbody ng-repeat="r in data">
+            <tbody ng-repeat="r in menus">
                 <tr>
-                    <td ng-bind="r.itemCode"></td>
+                    <td ng-bind="r.groupNo"></td>
                     <td ng-bind="r.routeCode"></td>
-                    <td ng-bind="r.locCode"></td>
-                    <td ng-bind="r.lp"></td>
-                    <td ng-bind="r.pullTime"></td>
-                    <td ng-bind="r.planOnlineTime"></td>
+                    <td ng-bind="r.dollyNo"></td>
+                    <td ng-bind="r.qty"></td>
+                    <td ng-bind="r.dueDate"></td>
                     <td class="operation">
-                        <span ng-bind="r.txt" ng-click="off(r)">下&nbsp;架</span>
-                        <a ng-href="#/ad/kucun/{{r.itemCode}}"><span>库&nbsp;存</span></a>
+                        <span ng-bind="r.txt" ng-click="start(r)">下&nbsp;架</span>
                     </td>
                 </tr>
             </tbody>
