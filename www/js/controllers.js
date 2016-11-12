@@ -1796,7 +1796,7 @@ angular.module('starter.controllers', [])
                 item.txt = '下架中';
                 XiaJia.xiajia('?epsSupplyId=' + item.id + '&userName=' + $scope.loginUser.loginNme).then(function() {
                     $scope.showAlert('下架成功', true);
-                    loadList();
+                    $scope.loadList();
                 }).catch(function(errorMsg) {
                     $scope.showAlert('下架失败', false, errorMsg);
                     item.txt = '下架';
