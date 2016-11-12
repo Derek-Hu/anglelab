@@ -379,6 +379,7 @@ angular.module('starter.services', ['ngResource'])
                 kucunListURL = baseURL + '/AdPull/SelectStock.aspx';
                 adMemberURL = baseURL + '/AdPull/GetItemUsers.aspx';
                 adAllMemberURL = baseURL + '/AdPull/SelectUserByGroup.aspx';
+                adModifyMemberURL = baseURL + '/AdPull/UpdateItemUser.aspx';
                 // http://192.168.0.147:8083/AdPull/Login.aspx?name=wmh&pwd=1111
                 login = baseURL + '/AdPull/Login.aspx';
                 userAuth = baseURL + '/AdPull/UserAuthority.aspx';
@@ -399,6 +400,7 @@ angular.module('starter.services', ['ngResource'])
                 kucunListURL: kucunListURL,
                 adMemberURL: adMemberURL,
                 adAllMemberURL: adAllMemberURL,
+                adModifyMemberURL: adModifyMemberURL,
                 login: login,
                 userAuth: userAuth,
                 pullListURL: pullListURL,

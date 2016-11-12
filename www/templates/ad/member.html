@@ -3,18 +3,20 @@
         <single-title title="人员调整"></single-title>
     </ion-header-bar>
     <ion-content class="bgFF" style="background: #FFF;bottom: 4em;" on-double-tap="goHome('kqhz')">
-        <div class="kqhz gwrx xiajia content-wrapper">
-            <table>
+        <div class="kqhz gwrx xiajia member content-wrapper">
+            <p ng-if="noPermission" ng-bind="noPermission" style="font-size: 1.5em"></p>
+            <table ng-hide="noPermission">
                 <thead>
                     <tr>
-                        <th>选择(可以多选)</th>
+                        <!-- <th>选择(可以多选)</th> -->
+                        <th>零件号</th>
                         <th>班组</th>
-                        <th>零件</th>
-                        <th>人员</th>
-                        <th>最后修改时间</th>
+                        <th>初始用户</th>
+                        <th>当前用户</th>
+                        <th>修改时间</th>
                     </tr>
                 </thead>
-                <tbody ng-show="errorMsg">
+                <tbody ng-show="errorMsg" class="errorMsg">
                     <tr>
                         <td colspan="5">
                             <span ng-bind="errorMsg" style="display: inline;">加载中</span>
@@ -23,12 +25,15 @@
                 </tbody>
                 <tbody ng-repeat="r in itemMembers">
                     <tr>
+                        <!-- <td  class="check"><label><span><span class="glyphicon glyphicon-ok"></span></span></label></td> -->
                         <td ng-bind="r.itemCode"></td>
-                        <td ng-bind="r.lsa"></td>
-                        <td ng-bind="r.routeCode"></td>
-                        <td ng-bind="r.dolly"></td>
-                        <td ng-bind="r.pullTime"></td>
-                        <td ng-bind="r.pullOpreator"></td>
+                        <td ng-bind="r.groupName"></td>
+                        <td ng-bind="r.firstUser"></td>
+                        <td class="operation">
+                            <span ng-bind="r.lastUser"></span>
+                            <span ng-bind="r.txt" ng-click="modifyMember(r)">&nbsp;</span>
+                        </td>
+                        <td ng-bind="r.lastModify"></td>
                     </tr>
                 </tbody>
             </table>
@@ -36,7 +41,7 @@
     </ion-content>
     <ion-footer-bar>
         <div class="quickNav">
-            <a ng-click="getList()"><span class="glyphicon glyphicon glyphicon-repeat"></span></a>
+            <a ng-click="loadList()"><span class="glyphicon glyphicon glyphicon-repeat"></span></a>
             <a href="#/ad/pull"><span class="glyphicon glyphicon-circle-arrow-left"></span></a>
             <a href="#/login-dashboard"><span class="glyphicon glyphicon-home"></span></a>
             <a href="#/ad/login"><span class="glyphicon glyphicon-log-out"></span></a>

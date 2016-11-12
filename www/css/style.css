@@ -1770,7 +1770,9 @@ a.entry-home:hover {
     margin-bottom: 1em;
 }
 
-.popup-container .popup div.xiajia {}
+.popup-container .popup div.xiajia {
+    font-size: 1.5em;
+}
 
 .popup-container .popup .popup-buttons button {
     background-color: #E6EBEF;
@@ -1778,19 +1780,28 @@ a.entry-home:hover {
 }
 
 .popup-container .popup .popup-head {
-    display: none;
+    padding: 0;
+    border: 0;
+    font-size: 1em;
+}
+
+.popup-container .popup .popup-head h3 {
+    font-size: 2em;
+    line-height: 2em;
 }
 
 .popup-container .popup {
     border-radius: 0.5em;
-    width: 14em;
     text-align: center;
     font-size: 1.5em;
     padding: 1em;
     background: #FFF;
+    font-size: 1em;
+    width: inherit;
+    min-width: 20em;
 }
 
-div.pull p{
+div.pull p {
     color: #FFF;
     text-align: center;
     font-size: 1.2em;
@@ -1849,4 +1860,77 @@ div.pull .bz-menu .list.card > div > div {
     line-height: 2em;
     margin-bottom: 0.5em;
     border-radius: 0.2em;
+}
+
+.xiajia.member.content-wrapper table td.operation {
+    text-align: right;
+}
+
+.xiajia.member.content-wrapper table td.operation span:first-child {
+    background: #FFF;
+    text-align: center;
+    color: #4172A9;
+}
+
+.xiajia.member.content-wrapper table td.operation span:last-child {
+    text-align: center;
+    background: #F5AA35;
+    color: #FFF;
+}
+
+.xiajia.member.content-wrapper table td {
+    padding: 1em 0.5em;
+}
+
+.xiajia.member.content-wrapper table td.check {
+    padding: 0;
+}
+
+.xiajia.member.content-wrapper table td.check label {
+    height: 5em;
+    display: block;
+    margin-bottom: 0;
+    line-height: 5em;
+}
+
+.xiajia.member.content-wrapper table td.check label > span {
+    border: 1px solid;
+    line-height: 3em;
+    padding: 0.3em;
+}
+
+.xiajia.member.content-wrapper table tbody.errorMsg td {
+    padding: 2em;
+}
+
+.popup-container .popup div.member span {}
+
+.popup-container .popup .popup-body div.member {
+    width: 25em;
+}
+
+.popup-container .popup .popup-body div.member table {}
+
+.popup-container .popup .popup-body div.member td {
+    font-size: 1.2em;
+}
+
+.popup-container .popup .popup-body div.member span {}
+
+.popup-container .popup .popup-body div.member select {}
+
+.popup-container .popup .popup-body div.member td.name {
+    text-align: right;
+    color: #A9B1BC;
+    padding: 1em;
+}
+
+.popup-container .popup .popup-buttons .button.button-positive {
+    background: #12AAEB;
+    color: #FFF;
+}
+
+.popup-container .popup .popup-buttons .button.button-default {
+    background: #E6EBEF;
+    color: #C2C9D2;
 }
