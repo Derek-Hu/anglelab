@@ -1449,9 +1449,10 @@ angular.module('starter.controllers', [])
     .controller('AdPullHisotryCtrl', ['$scope', '$http', 'Backend', '$rootScope', function($scope, $http, Backend, $rootScope) {
         $scope.getList = function() {
             $scope.errorMsg = '加载中';
+            $scope.menus = [];
             $http({
                 method: 'GET',
-                url: Backend().pullHistoryURL + '?whseId=' + $rootScope.loginUser.whseId + '&userName=' + $rootScope.loginUser.userId
+                url: Backend().pullHistoryURL + '?whseId=' + $rootScope.loginUser.whseId + '&userName=' + $rootScope.loginUser.loginNme
             }).
             success(function(data, status, headers, config) {
                 if (data && Object.prototype.toString.call(data) === '[object Array]') {
