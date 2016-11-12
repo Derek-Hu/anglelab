@@ -1484,9 +1484,7 @@ angular.module('starter.controllers', [])
                     template: '<div class="xiajia"><img src="./img/ad/off-' + isSuccess + '.jpg" />' + msg + '<span>' + (errorMsg ? errorMsg : '') + '</span></div>',
                     okText: '知道了'
                 });
-                alertPopup.then(function(res) {
-                    $scope.getList();
-                });
+                alertPopup.then(function(res) {});
             };
 
             $scope.start = function(item) {
@@ -1508,6 +1506,7 @@ angular.module('starter.controllers', [])
                 success(function(data, status, headers, config) {
                     if (data && data.respCode === 'success') {
                         $scope.showAlert('上线成功', true);
+                        $scope.getList();
                     } else {
                         $scope.showAlert('上线失败', false, (data && data.respCode)?data.respCode: null);
                     }
@@ -1561,7 +1560,7 @@ angular.module('starter.controllers', [])
                     okText: '知道了'
                 });
                 alertPopup.then(function(res) {
-                    $scope.getList();
+                    // $scope.getList();
                 });
             };
             $scope.pull = function(item) {
@@ -1577,12 +1576,13 @@ angular.module('starter.controllers', [])
                         '&lsa=' + item.lsa +
                         '&whseId=' + $rootScope.loginUser.whseId +
                         '&zoneId=' + $rootScope.loginUser.zoneId +
-                        '&userName=' + $rootScope.loginUser.userId
+                        '&userName=' + $rootScope.loginUser.loginNme
                 }).
                 success(function(data, status, headers, config) {
                     item.isPulling = $scope.isPulling = false;
                     if (data && data.respCode === 'success') {
                         $scope.showAlert('拉动成功', true);
+                        $scope.getList();
                     } else {
                         $scope.showAlert('拉动失败', false, data.respCode);
                     }
@@ -1593,7 +1593,7 @@ angular.module('starter.controllers', [])
                 });
             };
             $scope.getList = function() {
-                $scope.errorMsg = '加载中';
+                // $scope.errorMsg = '加载中';
                 $http({
                     method: 'GET',
                     url: Backend().pullListURL + '?userId=' + $rootScope.loginUser.userId
@@ -1666,21 +1666,18 @@ angular.module('starter.controllers', [])
                     template: '<div class="xiajia"><img src="./img/ad/off-' + isSuccess + '.jpg" />' + msg + '<span>' + (errorMsg ? errorMsg : '') + '</span></div>',
                     okText: '知道了'
                 });
-                alertPopup.then(function(res) {
-                    loadList({
-                        whseId: $scope.loginUser.whseId
-                    });
-                });
+                alertPopup.then(function(res) {});
             };
 
             $scope.off = function(item) {
                 item.txt = '下架中';
                 XiaJia.xiajia('?epsSupplyId=' + item.id + '&userName=' + $scope.loginUser.loginNme).then(function() {
                     $scope.showAlert('下架成功', true);
+                    loadList();
                 }).catch(function(errorMsg) {
                     $scope.showAlert('下架失败', false, errorMsg);
                     item.txt = '下架';
-                })
+                });
             };
 
             function loadList() {
