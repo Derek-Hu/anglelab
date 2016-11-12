@@ -7,6 +7,7 @@
         <table>
             <thead>
             <tr>
+                <th>序号</th>
                 <th>编组单号</th>
                 <th>线路</th>
                 <th>DOLLY</th>
@@ -16,12 +17,13 @@
             </tr>
             </thead>
             <tbody ng-show="errorMsg" >
-                <tr><td colspan="6">
+                <tr><td colspan="7">
                     <span ng-bind="errorMsg" style="display: inline;">加载中</span>
                 </td></tr>
             </tbody>
             <tbody ng-repeat="r in menus">
                 <tr>
+                    <td ng-bind="$index+1"></td>
                     <td ng-bind="r.groupNo"></td>
                     <td ng-bind="r.routeCode"></td>
                     <td ng-bind="r.dollyNo"></td>

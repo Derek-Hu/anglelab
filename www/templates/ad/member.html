@@ -9,6 +9,7 @@
                 <thead>
                     <tr>
                         <!-- <th>选择(可以多选)</th> -->
+                        <th>序号</th>
                         <th>零件号</th>
                         <th>班组</th>
                         <th>初始用户</th>
@@ -18,7 +19,7 @@
                 </thead>
                 <tbody ng-show="errorMsg" class="errorMsg">
                     <tr>
-                        <td colspan="5">
+                        <td colspan="6">
                             <span ng-bind="errorMsg" style="display: inline;">加载中</span>
                         </td>
                     </tr>
@@ -26,6 +27,7 @@
                 <tbody ng-repeat="r in itemMembers">
                     <tr>
                         <!-- <td  class="check"><label><span><span class="glyphicon glyphicon-ok"></span></span></label></td> -->
+                        <td ng-bind="$index+1"></td>
                         <td ng-bind="r.itemCode"></td>
                         <td ng-bind="r.groupName"></td>
                         <td ng-bind="r.firstUser"></td>

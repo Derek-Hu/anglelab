@@ -59,13 +59,13 @@ angular.module('starter.controllers', [])
                 $scope[name].items = items;
                 $scope[name].close = function() {
                     $scope[name].isOpen = false;
-                }
+                };
                 $scope[name].open = function() {
                     if (!$scope[name].items || $scope[name].items.length <= 1) {
                         return;
                     }
                     this.isOpen = !this.isOpen;
-                }
+                };
                 $scope[name].selectOption = function(option) {
                     if (!option) {
                         return;
@@ -78,7 +78,7 @@ angular.module('starter.controllers', [])
                     $scope[name].option = option;
                     renderData($scope[name].option.key);
                     this.close();
-                }
+                };
                 if (!defaultOpt && items.length) {
                     $scope[name].selectOption(items[0]);
                 } else {
@@ -111,7 +111,7 @@ angular.module('starter.controllers', [])
                         var ele = data[dx];
                         for (var i = 0, len = types.length; i < len; i++) {
                             var type = types[i];
-                            if (ele.ID.indexOf(type) == 0) {
+                            if (ele.ID.indexOf(type) === 0) {
                                 if (type in $scope.types) {
                                     $scope.types[type].push(ele);
                                 } else {
@@ -336,7 +336,7 @@ angular.module('starter.controllers', [])
                             //$scope.dbgMsg += JSON.stringify(fileEntry);
                             try {
                                 fileEntry.remove();
-                            } catch (e) {};
+                            } catch (e) {}
                             var fileTransfer = new FileTransfer();
                             $cordovaFileTransfer.download($scope.apkURL, path + "" + $scope.apkName, {}, true)
                                 .then(function(result) {
@@ -565,7 +565,7 @@ angular.module('starter.controllers', [])
                 });
                 KPIItem($stateParams.BizType, $scope.isLine).then(function(data) {
                     if (!data.length) {
-                        var data = [];
+                        data = [];
                         for (var i = 0, len = DateUtil.getLastDay(); i < len; i++) {
                             data.push({
                                 ID: i + 1,
@@ -1036,7 +1036,7 @@ angular.module('starter.controllers', [])
                                 }
                                 // again, Eclipse doesn't allow object inspection, thus the stringify
                                 $scope.slides = entries.filter(function(entry) {
-                                    return entry.name.indexOf('.') != 0 && entry.isFile && Constant.isExtSupport(entry.name);
+                                    return entry.name.indexOf('.') !== 0 && entry.isFile && Constant.isExtSupport(entry.name);
                                 }).sort(function(a, b) {
                                     // alphabetically sort the entries based on the entry's name
                                     return (a.name.toLowerCase() < b.name.toLowerCase() ? -1 : 1);
@@ -1803,7 +1803,7 @@ angular.module('starter.controllers', [])
                 });
             };
 
-            function loadList() {
+            $scope.loadList = function() {
                 $scope.loadingStatus = '加载中';
                 $scope.data = [];
                 XiaJia.getList('?whseId=' + $rootScope.loginUser.whseId).then(function(data) {
@@ -1823,9 +1823,8 @@ angular.module('starter.controllers', [])
                     $scope.data = [];
                 });
             };
-            $scope.loadList = loadList;
             $scope.$on('$ionicView.enter', function(e) {
-                loadList();
+                $scope.loadList();
             });
         }
     ])

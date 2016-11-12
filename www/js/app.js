@@ -15,7 +15,7 @@ angular.module('starter', ['ionic', 'ngCordova', 'ui.bootstrap', 'LocalStorageMo
   });
   $rootScope.historyBack = function(){
     $window.history.back();
-  }
+  };
 
   $ionicPlatform.ready(function() {
     // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
@@ -303,7 +303,7 @@ angular.module('starter', ['ionic', 'ngCordova', 'ui.bootstrap', 'LocalStorageMo
           controller: 'LoginCtrl'
         }
       }
-    })
+    });
   // if none of the above states are matched, use this as the fallback
   $urlRouterProvider.otherwise('/ad/login');
 

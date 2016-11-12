@@ -7,6 +7,7 @@
         <table>
             <thead>
             <tr>
+                <th>序号</th>
                 <th>零件号</th>
                 <th>线路号</th>
                 <th>推荐库位</th>
@@ -17,12 +18,13 @@
             </tr>
             </thead>
             <tbody ng-show="loadingStatus!=''" >
-                <tr><td colspan="7">
+                <tr><td colspan="8">
                     <span ng-bind="loadingStatus" style="display: inline;">加载中</span>
                 </td></tr>
             </tbody>
             <tbody ng-repeat="r in data">
                 <tr>
+                    <td ng-bind="$index+1"></td>
                     <td ng-bind="r.itemCode"></td>
                     <td ng-bind="r.routeCode"></td>
                     <td ng-bind="r.locCode"></td>
