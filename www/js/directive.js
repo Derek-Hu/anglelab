@@ -8,5 +8,5 @@ angular.module('starter.directives')
     },
     link: function($scope, $element, $attrs) {
     }
-  }
+  };
 });

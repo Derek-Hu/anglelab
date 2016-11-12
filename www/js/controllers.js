@@ -107,9 +107,11 @@ angular.module('starter.controllers', [])
 
                     var types = Object.keys(ConstantTypes);
                     $scope.types = {};
+
+                    var i, len;
                     for (var dx = 0, dlen = data.length; dx < dlen; dx++) {
                         var ele = data[dx];
-                        for (var i = 0, len = types.length; i < len; i++) {
+                        for (i = 0, len = types.length; i < len; i++) {
                             var type = types[i];
                             if (ele.ID.indexOf(type) === 0) {
                                 if (type in $scope.types) {
@@ -123,7 +125,7 @@ angular.module('starter.controllers', [])
                     }
                     types = Object.keys($scope.types);
                     $scope.typeDropdown = [];
-                    for (var i = 0, len = types.length; i < len; i++) {
+                    for (i = 0, len = types.length; i < len; i++) {
                         $scope.typeDropdown.push({
                             key: types[i],
                             value: ConstantTypes[types[i]]
@@ -180,7 +182,7 @@ angular.module('starter.controllers', [])
                     return;
                 }
                 $state.go(menu.state, { PageType: menu.PageType });
-            }
+            };
 
             $scope.kqDropdown = {
                 isOpen: false,
@@ -199,7 +201,7 @@ angular.module('starter.controllers', [])
                     $scope.criteria.kuqu = option;
                     this.close();
                 }
-            }
+            };
             $scope.criteria = {};
             $scope.$on('$ionicView.enter', function(e) {
                 var selectedCriteria = localStorageService.get('criteria');
@@ -242,7 +244,7 @@ angular.module('starter.controllers', [])
                 MenuBorder.lineBoard($scope.criteria.kuqu.Id).then(function(data) {
                     $scope.menuBorders = data;
                 });
-            })
+            });
 
         }
     ])
@@ -256,29 +258,29 @@ angular.module('starter.controllers', [])
             };
             $scope.goToFolderSelector = function() {
                 $state.go('folderPath', { select: true });
-            }
+            };
             $scope.openModify = function() {
                 $scope.isModify = true;
                 $scope.settings.serverURL = $scope.serverAddr;
-            }
+            };
             $scope.modify = function(serverURL) {
                 $scope.isModify = false;
-                Constant.updateServerURL(serverURL)
+                Constant.updateServerURL(serverURL);
                 $scope.serverAddr = serverURL;
                 $scope.settings.serverURL = serverURL;
-            }
+            };
             $scope.getURL = function() {
                 return $scope.settings.serverURL;
-            }
+            };
             $scope.cancelModify = function() {
                 $scope.isModify = false;
                 $scope.settings.serverURL = $scope.serverAddr;
-            }
+            };
 
             $scope.openIntervalModify = function() {
                 $scope.isIntervalModify = true;
                 $scope.settings.editInterval = $scope.settings.timeInterval;
-            }
+            };
             $scope.modifyInterval = function(time) {
                 if (!time) {
                     time = 1;
@@ -286,14 +288,14 @@ angular.module('starter.controllers', [])
                 Constant.updateInterval(time);
                 $scope.settings.timeInterval = time;
                 $scope.isIntervalModify = false;
-            }
+            };
             $scope.cancelIntervalModify = function() {
                 $scope.isIntervalModify = false;
                 $scope.settings.editInterval = $scope.settings.timeInterval;
-            }
+            };
             $scope.getInterval = function() {
                 return $scope.settings.timeInterval;
-            }
+            };
             $scope.checkVersion = function() {
                 $scope.checkVersionText = '版本检查中...';
                 cordova.getAppVersion.getVersionNumber().then(function(version) {
@@ -314,7 +316,7 @@ angular.module('starter.controllers', [])
                     }, function() {
                         $scope.checkVersionText = '检查更新';
                         $scope.hasNewVersion = '';
-                    })
+                    });
                 });
             };
             cordova.getAppVersion.getVersionNumber().then(function(version) {
@@ -426,7 +428,7 @@ angular.module('starter.controllers', [])
                     // ----------
                     data.sort(function(a, b) {
                         return parseInt(a.OrderNumber) - parseInt(b.OrderNumber);
-                    })
+                    });
 
                     /*
                       rows = [{
@@ -473,7 +475,7 @@ angular.module('starter.controllers', [])
                     }
                     $scope.rows = rows;
 
-                    for (var i = 0, len = rows.length; i < len; i++) {
+                    for (i = 0, len = rows.length; i < len; i++) {
                         rows[i].splitRows = [];
                         rows[i].splitRows.length = Math.ceil(rows[i].items.length / 3);
                     }
@@ -515,7 +517,7 @@ angular.module('starter.controllers', [])
                         data.push({
                             ID: i + 1,
                             STATE: ''
-                        })
+                        });
                     }
                 }
                 $scope.rows = [];
@@ -600,7 +602,7 @@ angular.module('starter.controllers', [])
                 banci: '',
                 charger: '加载中',
                 currentDate: '加载中'
-            }
+            };
             $scope.kqDropdown = {
                 isOpen: false,
                 close: function() {
@@ -618,7 +620,7 @@ angular.module('starter.controllers', [])
                     $scope.criteria.kuqu = option;
                     this.close();
                 }
-            }
+            };
 
             $scope.bzDropdown = {
                 isOpen: false,
@@ -637,7 +639,7 @@ angular.module('starter.controllers', [])
                     $scope.criteria.banzu = option;
                     this.close();
                 }
-            }
+            };
             $scope.bcDropdown = {
                 isOpen: false,
                 close: function() {
@@ -655,7 +657,7 @@ angular.module('starter.controllers', [])
                     $scope.criteria.banci = option;
                     this.close();
                 }
-            }
+            };
 
             $scope.goTo = function(menu) {
                 localStorageService.set('criteria', $scope.criteria);
@@ -663,10 +665,10 @@ angular.module('starter.controllers', [])
                     return;
                 }
                 $state.go(menu.state, { PageType: menu.PageType });
-            }
+            };
             $scope.goKPIDetail = function(state, BizType) {
                 $state.go(state ? state : 'kpi-item', { "aspect": $stateParams.aspect, "PageType": $stateParams.PageType, "BizType": BizType });
-            }
+            };
             var type = $stateParams.aspect;
             for (var idx = 0, idlen = Constant.kpis.length; idx < idlen; idx++) {
                 if (Constant.kpis[idx].type == type) {
@@ -734,7 +736,7 @@ angular.module('starter.controllers', [])
                 }, function(zones) {
                     $scope.banzus = zones;
                 });
-            })
+            });
             $scope.$watch('criteria.banzu', function() {
                 if (!$scope.criteria.banzu) {
                     return;
@@ -758,7 +760,7 @@ angular.module('starter.controllers', [])
                     }
 
                 });
-            })
+            });
             $scope.$watch('criteria.banci', function() {
                 if (!$scope.criteria.banci) {
                     return;
@@ -790,7 +792,7 @@ angular.module('starter.controllers', [])
 
                 }
 
-            })
+            });
 
 
 
@@ -835,7 +837,7 @@ angular.module('starter.controllers', [])
         });
         $scope.goHome = function() {
             $state.go('dash');
-        }
+        };
 
     }
 ])
@@ -845,7 +847,7 @@ angular.module('starter.controllers', [])
 
         $scope.goHome = function() {
             $state.go('dash');
-        }
+        };
 
         $scope.chart = {
             title: "审核问题关闭率（月度KPI样例）",
@@ -887,7 +889,7 @@ angular.module('starter.controllers', [])
                 "expect": 0.23700
             }],
             yLabel: "审核问题关闭率"
-        }
+        };
 
         $scope.$on('$ionicView.enter', function(e) {
             /*Backend().kaoqin.query(function(data){
@@ -913,10 +915,10 @@ angular.module('starter.controllers', [])
             $scope.selectPickerOpen = false;
             $scope.openPicker = function() {
                 $scope.selectPickerOpen = true;
-            }
+            };
             $scope.closePicker = function() {
                 $scope.selectPickerOpen = false;
-            }
+            };
             $scope.sendPicker = function(isSendEmail) {
                 try {
                     var values = angular.element(document.getElementById('selectedMonth')).val().match(/(\d{4}).*(\d{2})/);
@@ -943,7 +945,7 @@ angular.module('starter.controllers', [])
                     $scope.closePicker();
                 }
                 $scope.closePicker();
-            }
+            };
             $scope.clzMap = [
                 'absent',
                 'glyphicon glyphicon-ok',
@@ -959,7 +961,7 @@ angular.module('starter.controllers', [])
                 'hurt',
                 'glyphicon-triangle-bottom',
                 'glyphicon glyphicon-star'
-            ]
+            ];
             var headerCols = ['工号', '姓名'];
             $scope.loadingStatus = '';
             //var tailCols = ['迟到', '早退', '正班', '加班', '旷工', '请假', '休假','调休','签名'];
@@ -1087,7 +1089,7 @@ angular.module('starter.controllers', [])
                         $scope.slides[i].active = true;
                     }
                 }
-            }
+            };
             $scope.prev = function() {
                 for (var i = 0, len = $scope.slides.length; i < len; i++) {
                     if ($scope.slides[i].active) {
@@ -1100,7 +1102,7 @@ angular.module('starter.controllers', [])
                         $scope.slides[i].active = true;
                     }
                 }
-            }
+            };
 
         }
     ])
@@ -1116,12 +1118,12 @@ angular.module('starter.controllers', [])
 
             $scope.goToSettings = function() {
                 $state.go('settings', { fromSelect: true });
-            }
+            };
 
             $scope.setImageFolder = function() {
                 Constant.setImagePath({ name: $scope.folderName.fullPath, nativeURL: $scope.folderName.nativeURL });
                 $state.go('settings');
-            }
+            };
             $scope.doDirectoryUp = function() {
                 //var path = $scope._currentFileSystem.root.fullPath;
                 //$scope.msg += '----doDirectoryUp'+path;
@@ -1148,7 +1150,7 @@ angular.module('starter.controllers', [])
                         //$scope.msg += '----------------2-返回上级目录'+path+'失败:'+JSON.stringify(err);
                     }
                 );
-            }
+            };
 
             $scope.beginBrowseForFiles = function(file) {
                     //$scope.msg = '';
@@ -1177,7 +1179,7 @@ angular.module('starter.controllers', [])
                             //$scope.msg += 'beginBrowseForFiles目录失败:'+JSON.stringify(err);
                         }
                     );
-                }
+                };
                 /*
                 {
                   isFile:false,
@@ -1196,11 +1198,11 @@ angular.module('starter.controllers', [])
                 }
                 // again, Eclipse doesn't allow object inspection, thus the stringify
                 $scope.folders = entries.filter(function(entry) {
-                        return entry.name.indexOf('.') != 0 && (entry.isDirectory || Constant.isExtSupport(entry.name));
+                        return entry.name.indexOf('.') !== 0 && (entry.isDirectory || Constant.isExtSupport(entry.name));
                     }).sort(function(a, b) {
                         // alphabetically sort the entries based on the entry's name
                         return (a.name.toLowerCase() < b.name.toLowerCase() ? -1 : 1);
-                    })
+                    });
                     //$scope.msg += 'folders============='+JSON.stringify($scope.folders);
                     /*if(!$scope.folders || !$scope.folders.length){
                       
@@ -1253,7 +1255,7 @@ angular.module('starter.controllers', [])
             });
             $scope.goDetail = function(kpiType, PageType) {
                 $state.go('kpi-detail', { "aspect": kpiType, "PageType": Constant.lineKpiPageType, isLine: true });
-            }
+            };
 
         }
     ])
@@ -1277,7 +1279,7 @@ angular.module('starter.controllers', [])
             });
             $scope.goDetail = function(kpiType, PageType) {
                 $state.go('kpi-detail', { "aspect": kpiType, "PageType": PageType });
-            }
+            };
 
         }
     ])
@@ -1303,7 +1305,7 @@ angular.module('starter.controllers', [])
                     "BizType": BizType,
                     "isLine": $stateParams.isLine
                 });
-            }
+            };
             $scope.isLine = $stateParams.isLine;
             var type = $stateParams.aspect;
             for (var idx = 0, idlen = Constant.kpis.length; idx < idlen; idx++) {
@@ -1365,7 +1367,7 @@ angular.module('starter.controllers', [])
                     $scope.loadingStatus = '加载失败';
                     $scope.data = [];
                 });
-            };
+            }
             $scope.loadList = loadList;
             $scope.$on('$ionicView.enter', function(e) {
                 loadList();
@@ -1421,7 +1423,7 @@ angular.module('starter.controllers', [])
                 } else if (error.respCode === 403) {
                     $scope.errorMsg = '权限不足';
                 }
-            })
+            });
         };
         $scope.$on('$ionicView.enter', function(e) {
             $scope.errorMsg = '';
@@ -1834,13 +1836,13 @@ angular.module('starter.controllers', [])
             $scope.loadingStatus = '';
 
             function convertObj(val) {
-                var obj = {}
+                var obj = {};
                 if (!val) {
                     obj.isVal = true;
                     obj.val = '';
                     return obj;
                 }
-                var arr = val.split('/')
+                var arr = val.split('/');
                 if (arr.length == 1) {
                     obj.isVal = true;
                     obj.val = val;
@@ -1853,7 +1855,7 @@ angular.module('starter.controllers', [])
                     obj.bg = arr[1];
                     obj.cert = arr[2];
                 }
-                return obj
+                return obj;
             }
             $scope.loadGwrx = function(WareHouseId, ZoneId, ShiftId) {
                 $scope.loadingStatus = '加载中';
@@ -1919,7 +1921,7 @@ angular.module('starter.controllers', [])
                     }
                     data.sort(function(a, b) {
                         return parseInt(a.Order_number) - parseInt(b.Order_number);
-                    })
+                    });
                     var rows = [];
                     /*
                       rows = [{

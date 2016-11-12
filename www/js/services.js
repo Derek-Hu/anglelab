@@ -15,7 +15,7 @@ angular.module('starter.services', ['ngResource'])
                 return settings.cacheURL;
             },
             getInterval: function() {
-                return settings.timeInterval
+                return settings.timeInterval;
             },
             updateInterval: function(timeInterval) {
                 settings.timeInterval = timeInterval;
@@ -408,8 +408,8 @@ angular.module('starter.services', ['ngResource'])
                 startListURL: startListURL,
                 startActionURL: startActionURL,
                 pullHistoryURL: pullHistoryURL
-            }
-        }
+            };
+        };
     }])
     .service('AD', ['Backend', 'Constant', '$q', 'localStorageService', '$http', function(Backend, Constant, $q, localStorageService, $http) {
         return {
@@ -502,7 +502,7 @@ angular.module('starter.services', ['ngResource'])
                 });
                 return deferred.promise;
             }
-        }
+        };
     }])
     .service('XiaJia', ['Backend', 'Constant', '$q', '$http', function(Backend, Constant, $q, $http) {
         function getList(params) {
@@ -539,7 +539,7 @@ angular.module('starter.services', ['ngResource'])
         return {
             getList: getList,
             xiajia: xiajia
-        }
+        };
     }])
     .service('MetaDataSvc', ['Backend', 'Constant', 'localStorageService', '$q',
         function(Backend, Constant, localStorageService, $q) {
@@ -582,7 +582,7 @@ angular.module('starter.services', ['ngResource'])
                     deferred.resolve(empty);
                 });
                 return deferred.promise;
-            }
+            };
         }
     ])
     .service('KPIItem', ['Backend', 'Constant', 'localStorageService', '$q',
@@ -616,7 +616,7 @@ angular.module('starter.services', ['ngResource'])
                     deferred.reject('Load Data Error');
                 });
                 return deferred.promise;
-            }
+            };
         }
     ])
     .service('Util', ['Backend', 'Constant', 'localStorageService', '$q',
@@ -633,7 +633,7 @@ angular.module('starter.services', ['ngResource'])
                     }
                     return '';
                 }
-            }
+            };
         }
     ])
     .service('MenuList', ['Backend', 'Constant', 'localStorageService', '$q',
@@ -680,7 +680,7 @@ angular.module('starter.services', ['ngResource'])
                     });
                     return deferred.promise;
                 }
-            }
+            };
         }
     ])
     .service('MenuBorder', ['Backend', 'Constant', 'localStorageService', '$q',
@@ -707,14 +707,14 @@ angular.module('starter.services', ['ngResource'])
                         deferred.resolve([]);
                     });
                     return deferred.promise;
-                }
+                };
             }
             var viewBoard = getBoard(1);
             var lineBoard = getBoard(2);
             return {
                 viewBoard: viewBoard,
                 lineBoard: lineBoard
-            }
+            };
         }
     ])
     .service('KPIDetail', ['Backend', 'Constant', 'localStorageService', '$q',
@@ -747,8 +747,9 @@ angular.module('starter.services', ['ngResource'])
                     if (!data) {
                         return;
                     }
+                    var i;
                     if (kpiType == 'kpiHome') {
-                        for (var i = 0, ilen = data.length; i < ilen; i++) {
+                        for (i = 0, ilen = data.length; i < ilen; i++) {
                             for (var j = 0, jlen = menus.length; j < jlen; j++) {
                                 if (data[i].ID == menus[j].id) {
                                     menus[j].hatColor = Constant.hatImage[data[i].STATE];
@@ -760,7 +761,7 @@ angular.module('starter.services', ['ngResource'])
                         return;
                     }
 
-                    for (var i = 0, len = data.length; i < len; i++) {
+                    for (i = 0, len = data.length; i < len; i++) {
 
                         var idx = parseInt(data[i].ID.split('-')[1]) - 1;
                         if (menus[idx]) {
@@ -779,7 +780,7 @@ angular.module('starter.services', ['ngResource'])
                     deferred.resolve(menus);
                 });
                 return deferred.promise;
-            }
+            };
         }
     ])
     .service('DateUtil', function() {
@@ -805,7 +806,7 @@ angular.module('starter.services', ['ngResource'])
         }
         return {
             getLastDay: getLastDay
-        }
+        };
     })
     .service('Warehouse', ['Backend', '$q', function(Backend, $q) {
         function getWareHouse() {
@@ -832,7 +833,7 @@ angular.module('starter.services', ['ngResource'])
         }
         return {
             getWareHouse: getWareHouse
-        }
+        };
     }])
     .service('Zone', ['Backend', '$q', function(Backend, $q) {
         function getZone(WareHouseId) {
@@ -865,7 +866,7 @@ angular.module('starter.services', ['ngResource'])
         }
         return {
             getZone: getZone
-        }
+        };
     }])
     .service('Shift', ['Backend', '$q', function(Backend, $q) {
         function getShift(WareHouseId, ZoneId) {
@@ -895,7 +896,7 @@ angular.module('starter.services', ['ngResource'])
         }
         return {
             getShift: getShift
-        }
+        };
     }])
     .service('Charge', ['Backend', '$q', function(Backend, $q) {
         function getCharge(WareHouseId, ZoneId, ShiftId) {
@@ -922,5 +923,5 @@ angular.module('starter.services', ['ngResource'])
         }
         return {
             getCharge: getCharge
-        }
+        };
     }]);
