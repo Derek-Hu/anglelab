@@ -1652,8 +1652,8 @@ angular.module('starter.controllers', [])
             }
         });
     }])
-    .controller('XiaJiaCtrl', ['$scope', 'XiaJia', 'localStorageService', '$state', '$ionicPopup',
-        function($scope, XiaJia, localStorageService, $state, $ionicPopup) {
+    .controller('XiaJiaCtrl', ['$scope', 'XiaJia', 'localStorageService', '$state', '$ionicPopup', '$rootScope',
+        function($scope, XiaJia, localStorageService, $state, $ionicPopup, $rootScope) {
 
 
             // An alert dialog
@@ -1671,7 +1671,7 @@ angular.module('starter.controllers', [])
 
             $scope.off = function(item) {
                 item.txt = '下架中';
-                XiaJia.xiajia('?epsSupplyId=' + item.epsSupplyId + '&userName=' + $scope.loginUser.userId).then(function() {
+                XiaJia.xiajia('?epsSupplyId=' + item.id + '&userName=' + $scope.loginUser.loginNme).then(function() {
                     $scope.showAlert('下架成功', true);
                 }).catch(function(errorMsg) {
                     $scope.showAlert('下架失败', false, errorMsg);
@@ -1679,12 +1679,9 @@ angular.module('starter.controllers', [])
                 })
             };
 
-            function loadList(params) {
-                if ($scope.firstTime) {
-                    $scope.loadingStatus = '加载中';
-                }
-                XiaJia.getList(params).then(function(data) {
-                    $scope.firstTime = false;
+            function loadList() {
+                $scope.loadingStatus = '加载中';
+                XiaJia.getList('?whseId=' + $rootScope.loginUser.whseId).then(function(data) {
                     $scope.loadingStatus = '';
                     $scope.data = data;
                     if (!$scope.data.length) {
@@ -1697,22 +1694,13 @@ angular.module('starter.controllers', [])
                         return d;
                     });
                 }, function() {
-                    $scope.loadingStatus = $scope.firstTime ? '加载失败' : '刷新失败';
+                    $scope.loadingStatus = '加载失败';
                     $scope.data = [];
                 });
             };
             $scope.loadList = loadList;
             $scope.$on('$ionicView.enter', function(e) {
-                var loginUser = localStorageService.get('loginUser');
-                if (!loginUser) {
-                    $state.go('ad-login');
-                    return;
-                }
-                $scope.loginUser = loginUser;
-                $scope.firstTime = true;
-                loadList({
-                    whseId: loginUser.whseId
-                });
+                loadList();
             });
         }
     ])

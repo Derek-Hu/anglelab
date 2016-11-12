@@ -367,7 +367,7 @@ angular.module('starter.services', ['ngResource'])
                 kpi = $resource(baseURL + '/KPI.aspx');
 
                 // http://localhost:1460/AdPull/GetDownList.aspx?whseId=1
-                xiajiaList = $resource(baseURL + '/AdPull/GetDownList.aspx');
+                xiajiaListURL = baseURL + '/AdPull/GetDownList.aspx';
                 // http://localhost:1460/AdPull/DownShelves.aspx?epsSupplyId=1&userName=2
                 xiajiaURL = baseURL + '/AdPull/DownShelves.aspx';
                 pullListURL = baseURL + '/AdPull/GetItemPullInfo.aspx';
@@ -393,7 +393,7 @@ angular.module('starter.services', ['ngResource'])
                 lgjh: lgjh,
                 org: org,
                 kpi: kpi,
-                xiajiaList: xiajiaList,
+                xiajiaListURL: xiajiaListURL,
                 xiajiaURL: xiajiaURL,
                 kucunList: kucunList,
                 adMember: adMember,
@@ -519,16 +519,15 @@ angular.module('starter.services', ['ngResource'])
     .service('XiaJia', ['Backend', 'Constant', '$q', '$http', function(Backend, Constant, $q, $http) {
         function getList(params) {
             var deferred = $q.defer();
-            Backend().xiajiaList.query(params, function(data) {
-                if (!data || !data.length) {
-                    deferred.resolve([]);
-                    return;
-                } else if (data.length == 1 && data[0].ErrorCode !== undefined) {
-                    deferred.reject(null);
-                } else {
+            $http({ method: 'GET', url: Backend().xiajiaListURL + params }).
+            success(function(data, status, headers, config) {
+                if (data && Object.prototype.toString.call(data) === '[object Array]') {
                     deferred.resolve(data);
+                } else {
+                    deferred.reject((data && data.respCode) ? data.respCode : null);
                 }
-            }, function() {
+            }).
+            error(function(data, status, headers, config) {
                 deferred.reject(null);
             });
             return deferred.promise;

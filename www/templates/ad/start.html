@@ -2,8 +2,41 @@
     <ion-header-bar align-title="center">
         <single-title title="线边上线"></single-title>
     </ion-header-bar>
-    <ion-content>
-        
+    <ion-content class="bgFF" style="background: #FFF;bottom: 4em;">
+        <div class="kqhz gwrx xiajia content-wrapper">
+        <table>
+            <thead>
+            <tr>
+                <th>零件号</th>
+                <th>线路号</th>
+                <th>推荐库位</th>
+                <th>推荐箱号</th>
+                <th>拉动时间</th>
+                <th> 预计上线时间</th>
+                <th class="operation">操作</th>
+            </tr>
+            </thead>
+            <tbody ng-show="loadingStatus!=''" >
+                <tr><td colspan="7">
+                    <span ng-bind="loadingStatus" style="display: inline;">加载中</span>
+                </td></tr>
+            </tbody>
+            <tbody ng-repeat="r in data">
+                <tr>
+                    <td ng-bind="r.itemCode"></td>
+                    <td ng-bind="r.routeCode"></td>
+                    <td ng-bind="r.locCode"></td>
+                    <td ng-bind="r.lp"></td>
+                    <td ng-bind="r.pullTime"></td>
+                    <td ng-bind="r.planOnlineTime"></td>
+                    <td class="operation">
+                        <span ng-bind="r.txt" ng-click="off(r)">下&nbsp;架</span>
+                        <a ng-href="#/ad/kucun/{{r.itemCode}}"><span>库&nbsp;存</span></a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        </div>
     </ion-content>
     <ion-footer-bar>
         <div class="quickNav">
