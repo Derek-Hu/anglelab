@@ -1427,21 +1427,63 @@ angular.module('starter.controllers', [])
             $scope.errorMsg = '';
         });
     }])
-    .controller('AdMemberCtrl', ['AD', '$scope', function(AD, $scope) {
-        $scope.loadList = function(params) {
-            AD.getList('adMember', params).then(function() {
-                $scope.loadingStatus = '';
-                $scope.data = data;
-                if (!$scope.data.length) {
-                    $scope.loadingStatus = '暂无数据';
+    .controller('AdMemberCtrl', ['AD', '$scope', '$rootScope', '$q', '$http', 'Backend', function(AD, $scope, $rootScope, $q, $http, Backend) {
+        $scope.loadList = function () {
+            $scope.errorMsg = '加载中';
+            $q.all([
+                $scope.loadItemMembers(),
+                $scope.getMembers()
+            ]).then(function (datas) {
+                $scope.errorMsg = null;
+                $scope.itemMembers = datas[0];
+                $scope.members = datas[1];
+                if(!$scope.itemMembers.length){
+                    $scope.errorMsg = '暂无数据';
                 }
-            }, function() {
-                $scope.loadingStatus = '加载失败';
-                $scope.data = [];
+            }).catch(function (errors) {
+                $scope.errorMsg = '加载失败';
             });
-        }
+        };
+        $scope.loadItemMembers = function() {
+            var deferred = $q.defer();
+                $http({
+                    method: 'GET',
+                    url: Backend().adMemberURL + '?whseId=' + $rootScope.loginUser.whseId +'&groupName='
+                }).
+                success(function(data, status, headers, config) {
+                    if (data && Object.prototype.toString.call(data) === '[object Array]') {
+                        deferred.resolve(data);
+                    } else {
+                        deferred.reject(null);
+                    }
+                }).
+                error(function(data, status, headers, config) {
+                    deferred.reject(null);
+                });
+            return deferred.promise;
+        };
+        $scope.modifyMember = function() {
+            
+        };
+        $scope.getMembers = function() {
+            var deferred = $q.defer();
+                $http({
+                    method: 'GET',
+                    url: Backend().adAllMemberURL + '?whseId=' + $rootScope.loginUser.whseId +'&groupName='
+                }).
+                success(function(data, status, headers, config) {
+                    if (data && Object.prototype.toString.call(data) === '[object Array]') {
+                        deferred.resolve(data);
+                    } else {
+                        deferred.reject(null);
+                    }
+                }).
+                error(function(data, status, headers, config) {
+                    deferred.reject(null);
+                });
+            return deferred.promise;
+        };
         $scope.$on('$ionicView.enter', function(e) {
-            $scope.errorMsg = '';
             $scope.loadList();
         });
     }])

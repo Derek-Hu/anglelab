@@ -1,46 +1,45 @@
 <ion-view hide-nav-bar="true" hide-back-button="true">
-  <ion-header-bar align-title="center">
+    <ion-header-bar align-title="center">
         <single-title title="人员调整"></single-title>
     </ion-header-bar>
     <ion-content class="bgFF" style="background: #FFF;bottom: 4em;" on-double-tap="goHome('kqhz')">
-        <div class="kqhz gwrx ad-member content-wrapper">
-        <table>
-            <thead>
-            <tr>
-                <th>选择(可以多选)</th>
-                <th>班组</th>
-                <th>零件</th>
-                <th>人员</th>
-                <th>最后修改时间</th>
-            </tr>
-            </thead>
-            <tbody ng-show="loadingStatus!=''" >
-                <tr><td colspan="5">
-                    <span ng-bind="loadingStatus" style="display: inline;">加载中</span>
-                </td></tr>
-            </tbody>
-            <tbody ng-repeat="r in data">
-                <tr>
-                    <td class="check" ng-click="r.selected = !r.selected">
-                        <label><span ng-class="{'glyphicon glyphicon-ok': r.selected}"></span></label>
-                        <input id="m{{$index+1}}" type="checkbox" ng-model="r.selected">
-                    </td>
-                    <td ng-bind="r.banzu"></td>
-                    <td ng-bind="r.name"></td>
-                    <td><span  ng-bind="r.member"></span><span class="modify">修改</span></td>
-                    <td ng-bind="r.lastUpdateTime"></td>
-                </tr>
-            </tbody>
-        </table>
+        <div class="kqhz gwrx xiajia content-wrapper">
+            <table>
+                <thead>
+                    <tr>
+                        <th>选择(可以多选)</th>
+                        <th>班组</th>
+                        <th>零件</th>
+                        <th>人员</th>
+                        <th>最后修改时间</th>
+                    </tr>
+                </thead>
+                <tbody ng-show="errorMsg">
+                    <tr>
+                        <td colspan="5">
+                            <span ng-bind="errorMsg" style="display: inline;">加载中</span>
+                        </td>
+                    </tr>
+                </tbody>
+                <tbody ng-repeat="r in itemMembers">
+                    <tr>
+                        <td ng-bind="r.itemCode"></td>
+                        <td ng-bind="r.lsa"></td>
+                        <td ng-bind="r.routeCode"></td>
+                        <td ng-bind="r.dolly"></td>
+                        <td ng-bind="r.pullTime"></td>
+                        <td ng-bind="r.pullOpreator"></td>
+                    </tr>
+                </tbody>
+            </table>
         </div>
     </ion-content>
     <ion-footer-bar>
         <div class="quickNav">
-            <a ng-click="loadList()"><span class="glyphicon glyphicon glyphicon-repeat"></span></a>
-            <a href="#/ad/sub-permssion"><span class="glyphicon glyphicon-circle-arrow-left"></span></a>
+            <a ng-click="getList()"><span class="glyphicon glyphicon glyphicon-repeat"></span></a>
+            <a href="#/ad/pull"><span class="glyphicon glyphicon-circle-arrow-left"></span></a>
             <a href="#/login-dashboard"><span class="glyphicon glyphicon-home"></span></a>
             <a href="#/ad/login"><span class="glyphicon glyphicon-log-out"></span></a>
-
         </div>
     </ion-footer-bar>
 </ion-view>

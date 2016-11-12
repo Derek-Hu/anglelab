@@ -377,7 +377,8 @@ angular.module('starter.services', ['ngResource'])
                 pullHistoryURL = baseURL + '/AdPull/GetPullHis.aspx';
                 // http://localhost:1460/AdPull/SelectStock.aspx?itemCode=1&whseId=2
                 kucunListURL = baseURL + '/AdPull/SelectStock.aspx';
-                adMember = $resource(baseURL + '/member.aspx');
+                adMemberURL = baseURL + '/AdPull/GetItemUsers.aspx';
+                adAllMemberURL = baseURL + '/AdPull/SelectUserByGroup.aspx';
                 // http://192.168.0.147:8083/AdPull/Login.aspx?name=wmh&pwd=1111
                 login = baseURL + '/AdPull/Login.aspx';
                 userAuth = baseURL + '/AdPull/UserAuthority.aspx';
@@ -396,7 +397,8 @@ angular.module('starter.services', ['ngResource'])
                 xiajiaListURL: xiajiaListURL,
                 xiajiaURL: xiajiaURL,
                 kucunListURL: kucunListURL,
-                adMember: adMember,
+                adMemberURL: adMemberURL,
+                adAllMemberURL: adAllMemberURL,
                 login: login,
                 userAuth: userAuth,
                 pullListURL: pullListURL,
@@ -409,22 +411,6 @@ angular.module('starter.services', ['ngResource'])
     }])
     .service('AD', ['Backend', 'Constant', '$q', 'localStorageService', '$http', function(Backend, Constant, $q, localStorageService, $http) {
         return {
-            getList: function(sender, params) {
-                var deferred = $q.defer();
-                Backend()[sender].query(params, function(data) {
-                    if (!data || !data.length) {
-                        deferred.resolve([]);
-                        return;
-                    } else if (data.length == 1 && data[0].ErrorCode !== undefined) {
-                        deferred.reject(null);
-                    } else {
-                        deferred.resolve(data);
-                    }
-                }, function() {
-                    deferred.reject(null);
-                });
-                return deferred.promise;
-            },
             login: function(params) {
                 var deferred = $q.defer();
                 /*
