@@ -1621,7 +1621,7 @@ angular.module('starter.controllers', [])
                 $http({
                     method: 'GET',
                     url: Backend().startActionURL +
-                        '?groupNo=' + item.groupNo +
+                        '?epsSupplyId=' + item.id +
                         '&whseId=' + $rootScope.loginUser.whseId +
                         '&whseName=' + $rootScope.loginUser.whseCode +
                         '&userName=' + $rootScope.loginUser.loginNme +
@@ -1645,7 +1645,7 @@ angular.module('starter.controllers', [])
                 $scope.menus = [];
                 $http({
                     method: 'GET',
-                    url: Backend().startListURL + '?whseId=' + $rootScope.loginUser.whseId
+                    url: Backend().startListURL + '?whseId=' + $rootScope.loginUser.whseId + '&userName=' + $rootScope.loginUser.loginNme
                 }).
                 success(function(data, status, headers, config) {
                     $scope.errorMsg = null;

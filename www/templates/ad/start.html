@@ -11,13 +11,16 @@
                 <th>编组单号</th>
                 <th>线路</th>
                 <th>DOLLY</th>
+                <th>零件</th>
                 <th>数量</th>
+                <th>线旁位置</th>
+                <th>箱号</th>
                 <th> 预计上线时间</th>
                 <th class="operation">操作</th>
             </tr>
             </thead>
             <tbody ng-show="errorMsg" >
-                <tr><td colspan="7">
+                <tr><td colspan="10">
                     <span ng-bind="errorMsg" style="display: inline;">加载中</span>
                 </td></tr>
             </tbody>
@@ -27,7 +30,10 @@
                     <td ng-bind="r.groupNo"></td>
                     <td ng-bind="r.routeCode"></td>
                     <td ng-bind="r.dollyNo"></td>
+                    <td ng-bind="r.itemCode"></td>
                     <td ng-bind="r.qty"></td>
+                    <td ng-bind="r.lsa"></td>
+                    <td ng-bind="r.lp"></td>
                     <td ng-bind="r.dueDate"></td>
                     <td class="operation">
                         <span ng-bind="r.txt" ng-click="start(r)">下&nbsp;架</span>
