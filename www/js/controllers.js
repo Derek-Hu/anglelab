@@ -1621,7 +1621,7 @@ angular.module('starter.controllers', [])
                 $http({
                     method: 'GET',
                     url: Backend().startActionURL +
-                        '?epsSupplyId=' + item.id +
+                        '?epsSupplyId=' + item.epsSupplyId +
                         '&whseId=' + $rootScope.loginUser.whseId +
                         '&whseName=' + $rootScope.loginUser.whseCode +
                         '&userName=' + $rootScope.loginUser.loginNme +
