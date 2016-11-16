@@ -248,9 +248,11 @@ angular.module('starter.controllers', [])
 
         }
     ])
-    .controller('SettingsCtrl', ['$scope', 'Constant', '$state', '$window', '$stateParams', 'Backend', '$cordovaInAppBrowser', '$cordovaFileTransfer', '$timeout',
-        function($scope, Constant, $state, $window, $stateParams, Backend, $cordovaInAppBrowser, $cordovaFileTransfer, $timeout) {
+    .controller('SettingsCtrl', ['$scope', 'Constant', '$state', '$window', '$stateParams', 'Backend', '$cordovaInAppBrowser', '$cordovaFileTransfer', '$timeout', '$location',
+        function($scope, Constant, $state, $window, $stateParams, Backend, $cordovaInAppBrowser, $cordovaFileTransfer, $timeout, $location) {
             $scope.settings = {};
+
+            $scope.noHomeMenu = ('noHomeMenu' in $location.search());
 
             var isBackFromFolder = !!$stateParams.fromSelect;
             $scope.back = function() {
@@ -1427,7 +1429,7 @@ angular.module('starter.controllers', [])
         };
         $scope.$on('$ionicView.enter', function(e) {
             $scope.errorMsg = '';
-            localStorageService.set('loginUser', null);
+            localStorageService.set('loginUser', '');
             $scope.params.pwd = '';
         });
     }])
