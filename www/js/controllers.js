@@ -1573,6 +1573,36 @@ angular.module('starter.controllers', [])
         }
     ])
     .controller('LoginDashboard', ['$scope', function($scope) {}])
+    .controller('AdPullNickCtrl', ['$scope', 'Backend', '$rootScope', '$http', 
+        function($scope, Backend, $rootScope, $http) {
+        $scope.getList = function() {
+            $scope.errorMsg = '加载中';
+            $http({
+                method: 'GET',
+                url: Backend().pullListURL + '?userId=' + $rootScope.loginUser.userId
+            }).
+            success(function(data, status, headers, config) {
+                if (data && Object.prototype.toString.call(data) === '[object Array]') {
+                    $scope.menus = data;
+                    $scope.errorMsg = null;
+                    if (!data.length) {
+                        $scope.errorMsg = '暂无数据';
+                    }
+                } else {
+                    $scope.menus = [];
+                    $scope.errorMsg = (data && data.respCode) ? data.respCode : '暂无数据';
+                }
+            }).
+            error(function(data, status, headers, config) {
+                $scope.menus = [];
+                $scope.errorMsg = '加载失败';
+            });
+        };
+
+        $scope.$on('$ionicView.enter', function(e) {
+            $scope.getList();
+        });
+    }])
     .controller('AdPullHisotryCtrl', ['$scope', '$http', 'Backend', '$rootScope', function($scope, $http, Backend, $rootScope) {
         $scope.getList = function() {
             $scope.errorMsg = '加载中';
@@ -1651,7 +1681,7 @@ angular.module('starter.controllers', [])
                     url: Backend().startListURL + '?whseId=' + $rootScope.loginUser.whseId + '&userName=' + $rootScope.loginUser.loginNme
                 }).
                 success(function(data, status, headers, config) {
-                    $timeout(function () {
+                    $timeout(function() {
                         $scope.getList();
                     }, seconds);
 
@@ -1671,7 +1701,7 @@ angular.module('starter.controllers', [])
                     }
                 }).
                 error(function(data, status, headers, config) {
-                    $timeout(function () {
+                    $timeout(function() {
                         $scope.getList();
                     }, seconds);
 
@@ -1689,6 +1719,9 @@ angular.module('starter.controllers', [])
             $scope.goPullHistory = function() {
                 $state.go('ad-pull-hisotry');
             };
+            $scope.goPullNick = function() {
+                $state.go('ad-pull-nick');
+            };
             // An alert dialog
             $scope.showAlert = function(msg, isSuccess, errorMsg) {
                 var alertPopup = $ionicPopup.alert({
@@ -1701,16 +1734,9 @@ angular.module('starter.controllers', [])
             };
             $scope.showConfirmPull = function(item) {
                 var confirmPopup = $ionicPopup.confirm({
-                    title: '线边拉动确认',
                     cancelText: '取消',
                     okText: '确认',
-                    template: '<div class="member"><table>'+
-                                    '<tr><td class="name">零件号：</td><td><span>' + item.itemCode + '</span></td></tr>'+
-                                    '<tr><td class="name">昵称：</td><td>' + item.nickName + '</td></tr>'+
-                                    '<tr><td class="name">线路：</td><td>' + item.routeCode + '</td></tr>'+
-                                    '<tr><td class="name">LSA：</td><td>' + item.lsa + '</td></tr>'+
-                                    '<tr><td class="name">DOLLY：</td><td>' + item.dolly + '</td></tr>'+
-                                    '</table></div>'
+                    template: '<div class="xiajia"><img src="./img/ad/tip.png" />是否确认拉动？</div>',
                 });
                 confirmPopup.then(function(res) {
                     if (res) {
@@ -1839,7 +1865,7 @@ angular.module('starter.controllers', [])
                 $scope.loadingStatus = '加载中';
                 $scope.data = [];
                 XiaJia.getList('?whseId=' + $rootScope.loginUser.whseId).then(function(data) {
-                    $timeout(function () {
+                    $timeout(function() {
                         $scope.loadList();
                     }, seconds);
 
@@ -1860,7 +1886,7 @@ angular.module('starter.controllers', [])
                     $scope.loadingStatus = '加载失败';
                     $scope.data = [];
 
-                    $timeout(function () {
+                    $timeout(function() {
                         $scope.loadList();
                     }, seconds);
                 });

@@ -254,6 +254,15 @@ angular.module('starter', ['ionic', 'ngCordova', 'ui.bootstrap', 'LocalStorageMo
         }
       }
     })
+  .state('ad-pull-nick', {
+      url: '/ad-pull-nick',
+      views: {
+        'dash': {
+          templateUrl: 'templates/ad/pull-nick.html',
+          controller: 'AdPullNickCtrl'
+        }
+      }
+    })
    // 人员调整
   .state('ad-member', {
       url: '/ad/member',
