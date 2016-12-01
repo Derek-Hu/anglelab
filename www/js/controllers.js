@@ -1155,42 +1155,42 @@ angular.module('starter.controllers', [])
             };
 
             $scope.beginBrowseForFiles = function(file) {
-                    //$scope.msg = '';
-                    $scope.loading = Constant.loading;
-                    $scope.folders = [];
-                    $ionicScrollDelegate.scrollTop();
-                    // check subscription type
-                    if (!file) { // start load root folder
-                        window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, requestFileSystemSuccess,
-                            function(evt) {
-                                $scope.loading = Constant.loadingError;
-                                //$scope.msg += JSON.stringify(evt);
-                            });
-                        return;
-                    }
-                    //$scope.msg += '----beginBrowseForFiles目录'+JSON.stringify(file);
-                    // this is used to get subdirectories
-                    $scope._treePath.push(file.nativeURL);
-                    window.resolveLocalFileSystemURL(file.nativeURL, function(filesystem) {
-                            // we must pass what the PhoneGap API doc examples call an "entry" to the reader
-                            // which appears to take the form constructed below.
-                            requestFileSystemSuccess({ root: filesystem });
-                        },
-                        function(err) {
+                //$scope.msg = '';
+                $scope.loading = Constant.loading;
+                $scope.folders = [];
+                $ionicScrollDelegate.scrollTop();
+                // check subscription type
+                if (!file) { // start load root folder
+                    window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, requestFileSystemSuccess,
+                        function(evt) {
                             $scope.loading = Constant.loadingError;
-                            //$scope.msg += 'beginBrowseForFiles目录失败:'+JSON.stringify(err);
-                        }
-                    );
-                };
-                /*
-                {
-                  isFile:false,
-                  isDirectory:true,
-                  name:'backups',
-                  fullPath:'file:///storage/sdcard0',
-                  filesystem:null
+                            //$scope.msg += JSON.stringify(evt);
+                        });
+                    return;
                 }
-                */
+                //$scope.msg += '----beginBrowseForFiles目录'+JSON.stringify(file);
+                // this is used to get subdirectories
+                $scope._treePath.push(file.nativeURL);
+                window.resolveLocalFileSystemURL(file.nativeURL, function(filesystem) {
+                        // we must pass what the PhoneGap API doc examples call an "entry" to the reader
+                        // which appears to take the form constructed below.
+                        requestFileSystemSuccess({ root: filesystem });
+                    },
+                    function(err) {
+                        $scope.loading = Constant.loadingError;
+                        //$scope.msg += 'beginBrowseForFiles目录失败:'+JSON.stringify(err);
+                    }
+                );
+            };
+            /*
+            {
+              isFile:false,
+              isDirectory:true,
+              name:'backups',
+              fullPath:'file:///storage/sdcard0',
+              filesystem:null
+            }
+            */
             function directoryReaderSuccess(entries) {
                 $scope.loading = '';
                 //$scope.msg += '目录列表遍历中...';
@@ -1200,15 +1200,15 @@ angular.module('starter.controllers', [])
                 }
                 // again, Eclipse doesn't allow object inspection, thus the stringify
                 $scope.folders = entries.filter(function(entry) {
-                        return entry.name.indexOf('.') !== 0 && (entry.isDirectory || Constant.isExtSupport(entry.name));
-                    }).sort(function(a, b) {
-                        // alphabetically sort the entries based on the entry's name
-                        return (a.name.toLowerCase() < b.name.toLowerCase() ? -1 : 1);
-                    });
-                    //$scope.msg += 'folders============='+JSON.stringify($scope.folders);
-                    /*if(!$scope.folders || !$scope.folders.length){
-                      
-                    }*/
+                    return entry.name.indexOf('.') !== 0 && (entry.isDirectory || Constant.isExtSupport(entry.name));
+                }).sort(function(a, b) {
+                    // alphabetically sort the entries based on the entry's name
+                    return (a.name.toLowerCase() < b.name.toLowerCase() ? -1 : 1);
+                });
+                //$scope.msg += 'folders============='+JSON.stringify($scope.folders);
+                /*if(!$scope.folders || !$scope.folders.length){
+                  
+                }*/
                 $scope.$apply();
             }
 
@@ -1602,9 +1602,10 @@ angular.module('starter.controllers', [])
             $scope.getList();
         });
     }])
-    .controller('AdStartCtrl', ['$scope', '$state', '$http', 'Backend', '$rootScope', '$ionicPopup',
-        function($scope, $state, $http, Backend, $rootScope, $ionicPopup) {
+    .controller('AdStartCtrl', ['$scope', '$state', '$http', 'Backend', '$rootScope', '$ionicPopup', '$timeout',
+        function($scope, $state, $http, Backend, $rootScope, $ionicPopup, $timeout) {
 
+            var seconds = 120000;
             // An alert dialog
             $scope.showAlert = function(msg, isSuccess, errorMsg) {
                 var alertPopup = $ionicPopup.alert({
@@ -1650,6 +1651,10 @@ angular.module('starter.controllers', [])
                     url: Backend().startListURL + '?whseId=' + $rootScope.loginUser.whseId + '&userName=' + $rootScope.loginUser.loginNme
                 }).
                 success(function(data, status, headers, config) {
+                    $timeout(function () {
+                        $scope.getList();
+                    }, seconds);
+
                     $scope.errorMsg = null;
                     if (data && Object.prototype.toString.call(data) === '[object Array]') {
                         $scope.menus = data;
@@ -1666,6 +1671,10 @@ angular.module('starter.controllers', [])
                     }
                 }).
                 error(function(data, status, headers, config) {
+                    $timeout(function () {
+                        $scope.getList();
+                    }, seconds);
+
                     $scope.menus = [];
                     $scope.errorMsg = '加载失败';
                 });
@@ -1688,6 +1697,25 @@ angular.module('starter.controllers', [])
                 });
                 alertPopup.then(function(res) {
                     // $scope.getList();
+                });
+            };
+            $scope.showConfirmPull = function(item) {
+                var confirmPopup = $ionicPopup.confirm({
+                    title: '线边拉动确认',
+                    cancelText: '取消',
+                    okText: '确认',
+                    template: '<div class="member"><table>'+
+                                    '<tr><td class="name">零件号：</td><td><span>' + item.itemCode + '</span></td></tr>'+
+                                    '<tr><td class="name">昵称：</td><td>' + item.nickName + '</td></tr>'+
+                                    '<tr><td class="name">线路：</td><td>' + item.routeCode + '</td></tr>'+
+                                    '<tr><td class="name">LSA：</td><td>' + item.lsa + '</td></tr>'+
+                                    '<tr><td class="name">DOLLY：</td><td>' + item.dolly + '</td></tr>'+
+                                    '</table></div>'
+                });
+                confirmPopup.then(function(res) {
+                    if (res) {
+                        $scope.pull(item);
+                    }
                 });
             };
             $scope.pull = function(item) {
@@ -1783,10 +1811,10 @@ angular.module('starter.controllers', [])
             }
         });
     }])
-    .controller('XiaJiaCtrl', ['$scope', 'XiaJia', 'localStorageService', '$state', '$ionicPopup', '$rootScope',
-        function($scope, XiaJia, localStorageService, $state, $ionicPopup, $rootScope) {
+    .controller('XiaJiaCtrl', ['$scope', 'XiaJia', 'localStorageService', '$state', '$ionicPopup', '$rootScope', '$timeout',
+        function($scope, XiaJia, localStorageService, $state, $ionicPopup, $rootScope, $timeout) {
 
-
+            var seconds = 120000;
             // An alert dialog
             $scope.showAlert = function(msg, isSuccess, errorMsg) {
                 var alertPopup = $ionicPopup.alert({
@@ -1811,6 +1839,10 @@ angular.module('starter.controllers', [])
                 $scope.loadingStatus = '加载中';
                 $scope.data = [];
                 XiaJia.getList('?whseId=' + $rootScope.loginUser.whseId).then(function(data) {
+                    $timeout(function () {
+                        $scope.loadList();
+                    }, seconds);
+
                     $scope.loadingStatus = '';
                     $scope.data = data;
                     if (!$scope.data.length) {
@@ -1822,9 +1854,15 @@ angular.module('starter.controllers', [])
                         d.txt = '下架';
                         return d;
                     });
+
+
                 }, function() {
                     $scope.loadingStatus = '加载失败';
                     $scope.data = [];
+
+                    $timeout(function () {
+                        $scope.loadList();
+                    }, seconds);
                 });
             };
             $scope.$on('$ionicView.enter', function(e) {
