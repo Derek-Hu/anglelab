@@ -4,6 +4,7 @@ angular.module('starter.services', ['ngResource'])
         var settings = {
             // cacheURL: 'http://192.168.0.147:8083',
             cacheURL: 'http://58.246.227.27:83',
+            // cacheURL: 'http://localhost:8080',
             // cacheURL: 'http://221.181.71.171:8082',
             // Private
             //cacheURL : 'http://10.102.10.207:8082',

@@ -1811,6 +1811,9 @@ div.pull .bz-menu {
     padding: 1.5em;
 }
 
+div.pull .bz-menu .nickName {
+    display: block;
+}
 div.pull .bz-menu .itemCode {
     display: block;
     color: #159EDC;

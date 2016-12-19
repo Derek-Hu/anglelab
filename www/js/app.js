@@ -30,6 +30,11 @@ angular.module('starter', ['ionic', 'ngCordova', 'ui.bootstrap', 'LocalStorageMo
       StatusBar.styleLightContent();
     }
   });
+
+    ionic.Platform.ready(function(){
+    // will execute when device is ready, or immediately if the device is already ready.
+      ionic.Platform.fullScreen(false, true);
+    });
 })
 .config(function($stateProvider, $urlRouterProvider) {
 
