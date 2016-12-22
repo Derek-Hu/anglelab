@@ -141,29 +141,34 @@ angular.module('starter.services', ['ngResource'])
                 'MenuId': '5-1-0',
                 name: '安全',
                 PageType: 5,
+                logo: '1900959231.jpg',
                 id: 1,
                 type: 'security'
             }, {
                 'MenuId': '5-5-0',
                 name: '质量',
                 PageType: 5,
+                logo: '1453182686.jpg',
                 id: 5,
                 type: 'quality'
             }, {
                 'MenuId': '5-2-0',
                 PageType: 5,
                 name: '流程',
+                logo: '1032454182.jpg',
                 id: 2,
                 type: 'flow'
             }, {
                 'MenuId': '5-3-0',
                 PageType: 5,
+                logo: '628902908.jpg',
                 name: '人员',
                 id: 3,
                 type: 'member'
             }, {
                 'MenuId': '5-4-0',
                 PageType: 5,
+                logo: '1975774961.jpg',
                 name: '成本',
                 id: 4,
                 type: 'cost'

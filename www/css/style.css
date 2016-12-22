@@ -970,7 +970,7 @@ ion-footer-bar .color-menu-type.header div.twrapper:last-child {
 
 .kpiGroup .center {
     display: block;
-    background-color: #FFF;
+    /*background-color: #FFF;*/
     width: 15em;
     margin: 10em auto;
     height: 15em;
@@ -986,6 +986,29 @@ ion-content.bgFF {
     background-color: #fff;
     margin: 0 0.5em;
     border-radius: 0.5em;
+}
+
+.kpiGroup.five-menu a.kpi > div span {
+    display: block;
+    height: 2em;
+    line-height: 2em;
+}
+
+.kpiGroup.five-menu a.kpi > div img {
+    height: 4em;
+    position: relative;
+    top: 0;
+}
+
+.kpiGroup.five-menu a.kpi > div {
+    height: 100%;
+    width: 100%;
+    position: relative;
+    padding-top: 1em;
+}
+
+.kpiGroup.five-menu a.kpi {
+    color: #666;
 }
 
 .kpiGroup .kpi {
@@ -1004,32 +1027,32 @@ ion-content.bgFF {
 
 .kpiGroup .security {
     border-color: #F5AA35;
-    bottom: -6em;
-    left: 4.5em;
+    left: -5em;
+    top: -4em;
 }
 
 .kpiGroup .quality {
     border-color: #F7DD3E;
     bottom: -6em;
-    left: -12em;
+    left: 2.5em;
 }
 
 .kpiGroup .flow {
     border-color: #A2D329;
-    left: -8em;
-    top: 0em;
+    bottom: -6em;
+    right: -12em;
 }
 
 .kpiGroup .member {
     border-color: #DE6744;
     bottom: -6em;
-    right: -12em;
+    left: -12em;
 }
 
 .kpiGroup .cost {
     border-color: #12AAEB;
-    top: 0em;
-    right: -8em;
+    top: -4em;
+    right: -5em;
 }
 
 
@@ -1814,6 +1837,7 @@ div.pull .bz-menu {
 div.pull .bz-menu .nickName {
     display: block;
 }
+
 div.pull .bz-menu .itemCode {
     display: block;
     color: #159EDC;
