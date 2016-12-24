@@ -2,7 +2,7 @@ angular.module('starter.services', ['ngResource'])
 
 .service('Constant', function() {
         var settings = {
-            // cacheURL: 'http://192.168.0.147:8083',
+            // cacheURL: 'http://192.168.0.43:1460',
             cacheURL: 'http://58.246.227.27:83',
             // cacheURL: 'http://localhost:8080',
             // cacheURL: 'http://221.181.71.171:8082',
