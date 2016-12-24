@@ -1573,36 +1573,37 @@ angular.module('starter.controllers', [])
         }
     ])
     .controller('LoginDashboard', ['$scope', function($scope) {}])
-    .controller('AdPullNickCtrl', ['$scope', 'Backend', '$rootScope', '$http', 
+    .controller('AdPullNickCtrl', ['$scope', 'Backend', '$rootScope', '$http',
         function($scope, Backend, $rootScope, $http) {
-        $scope.getList = function() {
-            $scope.errorMsg = '加载中';
-            $http({
-                method: 'GET',
-                url: Backend().pullListURL + '?userId=' + $rootScope.loginUser.userId
-            }).
-            success(function(data, status, headers, config) {
-                if (data && Object.prototype.toString.call(data) === '[object Array]') {
-                    $scope.menus = data;
-                    $scope.errorMsg = null;
-                    if (!data.length) {
-                        $scope.errorMsg = '暂无数据';
+            $scope.getList = function() {
+                $scope.errorMsg = '加载中';
+                $http({
+                    method: 'GET',
+                    url: Backend().pullListURL + '?userId=' + $rootScope.loginUser.userId
+                }).
+                success(function(data, status, headers, config) {
+                    if (data && Object.prototype.toString.call(data) === '[object Array]') {
+                        $scope.menus = data;
+                        $scope.errorMsg = null;
+                        if (!data.length) {
+                            $scope.errorMsg = '暂无数据';
+                        }
+                    } else {
+                        $scope.menus = [];
+                        $scope.errorMsg = (data && data.respCode) ? data.respCode : '暂无数据';
                     }
-                } else {
+                }).
+                error(function(data, status, headers, config) {
                     $scope.menus = [];
-                    $scope.errorMsg = (data && data.respCode) ? data.respCode : '暂无数据';
-                }
-            }).
-            error(function(data, status, headers, config) {
-                $scope.menus = [];
-                $scope.errorMsg = '加载失败';
-            });
-        };
+                    $scope.errorMsg = '加载失败';
+                });
+            };
 
-        $scope.$on('$ionicView.enter', function(e) {
-            $scope.getList();
-        });
-    }])
+            $scope.$on('$ionicView.enter', function(e) {
+                $scope.getList();
+            });
+        }
+    ])
     .controller('AdPullHisotryCtrl', ['$scope', '$http', 'Backend', '$rootScope', function($scope, $http, Backend, $rootScope) {
         $scope.getList = function() {
             $scope.errorMsg = '加载中';
@@ -1673,9 +1674,12 @@ angular.module('starter.controllers', [])
                     $scope.showAlert('上线失败', false, '服务器异常');
                 });
             };
+            var timing = false;
+
             $scope.getList = function() {
                 $scope.errorMsg = '加载中';
                 $scope.menus = [];
+                timing = true;
                 $http({
                     method: 'GET',
                     url: Backend().startListURL + '?whseId=' + $rootScope.loginUser.whseId + '&userName=' + $rootScope.loginUser.loginNme
@@ -1710,7 +1714,9 @@ angular.module('starter.controllers', [])
                 });
             };
             $scope.$on('$ionicView.enter', function(e) {
-                $scope.getList();
+                if (!timing) {
+                    $scope.getList();
+                }
             });
         }
     ])
@@ -1736,7 +1742,7 @@ angular.module('starter.controllers', [])
                 var confirmPopup = $ionicPopup.confirm({
                     cancelText: '取消',
                     okText: '确认',
-                    template: '<div class="xiajia"><img src="./img/ad/tip.png" /><div style="margin-bottom: 0.5em"><span style="margin:0;color: #333;">'+item.itemCode+'</span><span style="margin:0;color: #333;">'+item.routeCode +'</span><span style="margin:0;color: #333;">'+item.lsa+'</span><span style="margin:0;color: #333;">'+item.nickName+'</span></div>是否确认拉动？</div>',
+                    template: '<div class="xiajia"><img src="./img/ad/tip.png" /><div style="margin-bottom: 0.5em"><span style="margin:0;color: #333;">' + item.itemCode + '</span><span style="margin:0;color: #333;">' + item.routeCode + '</span><span style="margin:0;color: #333;">' + item.lsa + '</span><span style="margin:0;color: #333;">' + item.nickName + '</span></div>是否确认拉动？</div>',
                 });
                 confirmPopup.then(function(res) {
                     if (res) {
@@ -1792,13 +1798,13 @@ angular.module('starter.controllers', [])
                     }
                 }).
                 error(function(data, status, headers, config) {
-/*                    $scope.menus = [{
-                        itemCode: 'itemCode1',
-                        routeCode: 'routeCode2',
-                        lsa: 'lsa3',
-                        nickName: 'nickName4'
-                    }];
-                    return;*/
+                    /*                    $scope.menus = [{
+                                            itemCode: 'itemCode1',
+                                            routeCode: 'routeCode2',
+                                            lsa: 'lsa3',
+                                            nickName: 'nickName4'
+                                        }];
+                                        return;*/
 
                     $scope.menus = [];
                     $scope.errorMsg = '加载失败';
@@ -1868,10 +1874,13 @@ angular.module('starter.controllers', [])
                     item.txt = '下架';
                 });
             };
+            var timing = false;
 
             $scope.loadList = function() {
                 $scope.loadingStatus = '加载中';
                 $scope.data = [];
+                timing = true;
+
                 XiaJia.getList('?whseId=' + $rootScope.loginUser.whseId).then(function(data) {
                     $timeout(function() {
                         $scope.loadList();
@@ -1900,7 +1909,9 @@ angular.module('starter.controllers', [])
                 });
             };
             $scope.$on('$ionicView.enter', function(e) {
-                $scope.loadList();
+                if (!timing) {
+                    $scope.loadList();
+                }
             });
         }
     ])
