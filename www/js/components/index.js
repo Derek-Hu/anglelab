@@ -1,4 +1,4 @@
-var app = angular.module('starter.components');
+var app = angular.module('starter.components', []);
 
 var singleTitle = require('./single-title');
 var d3 = require('./d3');

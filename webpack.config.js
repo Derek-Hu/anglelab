@@ -13,19 +13,22 @@ module.exports = {
         failOnError: false
     },
     entry: {
-        app: './www/js/app.js'
+        boundle: './www/js/app.js'
     },
     output: {
-        path: 'output',
+        path: 'www',
         publicPath: '',
-        filename: '[name].[hash].js',
+        filename: '[name].js',
         chunkFilename: "[id].[chunkhash].bundle.js",
         sourceMapFilename: 'maps/[file].map'
     },
+    
+    devtool: '#source-map',
 
     plugins: [
         new ProgressBarPlugin(),
-        new WebpackNotifierPlugin({ alwaysNotify: true })
+        new WebpackNotifierPlugin({ alwaysNotify: true }),
+        new HtmlWebpackPlugin({ template: 'www/index.ejs', inject: true }),
     ],
     module: {
         preLoaders: [

@@ -1,5 +1,3 @@
-// require('../css/style.css');
-
 var routers = require('./pages');
 var LocalStorageModule = require('angular-local-storage');
 

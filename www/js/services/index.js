@@ -1,4 +1,8 @@
-var app = angular.module('starter.services', ['ngResource']);
+var LocalStorageModule = require('angular-local-storage');
+var ngResource = require('angular-resource');
+var componentsModule = require('../components');
+
+var app = angular.module('starter.services', ['ionic', 'ngCordova', ngResource, LocalStorageModule, componentsModule]);
 
 var services = [
     require('./Constant'),
