@@ -7,7 +7,7 @@
 				<div class="logo-right-wp"><img src="img/LOG9.jpg"/></div>
 				<div>
 					<div class="bold-title single-line">
-			  			<span class="oneLineTitle" ng-bind="criteria.kuqu?criteria.kuqu.whse_code+'目视板':'目视板'"></span>
+			  			<span class="oneLineTitle" ng-bind="criteria.kuqu?criteria.kuqu.whse_name+'目视板':'目视板'"></span>
 		  			</div>
 
 				</div>
@@ -21,12 +21,12 @@
 				<div class="twrapper" style="float:left;">
 					<div class="type an-dropdown clear" ng-class="{open: kqDropdown.isOpen}">
 						<div class="name">库区</div>
-						<div class="value" ng-click="kqDropdown.open()" ng-bind="criteria.kuqu?criteria.kuqu.whse_code:'加载中'">加载中</div>
+						<div class="value" ng-click="kqDropdown.open()" ng-bind="criteria.kuqu?criteria.kuqu.whse_name:'加载中'">加载中</div>
 						<div class="option" ng-class="{visHide: (!kuqus || kuqu.length<=1)}" ng-click="kqDropdown.open()">
 							<span class="glyphicon glyphicon-chevron-down"></span>
 						</div>
 						<div class="an-select">
-							<div class="value" ng-click="kqDropdown.selectOption(kuqu)" ng-repeat="kuqu in kuqus" ng-bind="kuqu.whse_code"></div>
+							<div class="value" ng-click="kqDropdown.selectOption(kuqu)" ng-repeat="kuqu in kuqus" ng-bind="kuqu.whse_name"></div>
 						</div>
 					</div>
 				</div>

@@ -9,7 +9,7 @@
 					<div class="bold-title single-line">
                         <span class="pageTitle">
                             <span>KPI跟踪-<span ng-bind="aspectTitle"></span></span><br>
-                            ( <span class="subPageTitle" ng-bind="criteriaFromCache.kuqu?criteriaFromCache.kuqu.whse_code:''"></span>
+                            ( <span class="subPageTitle" ng-bind="criteriaFromCache.kuqu?criteriaFromCache.kuqu.whse_name:''"></span>
 				  			<span class="subPageTitle" ng-if="!isLine" ng-bind="'-'+(criteriaFromCache.banzu?criteriaFromCache.banzu.description:'')"></span>
 				  			<span ng-if="!isLine" ng-hide="aspect=='member' || aspect=='quality'" style="font-size:0.75em" ng-bind="'-'+(criteriaFromCache.banci?criteriaFromCache.banci.shift_code:'')"></span>)
                         </span>
