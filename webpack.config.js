@@ -36,6 +36,7 @@ module.exports = {
         ],
         loaders: [
             { test: /\.js$/, exclude: /node_modules/, loader: 'babel' },
+            { test: /\.(eot|woff(2)?|ttf|svg)(\?v=\d+\.\d+\.\d+)?$/, loader: 'file?name=fonts/[name]---[hash].[ext]' },
             { test: /\.json$/, loader: 'json' },
             { test: /\.html$/, loader: 'html' }, {
                 test: /\.(png|jpg)$/,
