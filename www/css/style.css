@@ -1468,9 +1468,23 @@ span.arrow-border-up span {
     display: none;
 }
 
-.pageTitle {
-    line-height: 1.5em;
+.pageTitle > span:first-child {
     font-size: 1.2em;
+    line-height: 1.25em;
+    display: block;
+}
+
+.pageTitle .subPageTitle {
+    font-size: 0.75em;
+    line-height: 1.875em;
+}
+
+.pageTitle {
+    font-size: 1em;
+    line-height: 1em;
+    display: inline-block;
+    height: 100%;
+    position: relative;
 }
 
 .subPageTitle {

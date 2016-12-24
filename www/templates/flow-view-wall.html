@@ -8,10 +8,10 @@
 				<div>
 					<div class="bold-title single-line">
                         <span class="pageTitle">
-                            <span>生产停线时间</span><br>
-                            ( <span class="subPageTitle" ng-bind="selectedCriteria.kuqu.whse_name"></span>
-							<span ng-if="!isLine" class="subPageTitle" ng-bind="'-'+selectedCriteria.banzu.description+'-'"></span>
-							<span ng-if="!isLine" class="subPageTitle" ng-bind="selectedCriteria.banci.shift_code"></span>)
+                            <span>生产停线时间</span>
+                            <span class="subPageTitle">( <span ng-bind="selectedCriteria.kuqu.whse_name"></span>
+							<span ng-if="!isLine" ng-bind="'-'+selectedCriteria.banzu.description+'-'"></span>
+							<span ng-if="!isLine" ng-bind="selectedCriteria.banci.shift_code"></span>)</span>
                         </span>
                     </div>
 				</div>
