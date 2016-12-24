@@ -1,12 +1,12 @@
-var Controller = function(localStorageService, Backend, $scope, $state, MetaDataSvc, $stateParams, Constant) {
+var Controller = function (localStorageService, Backend, $scope, $state, MetaDataSvc, $stateParams, Constant) {
     // With the new view caching in Ionic, Controllers are only called
     // when they are recreated or on app start, instead of every page change.
     // To listen for when this page is active (for example, to refresh data),
     // listen for the $ionicView.enter event:
     //
 
-    $scope.$on('$ionicView.enter', function(e) {
-        MetaDataSvc($stateParams.PageType).then(function(data) {
+    $scope.$on('$ionicView.enter', function (e) {
+        MetaDataSvc($stateParams.PageType).then(function (data) {
             $scope.metaData = data;
         });
 
@@ -16,11 +16,11 @@ var Controller = function(localStorageService, Backend, $scope, $state, MetaData
             'WareHouseId': $scope.selectedCriteria.kuqu.Id,
             'ZoneId': $scope.selectedCriteria.banzu.Id,
             'ShiftId': $scope.selectedCriteria.banci.ID
-        }, function(data) {
+        }, function (data) {
             if (!data[0] || data[0].ErrorCode !== undefined) {
                 return;
             }
-            data.sort(function(a, b) {
+            data.sort(function (a, b) {
                 return parseInt(a.Order_number) - parseInt(b.Order_number);
             });
             for (var i = 0, len = data.length; i < len; i++) {
@@ -33,11 +33,11 @@ var Controller = function(localStorageService, Backend, $scope, $state, MetaData
             console.log($scope.group);
         });
     });
-    $scope.goHome = function() {
+    $scope.goHome = function () {
         $state.go('dash');
     };
 
-}
+};
 
 
-module.exports ['localStorageService', 'Backend', '$scope', '$state', 'MetaDataSvc', '$stateParams', 'Constant', Controller];
+module.exports = ['localStorageService', 'Backend', '$scope', '$state', 'MetaDataSvc', '$stateParams', 'Constant', Controller];

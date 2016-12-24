@@ -1,5 +1,5 @@
-var Controller = function(localStorageService, Backend, $scope, DateUtil, $ionicScrollDelegate, $state, $stateParams, MetaDataSvc) {
-    /*$scope.goHome = function(type) {
+var Controller = function (localStorageService, Backend, $scope, DateUtil, $ionicScrollDelegate, $state, $stateParams, MetaDataSvc) {
+    /* $scope.goHome = function(type) {
       var scrollDelegate = $ionicScrollDelegate.$getByHandle(type);
       var view = scrollDelegate.getScrollView();
       var scale = view.__zoomLevel;
@@ -13,13 +13,13 @@ var Controller = function(localStorageService, Backend, $scope, DateUtil, $ionic
       }
     }*/
     $scope.selectPickerOpen = false;
-    $scope.openPicker = function() {
+    $scope.openPicker = function () {
         $scope.selectPickerOpen = true;
     };
-    $scope.closePicker = function() {
+    $scope.closePicker = function () {
         $scope.selectPickerOpen = false;
     };
-    $scope.sendPicker = function(isSendEmail) {
+    $scope.sendPicker = function (isSendEmail) {
         try {
             var values = angular.element(document.getElementById('selectedMonth')).val().match(/(\d{4}).*(\d{2})/);
             if (values) {
@@ -64,19 +64,19 @@ var Controller = function(localStorageService, Backend, $scope, DateUtil, $ionic
     ];
     var headerCols = ['工号', '姓名'];
     $scope.loadingStatus = '';
-    //var tailCols = ['迟到', '早退', '正班', '加班', '旷工', '请假', '休假','调休','签名'];
-    $scope.loadData = function(WareHouseId, ZoneId, ShiftId, Date, IsSendEmail) {
+    // var tailCols = ['迟到', '早退', '正班', '加班', '旷工', '请假', '休假','调休','签名'];
+    $scope.loadData = function (WareHouseId, ZoneId, ShiftId, Date, IsSendEmail) {
         $scope.loadingStatus = '加载中';
         $scope.data = [];
         Backend().kaoqin.query({
             'WareHouseId': WareHouseId,
             'ZoneId': ZoneId,
             'ShiftId': ShiftId,
-            //2015-09
+            // 2015-09
             'Date': Date,
             // 1 or 0
             'IsSendEmail': IsSendEmail
-        }, function(data) {
+        }, function (data) {
             if (!data || !data.length) {
                 $scope.loadingStatus = '暂无数据';
                 return;
@@ -86,13 +86,13 @@ var Controller = function(localStorageService, Backend, $scope, DateUtil, $ionic
             }
             $scope.loadingStatus = '';
             $scope.data = data;
-        }, function() {
+        }, function () {
             $scope.loadingStatus = '加载失败';
         });
     };
 
 
-    $scope.$on('$ionicView.enter', function(e) {
+    $scope.$on('$ionicView.enter', function (e) {
         $scope.selectedCriteria = localStorageService.get('criteria');
 
         var daysNum = DateUtil.getLastDay();
@@ -107,11 +107,11 @@ var Controller = function(localStorageService, Backend, $scope, DateUtil, $ionic
         $scope.selectedYear = today.getFullYear();
         $scope.selectedMonth = today.getMonth() + 1;
         $scope.loadData($scope.selectedCriteria.kuqu.Id, $scope.selectedCriteria.banzu.Id, $scope.selectedCriteria.banci.ID, $scope.selectedYear + '-' + $scope.selectedMonth, 0);
-        MetaDataSvc($stateParams.PageType).then(function(data) {
+        MetaDataSvc($stateParams.PageType).then(function (data) {
             $scope.metaData = data;
         });
     });
-}
+};
 
 
-module.exports ['localStorageService', 'Backend', '$scope', 'DateUtil', '$ionicScrollDelegate', '$state', '$stateParams', 'MetaDataSvc', Controller];
+module.exports = ['localStorageService', 'Backend', '$scope', 'DateUtil', '$ionicScrollDelegate', '$state', '$stateParams', 'MetaDataSvc', Controller];

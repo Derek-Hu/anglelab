@@ -1,4 +1,4 @@
-module.exports {
+module.exports = {
     name: 'Backend',
     fn: ['$resource', 'Constant', function($resource, Constant) {
         // Might use a resource here that returns a JSON array

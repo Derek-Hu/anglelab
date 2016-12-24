@@ -1,4 +1,4 @@
-module.exports {
+module.exports = {
     name: 'KPIDetail',
     fn: ['Backend', 'Constant', 'localStorageService', '$q',
         function(Backend, Constant, localStorageService, $q) {

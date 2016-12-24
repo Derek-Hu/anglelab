@@ -11,4 +11,4 @@ app.directive(singleTitle.name, singleTitle.fn);
 app.directive(kaoqinChart.name, kaoqinChart.fn);
 app.directive(orgChart.name, orgChart.fn);
 
-module.exports app.name;
+module.exports = app.name;

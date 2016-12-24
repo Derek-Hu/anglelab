@@ -30,4 +30,4 @@ var Controller = function($scope, Backend, $rootScope, $http) {
 
 };
 
-module.exports ['$scope', 'Backend', '$rootScope', '$http', Controller];
+module.exports = ['$scope', 'Backend', '$rootScope', '$http', Controller];

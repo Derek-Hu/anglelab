@@ -1,3 +1,3 @@
-var Controller = function() {};
+var Controller = function () {};
 
-module.exports [Controller];
+module.exports = [Controller];

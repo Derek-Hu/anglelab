@@ -1,4 +1,4 @@
-module.exports {
+module.exports = {
     name: 'Zone',
     fn: ['Backend', '$q', function(Backend, $q) {
         function getZone(WareHouseId) {

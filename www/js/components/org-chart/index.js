@@ -2,7 +2,7 @@ var template = require('./template.html');
 
 module.exports = {
     name: 'org',
-    fn: [function() {
+    fn: [function () {
         return {
             restrict: 'E',
             template: template,
@@ -10,8 +10,8 @@ module.exports = {
                 group: '=',
                 title: '@'
             },
-            link: function(scope, element, attrs) {
-                scope.$watch('group', function() {
+            link: function (scope, element, attrs) {
+                scope.$watch('group', function () {
                     scope.subTeams = [];
                     if (scope.group && scope.group.members) {
                         var totalNum = scope.group.members.length;
@@ -29,6 +29,6 @@ module.exports = {
                     }
                 });
             }
-        }
+        };
     }]
 };

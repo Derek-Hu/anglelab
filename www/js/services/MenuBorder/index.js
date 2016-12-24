@@ -1,4 +1,4 @@
-module.exports {
+module.exports = {
     name: 'MenuBorder',
     fn: ['Backend', 'Constant', 'localStorageService', '$q',
         function(Backend, Constant, localStorageService, $q) {

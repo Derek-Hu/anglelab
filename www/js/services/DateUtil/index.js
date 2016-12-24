@@ -1,4 +1,4 @@
-module.exports {
+module.exports = {
     name: 'DateUtil',
     fn: [function($resource) {
         function getLastDay(pYear, pMonth) {

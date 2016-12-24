@@ -1,4 +1,4 @@
-var Controller = function($scope, localStorageService, $state, $stateParams, $http, $rootScope, Backend) {
+var Controller = function ($scope, localStorageService, $state, $stateParams, $http, $rootScope, Backend) {
     $scope.itemCode = $stateParams.itemCode;
 
     function loadList(params) {
@@ -8,7 +8,7 @@ var Controller = function($scope, localStorageService, $state, $stateParams, $ht
             method: 'GET',
             url: Backend().kucunListURL + '?itemCode=' + $scope.itemCode + '&whseId=' + $rootScope.loginUser.whseId
         }).
-        success(function(data, status, headers, config) {
+        success(function (data, status, headers, config) {
             $scope.loadingStatus = '';
             if (data && Object.prototype.toString.call(data) === '[object Array]') {
                 $scope.data = data;
@@ -20,15 +20,15 @@ var Controller = function($scope, localStorageService, $state, $stateParams, $ht
                 $scope.loadingStatus = (data && data.respCode) ? data.respCode : '加载失败';
             }
         }).
-        error(function(data, status, headers, config) {
+        error(function (data, status, headers, config) {
             $scope.loadingStatus = '加载失败';
             $scope.data = [];
         });
     }
     $scope.loadList = loadList;
-    $scope.$on('$ionicView.enter', function(e) {
+    $scope.$on('$ionicView.enter', function (e) {
         loadList();
     });
-}
+};
 
-module.exports ['$scope', 'localStorageService', '$state', '$stateParams', '$http', '$rootScope', 'Backend', Controller];
+module.exports = ['$scope', 'localStorageService', '$state', '$stateParams', '$http', '$rootScope', 'Backend', Controller];

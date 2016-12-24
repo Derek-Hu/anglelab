@@ -1,4 +1,4 @@
-module.exports {
+module.exports = {
     name: 'AD',
     fn: ['Backend', 'Constant', '$q', 'localStorageService', '$http', function(Backend, Constant, $q, localStorageService, $http) {
         return {

@@ -53,4 +53,4 @@ var Controller = function($scope, $state, Backend, $window) {
     });
 }
 
-module.exports ['$scope', '$state', 'Backend', '$window', Controller];
+module.exports = ['$scope', '$state', 'Backend', '$window', Controller];

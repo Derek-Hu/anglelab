@@ -1,26 +1,26 @@
-var Controller = function($scope, $stateParams, $state, $ionicScrollDelegate, MetaDataSvc, KPIItem, Constant, DateUtil, localStorageService, Warehouse, MenuBorder, Util, MenuList) {
+var Controller = function ($scope, $stateParams, $state, $ionicScrollDelegate, MetaDataSvc, KPIItem, Constant, DateUtil, localStorageService, Warehouse, MenuBorder, Util, MenuList) {
 
     $scope.getBorderFreq = Util.getBorderFreq;
 
     $scope.lineMenus = [{
         'MenuId': '10',
         'PageType': 10,
-        "nm": "KPI跟踪",
-        "enm": "KPI Tracking",
-        "fc": "#36CD14",
-        "state": "line-kpi",
-        "bg": 'img/svg/kpi-tracking.svg'
+        'nm': 'KPI跟踪',
+        'enm': 'KPI Tracking',
+        'fc': '#36CD14',
+        'state': 'line-kpi',
+        'bg': 'img/svg/kpi-tracking.svg'
     }, {
         'MenuId': '11',
         'PageType': 11,
-        "nm": "问题跟踪推进",
-        "enm": "Problem Tracking",
-        "fc": "#62839D",
-        "state": "",
-        "bg": 'img/svg/problem-tracking.svg'
+        'nm': '问题跟踪推进',
+        'enm': 'Problem Tracking',
+        'fc': '#62839D',
+        'state': '',
+        'bg': 'img/svg/problem-tracking.svg'
     }];
 
-    $scope.goTo = function(menu) {
+    $scope.goTo = function (menu) {
         localStorageService.set('criteria', $scope.criteria);
         if (!menu.state) {
             return;
@@ -30,36 +30,36 @@ var Controller = function($scope, $stateParams, $state, $ionicScrollDelegate, Me
 
     $scope.kqDropdown = {
         isOpen: false,
-        close: function() {
+        close: function () {
             this.isOpen = false;
         },
-        open: function() {
+        open: function () {
             if (!$scope.kuqus || $scope.kuqus.length <= 1) {
                 return;
             }
             this.isOpen = !this.isOpen;
-            //$scope.bzDropdown.close();
-            //$scope.bcDropdown.close();
+            // $scope.bzDropdown.close();
+            // $scope.bcDropdown.close();
         },
-        selectOption: function(option) {
+        selectOption: function (option) {
             $scope.criteria.kuqu = option;
             this.close();
         }
     };
     $scope.criteria = {};
-    $scope.$on('$ionicView.enter', function(e) {
+    $scope.$on('$ionicView.enter', function (e) {
         var selectedCriteria = localStorageService.get('criteria');
 
         MenuList.getList($scope.lineMenus, true, {
             WareHouseId: selectedCriteria.kuqu ? selectedCriteria.kuqu.Id : -1,
             ZoneId: selectedCriteria.banzu ? selectedCriteria.banzu.Id : -1
-        }).then(function(menus) {
+        }).then(function (menus) {
             $scope.menus = menus;
         });
 
-        Warehouse.getWareHouse().then(function(Warehouse) {
+        Warehouse.getWareHouse().then(function (Warehouse) {
             $scope.kuqus = Warehouse;
-            var isExist = selectedCriteria && selectedCriteria.kuqu && !!$scope.kuqus.filter(function(kq) {
+            var isExist = selectedCriteria && selectedCriteria.kuqu && !!$scope.kuqus.filter(function (kq) {
                 return kq.whse_code == selectedCriteria.kuqu.whse_code;
             }).length;
             if (isExist) {
@@ -67,13 +67,13 @@ var Controller = function($scope, $stateParams, $state, $ionicScrollDelegate, Me
             } else {
                 $scope.criteria.kuqu = $scope.kuqus[0];
             }
-        }, function(Warehouse) {
+        }, function (Warehouse) {
             $scope.kuqus = Warehouse;
         });
         $scope.kqDropdown.close();
     });
 
-    $scope.$watch('criteria.kuqu', function() {
+    $scope.$watch('criteria.kuqu', function () {
         if (!$scope.criteria || !$scope.criteria.kuqu) {
             return;
         }
@@ -81,16 +81,16 @@ var Controller = function($scope, $stateParams, $state, $ionicScrollDelegate, Me
         MenuList.getList($scope.lineMenus, true, {
             WareHouseId: $scope.criteria.kuqu.Id,
             ZoneId: -1
-        }).then(function(menus) {
+        }).then(function (menus) {
             $scope.menus = menus;
         });
 
-        MenuBorder.lineBoard($scope.criteria.kuqu.Id).then(function(data) {
+        MenuBorder.lineBoard($scope.criteria.kuqu.Id).then(function (data) {
             $scope.menuBorders = data;
         });
     });
 
-}
+};
 
 
-module.exports ['$scope', '$stateParams', '$state', '$ionicScrollDelegate', 'MetaDataSvc', 'KPIItem', 'Constant', 'DateUtil', 'localStorageService', 'Warehouse', 'MenuBorder', 'Util', 'MenuList', Controller];
+module.exports = ['$scope', '$stateParams', '$state', '$ionicScrollDelegate', 'MetaDataSvc', 'KPIItem', 'Constant', 'DateUtil', 'localStorageService', 'Warehouse', 'MenuBorder', 'Util', 'MenuList', Controller];

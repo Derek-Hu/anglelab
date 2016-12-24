@@ -1,4 +1,4 @@
-var Controller = function($scope, localStorageService, $state) {
+var Controller = function ($scope, localStorageService, $state) {
 
     $scope.menuConfig = {
         off: {
@@ -23,7 +23,7 @@ var Controller = function($scope, localStorageService, $state) {
         }
     };
     $scope.menus = Object.keys($scope.menuConfig);
-    $scope.$on('$ionicView.enter', function(e) {
+    $scope.$on('$ionicView.enter', function () {
         var loginUser = localStorageService.get('loginUser');
         if (!loginUser) {
             $state.go('ad-login');
@@ -37,4 +37,4 @@ var Controller = function($scope, localStorageService, $state) {
 
 };
 
-module.exports ['$scope', 'localStorageService', '$state', Controller];
+module.exports = ['$scope', 'localStorageService', '$state', Controller];

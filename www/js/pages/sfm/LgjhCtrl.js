@@ -1,12 +1,12 @@
-var Controller = function(localStorageService, $scope, Backend, MetaDataSvc, $stateParams) {
+var Controller = function (localStorageService, $scope, Backend, MetaDataSvc, $stateParams) {
     $scope.loadingStatus = '';
-    $scope.loadLgjh = function(WareHouseId, ZoneId, ShiftId) {
+    $scope.loadLgjh = function (WareHouseId, ZoneId, ShiftId) {
         $scope.loadingStatus = '加载中';
         Backend().lgjh.query({
             'WareHouseId': WareHouseId,
             'ZoneId': ZoneId,
             'ShiftId': ShiftId
-        }, function(data) {
+        }, function (data) {
             $scope.loadingStatus = '';
             if (!data || !data.length) {
                 $scope.loadingStatus = '暂无数据';
@@ -15,7 +15,7 @@ var Controller = function(localStorageService, $scope, Backend, MetaDataSvc, $st
                 $scope.loadingStatus = '加载失败';
                 return;
             }
-            data.sort(function(a, b) {
+            data.sort(function (a, b) {
                 return parseInt(a.Order_number) - parseInt(b.Order_number);
             });
             var rows = [];
@@ -75,19 +75,19 @@ var Controller = function(localStorageService, $scope, Backend, MetaDataSvc, $st
             }
             $scope.rows = rows;
             console.log(rows);
-        }, function() {
+        }, function () {
             $scope.loadingStatus = '加载失败';
         });
 
     };
-    $scope.$on('$ionicView.enter', function(e) {
+    $scope.$on('$ionicView.enter', function (e) {
         $scope.selectedCriteria = localStorageService.get('criteria');
         $scope.loadLgjh($scope.selectedCriteria.kuqu.Id, $scope.selectedCriteria.banzu.Id, $scope.selectedCriteria.banci.ID);
 
-        MetaDataSvc($stateParams.PageType).then(function(data) {
+        MetaDataSvc($stateParams.PageType).then(function (data) {
             $scope.metaData = data;
         });
     });
 };
 
-module.exports ['localStorageService', '$scope', 'Backend', 'MetaDataSvc', '$stateParams', Controller];
+module.exports = ['localStorageService', '$scope', 'Backend', 'MetaDataSvc', '$stateParams', Controller];

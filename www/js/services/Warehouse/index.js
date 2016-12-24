@@ -1,4 +1,4 @@
-module.exports {
+module.exports = {
     name: 'Warehouse',
     fn: ['Backend', '$q', function(Backend, $q) {
         function getWareHouse() {

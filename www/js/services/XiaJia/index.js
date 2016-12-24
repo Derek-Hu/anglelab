@@ -1,4 +1,4 @@
-module.exports {
+module.exports = {
     name: 'XiaJia',
     fn: ['Backend', 'Constant', '$q', '$http', function(Backend, Constant, $q, $http) {
         function getList(params) {

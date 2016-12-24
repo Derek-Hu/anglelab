@@ -1,13 +1,13 @@
-var Controller = function($scope, Constant, localStorageService, MetaDataSvc, $stateParams, KPIItem) {
+var Controller = function ($scope, Constant, localStorageService, MetaDataSvc, $stateParams, KPIItem) {
     $scope.isLine = $stateParams.isLine;
     $scope.loadingStatus = '加载中';
-    $scope.$on('$ionicView.enter', function(e) {
+    $scope.$on('$ionicView.enter', function (e) {
         $scope.selectedCriteria = localStorageService.get('criteria');
-        MetaDataSvc($stateParams.PageType, $scope.isLine).then(function(data) {
+        MetaDataSvc($stateParams.PageType, $scope.isLine).then(function (data) {
             $scope.metaData = data;
         });
         $scope.loadingStatus = '加载中';
-        KPIItem($stateParams.BizType, $scope.isLine).then(function(data) {
+        KPIItem($stateParams.BizType, $scope.isLine).then(function (data) {
 
             if (!data.length) {
                 $scope.loadingStatus = '暂无数据';
@@ -15,7 +15,7 @@ var Controller = function($scope, Constant, localStorageService, MetaDataSvc, $s
             }
             $scope.loadingStatus = '';
             // ----------
-            data.sort(function(a, b) {
+            data.sort(function (a, b) {
                 return parseInt(a.OrderNumber) - parseInt(b.OrderNumber);
             });
 
@@ -70,7 +70,7 @@ var Controller = function($scope, Constant, localStorageService, MetaDataSvc, $s
             }
             console.log(rows);
 
-            /*// ----------
+            /* // ----------
             var len = data.length, mod = len%4;
             if(mod){
               while(mod<4){
@@ -89,14 +89,14 @@ var Controller = function($scope, Constant, localStorageService, MetaDataSvc, $s
             }
             console.log('res=', res);
             $scope.records = res;*/
-        }, function() {
+        }, function () {
             $scope.loadingStatus = '加载失败';
             $scope.rows = [];
         });
 
     });
 
-}
+};
 
 
-module.exports ['$scope', 'Constant', 'localStorageService', 'MetaDataSvc', '$stateParams', 'KPIItem', Controller];
+module.exports = ['$scope', 'Constant', 'localStorageService', 'MetaDataSvc', '$stateParams', 'KPIItem', Controller];

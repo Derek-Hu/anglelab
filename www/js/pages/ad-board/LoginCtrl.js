@@ -1,7 +1,7 @@
-var Controller = function($scope, AD, $state, localStorageService) {
+var Controller = function ($scope, AD, $state, localStorageService) {
 
     $scope.params = {};
-    $scope.login = function() {
+    $scope.login = function () {
         $scope.errorMsg = '';
         if (!$scope.params.name) {
             $scope.errorMsg = '请输入用户名';
@@ -11,7 +11,7 @@ var Controller = function($scope, AD, $state, localStorageService) {
             $scope.errorMsg = '请输入密码';
             return;
         }
-        AD.login($scope.params).then(function(data) {
+        AD.login($scope.params).then(function (data) {
             if (data.permssionMap.SFM && data.permssionMap.SFM.length && data.permssionMap.AD && data.permssionMap.AD.length) {
                 $state.go('login-dashboard');
             } else if (data.permssionMap.SFM && data.permssionMap.SFM.length) {
@@ -35,7 +35,7 @@ var Controller = function($scope, AD, $state, localStorageService) {
             } else {
                 $scope.errorMsg = '权限不足';
             }
-        }, function(error) {
+        }, function (error) {
             if (!error) {
                 $scope.errorMsg = '服务器异常';
                 return;
@@ -50,7 +50,7 @@ var Controller = function($scope, AD, $state, localStorageService) {
             }
         });
     };
-    $scope.$on('$ionicView.enter', function(e) {
+    $scope.$on('$ionicView.enter', function (e) {
         $scope.errorMsg = '';
         localStorageService.set('loginUser', '');
         $scope.params.pwd = '';
@@ -58,4 +58,4 @@ var Controller = function($scope, AD, $state, localStorageService) {
 
 };
 
-module.exports ['$scope', 'AD', '$state', 'localStorageService', Controller];
+module.exports = ['$scope', 'AD', '$state', 'localStorageService', Controller];

@@ -1,4 +1,4 @@
-var Controller = function(localStorageService, $scope, Backend, $stateParams, MetaDataSvc) {
+var Controller = function (localStorageService, $scope, Backend, $stateParams, MetaDataSvc) {
     $scope.loadingStatus = '';
 
     function convertObj(val) {
@@ -23,16 +23,16 @@ var Controller = function(localStorageService, $scope, Backend, $stateParams, Me
         }
         return obj;
     }
-    $scope.loadGwrx = function(WareHouseId, ZoneId, ShiftId) {
+    $scope.loadGwrx = function (WareHouseId, ZoneId, ShiftId) {
         $scope.loadingStatus = '加载中';
         Backend().gwrx.query({
             'WareHouseId': WareHouseId,
             'ZoneId': ZoneId,
             'ShiftId': ShiftId
-        }, function(data) {
+        }, function (data) {
             $scope.loadingStatus = '';
 
-            $scope.records = data.map(function(d) {
+            $scope.records = data.map(function (d) {
                 for (var p in d) {
                     if (d.hasOwnProperty(p)) {
                         d[p] = convertObj(d[p]);
@@ -47,21 +47,21 @@ var Controller = function(localStorageService, $scope, Backend, $stateParams, Me
                 $scope.loadingStatus = '加载失败';
                 return;
             }
-            $scope.headers = Object.keys(data[0]).filter(function(data) {
+            $scope.headers = Object.keys(data[0]).filter(function (data) {
                 return data != '序号' && data != '班组' && data != '班次';
             });
-        }, function() {
+        }, function () {
             $scope.loadingStatus = '加载失败';
         });
     };
-    $scope.$on('$ionicView.enter', function(e) {
+    $scope.$on('$ionicView.enter', function (e) {
         $scope.selectedCriteria = localStorageService.get('criteria');
         $scope.loadGwrx($scope.selectedCriteria.kuqu.Id, $scope.selectedCriteria.banzu.Id, $scope.selectedCriteria.banci.ID);
 
-        MetaDataSvc($stateParams.PageType).then(function(data) {
+        MetaDataSvc($stateParams.PageType).then(function (data) {
             $scope.metaData = data;
         });
     });
 };
 
-module.exports ['localStorageService', '$scope', 'Backend', '$stateParams', 'MetaDataSvc', Controller];
+module.exports = ['localStorageService', '$scope', 'Backend', '$stateParams', 'MetaDataSvc', Controller];

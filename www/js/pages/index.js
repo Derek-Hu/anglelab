@@ -1,8 +1,10 @@
 var servicesModule = require('../services');
 var componentsModule = require('../components');
-var app = angular.module('starter.routers', ['ionic', 'ngCordova', 'ui.bootstrap', 'LocalStorageModule', 'ngResource', servicesModule, componentsModule]);
+var LocalStorageModule = require('angular-local-storage');
+var ngResource = require('angular-resource');
+var app = angular.module('starter.routers', ['ionic', 'ngCordova', 'ui.bootstrap', LocalStorageModule, ngResource, servicesModule, componentsModule]);
 
-app.config(function($stateProvider, $urlRouterProvider) {
+app.config(function ($stateProvider, $urlRouterProvider) {
 
     // Ionic uses AngularUI Router which uses the concept of states
     // Learn more here: https://github.com/angular-ui/ui-router
@@ -11,7 +13,7 @@ app.config(function($stateProvider, $urlRouterProvider) {
     $stateProvider
 
     // setup an abstract state for the tabs directive
-    /*.state('tab', {
+    /* .state('tab', {
     url: '/tab',
     abstract: true,
     template: 'templates/tabs.html'
@@ -33,7 +35,7 @@ app.config(function($stateProvider, $urlRouterProvider) {
             url: '/gwrx/:PageType',
             views: {
                 'dash': {
-                    template:  require('../pages/sfm/gwrx.html')
+                    template: require('../pages/sfm/gwrx.html'),
                     controller: require('../pages/sfm/GwrxCtrl')
                 }
             }
@@ -42,7 +44,7 @@ app.config(function($stateProvider, $urlRouterProvider) {
             url: '/folder-selector/:select',
             views: {
                 'dash': {
-                    template: 'templates/folders.html',
+                    template: require('../pages/sfm/folders.html'),
                     controller: require('../pages/sfm/FolderCtrl')
                 }
             }
@@ -103,14 +105,14 @@ app.config(function($stateProvider, $urlRouterProvider) {
         })
 
     .state('kqhz', {
-            url: '/kqhz/:PageType',
-            views: {
-                'dash': {
-                    template: require('../pages/sfm/kqhz.html'),
-                    controller: require('../pages/sfm/KqhzCtrl')
-                }
+        url: '/kqhz/:PageType',
+        views: {
+            'dash': {
+                template: require('../pages/sfm/kqhz.html'),
+                controller: require('../pages/sfm/KqhzCtrl')
             }
-        })
+        }
+    })
         .state('green-cross', {
             url: '/green-cross/:aspect/:PageType/:BizType/:isLine',
             views: {
@@ -269,4 +271,4 @@ app.config(function($stateProvider, $urlRouterProvider) {
     $urlRouterProvider.otherwise('/ad/login');
 
 });
-module.exports app.name;
+module.exports = app.name;
