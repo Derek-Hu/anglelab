@@ -1,8 +1,8 @@
 module.exports = {
     name: 'KPIDetail',
     fn: ['Backend', 'Constant', 'localStorageService', '$q',
-        function(Backend, Constant, localStorageService, $q) {
-            return function(kpiType, isLine) {
+        function (Backend, Constant, localStorageService, $q) {
+            return function (kpiType, isLine) {
                 var deferred = $q.defer();
                 var selectedCriteria = localStorageService.get('criteria');
                 var menus = angular.copy(Constant.kpiMenus[kpiType]);
@@ -24,9 +24,9 @@ module.exports = {
                     'ZoneId': selectedCriteria.banzu ? selectedCriteria.banzu.Id : '',
                     'ShiftId': selectedCriteria.banci ? selectedCriteria.banci.ID : '',
                     'BizType': (isLine ? 'L-' : '') + Constant.kpiBizType[kpiType]
-                }, function(data) {
+                }, function (data) {
 
-                    //var isRate = (kpiType == 'member' || kpiType == 'cost' || kpiType == 'quality')
+                    // var isRate = (kpiType == 'member' || kpiType == 'cost' || kpiType == 'quality')
                     if (!data) {
                         return;
                     }
@@ -59,7 +59,7 @@ module.exports = {
                         }
                     }
                     deferred.resolve(menus);
-                }, function() {
+                }, function () {
                     deferred.resolve(menus);
                 });
                 return deferred.promise;

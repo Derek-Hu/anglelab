@@ -1,6 +1,6 @@
 module.exports = {
     name: 'Backend',
-    fn: ['$resource', 'Constant', function($resource, Constant) {
+    fn: ['$resource', 'Constant', function ($resource, Constant) {
         // Might use a resource here that returns a JSON array
         var baseURL = '',
             kaoqin, kuqu, banzu, banci, metaData, org, gwrx, lgjh, kpi;
@@ -17,7 +17,7 @@ module.exports = {
         var banzu = $resource('js/test/banzu.json');
         var banCharge = $resource('js/test/banCharge.json');*/
 
-        return function() {
+        return function () {
             if (baseURL != Constant.baseURL()) {
                 baseURL = Constant.baseURL();
                 kaoqin = $resource(baseURL + '/EmployeeDutyListSub.aspx');

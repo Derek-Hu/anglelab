@@ -5,8 +5,9 @@ angular.module('starter', [routers, LocalStorageModule, 'ionic', 'ngCordova'])
 
 .run(function ($ionicPlatform, $rootScope, $window, localStorageService) {
 
-    $rootScope.$on('$stateChangeSuccess', function (event, routeData) {
+    $rootScope.$on('$stateChangeSuccess', function () {
         var loginUser = localStorageService.get('loginUser');
+
         $rootScope.loginUser = loginUser;
     });
     $rootScope.historyBack = function () {

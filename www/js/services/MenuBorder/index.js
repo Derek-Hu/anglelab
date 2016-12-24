@@ -1,10 +1,10 @@
 module.exports = {
     name: 'MenuBorder',
     fn: ['Backend', 'Constant', 'localStorageService', '$q',
-        function(Backend, Constant, localStorageService, $q) {
+        function (Backend, Constant, localStorageService, $q) {
 
             function getBoard(PageType) {
-                return function(WareHouseId) {
+                return function (WareHouseId) {
                     var deferred = $q.defer();
                     if (!WareHouseId || !PageType) {
                         deferred.resolve([]);
@@ -14,13 +14,13 @@ module.exports = {
                         'WareHouseId': WareHouseId,
                         'BizType': 3,
                         'PageType': PageType
-                    }, function(data) {
+                    }, function (data) {
                         if (!data || !data[0] || data[0].ErrorCode !== undefined) {
                             deferred.resolve([]);
                         } else {
                             deferred.resolve(data);
                         }
-                    }, function() {
+                    }, function () {
                         deferred.resolve([]);
                     });
                     return deferred.promise;

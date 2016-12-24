@@ -1,9 +1,9 @@
 module.exports = {
     name: 'MenuList',
     fn: ['Backend', 'Constant', 'localStorageService', '$q',
-        function(Backend, Constant, localStorageService, $q) {
+        function (Backend, Constant, localStorageService, $q) {
             return {
-                getList: function(originalMenus, isLine, params) {
+                getList: function (originalMenus, isLine, params) {
                     var deferred = $q.defer();
                     if (!params || !params.WareHouseId) {
                         deferred.resolve(originalMenus);
@@ -19,7 +19,7 @@ module.exports = {
                         'WareHouseId': params.WareHouseId,
                         'BizType': 4,
                         'ZoneId': isLine ? -1 : params.ZoneId
-                    }, function(data) {
+                    }, function (data) {
                         if (!data || !data[0] || data[0].ErrorCode !== undefined) {
                             deferred.resolve(originalMenus);
                         } else {
@@ -39,7 +39,7 @@ module.exports = {
                             }
                             deferred.resolve(displayNemnus);
                         }
-                    }, function() {
+                    }, function () {
                         deferred.resolve(originalMenus);
                     });
                     return deferred.promise;

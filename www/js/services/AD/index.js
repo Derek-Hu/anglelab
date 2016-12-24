@@ -1,8 +1,8 @@
 module.exports = {
     name: 'AD',
-    fn: ['Backend', 'Constant', '$q', 'localStorageService', '$http', function(Backend, Constant, $q, localStorageService, $http) {
+    fn: ['Backend', 'Constant', '$q', 'localStorageService', '$http', function (Backend, Constant, $q, localStorageService, $http) {
         return {
-            login: function(params) {
+            login: function (params) {
                 var deferred = $q.defer();
                 /*
                   
@@ -24,13 +24,13 @@ module.exports = {
                     method: 'GET',
                     url: Backend().login + '?name=' + params.name + '&pwd=' + params.pwd
                 }).
-                success(function(data, status, headers, config) {
+                success(function (data, status, headers, config) {
                     if (data && data.userId) {
                         $http({
                             method: 'GET',
                             url: Backend().userAuth + '?userId=' + data.userId
                         }).
-                        success(function(auth, status, headers, config) {
+                        success(function (auth, status, headers, config) {
                             if (auth && auth.length) {
                                 data.permssionMap = {
                                     SFM: [],
@@ -64,7 +64,7 @@ module.exports = {
                                 });
                             }
                         }).
-                        error(function(data, status, headers, config) {
+                        error(function (data, status, headers, config) {
                             deferred.reject({
                                 respCode: 500
                             });
@@ -84,7 +84,7 @@ module.exports = {
                         });
                     }
                 }).
-                error(function(data, status, headers, config) {
+                error(function (data, status, headers, config) {
                     deferred.reject({
                         respCode: 500
                     });

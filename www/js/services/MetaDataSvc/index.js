@@ -1,14 +1,14 @@
 module.exports = {
     name: 'MetaDataSvc',
     fn: ['Backend', 'Constant', 'localStorageService', '$q',
-        function(Backend, Constant, localStorageService, $q) {
+        function (Backend, Constant, localStorageService, $q) {
             var empty = {
-                "bianzhi": "N/A",
-                "bianzhi_date": "N/A",
-                "shenhe": "N/A",
-                "pizhun": "N/A"
+                'bianzhi': 'N/A',
+                'bianzhi_date': 'N/A',
+                'shenhe': 'N/A',
+                'pizhun': 'N/A'
             };
-            return function(menuId, isLine) {
+            return function (menuId, isLine) {
                 var deferred = $q.defer();
                 var selectedCriteria = localStorageService.get('criteria');
 
@@ -31,13 +31,13 @@ module.exports = {
                     'BizType': 2,
                     // 考勤汇总
                     'PageType': menuId
-                }, function(data) {
+                }, function (data) {
                     if (!data || !data.length || data[0].ErrorCode !== undefined) {
                         deferred.resolve(empty);
                     } else {
                         deferred.resolve(data[0]);
                     }
-                }, function() {
+                }, function () {
                     deferred.resolve(empty);
                 });
                 return deferred.promise;

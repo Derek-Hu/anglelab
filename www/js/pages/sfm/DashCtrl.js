@@ -75,6 +75,7 @@ var Controller = function ($scope, $state, localStorageService, Constant, Wareho
         $state.go(state ? state : 'kpi-item', { 'aspect': $stateParams.aspect, 'PageType': $stateParams.PageType, 'BizType': BizType });
     };
     var type = $stateParams.aspect;
+
     for (var idx = 0, idlen = Constant.kpis.length; idx < idlen; idx++) {
         if (Constant.kpis[idx].type == type) {
             $scope.aspectTitle = Constant.kpis[idx].name;
@@ -95,6 +96,7 @@ var Controller = function ($scope, $state, localStorageService, Constant, Wareho
         }, function () {});
     }
     var selectedCriteria = localStorageService.get('criteria');
+
     $scope.$on('$ionicView.enter', function (e) {
         $scope.criteriaFromCache = localStorageService.get('criteria');
         $scope.isKPI = !!$stateParams.aspect;
@@ -104,6 +106,7 @@ var Controller = function ($scope, $state, localStorageService, Constant, Wareho
             var isExist = selectedCriteria && selectedCriteria.kuqu && !!$scope.kuqus.filter(function (kq) {
                 return kq.whse_code == selectedCriteria.kuqu.whse_code;
             }).length;
+            
             if (isExist) {
                 $scope.criteria.kuqu = selectedCriteria.kuqu;
             } else {

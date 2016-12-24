@@ -1,8 +1,8 @@
 var LocalStorageModule = require('angular-local-storage');
 var ngResource = require('angular-resource');
-var componentsModule = require('../components');
+// var componentsModule = require('../components');
 
-var app = angular.module('starter.services', ['ionic', 'ngCordova', ngResource, LocalStorageModule, componentsModule]);
+var app = angular.module('starter.services', ['ionic', 'ngCordova', ngResource, LocalStorageModule]);
 
 var services = [
     require('./Constant'),
@@ -22,7 +22,7 @@ var services = [
     require('./Charge')
 ];
 
-for(var i=0, len = services.length;i<len;i++){
+for (var i = 0, len = services.length; i < len; i++) {
     app.service(services[i].name. services[i].fn);
 }
 

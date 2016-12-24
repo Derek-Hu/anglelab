@@ -1,8 +1,8 @@
 module.exports = {
     name: 'KPIItem',
     fn: ['Backend', 'Constant', 'localStorageService', '$q',
-        function(Backend, Constant, localStorageService, $q) {
-            return function(kpiType, isLine) {
+        function (Backend, Constant, localStorageService, $q) {
+            return function (kpiType, isLine) {
                 var deferred = $q.defer();
                 var selectedCriteria = localStorageService.get('criteria');
 
@@ -22,12 +22,12 @@ module.exports = {
                     'ZoneId': selectedCriteria.banzu ? selectedCriteria.banzu.Id : '',
                     'ShiftId': selectedCriteria.banci ? selectedCriteria.banci.ID : '',
                     'BizType': (isLine ? 'L-' : '') + kpiType
-                }, function(data) {
+                }, function (data) {
                     if (!data) {
                         data = [];
                     }
                     deferred.resolve(data);
-                }, function() {
+                }, function () {
                     deferred.reject('Load Data Error');
                 });
                 return deferred.promise;

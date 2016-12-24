@@ -1,6 +1,6 @@
 module.exports = {
     name: 'DateUtil',
-    fn: [function($resource) {
+    fn: [function ($resource) {
         function getLastDay(pYear, pMonth) {
             var curr = new Date();
             if (pYear) {

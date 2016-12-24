@@ -1,9 +1,9 @@
 module.exports = {
     name: 'Util',
     fn: ['Backend', 'Constant', 'localStorageService', '$q',
-        function(Backend, Constant, localStorageService, $q) {
+        function (Backend, Constant, localStorageService, $q) {
             return {
-                getBorderFreq: function(menuBorders, menu) {
+                getBorderFreq: function (menuBorders, menu) {
                     if (!menuBorders || !menu) {
                         return '';
                     }
