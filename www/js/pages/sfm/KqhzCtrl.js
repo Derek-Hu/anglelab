@@ -114,7 +114,4 @@ var Controller = function(localStorageService, Backend, $scope, DateUtil, $ionic
 }
 
 
-module.exports = {
-    name: "kqhzCtrl",
-    $fn: ['localStorageService', 'Backend', '$scope', 'DateUtil', '$ionicScrollDelegate', '$state', '$stateParams', 'MetaDataSvc', Controller]
-};
+module.exports ['localStorageService', 'Backend', '$scope', 'DateUtil', '$ionicScrollDelegate', '$state', '$stateParams', 'MetaDataSvc', Controller];

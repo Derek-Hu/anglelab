@@ -132,7 +132,4 @@ var Controller = function($scope, Constant, $state, $window, $stateParams, Backe
 }
 
 
-module.exports = {
-    name: "SettingsCtrl",
-    $fn: ['$scope', 'Constant', '$state', '$window', '$stateParams', 'Backend', '$cordovaInAppBrowser', '$cordovaFileTransfer', '$timeout', '$location', Controller]
-};
+module.exports ['$scope', 'Constant', '$state', '$window', '$stateParams', 'Backend', '$cordovaInAppBrowser', '$cordovaFileTransfer', '$timeout', '$location', Controller];

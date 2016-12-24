@@ -99,7 +99,4 @@ var Controller = function($scope, Constant, localStorageService, MetaDataSvc, $s
 }
 
 
-module.exports = {
-    name: "CostWallCtrl",
-    $fn: ['$scope', 'Constant', 'localStorageService', 'MetaDataSvc', '$stateParams', 'KPIItem', Controller]
-};
+module.exports ['$scope', 'Constant', 'localStorageService', 'MetaDataSvc', '$stateParams', 'KPIItem', Controller];

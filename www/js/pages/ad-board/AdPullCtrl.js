@@ -93,7 +93,4 @@ var Controller = function($scope, $state, $http, Backend, $rootScope, $ionicPopu
     });
 };
 
-module.exports = {
-    name: "AdPullCtrl",
-    $fn: ['$scope', '$state', '$http', 'Backend', '$rootScope', '$ionicPopup', Controller]
-};
+module.exports ['$scope', '$state', '$http', 'Backend', '$rootScope', '$ionicPopup', Controller];

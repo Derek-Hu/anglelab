@@ -58,7 +58,4 @@ var Controller = function($scope, AD, $state, localStorageService) {
 
 };
 
-module.exports = {
-    name: "LoginCtrl",
-    $fn: ['$scope', 'AD', '$state', 'localStorageService', Controller]
-};
+module.exports ['$scope', 'AD', '$state', 'localStorageService', Controller];

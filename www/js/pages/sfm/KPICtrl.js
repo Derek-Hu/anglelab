@@ -22,7 +22,4 @@ var Controller = function($scope, Constant, $state, localStorageService, KPIDeta
 }
 
 
-module.exports = {
-    name: "TemplateCtrl",
-    $fn: ['$scope', 'Constant', '$state', 'localStorageService', 'KPIDetail', 'MenuList', Controller]
-};
+module.exports ['$scope', 'Constant', '$state', 'localStorageService', 'KPIDetail', 'MenuList', Controller];

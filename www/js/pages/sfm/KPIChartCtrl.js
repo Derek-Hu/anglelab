@@ -152,7 +152,4 @@ var Controller = function($scope, $stateParams, $state, $ionicScrollDelegate, Me
 }
 
 
-module.exports = {
-    name: "KPIChartCtrl",
-    $fn: ['$scope', '$stateParams', '$state', '$ionicScrollDelegate', 'MetaDataSvc', 'KPIItem', 'Constant', 'DateUtil', 'localStorageService', Controller]
-};
+module.exports ['$scope', '$stateParams', '$state', '$ionicScrollDelegate', 'MetaDataSvc', 'KPIItem', 'Constant', 'DateUtil', 'localStorageService', Controller];

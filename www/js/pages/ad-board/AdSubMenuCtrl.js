@@ -37,7 +37,4 @@ var Controller = function($scope, localStorageService, $state) {
 
 };
 
-module.exports = {
-    name: "AdSubMenuCtrl",
-    $fn: ['$scope', 'localStorageService', '$state', Controller]
-};
+module.exports ['$scope', 'localStorageService', '$state', Controller];

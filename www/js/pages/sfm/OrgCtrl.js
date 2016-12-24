@@ -40,7 +40,4 @@ var Controller = function(localStorageService, Backend, $scope, $state, MetaData
 }
 
 
-module.exports = {
-    name: "OrgCtrl",
-    $fn: ['localStorageService', 'Backend', '$scope', '$state', 'MetaDataSvc', '$stateParams', 'Constant', Controller]
-};
+module.exports ['localStorageService', 'Backend', '$scope', '$state', 'MetaDataSvc', '$stateParams', 'Constant', Controller];

@@ -119,7 +119,4 @@ var Controller = function($scope, Constant, $state, localStorageService, KPIDeta
     }
 }
 
-module.exports = {
-    name: "FolderCtrl",
-    $fn: ['$scope', 'Constant', '$state', 'localStorageService', 'KPIDetail', '$ionicScrollDelegate', Controller]
-};
+module.exports ['$scope', 'Constant', '$state', 'localStorageService', 'KPIDetail', '$ionicScrollDelegate', Controller];

@@ -27,7 +27,4 @@ var Controller = function($scope, Constant, $state, localStorageService, KPIDeta
 }
 
 
-module.exports = {
-    name: "LineKPICtrl",
-    $fn: ['$scope', 'Constant', '$state', 'localStorageService', 'KPIDetail', 'MetaDataSvc', 'MenuList', Controller]
-};
+module.exports ['$scope', 'Constant', '$state', 'localStorageService', 'KPIDetail', 'MetaDataSvc', 'MenuList', Controller];

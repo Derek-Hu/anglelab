@@ -53,7 +53,4 @@ var Controller = function($scope, $state, Backend, $window) {
     });
 }
 
-module.exports = {
-    name: "AttendCtrl",
-    $fn: ['$scope', '$state', 'Backend', '$window', Controller]
-};
+module.exports ['$scope', '$state', 'Backend', '$window', Controller];

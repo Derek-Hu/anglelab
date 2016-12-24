@@ -64,7 +64,4 @@ var Controller = function(localStorageService, $scope, Backend, $stateParams, Me
     });
 };
 
-module.exports = {
-    name: "GwrxCtrl",
-    $fn: ['localStorageService', '$scope', 'Backend', '$stateParams', 'MetaDataSvc', Controller]
-};
+module.exports ['localStorageService', '$scope', 'Backend', '$stateParams', 'MetaDataSvc', Controller];

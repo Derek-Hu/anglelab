@@ -30,7 +30,4 @@ var Controller = function($scope, $http, Backend, $rootScope) {
 
 };
 
-module.exports = {
-    name: "AdPullHisotryCtrl",
-    $fn: ['$scope', '$http', 'Backend', '$rootScope', Controller]
-};
+module.exports ['$scope', '$http', 'Backend', '$rootScope', Controller];

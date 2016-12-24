@@ -48,7 +48,4 @@ var Controller = function($scope, KPIDetail, Constant, $stateParams, MetaDataSvc
 
 }
 
-module.exports = {
-    name: "KPIDetailCtrl",
-    $fn: ['$scope', 'KPIDetail', 'Constant', '$stateParams', 'MetaDataSvc', '$state', 'localStorageService', 'MenuList', Controller]
-};
+module.exports ['$scope', 'KPIDetail', 'Constant', '$stateParams', 'MetaDataSvc', '$state', 'localStorageService', 'MenuList', Controller];

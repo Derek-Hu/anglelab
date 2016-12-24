@@ -93,7 +93,4 @@ var Controller = function($scope, $stateParams, $state, $ionicScrollDelegate, Me
 }
 
 
-module.exports = {
-    name: "ViewBoardCtrl",
-    $fn: ['$scope', '$stateParams', '$state', '$ionicScrollDelegate', 'MetaDataSvc', 'KPIItem', 'Constant', 'DateUtil', 'localStorageService', 'Warehouse', 'MenuBorder', 'Util', 'MenuList', Controller]
-};
+module.exports ['$scope', '$stateParams', '$state', '$ionicScrollDelegate', 'MetaDataSvc', 'KPIItem', 'Constant', 'DateUtil', 'localStorageService', 'Warehouse', 'MenuBorder', 'Util', 'MenuList', Controller];

@@ -90,7 +90,4 @@ var Controller = function(localStorageService, $scope, Backend, MetaDataSvc, $st
     });
 };
 
-module.exports = {
-    name: "LgjhCtrl",
-    $fn: ['localStorageService', '$scope', 'Backend', 'MetaDataSvc', '$stateParams', Controller]
-};
+module.exports ['localStorageService', '$scope', 'Backend', 'MetaDataSvc', '$stateParams', Controller];

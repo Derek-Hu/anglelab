@@ -137,7 +137,4 @@ var Controller = function(AD, $scope, $rootScope, $q, $http, Backend, $ionicPopu
 
 };
 
-module.exports = {
-    name: "AdMemberCtrl",
-    $fn: ['AD', '$scope', '$rootScope', '$q', '$http', 'Backend', '$ionicPopup', Controller]
-};
+module.exports ['AD', '$scope', '$rootScope', '$q', '$http', 'Backend', '$ionicPopup', Controller];

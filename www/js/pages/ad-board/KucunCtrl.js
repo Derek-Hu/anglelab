@@ -31,7 +31,4 @@ var Controller = function($scope, localStorageService, $state, $stateParams, $ht
     });
 }
 
-module.exports = {
-    name: "KucunCtrl",
-    $fn: ['$scope', 'localStorageService', '$state', '$stateParams', '$http', '$rootScope', 'Backend', Controller]
-};
+module.exports ['$scope', 'localStorageService', '$state', '$stateParams', '$http', '$rootScope', 'Backend', Controller];

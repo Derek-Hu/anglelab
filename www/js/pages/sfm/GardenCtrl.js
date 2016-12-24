@@ -91,7 +91,4 @@ var Controller = function($scope, Constant, $state, localStorageService, KPIDeta
 }
 
 
-module.exports = {
-    name: "GardenCtrl",
-    $fn: ['$scope', 'Constant', '$state', 'localStorageService', 'KPIDetail', Controller]
-};
+module.exports ['$scope', 'Constant', '$state', 'localStorageService', 'KPIDetail', Controller];

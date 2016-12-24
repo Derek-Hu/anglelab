@@ -84,7 +84,4 @@ var Controller = function($scope, $state, $http, Backend, $rootScope, $ionicPopu
     });
 };
 
-module.exports = {
-    name: "AdStartCtrl",
-    $fn: ['$scope', '$state', '$http', 'Backend', '$rootScope', '$ionicPopup', '$timeout', Controller]
-};
+module.exports ['$scope', '$state', '$http', 'Backend', '$rootScope', '$ionicPopup', '$timeout', Controller];

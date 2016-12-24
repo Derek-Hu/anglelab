@@ -63,7 +63,4 @@ var Controller = function($scope, XiaJia, localStorageService, $state, $ionicPop
 
 };
 
-module.exports = {
-    name: "XiaJiaCtrl",
-    $fn: ['$scope', 'XiaJia', 'localStorageService', '$state', '$ionicPopup', '$rootScope', '$timeout', Controller]
-};
+module.exports ['$scope', 'XiaJia', 'localStorageService', '$state', '$ionicPopup', '$rootScope', '$timeout', Controller];

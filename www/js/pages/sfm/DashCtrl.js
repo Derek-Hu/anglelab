@@ -204,7 +204,4 @@ var Controller = function($scope, $state, localStorageService, Constant, Warehou
 }
 
 
-module.exports = {
-    name: "DashCtrl",
-    $fn: ['$scope', '$state', 'localStorageService', 'Constant', 'Warehouse', 'Zone', 'Shift', 'Charge', '$stateParams', 'KPIDetail', 'MetaDataSvc', 'MenuBorder', 'Util', 'MenuList', Controller]
-};
+module.exports ['$scope', '$state', 'localStorageService', 'Constant', 'Warehouse', 'Zone', 'Shift', 'Charge', '$stateParams', 'KPIDetail', 'MetaDataSvc', 'MenuBorder', 'Util', 'MenuList', Controller];
