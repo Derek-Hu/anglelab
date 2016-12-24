@@ -1,34 +1,6 @@
-var app = angular.module('starter.routers', ['ionic', 'ngCordova', 'ui.bootstrap', 'LocalStorageModule', 'ngResource']);
-
-var AdMemberCtrl = require('../pages/ad-board/AdMemberCtrl');
-var AdMemberTemplate = require('../pages/ad-board/member.html');
-
-var AdPullCtrl = require('../pages/ad-board/AdPullCtrl');
-var AdPullTemplate = require('../pages/ad-board/pull.html');
-
-var AdPullHisotryCtrl = require('../pages/ad-board/AdPullHisotryCtrl');
-var AdPullHisotryTemplate = require('../pages/ad-board/pull-hisotry.html');
-
-var AdPullNickCtrl = require('../pages/ad-board/AdPullNickCtrl');
-var AdPullNickTemplate = require('../pages/ad-board/pull-nick.html');
-
-var AdStartCtrl = require('../pages/ad-board/AdStartCtrl');
-var AdStartTemplate = require('../pages/ad-board/start.html');
-
-var AdSubMenuCtrl = require('../pages/ad-board/AdSubMenuCtrl');
-var AdSubMenuTemplate = require('../pages/ad-board/ad-sub-permission.html');
-
-var XiaJiaCtrl = require('../pages/ad-board/XiaJiaCtrl');
-var XiaJiaTemplate = require('../pages/ad-board/xiajia.html');
-
-var LoginDashCtrl = require('../pages/ad-board/LoginDashboard');
-var LoginDashTemplate = require('../pages/ad-board/login-dashboard.html');
-
-var LoginCtrl = require('../pages/ad-board/LoginCtrl');
-var LoginCtrlTemplate = require('../pages/ad-board/login.html');
-
-var KucunCtrl = require('../pages/ad-board/KucunCtrl');
-var KucunCtrlTemplate = require('../pages/ad-board/kucun.html');
+var servicesModule = require('../services');
+var componentsModule = require('../components');
+var app = angular.module('starter.routers', ['ionic', 'ngCordova', 'ui.bootstrap', 'LocalStorageModule', 'ngResource', servicesModule, componentsModule]);
 
 app.config(function($stateProvider, $urlRouterProvider) {
 
@@ -208,8 +180,8 @@ app.config(function($stateProvider, $urlRouterProvider) {
             url: '/login-dashboard',
             views: {
                 'dash': {
-                    template: LoginDashTemplate,
-                    controller: LoginDashCtrl
+                    template: require('../pages/ad-board/login-dashboard.html'),
+                    controller: require('../pages/ad-board/LoginDashboard')
                 }
             }
         })
@@ -218,8 +190,8 @@ app.config(function($stateProvider, $urlRouterProvider) {
             url: '/ad/off',
             views: {
                 'dash': {
-                    template: XiaJiaTemplate,
-                    controller: XiaJiaCtrl
+                    template: require('../pages/ad-board/xiajia.html'),
+                    controller: require('../pages/ad-board/XiaJiaCtrl')
                 }
             }
         })
@@ -228,8 +200,8 @@ app.config(function($stateProvider, $urlRouterProvider) {
             url: '/ad/start',
             views: {
                 'dash': {
-                    template: AdStartTemplate,
-                    controller: AdStartCtrl
+                    template: require('../pages/ad-board/start.html'),
+                    controller: require('../pages/ad-board/AdStartCtrl')
                 }
             }
         })
@@ -238,8 +210,8 @@ app.config(function($stateProvider, $urlRouterProvider) {
             url: '/ad/pull',
             views: {
                 'dash': {
-                    template: AdPullTemplate,
-                    controller: AdPullCtrl
+                    template: require('../pages/ad-board/pull.html'),
+                    controller: require('../pages/ad-board/AdPullCtrl')
                 }
             }
         })
@@ -248,17 +220,8 @@ app.config(function($stateProvider, $urlRouterProvider) {
             url: '/ad/pull-hisotry',
             views: {
                 'dash': {
-                    template: AdPullHisotryTemplate,
-                    controller: AdPullHisotryCtrl
-                }
-            }
-        })
-        .state('ad-pull-nick', {
-            url: '/ad-pull-nick',
-            views: {
-                'dash': {
-                    template: AdPullNickTemplate,
-                    controller: AdPullNickCtrl
+                    template: require('../pages/ad-board/pull-hisotry.html'),
+                    controller: require('../pages/ad-board/AdPullHisotryCtrl')
                 }
             }
         })
@@ -267,8 +230,8 @@ app.config(function($stateProvider, $urlRouterProvider) {
             url: '/ad/member',
             views: {
                 'dash': {
-                    template: AdMemberTemplate,
-                    controller: AdMemberCtrl
+                    template: require('../pages/ad-board/member.html'),
+                    controller: require('../pages/ad-board/AdMemberCtrl')
                 }
             }
         })
@@ -277,8 +240,8 @@ app.config(function($stateProvider, $urlRouterProvider) {
             url: '/ad/kucun/:itemCode',
             views: {
                 'dash': {
-                    template: KucunCtrlTemplate,
-                    controller: KucunCtrl
+                    template: require('../pages/ad-board/kucun.html'),
+                    controller: require('../pages/ad-board/KucunCtrl')
                 }
             }
         })
@@ -287,8 +250,8 @@ app.config(function($stateProvider, $urlRouterProvider) {
             url: '/ad/login',
             views: {
                 'dash': {
-                    template: LoginCtrlTemplate,
-                    controller: LoginCtrl
+                    template: require('../pages/ad-board/login.html'),
+                    controller: require('../pages/ad-board/LoginCtrl')
                 }
             }
         })
@@ -297,8 +260,8 @@ app.config(function($stateProvider, $urlRouterProvider) {
             url: '/ad/sub-permssion',
             views: {
                 'dash': {
-                    template: AdSubMenuTemplate,
-                    controller: AdSubMenuCtrl
+                    template: require('../pages/ad-board/ad-sub-permission.html'),
+                    controller: require('../pages/ad-board/AdSubMenuCtrl')
                 }
             }
         });
