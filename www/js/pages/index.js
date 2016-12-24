@@ -51,8 +51,8 @@ app.config(function($stateProvider, $urlRouterProvider) {
             url: '/dash',
             views: {
                 'dash': {
-                    template: 'templates/dash.html',
-                    controller: 'DashCtrl'
+                    template: require('../pages/sfm/dash.html'),
+                    controller: require('../pages/sfm/DashCtrl')
 
                 }
             }
@@ -61,8 +61,8 @@ app.config(function($stateProvider, $urlRouterProvider) {
             url: '/gwrx/:PageType',
             views: {
                 'dash': {
-                    template: 'templates/gwrx.html',
-                    controller: 'GwrxCtrl'
+                    template:  require('../pages/sfm/gwrx.html')
+                    controller: require('../pages/sfm/GwrxCtrl')
                 }
             }
         })
@@ -71,7 +71,7 @@ app.config(function($stateProvider, $urlRouterProvider) {
             views: {
                 'dash': {
                     template: 'templates/folders.html',
-                    controller: 'FolderCtrl'
+                    controller: require('../pages/sfm/FolderCtrl')
                 }
             }
         })
@@ -79,8 +79,8 @@ app.config(function($stateProvider, $urlRouterProvider) {
             url: '/settings/:fromSelect',
             views: {
                 'dash': {
-                    template: 'templates/settings.html',
-                    controller: 'SettingsCtrl'
+                    template: require('../pages/sfm/settings.html'),
+                    controller: require('../pages/sfm/SettingsCtrl')
                 }
             }
         })
@@ -88,8 +88,8 @@ app.config(function($stateProvider, $urlRouterProvider) {
             url: '/lgjh/:PageType',
             views: {
                 'dash': {
-                    template: 'templates/lgjh.html',
-                    controller: 'LgjhCtrl'
+                    template: require('../pages/sfm/lgjh.html'),
+                    controller: require('../pages/sfm/LgjhCtrl')
                 }
             }
         })
@@ -97,8 +97,8 @@ app.config(function($stateProvider, $urlRouterProvider) {
             url: '/entry',
             views: {
                 'dash': {
-                    template: 'templates/entry.html',
-                    controller: 'EntryCtrl'
+                    template: require('../pages/sfm/entry.html'),
+                    controller: require('../pages/sfm/EntryCtrl')
                 }
             }
         })
@@ -106,8 +106,8 @@ app.config(function($stateProvider, $urlRouterProvider) {
             url: '/garden',
             views: {
                 'dash': {
-                    template: 'templates/garden.html',
-                    controller: 'GardenCtrl'
+                    template: require('../pages/sfm/garden.html'),
+                    controller: require('../pages/sfm/GardenCtrl')
                 }
             }
         })
@@ -115,8 +115,8 @@ app.config(function($stateProvider, $urlRouterProvider) {
             url: '/org/:PageType',
             views: {
                 'dash': {
-                    template: 'templates/org.html',
-                    controller: 'OrgCtrl'
+                    template: require('../pages/sfm/org.html'),
+                    controller: require('../pages/sfm/OrgCtrl')
                 }
             }
         })
@@ -124,8 +124,8 @@ app.config(function($stateProvider, $urlRouterProvider) {
             url: '/kpi',
             views: {
                 'dash': {
-                    template: 'templates/kpi-group.html',
-                    controller: 'KPICtrl'
+                    template: require('../pages/sfm/kpi-group.html'),
+                    controller: require('../pages/sfm/KPICtrl')
                 }
             }
         })
@@ -134,8 +134,8 @@ app.config(function($stateProvider, $urlRouterProvider) {
             url: '/kqhz/:PageType',
             views: {
                 'dash': {
-                    template: 'templates/kqhz.html',
-                    controller: 'kqhzCtrl'
+                    template: require('../pages/sfm/kqhz.html'),
+                    controller: require('../pages/sfm/KqhzCtrl')
                 }
             }
         })
@@ -143,8 +143,8 @@ app.config(function($stateProvider, $urlRouterProvider) {
             url: '/green-cross/:aspect/:PageType/:BizType/:isLine',
             views: {
                 'dash': {
-                    template: 'templates/green-cross.html',
-                    controller: 'GreenCrossCtrl'
+                    template: require('../pages/sfm/green-cross.html'),
+                    controller: require('../pages/sfm/GreenCrossCtrl')
                 }
             }
         })
@@ -152,8 +152,8 @@ app.config(function($stateProvider, $urlRouterProvider) {
             url: '/flow/view-all/:PageType/:BizType/:isLine',
             views: {
                 'dash': {
-                    template: 'templates/flow-view-wall.html',
-                    controller: 'FlowWallCtrl'
+                    template: require('../pages/sfm/flow-view-wall.html'),
+                    controller: require('../pages/sfm/FlowWallCtrl')
                 }
             }
         })
@@ -161,8 +161,8 @@ app.config(function($stateProvider, $urlRouterProvider) {
             url: '/cost/view-all/:PageType/:BizType/:isLine',
             views: {
                 'dash': {
-                    template: 'templates/cost-view-wall.html',
-                    controller: 'CostWallCtrl'
+                    template: require('../pages/sfm/cost-view-wall.html'),
+                    controller: require('../pages/sfm/CostWallCtrl')
                 }
             }
         })
@@ -170,8 +170,8 @@ app.config(function($stateProvider, $urlRouterProvider) {
             url: '/kpi-item/:aspect/:PageType/:BizType/:isPercentage/:isLine',
             views: {
                 'dash': {
-                    template: 'templates/kpi-chart.html',
-                    controller: 'KPIChartCtrl'
+                    template: require('../pages/sfm/kpi-chart.html'),
+                    controller: require('../pages/sfm/KPIChartCtrl')
                 }
             }
         })
@@ -179,8 +179,8 @@ app.config(function($stateProvider, $urlRouterProvider) {
             url: '/kpi/:aspect/:PageType/:isLine',
             views: {
                 'dash': {
-                    template: 'templates/kpi-detail.html',
-                    controller: 'KPIDetailCtrl'
+                    template: require('../pages/sfm/kpi-detail.html'),
+                    controller: require('../pages/sfm/KPIDetailCtrl')
                 }
             }
         })
@@ -188,8 +188,8 @@ app.config(function($stateProvider, $urlRouterProvider) {
             url: '/view-board',
             views: {
                 'dash': {
-                    template: 'templates/view-board.html',
-                    controller: 'ViewBoardCtrl'
+                    template: require('../pages/sfm/view-board.html'),
+                    controller: require('../pages/sfm/ViewBoardCtrl')
                 }
             }
         })
@@ -198,8 +198,8 @@ app.config(function($stateProvider, $urlRouterProvider) {
             url: '/line/kpi',
             views: {
                 'dash': {
-                    template: 'templates/kpi-group.html',
-                    controller: 'LineKPICtrl'
+                    template: require('../pages/sfm/kpi-group.html'),
+                    controller: require('../pages/sfm/LineKPICtrl')
                 }
             }
         })
