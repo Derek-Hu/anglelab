@@ -1869,7 +1869,9 @@ div.pull .bz-menu .list.card.active .itemCode {
     color: #FFF;
 }
 
-div.pull .bz-menu .lsa {}
+div.pull .bz-menu .lsa {
+    display: block;
+}
 
 div.pull .bz-menu .list.card.active {
     background: #159FDD;
