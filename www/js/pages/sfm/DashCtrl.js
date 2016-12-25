@@ -159,7 +159,7 @@ var Controller = function ($scope, $state, localStorageService, Constant, Wareho
         Shift.getShift($scope.criteria.kuqu.Id, $scope.criteria.banzu.Id).then(function (shifts) {
             $scope.bancis = shifts;
             var isExist = selectedCriteria && selectedCriteria.banci && !!$scope.bancis.filter(function (bc) {
-                return bc.shift_code == selectedCriteria.banci.shift_code;
+                return bc.shift_code == selectedCriteria.banci.shift_code && bc.ID == selectedCriteria.banci.ID;
             }).length;
             if (isExist) {
                 $scope.criteria.banci = selectedCriteria.banci;
