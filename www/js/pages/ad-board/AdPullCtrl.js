@@ -12,7 +12,8 @@ var Controller = function ($scope, $state, $http, Backend, $rootScope, $ionicPop
             template: '<div class="xiajia"><img src="./img/ad/off-' + isSuccess + '.jpg" />' + msg + '<span>' + (errorMsg ? errorMsg : '') + '</span></div>',
             okText: '知道了'
         });
-        alertPopup.then(function (res) {
+
+        alertPopup.then(function () {
             // $scope.getList();
         });
     };
@@ -22,6 +23,7 @@ var Controller = function ($scope, $state, $http, Backend, $rootScope, $ionicPop
             okText: '确认',
             template: '<div class="xiajia"><img src="./img/ad/tip.png" /><div style="margin-bottom: 0.5em"><span style="margin:0;color: #333;">' + item.itemCode + '</span><span style="margin:0;color: #333;">' + item.routeCode + '</span><span style="margin:0;color: #333;">' + item.lsa + '</span><span style="margin:0;color: #333;">' + item.nickName + '</span></div>是否确认拉动？</div>'
         });
+
         confirmPopup.then(function (res) {
             if (res) {
                 $scope.pull(item);
@@ -35,6 +37,7 @@ var Controller = function ($scope, $state, $http, Backend, $rootScope, $ionicPop
         item.isPulling = $scope.isPulling = true;
         $http({
             method: 'GET',
+            /*eslint-disable*/
             url: Backend().pullActionURL +
                 '?itemCode=' + item.itemCode +
                 '&routeCode=' + item.routeCode +
@@ -43,7 +46,7 @@ var Controller = function ($scope, $state, $http, Backend, $rootScope, $ionicPop
                 '&zoneId=' + $rootScope.loginUser.zoneId +
                 '&userName=' + $rootScope.loginUser.loginNme
         }).
-        success(function (data, status, headers, config) {
+        success(function (data) {
             item.isPulling = $scope.isPulling = false;
             if (data && data.respCode === 'success') {
                 $scope.showAlert('拉动成功', true);
@@ -52,7 +55,7 @@ var Controller = function ($scope, $state, $http, Backend, $rootScope, $ionicPop
                 $scope.showAlert('拉动失败', false, data.respCode);
             }
         }).
-        error(function (data, status, headers, config) {
+        error(function (data) {
             item.isPulling = $scope.isPulling = false;
             $scope.showAlert('拉动失败', false, '服务器异常');
         });
@@ -61,9 +64,10 @@ var Controller = function ($scope, $state, $http, Backend, $rootScope, $ionicPop
         // $scope.errorMsg = '加载中';
         $http({
             method: 'GET',
+            /*eslint-disable*/
             url: Backend().pullListURL + '?userId=' + $rootScope.loginUser.userId
         }).
-        success(function (data, status, headers, config) {
+        success(function (data) {
             if (data && Object.prototype.toString.call(data) === '[object Array]') {
                 $scope.menus = data;
                 $scope.errorMsg = null;
@@ -75,7 +79,7 @@ var Controller = function ($scope, $state, $http, Backend, $rootScope, $ionicPop
                 $scope.errorMsg = (data && data.respCode) ? data.respCode : '暂无数据';
             }
         }).
-        error(function (data, status, headers, config) {
+        error(function () {
             /*                    $scope.menus = [{
                                     itemCode: 'itemCode1',
                                     routeCode: 'routeCode2',
@@ -88,7 +92,7 @@ var Controller = function ($scope, $state, $http, Backend, $rootScope, $ionicPop
             $scope.errorMsg = '加载失败';
         });
     };
-    $scope.$on('$ionicView.enter', function (e) {
+    $scope.$on('$ionicView.enter', function () {
         $scope.getList();
     });
 };

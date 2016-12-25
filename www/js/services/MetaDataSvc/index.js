@@ -8,6 +8,7 @@ module.exports = {
                 'shenhe': 'N/A',
                 'pizhun': 'N/A'
             };
+
             return function (menuId, isLine) {
                 var deferred = $q.defer();
                 var selectedCriteria = localStorageService.get('criteria');
@@ -23,6 +24,7 @@ module.exports = {
                     deferred.resolve(empty);
                     return deferred.promise;
                 }
+                /*eslint-disable*/
                 Backend().metaData.query({
                     'WareHouseId': selectedCriteria.kuqu.Id,
                     'ZoneId': selectedCriteria.banzu ? selectedCriteria.banzu.Id : '',

@@ -7,10 +7,12 @@ module.exports = {
                 'zone_code': ' N/A',
                 'description': 'N/A'
             }];
+            
             if (!WareHouseId) {
                 deferred.resolve(empty);
                 return;
             }
+            /*eslint-disable*/
             Backend().banzu.query({
                 'WareHouseId': WareHouseId
             }, function (data) {

@@ -7,6 +7,8 @@ module.exports = {
                 'shift_code': 'N/A',
                 'description': 'N/A'
             }];
+            
+            /*eslint-disable*/
             Backend().banci.query({
                 'WareHouseId': WareHouseId,
                 'ZoneId': ZoneId

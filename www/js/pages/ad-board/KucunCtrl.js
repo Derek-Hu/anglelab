@@ -1,14 +1,15 @@
 var Controller = function ($scope, localStorageService, $state, $stateParams, $http, $rootScope, Backend) {
     $scope.itemCode = $stateParams.itemCode;
 
-    function loadList(params) {
+    function loadList() {
         $scope.loadingStatus = '加载中';
         $scope.data = [];
         $http({
             method: 'GET',
+            /*eslint-disable*/
             url: Backend().kucunListURL + '?itemCode=' + $scope.itemCode + '&whseId=' + $rootScope.loginUser.whseId
         }).
-        success(function (data, status, headers, config) {
+        success(function (data) {
             $scope.loadingStatus = '';
             if (data && Object.prototype.toString.call(data) === '[object Array]') {
                 $scope.data = data;
@@ -20,13 +21,13 @@ var Controller = function ($scope, localStorageService, $state, $stateParams, $h
                 $scope.loadingStatus = (data && data.respCode) ? data.respCode : '加载失败';
             }
         }).
-        error(function (data, status, headers, config) {
+        error(function (data) {
             $scope.loadingStatus = '加载失败';
             $scope.data = [];
         });
     }
     $scope.loadList = loadList;
-    $scope.$on('$ionicView.enter', function (e) {
+    $scope.$on('$ionicView.enter', function () {
         loadList();
     });
 };

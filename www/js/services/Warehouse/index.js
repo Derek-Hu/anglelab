@@ -7,6 +7,8 @@ module.exports = {
                 'whse_code': 'N/A',
                 'whse_name': 'N/A'
             }];
+            
+            /*eslint-disable*/
             Backend().kuqu.query(function (data) {
                 if (!data[0] || data[0].ErrorCode !== undefined) {
                     deferred.resolve(empty);

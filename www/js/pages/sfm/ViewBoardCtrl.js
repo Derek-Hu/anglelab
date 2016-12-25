@@ -47,7 +47,7 @@ var Controller = function ($scope, $stateParams, $state, $ionicScrollDelegate, M
         }
     };
     $scope.criteria = {};
-    $scope.$on('$ionicView.enter', function (e) {
+    $scope.$on('$ionicView.enter', function () {
         var selectedCriteria = localStorageService.get('criteria');
 
         MenuList.getList($scope.lineMenus, true, {
@@ -57,18 +57,19 @@ var Controller = function ($scope, $stateParams, $state, $ionicScrollDelegate, M
             $scope.menus = menus;
         });
 
-        Warehouse.getWareHouse().then(function (Warehouse) {
-            $scope.kuqus = Warehouse;
+        Warehouse.getWareHouse().then(function (kqs) {
+            $scope.kuqus = kqs;
             var isExist = selectedCriteria && selectedCriteria.kuqu && !!$scope.kuqus.filter(function (kq) {
-                return kq.whse_code == selectedCriteria.kuqu.whse_code;
+                return kq.whse_code === selectedCriteria.kuqu.whse_code;
             }).length;
+
             if (isExist) {
                 $scope.criteria.kuqu = selectedCriteria.kuqu;
             } else {
                 $scope.criteria.kuqu = $scope.kuqus[0];
             }
-        }, function (Warehouse) {
-            $scope.kuqus = Warehouse;
+        }, function (kuqus) {
+            $scope.kuqus = kuqus;
         });
         $scope.kqDropdown.close();
     });

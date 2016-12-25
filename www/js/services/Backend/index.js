@@ -4,6 +4,7 @@ module.exports = {
         // Might use a resource here that returns a JSON array
         var baseURL = '',
             kaoqin, kuqu, banzu, banci, metaData, org, gwrx, lgjh, kpi;
+        var xiajiaListURL, xiajiaURL, pullListURL, startListURL, startActionURL, pullActionURL, pullHistoryURL, kucunListURL, adMemberURL, adAllMemberURL, adModifyMemberURL, login, userAuth;
 
         /*
         var org = $resource('js/test/org.json');
@@ -18,7 +19,7 @@ module.exports = {
         var banCharge = $resource('js/test/banCharge.json');*/
 
         return function () {
-            if (baseURL != Constant.baseURL()) {
+            if (baseURL !== Constant.baseURL()) {
                 baseURL = Constant.baseURL();
                 kaoqin = $resource(baseURL + '/EmployeeDutyListSub.aspx');
                 kuqu = $resource(baseURL + '/Warehouse.aspx');

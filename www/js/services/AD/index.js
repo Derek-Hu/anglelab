@@ -4,6 +4,7 @@ module.exports = {
         return {
             login: function (params) {
                 var deferred = $q.defer();
+
                 /*
                   
                   {
@@ -22,22 +23,28 @@ module.exports = {
                  */
                 $http({
                     method: 'GET',
+                    /*eslint-disable*/
                     url: Backend().login + '?name=' + params.name + '&pwd=' + params.pwd
                 }).
-                success(function (data, status, headers, config) {
+                success(function (data) {
+                    var msg;
+
                     if (data && data.userId) {
                         $http({
                             method: 'GET',
+                            /*eslint-disable*/
                             url: Backend().userAuth + '?userId=' + data.userId
                         }).
-                        success(function (auth, status, headers, config) {
+                        success(function (auth) {
+                            var i, len;
+
                             if (auth && auth.length) {
                                 data.permssionMap = {
                                     SFM: [],
                                     // SFM: null if no SFM permission
                                     AD: []
                                 };
-                                for (var i = 0, len = auth.length; i < len; i++) {
+                                for (i = 0, len = auth.length; i < len; i++) {
                                     if (auth[i].name === 'SFM') {
                                         data.permssionMap.SFM = ['line', 'board'];
                                     } else if (auth[i].name === '拉动') {
@@ -64,13 +71,14 @@ module.exports = {
                                 });
                             }
                         }).
-                        error(function (data, status, headers, config) {
+                        error(function () {
                             deferred.reject({
                                 respCode: 500
                             });
                         });
                     } else {
-                        var msg = '服务器异常';
+                        msg = '服务器异常';
+
                         if (data) {
                             if ('userId' in data) {
                                 msg = '用户名或密码错误';
@@ -84,7 +92,7 @@ module.exports = {
                         });
                     }
                 }).
-                error(function (data, status, headers, config) {
+                error(function (data) {
                     deferred.reject({
                         respCode: 500
                     });

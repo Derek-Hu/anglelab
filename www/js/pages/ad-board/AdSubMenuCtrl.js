@@ -25,12 +25,15 @@ var Controller = function ($scope, localStorageService, $state) {
     $scope.menus = Object.keys($scope.menuConfig);
     $scope.$on('$ionicView.enter', function () {
         var loginUser = localStorageService.get('loginUser');
+        var permssions, i, len;
+
         if (!loginUser) {
             $state.go('ad-login');
             return;
         }
-        var permssions = loginUser.permssionMap.AD;
-        for (var i = 0, len = permssions.length; i < len; i++) {
+        permssions = loginUser.permssionMap.AD;
+
+        for (i = 0, len = permssions.length; i < len; i++) {
             $scope.menuConfig[permssions[i]].show = true;
         }
     });

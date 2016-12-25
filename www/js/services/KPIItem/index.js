@@ -17,6 +17,7 @@ module.exports = {
                     deferred.resolve([]);
                     return deferred.promise;
                 }
+                /*eslint-disable*/
                 Backend().kpi.query({
                     'WareHouseId': selectedCriteria.kuqu.Id,
                     'ZoneId': selectedCriteria.banzu ? selectedCriteria.banzu.Id : '',

@@ -1,13 +1,14 @@
 module.exports = {
     name: 'DateUtil',
-    fn: [function ($resource) {
+    fn: [function () {
         function getLastDay(pYear, pMonth) {
             var curr = new Date();
+
             if (pYear) {
-                curr.setFullYear(parseInt(pYear));
+                curr.setFullYear(parseInt(pYear, 10));
             }
             if (pMonth) {
-                curr.setMonth(parseInt(pMonth) - 1);
+                curr.setMonth(parseInt(pMonth, 10) - 1);
             }
             var year = curr.getFullYear();
             var month = curr.getMonth() + 1;
@@ -18,6 +19,7 @@ module.exports = {
             }
 
             var nextFirstDay = new Date(year, month, 1);
+
             console.log(nextFirstDay);
             return (new Date(nextFirstDay.getTime() - 1000 * 60 * 60 * 24)).getDate();
         }

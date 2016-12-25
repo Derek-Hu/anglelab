@@ -1802,6 +1802,7 @@
 	            timeInterval: 10,
 	            imagePath: { name: '目录暂未选择', nativeURL: null }
 	        };
+	
 	        return {
 	            baseURL: function baseURL() {
 	                return settings.cacheURL;
@@ -1826,13 +1827,17 @@
 	            loadingError: '加载失败',
 	            supportedExt: ['.jpg', '.jpeg', '.bmp', '.png', '.gif', '.tif'],
 	            isExtSupport: function isExtSupport(name) {
+	                var nameLen, extName, i, len;
+	
 	                if (!name) {
 	                    return false;
 	                }
-	                var nameLen = name.length;
-	                for (var i = 0, len = this.supportedExt.length; i < len; i++) {
-	                    var extName = this.supportedExt[i];
-	                    if (name.substring(nameLen - extName.length, nameLen) == extName) {
+	                nameLen = name.length;
+	
+	                for (i = 0, len = this.supportedExt.length; i < len; i++) {
+	                    extName = this.supportedExt[i];
+	
+	                    if (name.substring(nameLen - extName.length, nameLen) === extName) {
 	                        return true;
 	                    }
 	                }
@@ -2155,6 +2160,7 @@
 	            gwrx,
 	            lgjh,
 	            kpi;
+	        var xiajiaListURL, xiajiaURL, pullListURL, startListURL, startActionURL, pullActionURL, pullHistoryURL, kucunListURL, adMemberURL, adAllMemberURL, adModifyMemberURL, login, userAuth;
 	
 	        /*
 	        var org = $resource('js/test/org.json');
@@ -2169,7 +2175,7 @@
 	        var banCharge = $resource('js/test/banCharge.json');*/
 	
 	        return function () {
-	            if (baseURL != Constant.baseURL()) {
+	            if (baseURL !== Constant.baseURL()) {
 	                baseURL = Constant.baseURL();
 	                kaoqin = $resource(baseURL + '/EmployeeDutyListSub.aspx');
 	                kuqu = $resource(baseURL + '/Warehouse.aspx');
@@ -2240,6 +2246,7 @@
 	        return {
 	            login: function login(params) {
 	                var deferred = $q.defer();
+	
 	                /*
 	                  
 	                  {
@@ -2257,20 +2264,26 @@
 	                  */
 	                $http({
 	                    method: 'GET',
+	                    /*eslint-disable*/
 	                    url: Backend().login + '?name=' + params.name + '&pwd=' + params.pwd
-	                }).success(function (data, status, headers, config) {
+	                }).success(function (data) {
+	                    var msg;
+	
 	                    if (data && data.userId) {
 	                        $http({
 	                            method: 'GET',
+	                            /*eslint-disable*/
 	                            url: Backend().userAuth + '?userId=' + data.userId
-	                        }).success(function (auth, status, headers, config) {
+	                        }).success(function (auth) {
+	                            var i, len;
+	
 	                            if (auth && auth.length) {
 	                                data.permssionMap = {
 	                                    SFM: [],
 	                                    // SFM: null if no SFM permission
 	                                    AD: []
 	                                };
-	                                for (var i = 0, len = auth.length; i < len; i++) {
+	                                for (i = 0, len = auth.length; i < len; i++) {
 	                                    if (auth[i].name === 'SFM') {
 	                                        data.permssionMap.SFM = ['line', 'board'];
 	                                    } else if (auth[i].name === '拉动') {
@@ -2296,13 +2309,14 @@
 	                                    respCode: 403
 	                                });
 	                            }
-	                        }).error(function (data, status, headers, config) {
+	                        }).error(function () {
 	                            deferred.reject({
 	                                respCode: 500
 	                            });
 	                        });
 	                    } else {
-	                        var msg = '服务器异常';
+	                        msg = '服务器异常';
+	
 	                        if (data) {
 	                            if ('userId' in data) {
 	                                msg = '用户名或密码错误';
@@ -2315,7 +2329,7 @@
 	                            errorMsg: msg
 	                        });
 	                    }
-	                }).error(function (data, status, headers, config) {
+	                }).error(function (data) {
 	                    deferred.reject({
 	                        respCode: 500
 	                    });
@@ -2337,13 +2351,15 @@
 	    fn: ['Backend', 'Constant', '$q', '$http', function (Backend, Constant, $q, $http) {
 	        function getList(params) {
 	            var deferred = $q.defer();
-	            $http({ method: 'GET', url: Backend().xiajiaListURL + params }).success(function (data, status, headers, config) {
+	
+	            /*eslint-disable*/
+	            $http({ method: 'GET', url: Backend().xiajiaListURL + params }).success(function (data, status, headers) {
 	                if (data && Object.prototype.toString.call(data) === '[object Array]') {
 	                    deferred.resolve(data);
 	                } else {
 	                    deferred.reject(data && data.respCode ? data.respCode : null);
 	                }
-	            }).error(function (data, status, headers, config) {
+	            }).error(function (data, status, headers) {
 	                deferred.reject(null);
 	            });
 	            return deferred.promise;
@@ -2351,13 +2367,15 @@
 	
 	        function xiajia(params) {
 	            var deferred = $q.defer();
-	            $http({ method: 'GET', url: Backend().xiajiaURL + params }).success(function (data, status, headers, config) {
+	
+	            /*eslint-disable*/
+	            $http({ method: 'GET', url: Backend().xiajiaURL + params }).success(function (data, status, headers) {
 	                if (data && data.respCode === 'success') {
 	                    deferred.resolve();
 	                } else {
 	                    deferred.reject(data && data.respCode ? data.respCode : null);
 	                }
-	            }).error(function (data, status, headers, config) {
+	            }).error(function (data, status, headers) {
 	                deferred.reject(null);
 	            });
 	            return deferred.promise;
@@ -2384,6 +2402,7 @@
 	            'shenhe': 'N/A',
 	            'pizhun': 'N/A'
 	        };
+	
 	        return function (menuId, isLine) {
 	            var deferred = $q.defer();
 	            var selectedCriteria = localStorageService.get('criteria');
@@ -2399,6 +2418,7 @@
 	                deferred.resolve(empty);
 	                return deferred.promise;
 	            }
+	            /*eslint-disable*/
 	            Backend().metaData.query({
 	                'WareHouseId': selectedCriteria.kuqu.Id,
 	                'ZoneId': selectedCriteria.banzu ? selectedCriteria.banzu.Id : '',
@@ -2445,6 +2465,7 @@
 	                deferred.resolve([]);
 	                return deferred.promise;
 	            }
+	            /*eslint-disable*/
 	            Backend().kpi.query({
 	                'WareHouseId': selectedCriteria.kuqu.Id,
 	                'ZoneId': selectedCriteria.banzu ? selectedCriteria.banzu.Id : '',
@@ -2471,13 +2492,15 @@
 	
 	module.exports = {
 	    name: 'Util',
-	    fn: ['Backend', 'Constant', 'localStorageService', '$q', function (Backend, Constant, localStorageService, $q) {
+	    fn: ['Backend', function (Backend) {
 	        return {
 	            getBorderFreq: function getBorderFreq(menuBorders, menu) {
+	                var i, len;
+	
 	                if (!menuBorders || !menu) {
 	                    return '';
 	                }
-	                for (var i = 0, len = menuBorders.length; i < len; i++) {
+	                for (i = 0, len = menuBorders.length; i < len; i++) {
 	                    if (menuBorders[i].name == menu.PageType) {
 	                        return menuBorders[i].frequency;
 	                    }
@@ -2500,6 +2523,7 @@
 	        return {
 	            getList: function getList(originalMenus, isLine, params) {
 	                var deferred = $q.defer();
+	
 	                if (!params || !params.WareHouseId) {
 	                    deferred.resolve(originalMenus);
 	                    return deferred.promise;
@@ -2515,15 +2539,17 @@
 	                    'BizType': 4,
 	                    'ZoneId': isLine ? -1 : params.ZoneId
 	                }, function (data) {
+	                    var displayNemnus, cMenu, shouldShow, j, i;
+	
 	                    if (!data || !data[0] || data[0].ErrorCode !== undefined) {
 	                        deferred.resolve(originalMenus);
 	                    } else {
-	                        var displayNemnus = [];
-	                        for (var i = 0; i < originalMenus.length; i++) {
-	                            var cMenu = originalMenus[i];
-	                            var shouldShow = true;
-	                            for (var j = 0; j < data.length; j++) {
-	                                if (data[j].show_code == cMenu.MenuId) {
+	                        displayNemnus = [];
+	                        for (i = 0; i < originalMenus.length; i++) {
+	                            cMenu = originalMenus[i];
+	                            shouldShow = true;
+	                            for (j = 0; j < data.length; j++) {
+	                                if (data[j].show_code === cMenu.MenuId) {
 	                                    shouldShow = false;
 	                                    break;
 	                                }
@@ -2556,10 +2582,12 @@
 	        function getBoard(PageType) {
 	            return function (WareHouseId) {
 	                var deferred = $q.defer();
+	
 	                if (!WareHouseId || !PageType) {
 	                    deferred.resolve([]);
 	                    return deferred.promise;
 	                }
+	                /*eslint-disable*/
 	                Backend().metaData.query({
 	                    'WareHouseId': WareHouseId,
 	                    'BizType': 3,
@@ -2578,6 +2606,7 @@
 	        }
 	        var viewBoard = getBoard(1);
 	        var lineBoard = getBoard(2);
+	
 	        return {
 	            viewBoard: viewBoard,
 	            lineBoard: lineBoard
@@ -2598,7 +2627,8 @@
 	            var deferred = $q.defer();
 	            var selectedCriteria = localStorageService.get('criteria');
 	            var menus = angular.copy(Constant.kpiMenus[kpiType]);
-	            if (isLine && kpiType == 'kpiHome') {
+	
+	            if (isLine && kpiType === 'kpiHome') {
 	                menus = angular.copy(Constant.kpis);
 	                if (!selectedCriteria.kuqu) {
 	                    deferred.resolve(menus);
@@ -2616,15 +2646,16 @@
 	                'ShiftId': selectedCriteria.banci ? selectedCriteria.banci.ID : '',
 	                'BizType': (isLine ? 'L-' : '') + Constant.kpiBizType[kpiType]
 	            }, function (data) {
+	                var i, len, ilen, j, jlen, idx;
 	
 	                // var isRate = (kpiType == 'member' || kpiType == 'cost' || kpiType == 'quality')
 	                if (!data) {
 	                    return;
 	                }
-	                var i;
-	                if (kpiType == 'kpiHome') {
+	
+	                if (kpiType === 'kpiHome') {
 	                    for (i = 0, ilen = data.length; i < ilen; i++) {
-	                        for (var j = 0, jlen = menus.length; j < jlen; j++) {
+	                        for (j = 0, jlen = menus.length; j < jlen; j++) {
 	                            if (data[i].ID == menus[j].id) {
 	                                menus[j].hatColor = Constant.hatImage[data[i].STATE];
 	                                break;
@@ -2637,7 +2668,7 @@
 	
 	                for (i = 0, len = data.length; i < len; i++) {
 	
-	                    var idx = parseInt(data[i].ID.split('-')[1]) - 1;
+	                    idx = parseInt(data[i].ID.split('-')[1], 10) - 1;
 	                    if (menus[idx]) {
 	                        if (data[i].ACTUAL || data[i].TARGET) {
 	                            if (menus[idx].isPercentage) {
@@ -2666,14 +2697,15 @@
 	
 	module.exports = {
 	    name: 'DateUtil',
-	    fn: [function ($resource) {
+	    fn: [function () {
 	        function getLastDay(pYear, pMonth) {
 	            var curr = new Date();
+	
 	            if (pYear) {
-	                curr.setFullYear(parseInt(pYear));
+	                curr.setFullYear(parseInt(pYear, 10));
 	            }
 	            if (pMonth) {
-	                curr.setMonth(parseInt(pMonth) - 1);
+	                curr.setMonth(parseInt(pMonth, 10) - 1);
 	            }
 	            var year = curr.getFullYear();
 	            var month = curr.getMonth() + 1;
@@ -2684,6 +2716,7 @@
 	            }
 	
 	            var nextFirstDay = new Date(year, month, 1);
+	
 	            console.log(nextFirstDay);
 	            return new Date(nextFirstDay.getTime() - 1000 * 60 * 60 * 24).getDate();
 	        }
@@ -2708,6 +2741,8 @@
 	                'whse_code': 'N/A',
 	                'whse_name': 'N/A'
 	            }];
+	
+	            /*eslint-disable*/
 	            Backend().kuqu.query(function (data) {
 	                if (!data[0] || data[0].ErrorCode !== undefined) {
 	                    deferred.resolve(empty);
@@ -2745,10 +2780,12 @@
 	                'zone_code': ' N/A',
 	                'description': 'N/A'
 	            }];
+	
 	            if (!WareHouseId) {
 	                deferred.resolve(empty);
 	                return;
 	            }
+	            /*eslint-disable*/
 	            Backend().banzu.query({
 	                'WareHouseId': WareHouseId
 	            }, function (data) {
@@ -2788,6 +2825,8 @@
 	                'shift_code': 'N/A',
 	                'description': 'N/A'
 	            }];
+	
+	            /*eslint-disable*/
 	            Backend().banci.query({
 	                'WareHouseId': WareHouseId,
 	                'ZoneId': ZoneId
@@ -2828,6 +2867,8 @@
 	                'DateTime': 'N/A'
 	            };
 	            var deferred = $q.defer();
+	
+	            /*eslint-disable*/
 	            Backend().metaData.query({
 	                'WareHouseId': WareHouseId,
 	                'ZoneId': ZoneId,
@@ -2835,6 +2876,7 @@
 	                'BizType': 1
 	            }, function (data) {
 	                var res = data[0];
+	
 	                if (!data[0] || data[0].ErrorCode !== undefined) {
 	                    res = empty;
 	                }
@@ -2925,7 +2967,7 @@
 	
 	module.exports = {
 	    name: 'kaoQinChart',
-	    fn: ['d3', '$window', function (d3, $window) {
+	    fn: ['d3', function (d3) {
 	
 	        var textPadding = 0.5,
 	            textMargin = 1.5,
@@ -2933,12 +2975,11 @@
 	            lineP = 0.2;
 	        var bottomR = 3 * textMargin + textPadding,
 	            topTableBorder = textMargin + textPadding + lineP;
-	        var middleTableBorder = bottomR - lineP - textPadding,
-	            barIndcatorPos = 2 * textMargin - lineP;
+	        var middleTableBorder = bottomR - lineP - textPadding;
 	        var lastRow = bottomR + textMargin,
 	            middleRow = 2 * textMargin;
 	        var chartCls = 'svg-content';
-	        var percentage = d3.format('.2');
+	
 	        return {
 	            restrict: 'E',
 	            scope: {
@@ -2951,9 +2992,9 @@
 	                isDouble: '=',
 	                isRate: '='
 	            },
-	            link: function link(scope, element, attrs) {
+	            link: function link(scope, element) {
 	
-	                var fontSize = parseInt(d3.select('body').style('font-size'));
+	                var fontSize = parseInt(d3.select('body').style('font-size'), 10);
 	                var margin = { top: fontSize * 3, right: fontSize * 9, bottom: fontSize * 10, left: fontSize * 3 };
 	                var data = scope.data,
 	                    title = scope.title,
@@ -3227,19 +3268,21 @@
 	                group: '=',
 	                title: '@'
 	            },
-	            link: function link(scope, element, attrs) {
+	            link: function link(scope) {
 	                scope.$watch('group', function () {
+	                    var i, totalNum, subTeamNum;
+	
 	                    scope.subTeams = [];
 	                    if (scope.group && scope.group.members) {
-	                        var totalNum = scope.group.members.length;
+	                        totalNum = scope.group.members.length;
 	                        scope.col = Math.max(Math.ceil(totalNum / 4), 3);
 	                        if (totalNum) {
-	                            var subTeamNum = totalNum > scope.col ? scope.col : totalNum;
+	                            subTeamNum = totalNum > scope.col ? scope.col : totalNum;
 	                            scope.oddTeam = subTeamNum % 2 === 1;
-	                            for (var i = 0; i < subTeamNum; i++) {
+	                            for (i = 0; i < subTeamNum; i++) {
 	                                scope.subTeams[i] = [];
 	                            }
-	                            for (var i = 0; i < totalNum; i++) {
+	                            for (i = 0; i < totalNum; i++) {
 	                                scope.subTeams[i % subTeamNum].push(scope.group.members[i]);
 	                            }
 	                        }
@@ -4366,12 +4409,14 @@
 	    $scope.loadingStatus = '加载中';
 	    $scope.headers = ['序号', '厂区', '周数', '停线时间', '停线累计分钟(补装台数)', '停线起止时间', '停线零件名称', '停线零件号', '情况描述', '责任方'];
 	    $scope.isLine = $stateParams.isLine;
-	    $scope.$on('$ionicView.enter', function (e) {
+	    $scope.$on('$ionicView.enter', function () {
 	        $scope.selectedCriteria = localStorageService.get('criteria');
+	        /*eslint-disable*/
 	        MetaDataSvc($stateParams.PageType, $scope.isLine).then(function (data) {
 	            $scope.metaData = data;
 	        });
 	        $scope.loadingStatus = '加载中';
+	        /*eslint-disable*/
 	        KPIItem($stateParams.BizType, $scope.isLine).then(function (data) {
 	            if (!data.length) {
 	                $scope.loadingStatus = '暂无数据';
@@ -4681,6 +4726,8 @@
 	    $scope.aspect = $stateParams.aspect;
 	
 	    $scope.goKPIDetail = function (state, BizType, isPercentage, isInvalid) {
+	        var type;
+	
 	        if (isInvalid) {
 	            return;
 	        }
@@ -4693,31 +4740,34 @@
 	        });
 	    };
 	    $scope.isLine = $stateParams.isLine;
-	    var type = $stateParams.aspect;
+	    type = $stateParams.aspect;
+	
 	    for (var idx = 0, idlen = Constant.kpis.length; idx < idlen; idx++) {
-	        if (Constant.kpis[idx].type == type) {
+	        if (Constant.kpis[idx].type === type) {
 	            $scope.aspectTitle = Constant.kpis[idx].name;
 	            break;
 	        }
 	    }
-	    $scope.$on('$ionicView.enter', function (e) {
+	    $scope.$on('$ionicView.enter', function () {
 	        $scope.criteriaFromCache = localStorageService.get('criteria');
 	
+	        /*eslint-disable*/
 	        KPIDetail(type, $scope.isLine).then(function (menus) {
 	
 	            MenuList.getList(menus, $scope.isLine, {
 	                WareHouseId: $scope.criteriaFromCache.kuqu ? $scope.criteriaFromCache.kuqu.Id : -1,
 	                ZoneId: $scope.criteriaFromCache.banzu ? $scope.criteriaFromCache.banzu.Id : -1
-	            }).then(function (menus) {
-	                $scope.menus = menus;
+	            }).then(function (emptyMenus) {
+	                $scope.menus = emptyMenus;
 	            });
 	
-	            if (type == 'security') {
+	            if (type === 'security') {
 	                // Green Cross
 	                // $scope.menus[0].hatColor = ''; 
 	            }
 	        }, function () {});
 	
+	        /*eslint-disable*/
 	        MetaDataSvc($stateParams.PageType).then(function (data) {
 	            $scope.metaData = data;
 	        });
@@ -4787,7 +4837,7 @@
 	        }
 	    };
 	    $scope.criteria = {};
-	    $scope.$on('$ionicView.enter', function (e) {
+	    $scope.$on('$ionicView.enter', function () {
 	        var selectedCriteria = localStorageService.get('criteria');
 	
 	        MenuList.getList($scope.lineMenus, true, {
@@ -4797,18 +4847,19 @@
 	            $scope.menus = menus;
 	        });
 	
-	        Warehouse.getWareHouse().then(function (Warehouse) {
-	            $scope.kuqus = Warehouse;
+	        Warehouse.getWareHouse().then(function (kqs) {
+	            $scope.kuqus = kqs;
 	            var isExist = selectedCriteria && selectedCriteria.kuqu && !!$scope.kuqus.filter(function (kq) {
-	                return kq.whse_code == selectedCriteria.kuqu.whse_code;
+	                return kq.whse_code === selectedCriteria.kuqu.whse_code;
 	            }).length;
+	
 	            if (isExist) {
 	                $scope.criteria.kuqu = selectedCriteria.kuqu;
 	            } else {
 	                $scope.criteria.kuqu = $scope.kuqus[0];
 	            }
-	        }, function (Warehouse) {
-	            $scope.kuqus = Warehouse;
+	        }, function (kuqus) {
+	            $scope.kuqus = kuqus;
 	        });
 	        $scope.kqDropdown.close();
 	    });
@@ -4843,23 +4894,23 @@
 	
 	    // $scope.kpis=Constant.kpis;
 	    $scope.isLine = true;
-	    $scope.$on('$ionicView.enter', function (e) {
+	    $scope.$on('$ionicView.enter', function () {
 	        $scope.selectedCriteria = localStorageService.get('criteria');
-	
+	        /*eslint-disable*/
 	        MetaDataSvc(Constant.lineKpiPageType, $scope.isLine).then(function (data) {
 	            $scope.metaData = data;
 	        });
-	
+	        /*eslint-disable*/
 	        KPIDetail('kpiHome', $scope.isLine).then(function (menus) {
 	            MenuList.getList(menus, $scope.isLine, {
 	                WareHouseId: $scope.selectedCriteria.kuqu ? $scope.selectedCriteria.kuqu.Id : -1,
 	                ZoneId: $scope.selectedCriteria.banzu ? $scope.selectedCriteria.banzu.Id : -1
-	            }).then(function (menus) {
-	                $scope.kpis = menus;
+	            }).then(function (kpiMenus) {
+	                $scope.kpis = kpiMenus;
 	            });
 	        }, function () {});
 	    });
-	    $scope.goDetail = function (kpiType, PageType) {
+	    $scope.goDetail = function (kpiType) {
 	        $state.go('kpi-detail', { 'aspect': kpiType, 'PageType': Constant.lineKpiPageType, isLine: true });
 	    };
 	};
@@ -4909,13 +4960,15 @@
 	var Controller = function Controller($scope, XiaJia, localStorageService, $state, $ionicPopup, $rootScope, $timeout) {
 	
 	    var seconds = 120000;
+	
 	    // An alert dialog
 	    $scope.showAlert = function (msg, isSuccess, errorMsg) {
 	        var alertPopup = $ionicPopup.alert({
 	            template: '<div class="xiajia"><img src="./img/ad/off-' + isSuccess + '.jpg" />' + msg + '<span>' + (errorMsg ? errorMsg : '') + '</span></div>',
 	            okText: '知道了'
 	        });
-	        alertPopup.then(function (res) {});
+	
+	        alertPopup.then(function () {});
 	    };
 	
 	    $scope.off = function (item) {
@@ -4960,7 +5013,7 @@
 	            }, seconds);
 	        });
 	    };
-	    $scope.$on('$ionicView.enter', function (e) {
+	    $scope.$on('$ionicView.enter', function () {
 	        if (!timing) {
 	            $scope.loadList();
 	        }
@@ -4984,13 +5037,15 @@
 	var Controller = function Controller($scope, $state, $http, Backend, $rootScope, $ionicPopup, $timeout) {
 	
 	    var seconds = 120000;
+	
 	    // An alert dialog
 	    $scope.showAlert = function (msg, isSuccess, errorMsg) {
 	        var alertPopup = $ionicPopup.alert({
 	            template: '<div class="xiajia"><img src="./img/ad/off-' + isSuccess + '.jpg" />' + msg + '<span>' + (errorMsg ? errorMsg : '') + '</span></div>',
 	            okText: '知道了'
 	        });
-	        alertPopup.then(function (res) {});
+	
+	        alertPopup.then(function () {});
 	    };
 	
 	    $scope.start = function (item) {
@@ -5001,15 +5056,16 @@
 	
 	        $http({
 	            method: 'GET',
+	            /*eslint-disable*/
 	            url: Backend().startActionURL + '?epsSupplyId=' + item.epsSupplyId + '&whseId=' + $rootScope.loginUser.whseId + '&whseName=' + $rootScope.loginUser.whseCode + '&userName=' + $rootScope.loginUser.loginNme + '&factoryCode=' + $rootScope.loginUser.factoryCode + '&zoneId=' + $rootScope.loginUser.zoneId
-	        }).success(function (data, status, headers, config) {
+	        }).success(function (data) {
 	            if (data && data.respCode === 'success') {
 	                $scope.showAlert('上线成功', true);
 	                $scope.getList();
 	            } else {
 	                $scope.showAlert('上线失败', false, data && data.respCode ? data.respCode : null);
 	            }
-	        }).error(function (data, status, headers, config) {
+	        }).error(function () {
 	            $scope.showAlert('上线失败', false, '服务器异常');
 	        });
 	    };
@@ -5021,8 +5077,9 @@
 	        timing = true;
 	        $http({
 	            method: 'GET',
+	            /*eslint-disable*/
 	            url: Backend().startListURL + '?whseId=' + $rootScope.loginUser.whseId + '&userName=' + $rootScope.loginUser.loginNme
-	        }).success(function (data, status, headers, config) {
+	        }).success(function (data) {
 	            $timeout(function () {
 	                $scope.getList();
 	            }, seconds);
@@ -5050,7 +5107,7 @@
 	            $scope.errorMsg = '加载失败';
 	        });
 	    };
-	    $scope.$on('$ionicView.enter', function (e) {
+	    $scope.$on('$ionicView.enter', function () {
 	        if (!timing) {
 	            $scope.getList();
 	        }
@@ -5085,7 +5142,8 @@
 	            template: '<div class="xiajia"><img src="./img/ad/off-' + isSuccess + '.jpg" />' + msg + '<span>' + (errorMsg ? errorMsg : '') + '</span></div>',
 	            okText: '知道了'
 	        });
-	        alertPopup.then(function (res) {
+	
+	        alertPopup.then(function () {
 	            // $scope.getList();
 	        });
 	    };
@@ -5095,6 +5153,7 @@
 	            okText: '确认',
 	            template: '<div class="xiajia"><img src="./img/ad/tip.png" /><div style="margin-bottom: 0.5em"><span style="margin:0;color: #333;">' + item.itemCode + '</span><span style="margin:0;color: #333;">' + item.routeCode + '</span><span style="margin:0;color: #333;">' + item.lsa + '</span><span style="margin:0;color: #333;">' + item.nickName + '</span></div>是否确认拉动？</div>'
 	        });
+	
 	        confirmPopup.then(function (res) {
 	            if (res) {
 	                $scope.pull(item);
@@ -5108,8 +5167,9 @@
 	        item.isPulling = $scope.isPulling = true;
 	        $http({
 	            method: 'GET',
+	            /*eslint-disable*/
 	            url: Backend().pullActionURL + '?itemCode=' + item.itemCode + '&routeCode=' + item.routeCode + '&lsa=' + item.lsa + '&whseId=' + $rootScope.loginUser.whseId + '&zoneId=' + $rootScope.loginUser.zoneId + '&userName=' + $rootScope.loginUser.loginNme
-	        }).success(function (data, status, headers, config) {
+	        }).success(function (data) {
 	            item.isPulling = $scope.isPulling = false;
 	            if (data && data.respCode === 'success') {
 	                $scope.showAlert('拉动成功', true);
@@ -5117,7 +5177,7 @@
 	            } else {
 	                $scope.showAlert('拉动失败', false, data.respCode);
 	            }
-	        }).error(function (data, status, headers, config) {
+	        }).error(function (data) {
 	            item.isPulling = $scope.isPulling = false;
 	            $scope.showAlert('拉动失败', false, '服务器异常');
 	        });
@@ -5126,8 +5186,9 @@
 	        // $scope.errorMsg = '加载中';
 	        $http({
 	            method: 'GET',
+	            /*eslint-disable*/
 	            url: Backend().pullListURL + '?userId=' + $rootScope.loginUser.userId
-	        }).success(function (data, status, headers, config) {
+	        }).success(function (data) {
 	            if (data && Object.prototype.toString.call(data) === '[object Array]') {
 	                $scope.menus = data;
 	                $scope.errorMsg = null;
@@ -5138,7 +5199,7 @@
 	                $scope.menus = [];
 	                $scope.errorMsg = data && data.respCode ? data.respCode : '暂无数据';
 	            }
-	        }).error(function (data, status, headers, config) {
+	        }).error(function () {
 	            /*                    $scope.menus = [{
 	                                    itemCode: 'itemCode1',
 	                                    routeCode: 'routeCode2',
@@ -5151,7 +5212,7 @@
 	            $scope.errorMsg = '加载失败';
 	        });
 	    };
-	    $scope.$on('$ionicView.enter', function (e) {
+	    $scope.$on('$ionicView.enter', function () {
 	        $scope.getList();
 	    });
 	};
@@ -5177,8 +5238,9 @@
 	        $scope.menus = [];
 	        $http({
 	            method: 'GET',
+	            /*eslint-disable*/
 	            url: Backend().pullHistoryURL + '?whseId=' + $rootScope.loginUser.whseId + '&userName=' + $rootScope.loginUser.loginNme
-	        }).success(function (data, status, headers, config) {
+	        }).success(function (data) {
 	            if (data && Object.prototype.toString.call(data) === '[object Array]') {
 	                $scope.menus = data;
 	                $scope.errorMsg = null;
@@ -5189,12 +5251,12 @@
 	                $scope.menus = [];
 	                $scope.errorMsg = data && data.respCode ? data.respCode : '暂无数据';
 	            }
-	        }).error(function (data, status, headers, config) {
+	        }).error(function () {
 	            $scope.menus = [];
 	            $scope.errorMsg = '加载失败';
 	        });
 	    };
-	    $scope.$on('$ionicView.enter', function (e) {
+	    $scope.$on('$ionicView.enter', function () {
 	        $scope.getList();
 	    });
 	};
@@ -5227,22 +5289,27 @@
 	            template: '<div class="xiajia"><img src="./img/ad/off-' + isSuccess + '.jpg" />' + msg + '<span>' + (errorMsg ? errorMsg : '') + '</span></div>',
 	            okText: '知道了'
 	        });
-	        alertPopup.then(function (res) {});
+	
+	        alertPopup.then(function () {});
 	    };
 	
 	    $scope.showModifyMember = function (item, isRevert) {
 	        var htmlSelect = '<select id="memberSelection">';
-	        for (var i = 0, len = $scope.members.length; i < len; i++) {
+	        var i, len;
+	        var confirmPopup;
+	
+	        for (i = 0, len = $scope.members.length; i < len; i++) {
 	            htmlSelect += '<option value="' + $scope.members[i] + '">' + $scope.members[i] + '</option>';
 	        }
 	        htmlSelect += '</selct>';
-	        var confirmPopup = $ionicPopup.confirm({
+	        confirmPopup = $ionicPopup.confirm({
 	            scope: $scope,
 	            title: '人员修改',
 	            cancelText: '取消',
 	            okText: '确认',
 	            template: '<div class="member"><table><tr><td class="name">当前选择零件号：</td><td><span>' + item.itemCode + '</span></td></tr><tr><td class="name">人员：</td><td>' + htmlSelect + '</td></tr></table></div>'
 	        });
+	
 	        confirmPopup.then(function (res) {
 	            if (res) {
 	                doModify(item, document.getElementById('memberSelection').value, isRevert);
@@ -5269,27 +5336,31 @@
 	    };
 	    $scope.loadItemMembers = function () {
 	        var deferred = $q.defer();
+	
 	        $http({
 	            method: 'GET',
 	            url: Backend().adMemberURL + '?groupId=' + $rootScope.loginUser.groupId
-	        }).success(function (data, status, headers, config) {
+	        }).success(function (data) {
 	            if (data && Object.prototype.toString.call(data) === '[object Array]') {
 	                deferred.resolve(data);
 	            } else {
 	                deferred.reject(null);
 	            }
-	        }).error(function (data, status, headers, config) {
+	        }).error(function (data) {
 	            deferred.reject(null);
 	        });
 	        return deferred.promise;
 	    };
 	    $scope.modifyMember = function (item) {
+	        var isRevert;
+	
 	        // 修改中, 还原中
 	        if (item.txt.indexOf('中') !== -1) {
 	            return;
 	        }
 	        // 还原中
-	        var isRevert = item.firstUser !== item.lastUser;
+	        isRevert = item.firstUser !== item.lastUser;
+	
 	        if (isRevert) {
 	            doModify(item, item.firstUser, isRevert);
 	        } else {
@@ -5300,6 +5371,7 @@
 	    function doModify(item, lastName, isRevert) {
 	        item.txt = item.txt + '中';
 	        var typeMsg = isRevert ? '还原' : '修改';
+	
 	        $http({
 	            method: 'GET',
 	            url: Backend().adModifyMemberURL + '?id=' + item.id + '&lastName=' + lastName + '&userName=' + $rootScope.loginUser.loginNme
@@ -5318,21 +5390,22 @@
 	    }
 	    $scope.getMembers = function () {
 	        var deferred = $q.defer();
+	
 	        $http({
 	            method: 'GET',
 	            url: Backend().adAllMemberURL + '?groupId=' + $rootScope.loginUser.groupId
-	        }).success(function (data, status, headers, config) {
+	        }).success(function (data) {
 	            if (data && Object.prototype.toString.call(data) === '[object Array]') {
 	                deferred.resolve(data);
 	            } else {
 	                deferred.reject(null);
 	            }
-	        }).error(function (data, status, headers, config) {
+	        }).error(function () {
 	            deferred.reject(null);
 	        });
 	        return deferred.promise;
 	    };
-	    $scope.$on('$ionicView.enter', function (e) {
+	    $scope.$on('$ionicView.enter', function () {
 	        if ($rootScope.loginUser.groupId === '0') {
 	            $scope.noPermission = '用户班组未维护';
 	            return;
@@ -5359,13 +5432,14 @@
 	var Controller = function Controller($scope, localStorageService, $state, $stateParams, $http, $rootScope, Backend) {
 	    $scope.itemCode = $stateParams.itemCode;
 	
-	    function loadList(params) {
+	    function loadList() {
 	        $scope.loadingStatus = '加载中';
 	        $scope.data = [];
 	        $http({
 	            method: 'GET',
+	            /*eslint-disable*/
 	            url: Backend().kucunListURL + '?itemCode=' + $scope.itemCode + '&whseId=' + $rootScope.loginUser.whseId
-	        }).success(function (data, status, headers, config) {
+	        }).success(function (data) {
 	            $scope.loadingStatus = '';
 	            if (data && Object.prototype.toString.call(data) === '[object Array]') {
 	                $scope.data = data;
@@ -5376,13 +5450,13 @@
 	                $scope.data = [];
 	                $scope.loadingStatus = data && data.respCode ? data.respCode : '加载失败';
 	            }
-	        }).error(function (data, status, headers, config) {
+	        }).error(function (data) {
 	            $scope.loadingStatus = '加载失败';
 	            $scope.data = [];
 	        });
 	    }
 	    $scope.loadList = loadList;
-	    $scope.$on('$ionicView.enter', function (e) {
+	    $scope.$on('$ionicView.enter', function () {
 	        loadList();
 	    });
 	};
@@ -5453,7 +5527,7 @@
 	            }
 	        });
 	    };
-	    $scope.$on('$ionicView.enter', function (e) {
+	    $scope.$on('$ionicView.enter', function () {
 	        $scope.errorMsg = '';
 	        localStorageService.set('loginUser', '');
 	        $scope.params.pwd = '';
@@ -5501,12 +5575,15 @@
 	    $scope.menus = Object.keys($scope.menuConfig);
 	    $scope.$on('$ionicView.enter', function () {
 	        var loginUser = localStorageService.get('loginUser');
+	        var permssions, i, len;
+	
 	        if (!loginUser) {
 	            $state.go('ad-login');
 	            return;
 	        }
-	        var permssions = loginUser.permssionMap.AD;
-	        for (var i = 0, len = permssions.length; i < len; i++) {
+	        permssions = loginUser.permssionMap.AD;
+	
+	        for (i = 0, len = permssions.length; i < len; i++) {
 	            $scope.menuConfig[permssions[i]].show = true;
 	        }
 	    });

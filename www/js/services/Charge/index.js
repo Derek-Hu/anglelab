@@ -7,7 +7,8 @@ module.exports = {
                 'DateTime': 'N/A'
             };
             var deferred = $q.defer();
-
+            
+            /*eslint-disable*/
             Backend().metaData.query({
                 'WareHouseId': WareHouseId,
                 'ZoneId': ZoneId,

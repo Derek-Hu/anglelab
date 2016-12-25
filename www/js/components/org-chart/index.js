@@ -10,19 +10,21 @@ module.exports = {
                 group: '=',
                 title: '@'
             },
-            link: function (scope, element, attrs) {
+            link: function (scope) {
                 scope.$watch('group', function () {
+                    var i, totalNum, subTeamNum;
+
                     scope.subTeams = [];
                     if (scope.group && scope.group.members) {
-                        var totalNum = scope.group.members.length;
+                        totalNum = scope.group.members.length;
                         scope.col = Math.max(Math.ceil(totalNum / 4), 3);
                         if (totalNum) {
-                            var subTeamNum = totalNum > scope.col ? scope.col : totalNum;
+                            subTeamNum = totalNum > scope.col ? scope.col : totalNum;
                             scope.oddTeam = (subTeamNum % 2 === 1);
-                            for (var i = 0; i < subTeamNum; i++) {
+                            for (i = 0; i < subTeamNum; i++) {
                                 scope.subTeams[i] = [];
                             }
-                            for (var i = 0; i < totalNum; i++) {
+                            for (i = 0; i < totalNum; i++) {
                                 scope.subTeams[i % subTeamNum].push(scope.group.members[i]);
                             }
                         }

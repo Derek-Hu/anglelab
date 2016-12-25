@@ -50,7 +50,7 @@ var Controller = function ($scope, AD, $state, localStorageService) {
             }
         });
     };
-    $scope.$on('$ionicView.enter', function (e) {
+    $scope.$on('$ionicView.enter', function () {
         $scope.errorMsg = '';
         localStorageService.set('loginUser', '');
         $scope.params.pwd = '';

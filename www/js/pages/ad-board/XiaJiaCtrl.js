@@ -2,13 +2,15 @@ var Controller = function ($scope, XiaJia, localStorageService, $state, $ionicPo
 
 
     var seconds = 120000;
+
     // An alert dialog
     $scope.showAlert = function (msg, isSuccess, errorMsg) {
         var alertPopup = $ionicPopup.alert({
             template: '<div class="xiajia"><img src="./img/ad/off-' + isSuccess + '.jpg" />' + msg + '<span>' + (errorMsg ? errorMsg : '') + '</span></div>',
             okText: '知道了'
         });
-        alertPopup.then(function (res) {});
+
+        alertPopup.then(function () {});
     };
 
     $scope.off = function (item) {
@@ -55,7 +57,7 @@ var Controller = function ($scope, XiaJia, localStorageService, $state, $ionicPo
             }, seconds);
         });
     };
-    $scope.$on('$ionicView.enter', function (e) {
+    $scope.$on('$ionicView.enter', function () {
         if (!timing) {
             $scope.loadList();
         }

@@ -1,6 +1,6 @@
 module.exports = {
     name: 'kaoQinChart',
-    fn: ['d3', '$window', function (d3, $window) {
+    fn: ['d3', function (d3) {
 
         var textPadding = 0.5,
             textMargin = 1.5,
@@ -8,12 +8,11 @@ module.exports = {
             lineP = 0.2;
         var bottomR = 3 * textMargin + textPadding,
             topTableBorder = textMargin + textPadding + lineP;
-        var middleTableBorder = bottomR - lineP - textPadding,
-            barIndcatorPos = 2 * textMargin - lineP;
+        var middleTableBorder = bottomR - lineP - textPadding;
         var lastRow = bottomR + textMargin,
             middleRow = 2 * textMargin;
         var chartCls = 'svg-content';
-        var percentage = d3.format('.2');
+
         return {
             restrict: 'E',
             scope: {
@@ -26,9 +25,9 @@ module.exports = {
                 isDouble: '=',
                 isRate: '='
             },
-            link: function (scope, element, attrs) {
+            link: function (scope, element) {
 
-                var fontSize = parseInt(d3.select('body').style('font-size'));
+                var fontSize = parseInt(d3.select('body').style('font-size'), 10);
                 var margin = { top: fontSize * 3, right: fontSize * 9, bottom: fontSize * 10, left: fontSize * 3 };
                 var data = scope.data,
                     title = scope.title,

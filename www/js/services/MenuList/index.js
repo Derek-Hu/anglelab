@@ -5,30 +5,35 @@ module.exports = {
             return {
                 getList: function (originalMenus, isLine, params) {
                     var deferred = $q.defer();
+                    var i;
+
                     if (!params || !params.WareHouseId) {
                         deferred.resolve(originalMenus);
                         return deferred.promise;
                     }
                     if (isLine) {
                         originalMenus = originalMenus.concat([]);
-                        for (var i = 0; i < originalMenus.length; i++) {
+                        for (i = 0; i < originalMenus.length; i++) {
                             originalMenus[i].MenuId = originalMenus[i].MenuId.replace(/(\d+)\-(\d+)\-(\d+)/, '10-$2-$3');
                         }
                     }
+                    /*eslint-disable*/
                     Backend().metaData.query({
                         'WareHouseId': params.WareHouseId,
                         'BizType': 4,
                         'ZoneId': isLine ? -1 : params.ZoneId
                     }, function (data) {
+                        var displayNemnus, cMenu, shouldShow, j, idx;
+
                         if (!data || !data[0] || data[0].ErrorCode !== undefined) {
                             deferred.resolve(originalMenus);
                         } else {
-                            var displayNemnus = [];
-                            for (var i = 0; i < originalMenus.length; i++) {
-                                var cMenu = originalMenus[i];
-                                var shouldShow = true;
-                                for (var j = 0; j < data.length; j++) {
-                                    if (data[j].show_code == cMenu.MenuId) {
+                            displayNemnus = [];
+                            for (idx = 0; idx < originalMenus.length; idx++) {
+                                cMenu = originalMenus[idx];
+                                shouldShow = true;
+                                for (j = 0; j < data.length; j++) {
+                                    if (data[j].show_code === cMenu.MenuId) {
                                         shouldShow = false;
                                         break;
                                     }

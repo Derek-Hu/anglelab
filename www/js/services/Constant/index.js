@@ -11,6 +11,7 @@ module.exports = {
             timeInterval: 10,
             imagePath: { name: '目录暂未选择', nativeURL: null }
         };
+
         return {
             baseURL: function () {
                 return settings.cacheURL;
@@ -35,13 +36,17 @@ module.exports = {
             loadingError: '加载失败',
             supportedExt: ['.jpg', '.jpeg', '.bmp', '.png', '.gif', '.tif'],
             isExtSupport: function (name) {
+                var nameLen, extName, i, len;
+
                 if (!name) {
                     return false;
                 }
-                var nameLen = name.length;
-                for (var i = 0, len = this.supportedExt.length; i < len; i++) {
-                    var extName = this.supportedExt[i];
-                    if (name.substring(nameLen - extName.length, nameLen) == extName) {
+                nameLen = name.length;
+
+                for (i = 0, len = this.supportedExt.length; i < len; i++) {
+                    extName = this.supportedExt[i];
+
+                    if (name.substring(nameLen - extName.length, nameLen) === extName) {
                         return true;
                     }
                 }

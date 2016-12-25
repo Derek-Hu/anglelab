@@ -6,10 +6,12 @@ module.exports = {
             function getBoard(PageType) {
                 return function (WareHouseId) {
                     var deferred = $q.defer();
+
                     if (!WareHouseId || !PageType) {
                         deferred.resolve([]);
                         return deferred.promise;
                     }
+                    /*eslint-disable*/
                     Backend().metaData.query({
                         'WareHouseId': WareHouseId,
                         'BizType': 3,
@@ -28,6 +30,7 @@ module.exports = {
             }
             var viewBoard = getBoard(1);
             var lineBoard = getBoard(2);
+            
             return {
                 viewBoard: viewBoard,
                 lineBoard: lineBoard
