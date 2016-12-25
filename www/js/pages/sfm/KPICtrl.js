@@ -1,6 +1,6 @@
 var Controller = function ($scope, Constant, $state, localStorageService, KPIDetail, MenuList) {
 
-    $scope.$on('$ionicView.enter', function (e) {
+    $scope.$on('$ionicView.enter', function () {
         $scope.selectedCriteria = localStorageService.get('criteria');
         MenuList.getList(Constant.kpis, false, {
             WareHouseId: $scope.selectedCriteria.kuqu ? $scope.selectedCriteria.kuqu.Id : -1,

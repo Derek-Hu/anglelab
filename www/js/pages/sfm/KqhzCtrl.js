@@ -19,17 +19,24 @@ var Controller = function (localStorageService, Backend, $scope, DateUtil, $ioni
     $scope.closePicker = function () {
         $scope.selectPickerOpen = false;
     };
+    var headerCols = ['工号', '姓名'];
+
     $scope.sendPicker = function (isSendEmail) {
+        var values, daysNum, i, len;
+        
         try {
-            var values = angular.element(document.getElementById('selectedMonth')).val().match(/(\d{4}).*(\d{2})/);
+            values = angular.element(document.getElementById('selectedMonth')).val().match(/(\d{4}).*(\d{2})/);
+
             if (values) {
                 $scope.selectedYear = values[1];
                 $scope.selectedMonth = values[2];
 
-                var daysNum = DateUtil.getLastDay($scope.selectedYear, $scope.selectedMonth);
+                daysNum = DateUtil.getLastDay($scope.selectedYear, $scope.selectedMonth);
+
                 $scope.headers = headerCols;
                 $scope.daysArr = [];
-                for (var i = 1, len = daysNum; i <= len; i++) {
+
+                for (i = 1, len = daysNum; i <= len; i++) {
                     $scope.daysArr.push(i);
                 }
                 $scope.headers = $scope.headers.concat($scope.daysArr);
@@ -62,12 +69,13 @@ var Controller = function (localStorageService, Backend, $scope, DateUtil, $ioni
         'glyphicon-triangle-bottom',
         'glyphicon glyphicon-star'
     ];
-    var headerCols = ['工号', '姓名'];
+
     $scope.loadingStatus = '';
     // var tailCols = ['迟到', '早退', '正班', '加班', '旷工', '请假', '休假','调休','签名'];
     $scope.loadData = function (WareHouseId, ZoneId, ShiftId, Date, IsSendEmail) {
         $scope.loadingStatus = '加载中';
         $scope.data = [];
+        /*eslint-disable*/
         Backend().kaoqin.query({
             'WareHouseId': WareHouseId,
             'ZoneId': ZoneId,
@@ -80,7 +88,7 @@ var Controller = function (localStorageService, Backend, $scope, DateUtil, $ioni
             if (!data || !data.length) {
                 $scope.loadingStatus = '暂无数据';
                 return;
-            } else if (data.length == 1 && data[0].ErrorCode !== undefined) {
+            } else if (data.length === 1 && data[0].ErrorCode !== undefined) {
                 $scope.loadingStatus = '加载失败';
                 return;
             }
@@ -92,21 +100,27 @@ var Controller = function (localStorageService, Backend, $scope, DateUtil, $ioni
     };
 
 
-    $scope.$on('$ionicView.enter', function (e) {
+    $scope.$on('$ionicView.enter', function () {
         $scope.selectedCriteria = localStorageService.get('criteria');
 
         var daysNum = DateUtil.getLastDay();
+
         $scope.headers = headerCols;
         $scope.daysArr = [];
-        for (var i = 1, len = daysNum; i <= len; i++) {
+
+        var i, len;
+
+        for (i = 1, len = daysNum; i <= len; i++) {
             $scope.daysArr.push(i);
         }
         $scope.headers = $scope.headers.concat($scope.daysArr);
 
         var today = new Date();
+
         $scope.selectedYear = today.getFullYear();
         $scope.selectedMonth = today.getMonth() + 1;
         $scope.loadData($scope.selectedCriteria.kuqu.Id, $scope.selectedCriteria.banzu.Id, $scope.selectedCriteria.banci.ID, $scope.selectedYear + '-' + $scope.selectedMonth, 0);
+        /*eslint-disable*/
         MetaDataSvc($stateParams.PageType).then(function (data) {
             $scope.metaData = data;
         });

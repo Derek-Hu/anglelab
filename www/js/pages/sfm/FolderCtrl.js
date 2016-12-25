@@ -1,6 +1,46 @@
 var Controller = function ($scope, Constant, $state, localStorageService, KPIDetail, $ionicScrollDelegate) {
 
-    $scope.$on('$ionicView.enter', function (e) {
+    function directoryReaderSuccess(entries) {
+        $scope.loading = '';
+        // $scope.msg += '目录列表遍历中...';
+        if (!entries) {
+            // $scope.msg += '目录列表为空';
+            return;
+        }
+        // again, Eclipse doesn't allow object inspection, thus the stringify
+        $scope.folders = entries.filter(function (entry) {
+            return entry.name.indexOf('.') !== 0 && (entry.isDirectory || Constant.isExtSupport(entry.name));
+        }).sort(function (a, b) {
+            // alphabetically sort the entries based on the entry's name
+            return (a.name.toLowerCase() < b.name.toLowerCase() ? -1 : 1);
+        });
+        // $scope.msg += 'folders============='+JSON.stringify($scope.folders);
+        /* if(!$scope.folders || !$scope.folders.length){
+          
+        }*/
+        $scope.$apply();
+    }
+
+
+    function requestFileSystemSuccess(fileSystem) {
+        // $scope.msg += '加载目录'+JSON.stringify(fileSystem)+'成功';
+        // lets insert the current path into our UI
+        $scope.folderName = fileSystem.root;
+        // save this location for future use
+        // $scope._currentFileSystem = fileSystem;
+        // create a directory reader
+        var directoryReader = fileSystem.root.createReader();
+
+        // Get a list of all the entries in the directory
+        $scope.loading = Constant.loading;
+        directoryReader.readEntries(directoryReaderSuccess, function () {
+            $scope.loading = Constant.loadingError;
+            // $scope.folders = 'Error';
+            // $scope.msg += 'requestFileSystemSuccess目录'+path+'失败:'+JSON.stringify(err);
+        });
+    }
+
+    $scope.$on('$ionicView.enter', function () {
         $scope._treePath = [];
         document.addEventListener('deviceready', function () {
             $scope.beginBrowseForFiles();
@@ -26,17 +66,18 @@ var Controller = function ($scope, Constant, $state, localStorageService, KPIDet
             return;
         }
         var path = $scope._treePath.pop();
+
         window.resolveLocalFileSystemURL(path, function (entry) {
             entry.getParent(function (filesystem) {
                 requestFileSystemSuccess({ root: filesystem });
             },
-                    function (err) {
+                    function () {
                         $scope.loading = Constant.loadingError;
                         // $scope.msg += '------------1-返回上级目录'+path+'失败:'+JSON.stringify(err);
                     }
                 );
         },
-            function (err) {
+            function () {
                 $scope.loading = Constant.loadingError;
                 // $scope.msg += '----------------2-返回上级目录'+path+'失败:'+JSON.stringify(err);
             }
@@ -51,7 +92,7 @@ var Controller = function ($scope, Constant, $state, localStorageService, KPIDet
         // check subscription type
         if (!file) { // start load root folder
             window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, requestFileSystemSuccess,
-                function (evt) {
+                function () {
                     $scope.loading = Constant.loadingError;
                     // $scope.msg += JSON.stringify(evt);
                 });
@@ -65,7 +106,7 @@ var Controller = function ($scope, Constant, $state, localStorageService, KPIDet
                 // which appears to take the form constructed below.
             requestFileSystemSuccess({ root: filesystem });
         },
-            function (err) {
+            function () {
                 $scope.loading = Constant.loadingError;
                 // $scope.msg += 'beginBrowseForFiles目录失败:'+JSON.stringify(err);
             }
@@ -80,43 +121,7 @@ var Controller = function ($scope, Constant, $state, localStorageService, KPIDet
       filesystem:null
     }
     */
-    function directoryReaderSuccess(entries) {
-        $scope.loading = '';
-        // $scope.msg += '目录列表遍历中...';
-        if (!entries) {
-            // $scope.msg += '目录列表为空';
-            return;
-        }
-        // again, Eclipse doesn't allow object inspection, thus the stringify
-        $scope.folders = entries.filter(function (entry) {
-            return entry.name.indexOf('.') !== 0 && (entry.isDirectory || Constant.isExtSupport(entry.name));
-        }).sort(function (a, b) {
-            // alphabetically sort the entries based on the entry's name
-            return (a.name.toLowerCase() < b.name.toLowerCase() ? -1 : 1);
-        });
-        // $scope.msg += 'folders============='+JSON.stringify($scope.folders);
-        /* if(!$scope.folders || !$scope.folders.length){
-          
-        }*/
-        $scope.$apply();
-    }
 
-    function requestFileSystemSuccess(fileSystem) {
-        // $scope.msg += '加载目录'+JSON.stringify(fileSystem)+'成功';
-        // lets insert the current path into our UI
-        $scope.folderName = fileSystem.root;
-        // save this location for future use
-        // $scope._currentFileSystem = fileSystem;
-        // create a directory reader
-        var directoryReader = fileSystem.root.createReader();
-        // Get a list of all the entries in the directory
-        $scope.loading = Constant.loading;
-        directoryReader.readEntries(directoryReaderSuccess, function (err) {
-            $scope.loading = Constant.loadingError;
-            // $scope.folders = 'Error';
-            // $scope.msg += 'requestFileSystemSuccess目录'+path+'失败:'+JSON.stringify(err);
-        });
-    }
 };
 
 module.exports = ['$scope', 'Constant', '$state', 'localStorageService', 'KPIDetail', '$ionicScrollDelegate', Controller];

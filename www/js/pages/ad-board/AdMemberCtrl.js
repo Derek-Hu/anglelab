@@ -1,4 +1,4 @@
-var Controller = function(AD, $scope, $rootScope, $q, $http, Backend, $ionicPopup) {
+var Controller = function (AD, $scope, $rootScope, $q, $http, Backend, $ionicPopup) {
 
     if ($rootScope.loginUser.groupId === '0') {
         $scope.noPermission = '用户班组未维护';

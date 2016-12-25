@@ -75,8 +75,9 @@ var Controller = function ($scope, $state, localStorageService, Constant, Wareho
         $state.go(state ? state : 'kpi-item', { 'aspect': $stateParams.aspect, 'PageType': $stateParams.PageType, 'BizType': BizType });
     };
     var type = $stateParams.aspect;
+    var idx, idlen;
 
-    for (var idx = 0, idlen = Constant.kpis.length; idx < idlen; idx++) {
+    for (idx = 0, idlen = Constant.kpis.length; idx < idlen; idx++) {
         if (Constant.kpis[idx].type == type) {
             $scope.aspectTitle = Constant.kpis[idx].name;
             break;

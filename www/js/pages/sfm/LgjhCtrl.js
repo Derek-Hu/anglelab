@@ -2,6 +2,7 @@ var Controller = function (localStorageService, $scope, Backend, MetaDataSvc, $s
     $scope.loadingStatus = '';
     $scope.loadLgjh = function (WareHouseId, ZoneId, ShiftId) {
         $scope.loadingStatus = '加载中';
+        /*eslint-disable*/
         Backend().lgjh.query({
             'WareHouseId': WareHouseId,
             'ZoneId': ZoneId,
@@ -11,12 +12,12 @@ var Controller = function (localStorageService, $scope, Backend, MetaDataSvc, $s
             if (!data || !data.length) {
                 $scope.loadingStatus = '暂无数据';
                 return;
-            } else if (data.length == 1 && data[0].ErrorCode !== undefined) {
+            } else if (data.length === 1 && data[0].ErrorCode !== undefined) {
                 $scope.loadingStatus = '加载失败';
                 return;
             }
             data.sort(function (a, b) {
-                return parseInt(a.Order_number) - parseInt(b.Order_number);
+                return parseInt(a.Order_number, 10) - parseInt(b.Order_number, 10);
             });
             var rows = [];
             /*

@@ -1,9 +1,9 @@
-var Controller = function($scope, KPIDetail, Constant, $stateParams, MetaDataSvc, $state, localStorageService, MenuList) {
+var Controller = function ($scope, KPIDetail, Constant, $stateParams, MetaDataSvc, $state, localStorageService, MenuList) {
     var idx, idlen, type;
 
     $scope.aspect = $stateParams.aspect;
 
-    $scope.goKPIDetail = function(state, BizType, isPercentage, isInvalid) {
+    $scope.goKPIDetail = function (state, BizType, isPercentage, isInvalid) {
 
         if (isInvalid) {
             return;
@@ -26,7 +26,7 @@ var Controller = function($scope, KPIDetail, Constant, $stateParams, MetaDataSvc
             break;
         }
     }
-    $scope.$on('$ionicView.enter', function() {
+    $scope.$on('$ionicView.enter', function () {
         $scope.criteriaFromCache = localStorageService.get('criteria');
 
         /*eslint-disable*/

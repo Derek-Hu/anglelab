@@ -5,13 +5,15 @@ var Controller = function (localStorageService, Backend, $scope, $state, MetaDat
     // listen for the $ionicView.enter event:
     //
 
-    $scope.$on('$ionicView.enter', function (e) {
+    $scope.$on('$ionicView.enter', function () {
+        /*eslint-disable*/
         MetaDataSvc($stateParams.PageType).then(function (data) {
             $scope.metaData = data;
         });
 
         $scope.selectedCriteria = localStorageService.get('criteria');
         $scope.group = null;
+        /*eslint-disable*/
         Backend().org.query({
             'WareHouseId': $scope.selectedCriteria.kuqu.Id,
             'ZoneId': $scope.selectedCriteria.banzu.Id,
@@ -21,9 +23,12 @@ var Controller = function (localStorageService, Backend, $scope, $state, MetaDat
                 return;
             }
             data.sort(function (a, b) {
-                return parseInt(a.Order_number) - parseInt(b.Order_number);
+                return parseInt(a.Order_number, 10) - parseInt(b.Order_number, 10);
             });
-            for (var i = 0, len = data.length; i < len; i++) {
+
+            var i, len;
+
+            for (i = 0, len = data.length; i < len; i++) {
                 data[i].Picture = Constant.baseURL() + '/Imagers/' + data[i].Picture;
             }
             $scope.group = {};

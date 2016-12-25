@@ -3391,8 +3391,9 @@
 	        $state.go(state ? state : 'kpi-item', { 'aspect': $stateParams.aspect, 'PageType': $stateParams.PageType, 'BizType': BizType });
 	    };
 	    var type = $stateParams.aspect;
+	    var idx, idlen;
 	
-	    for (var idx = 0, idlen = Constant.kpis.length; idx < idlen; idx++) {
+	    for (idx = 0, idlen = Constant.kpis.length; idx < idlen; idx++) {
 	        if (Constant.kpis[idx].type == type) {
 	            $scope.aspectTitle = Constant.kpis[idx].name;
 	            break;
@@ -3473,7 +3474,7 @@
 	        Shift.getShift($scope.criteria.kuqu.Id, $scope.criteria.banzu.Id).then(function (shifts) {
 	            $scope.bancis = shifts;
 	            var isExist = selectedCriteria && selectedCriteria.banci && !!$scope.bancis.filter(function (bc) {
-	                return bc.shift_code == selectedCriteria.banci.shift_code;
+	                return bc.shift_code == selectedCriteria.banci.shift_code && bc.ID == selectedCriteria.banci.ID;
 	            }).length;
 	            if (isExist) {
 	                $scope.criteria.banci = selectedCriteria.banci;
@@ -3533,20 +3534,22 @@
 	
 	    function convertObj(val) {
 	        var obj = {};
+	
 	        if (!val) {
 	            obj.isVal = true;
 	            obj.val = '';
 	            return obj;
 	        }
 	        var arr = val.split('/');
-	        if (arr.length == 1) {
+	
+	        if (arr.length === 1) {
 	            obj.isVal = true;
 	            obj.val = val;
-	        } else if (arr.length == 2) {
+	        } else if (arr.length === 2) {
 	            obj.isSkill = true;
 	            obj.skill = arr[0];
 	            obj.bg = arr[1];
-	        } else if (arr.length == 3) {
+	        } else if (arr.length === 3) {
 	            obj.isCertificate = true;
 	            obj.bg = arr[1];
 	            obj.cert = arr[2];
@@ -3555,6 +3558,7 @@
 	    }
 	    $scope.loadGwrx = function (WareHouseId, ZoneId, ShiftId) {
 	        $scope.loadingStatus = '加载中';
+	        /*eslint-disable*/
 	        Backend().gwrx.query({
 	            'WareHouseId': WareHouseId,
 	            'ZoneId': ZoneId,
@@ -3562,8 +3566,10 @@
 	        }, function (data) {
 	            $scope.loadingStatus = '';
 	
+	            var p;
+	
 	            $scope.records = data.map(function (d) {
-	                for (var p in d) {
+	                for (p in d) {
 	                    if (d.hasOwnProperty(p)) {
 	                        d[p] = convertObj(d[p]);
 	                    }
@@ -3573,21 +3579,22 @@
 	            if (!$scope.records || !$scope.records.length) {
 	                $scope.loadingStatus = '暂无数据';
 	                return;
-	            } else if (data.length == 1 && data[0].ErrorCode !== undefined) {
+	            } else if (data.length === 1 && data[0].ErrorCode !== undefined) {
 	                $scope.loadingStatus = '加载失败';
 	                return;
 	            }
-	            $scope.headers = Object.keys(data[0]).filter(function (data) {
-	                return data != '序号' && data != '班组' && data != '班次';
+	            $scope.headers = Object.keys(data[0]).filter(function (title) {
+	                return title !== '序号' && title !== '班组' && title !== '班次';
 	            });
 	        }, function () {
 	            $scope.loadingStatus = '加载失败';
 	        });
 	    };
-	    $scope.$on('$ionicView.enter', function (e) {
+	    $scope.$on('$ionicView.enter', function () {
 	        $scope.selectedCriteria = localStorageService.get('criteria');
 	        $scope.loadGwrx($scope.selectedCriteria.kuqu.Id, $scope.selectedCriteria.banzu.Id, $scope.selectedCriteria.banci.ID);
 	
+	        /*eslint-disable*/
 	        MetaDataSvc($stateParams.PageType).then(function (data) {
 	            $scope.metaData = data;
 	        });
@@ -3610,80 +3617,6 @@
 	
 	var Controller = function Controller($scope, Constant, $state, localStorageService, KPIDetail, $ionicScrollDelegate) {
 	
-	    $scope.$on('$ionicView.enter', function (e) {
-	        $scope._treePath = [];
-	        document.addEventListener('deviceready', function () {
-	            $scope.beginBrowseForFiles();
-	        }, false);
-	    });
-	
-	    $scope.goToSettings = function () {
-	        $state.go('settings', { fromSelect: true });
-	    };
-	
-	    $scope.setImageFolder = function () {
-	        Constant.setImagePath({ name: $scope.folderName.fullPath, nativeURL: $scope.folderName.nativeURL });
-	        $state.go('settings');
-	    };
-	    $scope.doDirectoryUp = function () {
-	        // var path = $scope._currentFileSystem.root.fullPath;
-	        // $scope.msg += '----doDirectoryUp'+path;
-	        $scope.loading = Constant.loading;
-	        $scope.folders = [];
-	        $ionicScrollDelegate.scrollTop();
-	        if (!$scope._treePath.length) {
-	            $scope.beginBrowseForFiles();
-	            return;
-	        }
-	        var path = $scope._treePath.pop();
-	        window.resolveLocalFileSystemURL(path, function (entry) {
-	            entry.getParent(function (filesystem) {
-	                requestFileSystemSuccess({ root: filesystem });
-	            }, function (err) {
-	                $scope.loading = Constant.loadingError;
-	                // $scope.msg += '------------1-返回上级目录'+path+'失败:'+JSON.stringify(err);
-	            });
-	        }, function (err) {
-	            $scope.loading = Constant.loadingError;
-	            // $scope.msg += '----------------2-返回上级目录'+path+'失败:'+JSON.stringify(err);
-	        });
-	    };
-	
-	    $scope.beginBrowseForFiles = function (file) {
-	        // $scope.msg = '';
-	        $scope.loading = Constant.loading;
-	        $scope.folders = [];
-	        $ionicScrollDelegate.scrollTop();
-	        // check subscription type
-	        if (!file) {
-	            // start load root folder
-	            window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, requestFileSystemSuccess, function (evt) {
-	                $scope.loading = Constant.loadingError;
-	                // $scope.msg += JSON.stringify(evt);
-	            });
-	            return;
-	        }
-	        // $scope.msg += '----beginBrowseForFiles目录'+JSON.stringify(file);
-	        // this is used to get subdirectories
-	        $scope._treePath.push(file.nativeURL);
-	        window.resolveLocalFileSystemURL(file.nativeURL, function (filesystem) {
-	            // we must pass what the PhoneGap API doc examples call an "entry" to the reader
-	            // which appears to take the form constructed below.
-	            requestFileSystemSuccess({ root: filesystem });
-	        }, function (err) {
-	            $scope.loading = Constant.loadingError;
-	            // $scope.msg += 'beginBrowseForFiles目录失败:'+JSON.stringify(err);
-	        });
-	    };
-	    /*
-	    {
-	      isFile:false,
-	      isDirectory:true,
-	      name:'backups',
-	      fullPath:'file:///storage/sdcard0',
-	      filesystem:null
-	    }
-	    */
 	    function directoryReaderSuccess(entries) {
 	        $scope.loading = '';
 	        // $scope.msg += '目录列表遍历中...';
@@ -3713,14 +3646,91 @@
 	        // $scope._currentFileSystem = fileSystem;
 	        // create a directory reader
 	        var directoryReader = fileSystem.root.createReader();
+	
 	        // Get a list of all the entries in the directory
 	        $scope.loading = Constant.loading;
-	        directoryReader.readEntries(directoryReaderSuccess, function (err) {
+	        directoryReader.readEntries(directoryReaderSuccess, function () {
 	            $scope.loading = Constant.loadingError;
 	            // $scope.folders = 'Error';
 	            // $scope.msg += 'requestFileSystemSuccess目录'+path+'失败:'+JSON.stringify(err);
 	        });
 	    }
+	
+	    $scope.$on('$ionicView.enter', function () {
+	        $scope._treePath = [];
+	        document.addEventListener('deviceready', function () {
+	            $scope.beginBrowseForFiles();
+	        }, false);
+	    });
+	
+	    $scope.goToSettings = function () {
+	        $state.go('settings', { fromSelect: true });
+	    };
+	
+	    $scope.setImageFolder = function () {
+	        Constant.setImagePath({ name: $scope.folderName.fullPath, nativeURL: $scope.folderName.nativeURL });
+	        $state.go('settings');
+	    };
+	    $scope.doDirectoryUp = function () {
+	        // var path = $scope._currentFileSystem.root.fullPath;
+	        // $scope.msg += '----doDirectoryUp'+path;
+	        $scope.loading = Constant.loading;
+	        $scope.folders = [];
+	        $ionicScrollDelegate.scrollTop();
+	        if (!$scope._treePath.length) {
+	            $scope.beginBrowseForFiles();
+	            return;
+	        }
+	        var path = $scope._treePath.pop();
+	
+	        window.resolveLocalFileSystemURL(path, function (entry) {
+	            entry.getParent(function (filesystem) {
+	                requestFileSystemSuccess({ root: filesystem });
+	            }, function () {
+	                $scope.loading = Constant.loadingError;
+	                // $scope.msg += '------------1-返回上级目录'+path+'失败:'+JSON.stringify(err);
+	            });
+	        }, function () {
+	            $scope.loading = Constant.loadingError;
+	            // $scope.msg += '----------------2-返回上级目录'+path+'失败:'+JSON.stringify(err);
+	        });
+	    };
+	
+	    $scope.beginBrowseForFiles = function (file) {
+	        // $scope.msg = '';
+	        $scope.loading = Constant.loading;
+	        $scope.folders = [];
+	        $ionicScrollDelegate.scrollTop();
+	        // check subscription type
+	        if (!file) {
+	            // start load root folder
+	            window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, requestFileSystemSuccess, function () {
+	                $scope.loading = Constant.loadingError;
+	                // $scope.msg += JSON.stringify(evt);
+	            });
+	            return;
+	        }
+	        // $scope.msg += '----beginBrowseForFiles目录'+JSON.stringify(file);
+	        // this is used to get subdirectories
+	        $scope._treePath.push(file.nativeURL);
+	        window.resolveLocalFileSystemURL(file.nativeURL, function (filesystem) {
+	            // we must pass what the PhoneGap API doc examples call an "entry" to the reader
+	            // which appears to take the form constructed below.
+	            requestFileSystemSuccess({ root: filesystem });
+	        }, function () {
+	            $scope.loading = Constant.loadingError;
+	            // $scope.msg += 'beginBrowseForFiles目录失败:'+JSON.stringify(err);
+	        });
+	    };
+	    /*
+	    {
+	      isFile:false,
+	      isDirectory:true,
+	      name:'backups',
+	      fullPath:'file:///storage/sdcard0',
+	      filesystem:null
+	    }
+	    */
 	};
 	
 	module.exports = ['$scope', 'Constant', '$state', 'localStorageService', 'KPIDetail', '$ionicScrollDelegate', Controller];
@@ -3743,6 +3753,7 @@
 	    $scope.noHomeMenu = 'noHomeMenu' in $location.search();
 	
 	    var isBackFromFolder = !!$stateParams.fromSelect;
+	
 	    $scope.back = function () {
 	        $window.history.go(isBackFromFolder ? -3 : -1);
 	    };
@@ -3789,6 +3800,7 @@
 	    $scope.checkVersion = function () {
 	        $scope.checkVersionText = '版本检查中...';
 	        cordova.getAppVersion.getVersionNumber().then(function (version) {
+	            /*eslint-disable*/
 	            Backend().metaData.query({
 	                'BizType': 5,
 	                'Version': version
@@ -3821,30 +3833,31 @@
 	    };
 	    $scope.downloadVersion = function () {
 	        $scope.hasNewVersion = 'download';
-	        window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, function gotFS(fileSystem) {
-	            fileSystem.root.getDirectory('SFMDownload', { create: true }, function fileSystemSuccess(fileSystem) {
+	        window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, function gotFS(fileOuterSystem) {
+	            fileOuterSystem.root.getDirectory('SFMDownload', { create: true }, function fileSystemSuccess(fileSystem) {
 	                fileSystem.getFile($scope.apkName, { create: true, exclusive: false }, function gotFileEntry(fileEntry) {
 	                    var path = fileEntry.nativeURL.replace($scope.apkName, '');
+	
 	                    // $scope.dbgMsg += JSON.stringify(fileEntry);
 	                    try {
 	                        fileEntry.remove();
+	                        /*eslint-disable*/
 	                    } catch (e) {}
-	                    var fileTransfer = new FileTransfer();
-	                    $cordovaFileTransfer.download($scope.apkURL, path + '' + $scope.apkName, {}, true).then(function (result) {
+	                    $cordovaFileTransfer.download($scope.apkURL, path + '' + $scope.apkName, {}, true).then(function () {
 	                        window.plugins.webintent.startActivity({
 	                            action: window.plugins.webintent.ACTION_VIEW,
 	                            // url: 'file://' + entry.fullPath,
 	                            url: path + '' + $scope.apkName,
 	                            type: 'application/vnd.android.package-archive'
-	                        }, function () {}, function (e) {
+	                        }, function () {}, function () {
 	                            alert('Error launching app update');
 	                        });
-	                    }, function (err) {
+	                    }, function () {
 	                        alert('DownLoad Error');
 	                    }, function (progress) {
 	                        // alert(progress);
 	                        $timeout(function () {
-	                            $scope.downloadProgress = parseInt(progress.loaded / progress.total * 100) + '%';
+	                            $scope.downloadProgress = parseInt(progress.loaded / progress.total * 100, 10) + '%';
 	                        });
 	                    });
 	                }, function () {
@@ -3857,7 +3870,7 @@
 	    };
 	    $scope.checkVersionText = '检查更新';
 	    $scope.hasNewVersion = '';
-	    $scope.$on('$ionicView.enter', function (e) {
+	    $scope.$on('$ionicView.enter', function () {
 	        $scope.hasNewVersion = '';
 	        $scope.settings.timeInterval = Constant.getInterval();
 	        $scope.settings.editInterval = $scope.settings.timeInterval;
@@ -3887,6 +3900,7 @@
 	    $scope.loadingStatus = '';
 	    $scope.loadLgjh = function (WareHouseId, ZoneId, ShiftId) {
 	        $scope.loadingStatus = '加载中';
+	        /*eslint-disable*/
 	        Backend().lgjh.query({
 	            'WareHouseId': WareHouseId,
 	            'ZoneId': ZoneId,
@@ -3896,12 +3910,12 @@
 	            if (!data || !data.length) {
 	                $scope.loadingStatus = '暂无数据';
 	                return;
-	            } else if (data.length == 1 && data[0].ErrorCode !== undefined) {
+	            } else if (data.length === 1 && data[0].ErrorCode !== undefined) {
 	                $scope.loadingStatus = '加载失败';
 	                return;
 	            }
 	            data.sort(function (a, b) {
-	                return parseInt(a.Order_number) - parseInt(b.Order_number);
+	                return parseInt(a.Order_number, 10) - parseInt(b.Order_number, 10);
 	            });
 	            var rows = [];
 	            /*
@@ -4015,19 +4029,21 @@
 
 	'use strict';
 	
-	var Controller = function Controller($scope, Constant, $state, localStorageService, KPIDetail) {
+	var Controller = function Controller($scope, Constant, $state, localStorageService) {
 	
-	    $scope.$on('$ionicView.enter', function (e) {
+	    $scope.$on('$ionicView.enter', function () {
 	        $scope.selectedCriteria = localStorageService.get('criteria');
 	        $scope.myInterval = Constant.getInterval() * 1000;
 	        // $scope.msg = '';
 	        $scope.slides = [];
 	        var imagePath = Constant.getImagePath();
+	
 	        if (imagePath && imagePath.nativeURL) {
 	            window.resolveLocalFileSystemURL(Constant.getImagePath().nativeURL, function (filesystem) {
 	                // we must pass what the PhoneGap API doc examples call an "entry" to the reader
 	                // which appears to take the form constructed below.
 	                var directoryReader = filesystem.createReader();
+	
 	                // Get a list of all the entries in the directory
 	                // $scope.loading = Constant.loading;
 	                directoryReader.readEntries(function (entries) {
@@ -4051,11 +4067,11 @@
 	                      
 	                    }*/
 	                    $scope.$apply();
-	                }, function (err) {
+	                }, function () {
 	                    // $scope.loading = Constant.loadingError;
 	                    // $scope.msg += 'requestFileSystemSuccess目录'+path+'失败:'+JSON.stringify(err);
 	                });
-	            }, function (err) {
+	            }, function () {
 	                // $scope.loading = Constant.loadingError;
 	                // $scope.msg += 'beginBrowseForFiles目录失败:'+JSON.stringify(err);
 	            });
@@ -4075,7 +4091,9 @@
 	    };*/
 	
 	    $scope.next = function () {
-	        for (var i = 0, len = $scope.slides.length; i < len; i++) {
+	        var i, len;
+	
+	        for (i = 0, len = $scope.slides.length; i < len; i++) {
 	            if ($scope.slides[i].active) {
 	                $scope.slides[i].active = false;
 	                if (i + 1 >= len) {
@@ -4088,7 +4106,9 @@
 	        }
 	    };
 	    $scope.prev = function () {
-	        for (var i = 0, len = $scope.slides.length; i < len; i++) {
+	        var i, len;
+	
+	        for (i = 0, len = $scope.slides.length; i < len; i++) {
 	            if ($scope.slides[i].active) {
 	                $scope.slides[i].active = false;
 	                if (i - 1 < 0) {
@@ -4102,7 +4122,7 @@
 	    };
 	};
 	
-	module.exports = ['$scope', 'Constant', '$state', 'localStorageService', 'KPIDetail', Controller];
+	module.exports = ['$scope', 'Constant', '$state', 'localStorageService', Controller];
 
 /***/ },
 /* 47 */
@@ -4123,13 +4143,15 @@
 	    // listen for the $ionicView.enter event:
 	    //
 	
-	    $scope.$on('$ionicView.enter', function (e) {
+	    $scope.$on('$ionicView.enter', function () {
+	        /*eslint-disable*/
 	        MetaDataSvc($stateParams.PageType).then(function (data) {
 	            $scope.metaData = data;
 	        });
 	
 	        $scope.selectedCriteria = localStorageService.get('criteria');
 	        $scope.group = null;
+	        /*eslint-disable*/
 	        Backend().org.query({
 	            'WareHouseId': $scope.selectedCriteria.kuqu.Id,
 	            'ZoneId': $scope.selectedCriteria.banzu.Id,
@@ -4139,9 +4161,12 @@
 	                return;
 	            }
 	            data.sort(function (a, b) {
-	                return parseInt(a.Order_number) - parseInt(b.Order_number);
+	                return parseInt(a.Order_number, 10) - parseInt(b.Order_number, 10);
 	            });
-	            for (var i = 0, len = data.length; i < len; i++) {
+	
+	            var i, len;
+	
+	            for (i = 0, len = data.length; i < len; i++) {
 	                data[i].Picture = Constant.baseURL() + '/Imagers/' + data[i].Picture;
 	            }
 	            $scope.group = {};
@@ -4172,7 +4197,7 @@
 	
 	var Controller = function Controller($scope, Constant, $state, localStorageService, KPIDetail, MenuList) {
 	
-	    $scope.$on('$ionicView.enter', function (e) {
+	    $scope.$on('$ionicView.enter', function () {
 	        $scope.selectedCriteria = localStorageService.get('criteria');
 	        MenuList.getList(Constant.kpis, false, {
 	            WareHouseId: $scope.selectedCriteria.kuqu ? $scope.selectedCriteria.kuqu.Id : -1,
@@ -4225,17 +4250,23 @@
 	    $scope.closePicker = function () {
 	        $scope.selectPickerOpen = false;
 	    };
+	    var headerCols = ['工号', '姓名'];
+	
 	    $scope.sendPicker = function (isSendEmail) {
+	        var values, daysNum, i, len;
 	        try {
-	            var values = angular.element(document.getElementById('selectedMonth')).val().match(/(\d{4}).*(\d{2})/);
+	            values = angular.element(document.getElementById('selectedMonth')).val().match(/(\d{4}).*(\d{2})/);
+	
 	            if (values) {
 	                $scope.selectedYear = values[1];
 	                $scope.selectedMonth = values[2];
 	
-	                var daysNum = DateUtil.getLastDay($scope.selectedYear, $scope.selectedMonth);
+	                daysNum = DateUtil.getLastDay($scope.selectedYear, $scope.selectedMonth);
+	
 	                $scope.headers = headerCols;
 	                $scope.daysArr = [];
-	                for (var i = 1, len = daysNum; i <= len; i++) {
+	
+	                for (i = 1, len = daysNum; i <= len; i++) {
 	                    $scope.daysArr.push(i);
 	                }
 	                $scope.headers = $scope.headers.concat($scope.daysArr);
@@ -4248,12 +4279,13 @@
 	        $scope.closePicker();
 	    };
 	    $scope.clzMap = ['absent', 'glyphicon glyphicon-ok', 'circle anjie-border', 'glyphicon glyphicon-remove', 'glyphicon glyphicon-star-empty', 'rect', 'anjie-bg circle anjie-border', 'glyphicon glyphicon-record', 'glyphicon glyphicon-triangle-top', 'glyphicon glyphicon-asterisk', 'rect half', 'hurt', 'glyphicon-triangle-bottom', 'glyphicon glyphicon-star'];
-	    var headerCols = ['工号', '姓名'];
+	
 	    $scope.loadingStatus = '';
 	    // var tailCols = ['迟到', '早退', '正班', '加班', '旷工', '请假', '休假','调休','签名'];
 	    $scope.loadData = function (WareHouseId, ZoneId, ShiftId, Date, IsSendEmail) {
 	        $scope.loadingStatus = '加载中';
 	        $scope.data = [];
+	        /*eslint-disable*/
 	        Backend().kaoqin.query({
 	            'WareHouseId': WareHouseId,
 	            'ZoneId': ZoneId,
@@ -4266,7 +4298,7 @@
 	            if (!data || !data.length) {
 	                $scope.loadingStatus = '暂无数据';
 	                return;
-	            } else if (data.length == 1 && data[0].ErrorCode !== undefined) {
+	            } else if (data.length === 1 && data[0].ErrorCode !== undefined) {
 	                $scope.loadingStatus = '加载失败';
 	                return;
 	            }
@@ -4277,21 +4309,27 @@
 	        });
 	    };
 	
-	    $scope.$on('$ionicView.enter', function (e) {
+	    $scope.$on('$ionicView.enter', function () {
 	        $scope.selectedCriteria = localStorageService.get('criteria');
 	
 	        var daysNum = DateUtil.getLastDay();
+	
 	        $scope.headers = headerCols;
 	        $scope.daysArr = [];
-	        for (var i = 1, len = daysNum; i <= len; i++) {
+	
+	        var i, len;
+	
+	        for (i = 1, len = daysNum; i <= len; i++) {
 	            $scope.daysArr.push(i);
 	        }
 	        $scope.headers = $scope.headers.concat($scope.daysArr);
 	
 	        var today = new Date();
+	
 	        $scope.selectedYear = today.getFullYear();
 	        $scope.selectedMonth = today.getMonth() + 1;
 	        $scope.loadData($scope.selectedCriteria.kuqu.Id, $scope.selectedCriteria.banzu.Id, $scope.selectedCriteria.banci.ID, $scope.selectedYear + '-' + $scope.selectedMonth, 0);
+	        /*eslint-disable*/
 	        MetaDataSvc($stateParams.PageType).then(function (data) {
 	            $scope.metaData = data;
 	        });
@@ -4314,7 +4352,9 @@
 	
 	var Controller = function Controller($scope, $stateParams, $state, $ionicScrollDelegate, MetaDataSvc, KPIItem, Constant, DateUtil, localStorageService) {
 	    function generate(data) {
-	        for (var i = 0, len = DateUtil.getLastDay(); i < len; i++) {
+	        var i, len;
+	
+	        for (i = 0, len = DateUtil.getLastDay(); i < len; i++) {
 	            if (!data[i]) {
 	                data.push({
 	                    ID: i + 1,
@@ -4324,34 +4364,41 @@
 	        }
 	        $scope.rows = [];
 	        $scope.rows.push(data.filter(function (el) {
-	            return parseInt(el.ID) <= 3;
+	            return parseInt(el.ID, 10) <= 3;
 	        }));
 	        $scope.rows.push(data.filter(function (el) {
-	            var id = parseInt(el.ID);
+	            var id = parseInt(el.ID, 10);
+	
 	            return id > 3 && id <= 6;
 	        }));
 	        $scope.rows.push(data.filter(function (el) {
-	            var id = parseInt(el.ID);
+	            var id = parseInt(el.ID, 10);
+	
 	            return id > 6 && id <= 13;
 	        }));
 	        $scope.rows.push(data.filter(function (el) {
-	            var id = parseInt(el.ID);
+	            var id = parseInt(el.ID, 10);
+	
 	            return id > 13 && id <= 20;
 	        }));
 	        $scope.rows.push(data.filter(function (el) {
-	            var id = parseInt(el.ID);
+	            var id = parseInt(el.ID, 10);
+	
 	            return id > 20 && id <= 27;
 	        }));
 	        var days = data.filter(function (el) {
-	            var id = parseInt(el.ID);
+	            var id = parseInt(el.ID, 10);
+	
 	            return id > 27 && id <= 30;
 	        });
+	
 	        days.length = 3;
 	        $scope.rows.push(days);
 	
 	        days = data.filter(function (el) {
-	            var id = parseInt(el.ID);
-	            return id == 31;
+	            var id = parseInt(el.ID, 10);
+	
+	            return id === 31;
 	        });
 	
 	        days.length = 3;
@@ -4360,17 +4407,21 @@
 	    $scope.colors = Constant.kpiColor;
 	    $scope.isLoading = false;
 	    $scope.isLine = $stateParams.isLine;
-	    $scope.$on('$ionicView.enter', function (e) {
+	    $scope.$on('$ionicView.enter', function () {
 	        $scope.tableWidth = angular.element(document.getElementById('greenCrossTable')).height();
 	        $scope.isLoading = true;
 	        $scope.selectedCriteria = localStorageService.get('criteria');
+	        /*eslint-disable*/
 	        MetaDataSvc($stateParams.PageType).then(function (data) {
 	            $scope.metaData = data;
 	        });
+	        /*eslint-disable*/
 	        KPIItem($stateParams.BizType, $scope.isLine).then(function (data) {
+	            var i, len;
+	
 	            if (!data.length) {
 	                data = [];
-	                for (var i = 0, len = DateUtil.getLastDay(); i < len; i++) {
+	                for (i = 0, len = DateUtil.getLastDay(); i < len; i++) {
 	                    data.push({
 	                        ID: i + 1,
 	                        STATE: ''
@@ -4381,7 +4432,9 @@
 	            $scope.isLoading = false;
 	        }, function () {
 	            var holder = [];
-	            for (var i = 0, len = DateUtil.getLastDay(); i < len; i++) {
+	            var i, len;
+	
+	            for (i = 0, len = DateUtil.getLastDay(); i < len; i++) {
 	                holder.push({
 	                    ID: i + 1,
 	                    STATE: ''

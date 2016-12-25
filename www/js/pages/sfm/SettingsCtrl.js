@@ -4,6 +4,7 @@ var Controller = function ($scope, Constant, $state, $window, $stateParams, Back
     $scope.noHomeMenu = ('noHomeMenu' in $location.search());
 
     var isBackFromFolder = !!$stateParams.fromSelect;
+
     $scope.back = function () {
         $window.history.go(isBackFromFolder ? -3 : -1);
     };
@@ -50,6 +51,7 @@ var Controller = function ($scope, Constant, $state, $window, $stateParams, Back
     $scope.checkVersion = function () {
         $scope.checkVersionText = '版本检查中...';
         cordova.getAppVersion.getVersionNumber().then(function (version) {
+            /*eslint-disable*/
             Backend().metaData.query({
                 'BizType': 5,
                 'Version': version
@@ -82,17 +84,18 @@ var Controller = function ($scope, Constant, $state, $window, $stateParams, Back
     };
     $scope.downloadVersion = function () {
         $scope.hasNewVersion = 'download';
-        window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, function gotFS(fileSystem) {
-            fileSystem.root.getDirectory('SFMDownload', { create: true }, function fileSystemSuccess(fileSystem) {
+        window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, function gotFS(fileOuterSystem) {
+            fileOuterSystem.root.getDirectory('SFMDownload', { create: true }, function fileSystemSuccess(fileSystem) {
                 fileSystem.getFile($scope.apkName, { create: true, exclusive: false }, function gotFileEntry(fileEntry) {
                     var path = fileEntry.nativeURL.replace($scope.apkName, '');
+
                     // $scope.dbgMsg += JSON.stringify(fileEntry);
                     try {
                         fileEntry.remove();
+                    /*eslint-disable*/
                     } catch (e) {}
-                    var fileTransfer = new FileTransfer();
                     $cordovaFileTransfer.download($scope.apkURL, path + '' + $scope.apkName, {}, true)
-                        .then(function (result) {
+                        .then(function () {
                             window.plugins.webintent.startActivity({
                                 action: window.plugins.webintent.ACTION_VIEW,
                                     // url: 'file://' + entry.fullPath,
@@ -100,14 +103,14 @@ var Controller = function ($scope, Constant, $state, $window, $stateParams, Back
                                 type: 'application/vnd.android.package-archive'
                             },
                                 function () {},
-                                function (e) { alert('Error launching app update'); }
+                                function () { alert('Error launching app update'); }
                             );
-                        }, function (err) {
+                        }, function () {
                             alert('DownLoad Error');
                         }, function (progress) {
                             // alert(progress);
                             $timeout(function () {
-                                $scope.downloadProgress = parseInt((progress.loaded / progress.total) * 100) + '%';
+                                $scope.downloadProgress = parseInt((progress.loaded / progress.total) * 100, 10) + '%';
                             });
                         });
 
@@ -117,7 +120,7 @@ var Controller = function ($scope, Constant, $state, $window, $stateParams, Back
     };
     $scope.checkVersionText = '检查更新';
     $scope.hasNewVersion = '';
-    $scope.$on('$ionicView.enter', function (e) {
+    $scope.$on('$ionicView.enter', function () {
         $scope.hasNewVersion = '';
         $scope.settings.timeInterval = Constant.getInterval();
         $scope.settings.editInterval = $scope.settings.timeInterval;

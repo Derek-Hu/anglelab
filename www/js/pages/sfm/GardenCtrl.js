@@ -1,16 +1,18 @@
-var Controller = function ($scope, Constant, $state, localStorageService, KPIDetail) {
+var Controller = function ($scope, Constant, $state, localStorageService) {
 
-    $scope.$on('$ionicView.enter', function (e) {
+    $scope.$on('$ionicView.enter', function () {
         $scope.selectedCriteria = localStorageService.get('criteria');
         $scope.myInterval = Constant.getInterval() * 1000;
         // $scope.msg = '';
         $scope.slides = [];
         var imagePath = Constant.getImagePath();
+
         if (imagePath && imagePath.nativeURL) {
             window.resolveLocalFileSystemURL(Constant.getImagePath().nativeURL, function (filesystem) {
                     // we must pass what the PhoneGap API doc examples call an "entry" to the reader
                     // which appears to take the form constructed below.
                 var directoryReader = filesystem.createReader();
+
                     // Get a list of all the entries in the directory
                     // $scope.loading = Constant.loading;
                 directoryReader.readEntries(function (entries) {
@@ -34,13 +36,13 @@ var Controller = function ($scope, Constant, $state, localStorageService, KPIDet
                           
                         }*/
                     $scope.$apply();
-                }, function (err) {
+                }, function () {
                         // $scope.loading = Constant.loadingError;
                         // $scope.msg += 'requestFileSystemSuccess目录'+path+'失败:'+JSON.stringify(err);
                 });
 
             },
-                function (err) {
+                function () {
                     // $scope.loading = Constant.loadingError;
                     // $scope.msg += 'beginBrowseForFiles目录失败:'+JSON.stringify(err);
                 }
@@ -62,7 +64,9 @@ var Controller = function ($scope, Constant, $state, localStorageService, KPIDet
     };*/
 
     $scope.next = function () {
-        for (var i = 0, len = $scope.slides.length; i < len; i++) {
+        var i, len;
+
+        for (i = 0, len = $scope.slides.length; i < len; i++) {
             if ($scope.slides[i].active) {
                 $scope.slides[i].active = false;
                 if (i + 1 >= len) {
@@ -75,7 +79,9 @@ var Controller = function ($scope, Constant, $state, localStorageService, KPIDet
         }
     };
     $scope.prev = function () {
-        for (var i = 0, len = $scope.slides.length; i < len; i++) {
+        var i, len;
+
+        for (i = 0, len = $scope.slides.length; i < len; i++) {
             if ($scope.slides[i].active) {
                 $scope.slides[i].active = false;
                 if (i - 1 < 0) {
@@ -91,4 +97,4 @@ var Controller = function ($scope, Constant, $state, localStorageService, KPIDet
 };
 
 
-module.exports = ['$scope', 'Constant', '$state', 'localStorageService', 'KPIDetail', Controller];
+module.exports = ['$scope', 'Constant', '$state', 'localStorageService', Controller];
