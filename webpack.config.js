@@ -36,12 +36,11 @@ module.exports = {
         ],
         loaders: [
             { test: /\.js$/, exclude: /node_modules/, loader: 'babel' },
-            { test: /\.(eot|woff(2)?|ttf|svg)(\?v=\d+\.\d+\.\d+)?$/, loader: 'file?name=fonts/[name]---[hash].[ext]' },
             { test: /\.json$/, loader: 'json' },
             { test: /\.html$/, loader: 'html' }, {
                 test: /.*www\/img\/.*\.(gif|png|jpe?g|svg)$/i,
                 loaders: [
-                    "url-loader?name=img/[name].[ext]&limit=8192",
+                    "url-loader?name=font/[name].[ext]&limit=8192",
                     'image-webpack?{optimizationLevel: 7, interlaced: false, pngquant:{quality: "65-90", speed: 4}, mozjpeg: {quality: 65}}'
                 ]
             },
