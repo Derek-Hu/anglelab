@@ -2996,207 +2996,22 @@
 	                isRate: '='
 	            },
 	            link: function link(scope, element) {
-	
 	                var fontSize = parseInt(d3.select('body').style('font-size'), 10);
 	                var margin = { top: fontSize * 3, right: fontSize * 9, bottom: fontSize * 10, left: fontSize * 3 };
-	                var data = scope.data,
-	                    title = scope.title,
-	                    yLabel = scope.ylabel;
-	
-	                scope.$watch('data', function (n, o) {
-	
-	                    var data = scope.data;
-	                    if (!data) {
-	                        return;
-	                    }
-	                    if (n === o) {
-	                        return;
-	                    }
-	                    var isRate = scope.isRate;
-	                    /* var isRate = data && !!data.filter(function(d){
-	                      if(d.TARGET){
-	                        return (d.TARGET).toString().indexOf('%')!=-1;
-	                      }
-	                      return false;
-	                    }).length;*/
-	                    var dimension = getDimension();
-	                    var width = dimension[0],
-	                        height = dimension[1];
-	
-	                    var chart = drawSchetch(data, width, height, isRate);
-	                    // checkData(scope.data, );
-	                    sketch(chart.svg, chart.x, chart.y, width, height, data, chart.line, isRate);
-	                    dynamicRender(chart.svg, chart.x, chart.y, width, height, data, chart.line, isRate);
-	                });
-	
-	                function getDimension() {
-	                    var kpiCharts = $('.kpiChart');
-	                    var totalW = $(kpiCharts[0]).width();
-	                    var totalH = $(kpiCharts[0]).height();
-	                    console.log('scope.isDouble=' + scope.isDouble);
-	                    for (var ki = 0; ki < kpiCharts.length; ki++) {
-	                        if ($(kpiCharts[ki]).width() > totalW) {
-	                            totalW = $(kpiCharts[ki]).width();
-	                        }
-	                        if ($(kpiCharts[ki]).height() > totalH) {
-	                            totalH = $(kpiCharts[ki]).height();
-	                        }
-	                    }
-	                    if (scope.isDouble) {
-	                        // totalW = totalW/2;
-	                        totalH = totalH / 2;
-	                    }
-	                    return [totalW - margin.left - margin.right, totalH - margin.top - margin.bottom];
-	                }
-	
-	                function drawSchetch(data, width, height, isRate) {
-	
-	                    var x = d3.scale.ordinal().rangeRoundBands([fontSize, width], .1);
-	                    var y = d3.scale.linear().range([height, 0]);
-	
-	                    var yMax = d3.max([d3.max(data, function (d) {
-	                        return parseFloat(d.ACTUAL);
-	                    }), d3.max(data, function (d) {
-	                        return parseFloat(d.TARGET);
-	                    })]);
-	                    x.domain(data.map(function (d) {
-	                        return d.month;
-	                    }));
-	                    y.domain([0, yMax ? yMax : 1]);
-	
-	                    var xAxis = d3.svg.axis().scale(x).orient('bottom').tickFormat(function (d) {
-	                        return d + (scope.xlabel ? scope.xlabel : '');
-	                    }).outerTickSize(0);
-	
-	                    var yAxis = d3.svg.axis().scale(y).orient('right');
-	
-	                    yAxis = isRate ? yAxis.ticks(15, '%') : yAxis.ticks(15, '');
-	
-	                    var svg, svgXA, svgYA;
-	                    // reset
-	                    d3.select(element[0]).html('');
-	                    svg = d3.select(element[0]).append('div').attr('class', chartCls).style('width', width + 'px').append('svg').attr('width', width + margin.left + margin.right).attr('height', height + margin.top + margin.bottom).append('g').attr('transform', 'translate(' + margin.left + ',' + margin.top + ')');
-	
-	                    svgXA = svg.append('g').attr('class', 'x axis');
-	                    svgYA = svg.append('g').attr('class', 'y axis');
-	
-	                    svgXA.attr('transform', 'translate(0,' + height + ')').call(xAxis);
-	                    svgYA.attr('transform', 'translate(' + width + ', 0)').call(yAxis);
-	                    var line = d3.svg.line().x(function (d) {
-	                        return x(d.month);
-	                    }).y(function (d) {
-	                        return y(parseFloat(d.TARGET) ? parseFloat(d.TARGET) : 0);
-	                    });
-	                    return {
-	                        svg: svg,
-	                        x: x,
-	                        y: y,
-	                        line: line
-	                    };
-	                }
-	
-	                function checkData(data, totalNum) {
-	                    if (!data) {
-	                        data = [];
-	                    }
-	                    // 12 month 
-	                    // data.length=12;
-	                    var records = [];
-	
-	                    for (var i = 0, len = totalNum; i < len; i++) {
-	                        records.push(false);
-	                    }
-	                    for (var i = 0, len = data.length; i < len; i++) {
-	                        if (data[i]) {
-	                            // missing a month data
-	                            /*              data[i]={
-	                                            month: i+1
-	                                          };*/
-	                            records[data[i].month - 1] = true;
-	                        }
-	                    }
-	                    for (var i = 0, len = totalNum; i < len; i++) {
-	                        if (!records[i]) {
-	                            data.push({
-	                                month: i + 1
-	                            });
-	                        }
-	                    }
-	                    data.sort(function (a, b) {
-	                        return a.month - b.month;
-	                    });
-	                    return data;
-	                }
-	
-	                function sketch(svg, x, y, width, height, data, line, isRate) {
-	                    var barWidth = x.rangeBand();
-	                    var xRange = x.range();
-	                    var xExtent = x.rangeExtent();
-	                    var xStep = xRange[1] - xRange[0] - barWidth;
-	                    var xStart = xRange[0];
-	
-	                    /* Border of the table's row */
-	                    svg.append('line').attr('class', 'dtline').attr('x1', 0).attr('y1', fontSize * topTableBorder).attr('x2', xExtent[1] + fontSize * (lastRow + textPadding)).attr('y2', fontSize * topTableBorder).attr('transform', 'translate(0, ' + height + ')');
-	
-	                    /* Border of the table's row */
-	                    svg.append('line').attr('class', 'dtline').attr('x1', 0).attr('y1', fontSize * middleTableBorder).attr('x2', xExtent[1] + fontSize * (lastRow + textPadding)).attr('y2', fontSize * middleTableBorder).attr('transform', 'translate(0,' + height + ')');
-	                    /* Border of the table's row */
-	                    svg.append('line').attr('class', 'dtline').attr('x1', 0).attr('y1', fontSize * (lastRow - lineH)).attr('x2', xExtent[1] + fontSize * (lastRow + textPadding)).attr('y2', fontSize * (lastRow - lineH)).attr('transform', 'translate(0,' + height + ')');
-	                    /* Second Left of the table's col */
-	                    svg.append('line').attr('class', 'dtline').attr('x1', 0).attr('y1', 0).attr('x2', 0).attr('y2', fontSize * (lastRow - lineH)).attr('transform', 'translate(0,' + height + ')');
-	                    /* Left Border of the table */
-	                    svg.append('line').attr('class', 'dtline').attr('x1', xExtent[1] + fontSize * (lastRow + textPadding) * 2).attr('y1', fontSize * topTableBorder).attr('x2', xExtent[1] + fontSize * (lastRow + textPadding) * 2).attr('y2', fontSize * (lastRow - lineH)).attr('transform', 'translate(' + -fontSize * (lastRow + textPadding) + ',' + height + ')');
-	
-	                    /* Right Border of the table's col */
-	                    svg.append('line').attr('class', 'dtline').attr('x1', 0).attr('y1', 0).attr('x2', 0).attr('y2', fontSize * (lastRow - lineH)).attr('transform', 'translate(' + xExtent[1] + ',' + height + ')');
-	
-	                    /* XY Padding */
-	                    svg.append('path').attr('class', 'xyPadding').attr('d', 'M0,0H' + (fontSize + 1)).attr('transform', 'translate(0,' + height + ')');
-	
-	                    /* Vertical Line of the table */
-	                    svg.selectAll('.vtline').data(data).enter().append('line').attr('class', 'dtline').attr('x1', 0).attr('y1', 0).attr('x2', 0).attr('y2', fontSize * (lastRow - lineH)).attr('transform', function (d, i) {
-	                        if (i == 0) {
-	                            return '';
-	                        }
-	                        return 'translate(' + (xRange[i] - xStep / 2) + ',' + height + ')';
-	                    }).style('display', function (d, i) {
-	                        if (i == 0) {
-	                            return 'none';
-	                        }
-	                    });
-	
-	                    svg.append('text')
-	                    // .attr("transform", function(d){return "translate("+d.month+","+d.TARGET+")"})
-	                    .attr('class', 'val').attr('x', xExtent[1] / 2).attr('y', -textMargin * fontSize).style('text-anchor', 'middle').text(title);
-	
-	                    /* target indicator in the bottom table */
-	                    svg.append('rect').attr('class', 'actualIndicator').attr('x', width).attr('width', fontSize * (lastRow + textPadding)).attr('y', fontSize * topTableBorder).attr('height', fontSize * (middleTableBorder - topTableBorder)).attr('transform', 'translate(0,' + height + ')');
-	
-	                    /* actual indicator in the bottom table */
-	                    svg.append('rect').attr('class', 'actualIndicator').attr('x', width).attr('width', fontSize * (lastRow + textPadding)).attr('y', fontSize * middleTableBorder).attr('height', fontSize * (middleTableBorder - topTableBorder)).style('fill', '#A1B752').attr('transform', 'translate(0,' + height + ')');
-	
-	                    /* Text 'Actual' in the bottom table */
-	                    svg.append('text')
-	                    // .attr("transform", function(d){return "translate("+d.month+","+d.TARGET+")"})
-	                    .attr('class', 'val').attr('x', width + fontSize * 4).attr('y', fontSize * middleRow).attr('dx', fontSize / 4).attr('dy', '.71em').attr('transform', 'translate(0,' + height + ')').style('text-anchor', 'end').style('fill', '#FFF').text('Actual');
-	
-	                    /* Text 'Target' in the bottom table */
-	                    svg.append('text')
-	                    // .attr("transform", function(d){return "translate("+d.month+","+d.TARGET+")"})
-	                    .attr('class', 'val').attr('x', width + fontSize * 4).attr('y', fontSize * bottomR).attr('dx', fontSize / 4).attr('dy', '.71em').attr('transform', 'translate(0,' + height + ')').style('text-anchor', 'end').style('fill', '#FFF').text('Target');
-	                }
+	                var title = scope.title;
 	
 	                function dynamicRender(svg, x, y, width, height, data, line, isRate) {
 	                    var barWidth = x.rangeBand();
 	                    var xRange = x.range();
-	                    var xExtent = x.rangeExtent();
-	                    var xStep = xRange[1] - xRange[0] - barWidth;
-	                    var xStart = xRange[0];
+	                    // var xExtent = x.rangeExtent();
+	                    // var xStep = xRange[1] - xRange[0] - barWidth;
+	                    // var xStart = xRange[0];
 	                    /* bar Axis */
 	                    /* Actual value in the table */
+	
 	                    svg.selectAll('.text').data(data).enter().append('text').attr('class', 'val targetVal').attr('x', function (d, i) {
 	                        return barWidth / 2 + xRange[i];
-	                    }).attr('y', function (d) {
+	                    }).attr('y', function () {
 	                        return fontSize * bottomR;
 	                    }).attr('dx', fontSize / 4).attr('dy', '.71em').attr('transform', 'translate(0,' + height + ')').style('text-anchor', 'middle').text(function (d) {
 	                        if (typeof d.TARGET === 'undefined') {
@@ -3207,7 +3022,7 @@
 	                    /* Target value in the table */
 	                    svg.selectAll('.text').data(data).enter().append('text').attr('class', 'val actualVal').attr('x', function (d, i) {
 	                        return barWidth / 2 + xRange[i];
-	                    }).attr('y', function (d) {
+	                    }).attr('y', function () {
 	                        return fontSize * middleRow;
 	                    }).attr('dx', fontSize / 4).attr('dy', '.71em').attr('transform', 'translate(0,' + height + ')').style('text-anchor', 'middle').text(function (d) {
 	                        if (typeof d.ACTUAL === 'undefined') {
@@ -3248,6 +3063,164 @@
 	
 	                    .attr('transform', 'translate(' + (barWidth / 2 - fontSize / 2) + ',' + -fontSize / 2 + ')');
 	                }
+	
+	                function getDimension() {
+	                    var kpiCharts = $('.kpiChart');
+	                    var totalW = $(kpiCharts[0]).width();
+	                    var totalH = $(kpiCharts[0]).height();
+	                    var ki;
+	
+	                    console.log('scope.isDouble=' + scope.isDouble);
+	                    for (ki = 0; ki < kpiCharts.length; ki++) {
+	                        if ($(kpiCharts[ki]).width() > totalW) {
+	                            totalW = $(kpiCharts[ki]).width();
+	                        }
+	                        if ($(kpiCharts[ki]).height() > totalH) {
+	                            totalH = $(kpiCharts[ki]).height();
+	                        }
+	                    }
+	                    if (scope.isDouble) {
+	                        // totalW = totalW/2;
+	                        totalH = totalH / 2;
+	                    }
+	                    return [totalW - margin.left - margin.right, totalH - margin.top - margin.bottom];
+	                }
+	
+	                function sketch(svg, x, y, width, height, data) {
+	                    var barWidth = x.rangeBand();
+	                    var xRange = x.range();
+	                    var xExtent = x.rangeExtent();
+	                    var xStep = xRange[1] - xRange[0] - barWidth;
+	                    // var xStart = xRange[0];
+	
+	
+	                    /* Border of the table's row */
+	                    svg.append('line').attr('class', 'dtline').attr('x1', 0).attr('y1', fontSize * topTableBorder).attr('x2', xExtent[1] + fontSize * (lastRow + textPadding)).attr('y2', fontSize * topTableBorder).attr('transform', 'translate(0, ' + height + ')');
+	
+	                    /* Border of the table's row */
+	                    svg.append('line').attr('class', 'dtline').attr('x1', 0).attr('y1', fontSize * middleTableBorder).attr('x2', xExtent[1] + fontSize * (lastRow + textPadding)).attr('y2', fontSize * middleTableBorder).attr('transform', 'translate(0,' + height + ')');
+	                    /* Border of the table's row */
+	                    svg.append('line').attr('class', 'dtline').attr('x1', 0).attr('y1', fontSize * (lastRow - lineH)).attr('x2', xExtent[1] + fontSize * (lastRow + textPadding)).attr('y2', fontSize * (lastRow - lineH)).attr('transform', 'translate(0,' + height + ')');
+	                    /* Second Left of the table's col */
+	                    svg.append('line').attr('class', 'dtline').attr('x1', 0).attr('y1', 0).attr('x2', 0).attr('y2', fontSize * (lastRow - lineH)).attr('transform', 'translate(0,' + height + ')');
+	                    /* Left Border of the table */
+	                    svg.append('line').attr('class', 'dtline').attr('x1', xExtent[1] + fontSize * (lastRow + textPadding) * 2).attr('y1', fontSize * topTableBorder).attr('x2', xExtent[1] + fontSize * (lastRow + textPadding) * 2).attr('y2', fontSize * (lastRow - lineH)).attr('transform', 'translate(' + -fontSize * (lastRow + textPadding) + ',' + height + ')');
+	
+	                    /* Right Border of the table's col */
+	                    svg.append('line').attr('class', 'dtline').attr('x1', 0).attr('y1', 0).attr('x2', 0).attr('y2', fontSize * (lastRow - lineH)).attr('transform', 'translate(' + xExtent[1] + ',' + height + ')');
+	
+	                    /* XY Padding */
+	                    svg.append('path').attr('class', 'xyPadding').attr('d', 'M0,0H' + (fontSize + 1)).attr('transform', 'translate(0,' + height + ')');
+	
+	                    /* Vertical Line of the table */
+	                    svg.selectAll('.vtline').data(data).enter().append('line').attr('class', 'dtline').attr('x1', 0).attr('y1', 0).attr('x2', 0).attr('y2', fontSize * (lastRow - lineH)).attr('transform', function (d, i) {
+	                        if (i === 0) {
+	                            return '';
+	                        }
+	                        return 'translate(' + (xRange[i] - xStep / 2) + ',' + height + ')';
+	                    }).style('display', function (d, i) {
+	                        if (i === 0) {
+	                            return 'none';
+	                        }
+	                    });
+	
+	                    svg.append('text')
+	                    // .attr("transform", function(d){return "translate("+d.month+","+d.TARGET+")"})
+	                    .attr('class', 'val').attr('x', xExtent[1] / 2).attr('y', -textMargin * fontSize).style('text-anchor', 'middle').text(title);
+	
+	                    /* target indicator in the bottom table */
+	                    svg.append('rect').attr('class', 'actualIndicator').attr('x', width).attr('width', fontSize * (lastRow + textPadding)).attr('y', fontSize * topTableBorder).attr('height', fontSize * (middleTableBorder - topTableBorder)).attr('transform', 'translate(0,' + height + ')');
+	
+	                    /* actual indicator in the bottom table */
+	                    svg.append('rect').attr('class', 'actualIndicator').attr('x', width).attr('width', fontSize * (lastRow + textPadding)).attr('y', fontSize * middleTableBorder).attr('height', fontSize * (middleTableBorder - topTableBorder)).style('fill', '#A1B752').attr('transform', 'translate(0,' + height + ')');
+	
+	                    /* Text 'Actual' in the bottom table */
+	                    svg.append('text')
+	                    // .attr("transform", function(d){return "translate("+d.month+","+d.TARGET+")"})
+	                    .attr('class', 'val').attr('x', width + fontSize * 4).attr('y', fontSize * middleRow).attr('dx', fontSize / 4).attr('dy', '.71em').attr('transform', 'translate(0,' + height + ')').style('text-anchor', 'end').style('fill', '#FFF').text('Actual');
+	
+	                    /* Text 'Target' in the bottom table */
+	                    svg.append('text')
+	                    // .attr("transform", function(d){return "translate("+d.month+","+d.TARGET+")"})
+	                    .attr('class', 'val').attr('x', width + fontSize * 4).attr('y', fontSize * bottomR).attr('dx', fontSize / 4).attr('dy', '.71em').attr('transform', 'translate(0,' + height + ')').style('text-anchor', 'end').style('fill', '#FFF').text('Target');
+	                }
+	
+	                function drawSchetch(data, width, height, isRate) {
+	
+	                    var x = d3.scale.ordinal().rangeRoundBands([fontSize, width], .1);
+	                    var y = d3.scale.linear().range([height, 0]);
+	
+	                    var yMax = d3.max([d3.max(data, function (d) {
+	                        return parseFloat(d.ACTUAL);
+	                    }), d3.max(data, function (d) {
+	                        return parseFloat(d.TARGET);
+	                    })]);
+	
+	                    x.domain(data.map(function (d) {
+	                        return d.month;
+	                    }));
+	                    y.domain([0, yMax ? yMax : 1]);
+	
+	                    var xAxis = d3.svg.axis().scale(x).orient('bottom').tickFormat(function (d) {
+	                        return d + (scope.xlabel ? scope.xlabel : '');
+	                    }).outerTickSize(0);
+	
+	                    var yAxis = d3.svg.axis().scale(y).orient('right');
+	
+	                    yAxis = isRate ? yAxis.ticks(15, '%') : yAxis.ticks(15, '');
+	
+	                    var svg, svgXA, svgYA;
+	
+	                    // reset
+	                    d3.select(element[0]).html('');
+	                    svg = d3.select(element[0]).append('div').attr('class', chartCls).style('width', width + 'px').append('svg').attr('width', width + margin.left + margin.right).attr('height', height + margin.top + margin.bottom).append('g').attr('transform', 'translate(' + margin.left + ',' + margin.top + ')');
+	
+	                    svgXA = svg.append('g').attr('class', 'x axis');
+	                    svgYA = svg.append('g').attr('class', 'y axis');
+	
+	                    svgXA.attr('transform', 'translate(0,' + height + ')').call(xAxis);
+	                    svgYA.attr('transform', 'translate(' + width + ', 0)').call(yAxis);
+	                    var line = d3.svg.line().x(function (d) {
+	                        return x(d.month);
+	                    }).y(function (d) {
+	                        return y(parseFloat(d.TARGET) ? parseFloat(d.TARGET) : 0);
+	                    });
+	
+	                    return {
+	                        svg: svg,
+	                        x: x,
+	                        y: y,
+	                        line: line
+	                    };
+	                }
+	
+	                scope.$watch('data', function (n, o) {
+	
+	                    var data = scope.data;
+	
+	                    if (!data) {
+	                        return;
+	                    }
+	                    if (n === o) {
+	                        return;
+	                    }
+	                    var isRate = scope.isRate;
+	                    /* var isRate = data && !!data.filter(function(d){
+	                      if(d.TARGET){
+	                        return (d.TARGET).toString().indexOf('%')!=-1;
+	                      }
+	                      return false;
+	                    }).length;*/
+	                    var dimension = getDimension();
+	                    var width = dimension[0],
+	                        height = dimension[1];
+	
+	                    var chart = drawSchetch(data, width, height, isRate);
+	
+	                    // checkData(scope.data, );
+	                    sketch(chart.svg, chart.x, chart.y, width, height, data, chart.line, isRate);
+	                    dynamicRender(chart.svg, chart.x, chart.y, width, height, data, chart.line, isRate);
+	                });
 	            }
 	        };
 	    }]
@@ -3394,7 +3367,7 @@
 	    var idx, idlen;
 	
 	    for (idx = 0, idlen = Constant.kpis.length; idx < idlen; idx++) {
-	        if (Constant.kpis[idx].type == type) {
+	        if (Constant.kpis[idx].type === type) {
 	            $scope.aspectTitle = Constant.kpis[idx].name;
 	            break;
 	        }
@@ -3404,9 +3377,10 @@
 	        // $scope.menus=Constant.viewBoard.menus;
 	    } else {
 	        $scope.menus = Constant.kpiMenus[type];
+	        /*eslint-disable*/
 	        KPIDetail(type).then(function (menus) {
 	            $scope.menus = menus;
-	            if (type == 'security') {
+	            if (type === 'security') {
 	                // Green Cross
 	                // $scope.menus[0].hatColor = ''; 
 	            }
@@ -3414,14 +3388,14 @@
 	    }
 	    var selectedCriteria = localStorageService.get('criteria');
 	
-	    $scope.$on('$ionicView.enter', function (e) {
+	    $scope.$on('$ionicView.enter', function () {
 	        $scope.criteriaFromCache = localStorageService.get('criteria');
 	        $scope.isKPI = !!$stateParams.aspect;
 	        selectedCriteria = localStorageService.get('criteria');
-	        Warehouse.getWareHouse().then(function (Warehouse) {
-	            $scope.kuqus = Warehouse;
+	        Warehouse.getWareHouse().then(function (kuqus) {
+	            $scope.kuqus = kuqus;
 	            var isExist = selectedCriteria && selectedCriteria.kuqu && !!$scope.kuqus.filter(function (kq) {
-	                return kq.whse_code == selectedCriteria.kuqu.whse_code;
+	                return kq.whse_code === selectedCriteria.kuqu.whse_code;
 	            }).length;
 	
 	            if (isExist) {
@@ -3429,8 +3403,8 @@
 	            } else {
 	                $scope.criteria.kuqu = $scope.kuqus[0];
 	            }
-	        }, function (Warehouse) {
-	            $scope.kuqus = Warehouse;
+	        }, function (kuqus) {
+	            $scope.kuqus = kuqus;
 	        });
 	        $scope.kqDropdown.close();
 	        $scope.bzDropdown.close();
@@ -3449,8 +3423,9 @@
 	        Zone.getZone($scope.criteria.kuqu.Id).then(function (zones) {
 	            $scope.banzus = zones;
 	            var isExist = selectedCriteria && selectedCriteria.banzu && !!$scope.banzus.filter(function (bz) {
-	                return bz.zone_code == selectedCriteria.banzu.zone_code;
+	                return bz.zone_code === selectedCriteria.banzu.zone_code;
 	            }).length;
+	
 	            if (isExist) {
 	                $scope.criteria.banzu = selectedCriteria.banzu;
 	            } else {
@@ -3474,8 +3449,9 @@
 	        Shift.getShift($scope.criteria.kuqu.Id, $scope.criteria.banzu.Id).then(function (shifts) {
 	            $scope.bancis = shifts;
 	            var isExist = selectedCriteria && selectedCriteria.banci && !!$scope.bancis.filter(function (bc) {
-	                return bc.shift_code == selectedCriteria.banci.shift_code && bc.ID == selectedCriteria.banci.ID;
+	                return bc.shift_code === selectedCriteria.banci.shift_code && bc.ID === selectedCriteria.banci.ID;
 	            }).length;
+	
 	            if (isExist) {
 	                $scope.criteria.banci = selectedCriteria.banci;
 	            } else {
@@ -3490,9 +3466,11 @@
 	        $scope.criteria.charger = '加载中';
 	        $scope.criteria.currentDate = '加载中';
 	        localStorageService.set('criteria', $scope.criteria);
-	        var type = $stateParams.aspect;
-	        if (type) {
-	            KPIDetail(type).then(function (menus) {
+	        var aType = $stateParams.aspect;
+	
+	        if (aType) {
+	            /*eslint-disable*/
+	            KPIDetail(aType).then(function (menus) {
 	
 	                MenuList.getList(menus, false, {
 	                    WareHouseId: $scope.criteria.kuqu ? $scope.criteria.kuqu.Id : -1,
@@ -3501,7 +3479,7 @@
 	                    $scope.menus = menus;
 	                });
 	
-	                if (type == 'security') {
+	                if (aType === 'security') {
 	                    // Green Cross
 	                    $scope.menus[0].hatColor = '';
 	                }
@@ -4254,6 +4232,7 @@
 	
 	    $scope.sendPicker = function (isSendEmail) {
 	        var values, daysNum, i, len;
+	
 	        try {
 	            values = angular.element(document.getElementById('selectedMonth')).val().match(/(\d{4}).*(\d{2})/);
 	
@@ -4504,12 +4483,14 @@
 	var Controller = function Controller($scope, Constant, localStorageService, MetaDataSvc, $stateParams, KPIItem) {
 	    $scope.isLine = $stateParams.isLine;
 	    $scope.loadingStatus = '加载中';
-	    $scope.$on('$ionicView.enter', function (e) {
+	    $scope.$on('$ionicView.enter', function () {
 	        $scope.selectedCriteria = localStorageService.get('criteria');
+	        /*eslint-disable*/
 	        MetaDataSvc($stateParams.PageType, $scope.isLine).then(function (data) {
 	            $scope.metaData = data;
 	        });
 	        $scope.loadingStatus = '加载中';
+	        /*eslint-disable*/
 	        KPIItem($stateParams.BizType, $scope.isLine).then(function (data) {
 	
 	            if (!data.length) {
@@ -4519,7 +4500,7 @@
 	            $scope.loadingStatus = '';
 	            // ----------
 	            data.sort(function (a, b) {
-	                return parseInt(a.OrderNumber) - parseInt(b.OrderNumber);
+	                return parseInt(a.OrderNumber, 10) - parseInt(b.OrderNumber, 10);
 	            });
 	
 	            /*
@@ -4548,17 +4529,19 @@
 	              }
 	            */
 	            var rows = [];
+	
 	            for (var i = 0, len = data.length; i < len; i++) {
 	                // find job type
 	                var jobType = {};
 	                var record = data[i];
+	
 	                for (var j = 0, jl = rows.length; j < jl; j++) {
-	                    if (rows[j] && rows[j].name == record.TYPE) {
+	                    if (rows[j] && rows[j].name === record.TYPE) {
 	                        rows[j].items.push(data[i]);
 	                        break;
 	                    }
 	                }
-	                if (j == jl) {
+	                if (j === jl) {
 	                    jobType.name = record.TYPE;
 	                    jobType.items = [data[i]];
 	                    rows.push(jobType);
@@ -4616,16 +4599,19 @@
 	
 	    $scope.chart = {};
 	    var aspect = Constant.kpiMenus[$stateParams.aspect];
+	
 	    $scope.aspect = $stateParams.aspect;
 	
 	    $scope.isLine = $stateParams.isLine;
 	    var BizType = $stateParams.BizType;
-	    for (var i = 0, len = aspect.length; i < len; i++) {
-	        if (aspect[i].BizType == BizType) {
+	    var i, len;
+	
+	    for (i = 0, len = aspect.length; i < len; i++) {
+	        if (aspect[i].BizType === BizType) {
 	            $scope.KPITitle = aspect[i].nm;
 	        }
 	    }
-	    $scope.chart.isRate = $stateParams.isPercentage == 'true';
+	    $scope.chart.isRate = $stateParams.isPercentage === 'true';
 	    // $scope.chart.isRate = ($scope.aspect == 'member' || $scope.aspect == 'cost' || $scope.aspect=='quality');
 	
 	    var ConstantTypes = {
@@ -4647,8 +4633,7 @@
 	        });
 	        $scope.chart1 = { data: null };
 	        $scope.chart.isDouble = false;
-	        if (key == 'W') {
-	            var total = $scope.chart.data;
+	        if (key === 'W') {
 	            /* $scope.chart.data = total.filter(function(d){
 	              return d.month <27;
 	            });
@@ -4698,14 +4683,16 @@
 	        }
 	    }
 	
-	    $scope.$on('$ionicView.enter', function (e) {
+	    $scope.$on('$ionicView.enter', function () {
 	        $scope.selectedCriteria = localStorageService.get('criteria');
+	        /*eslint-disable*/
 	        MetaDataSvc($stateParams.PageType, $scope.isLine).then(function (data) {
 	            $scope.metaData = data;
 	        });
 	
 	        var lastDay = DateUtil.getLastDay();
 	
+	        /*eslint-disable*/
 	        KPIItem($stateParams.BizType, $scope.isLine).then(function (data) {
 	
 	            /* data = data.map(function(d){
@@ -4720,10 +4707,13 @@
 	            $scope.types = {};
 	
 	            var i, len;
+	
 	            for (var dx = 0, dlen = data.length; dx < dlen; dx++) {
 	                var ele = data[dx];
+	
 	                for (i = 0, len = types.length; i < len; i++) {
 	                    var type = types[i];
+	
 	                    if (ele.ID.indexOf(type) === 0) {
 	                        if (type in $scope.types) {
 	                            $scope.types[type].push(ele);
@@ -4743,14 +4733,15 @@
 	                });
 	            }
 	            var BizTypeLen = $stateParams.BizType.length;
-	            if ($scope.aspect == 'flow' && $stateParams.BizType.charAt(BizTypeLen - 1) == '1') {
+	
+	            if ($scope.aspect === 'flow' && $stateParams.BizType.charAt(BizTypeLen - 1) === '1') {
 	                $scope.typeDropdown.push({
 	                    key: 'flow-wall',
 	                    value: '明细',
 	                    isURL: true,
 	                    param: { PageType: $stateParams.PageType, BizType: $stateParams.BizType + '-1', isLine: $scope.isLine }
 	                });
-	            } else if ($scope.aspect == 'cost' && $stateParams.BizType.charAt(BizTypeLen - 1) == '2') {
+	            } else if ($scope.aspect === 'cost' && $stateParams.BizType.charAt(BizTypeLen - 1) === '2') {
 	                $scope.typeDropdown.push({
 	                    key: 'cost-wall',
 	                    value: '目视墙',

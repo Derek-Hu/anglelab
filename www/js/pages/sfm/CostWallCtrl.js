@@ -1,12 +1,14 @@
 var Controller = function ($scope, Constant, localStorageService, MetaDataSvc, $stateParams, KPIItem) {
     $scope.isLine = $stateParams.isLine;
     $scope.loadingStatus = '加载中';
-    $scope.$on('$ionicView.enter', function (e) {
+    $scope.$on('$ionicView.enter', function () {
         $scope.selectedCriteria = localStorageService.get('criteria');
+        /*eslint-disable*/
         MetaDataSvc($stateParams.PageType, $scope.isLine).then(function (data) {
             $scope.metaData = data;
         });
         $scope.loadingStatus = '加载中';
+        /*eslint-disable*/
         KPIItem($stateParams.BizType, $scope.isLine).then(function (data) {
 
             if (!data.length) {
@@ -16,7 +18,7 @@ var Controller = function ($scope, Constant, localStorageService, MetaDataSvc, $
             $scope.loadingStatus = '';
             // ----------
             data.sort(function (a, b) {
-                return parseInt(a.OrderNumber) - parseInt(b.OrderNumber);
+                return parseInt(a.OrderNumber, 10) - parseInt(b.OrderNumber, 10);
             });
 
             /*
@@ -46,17 +48,19 @@ var Controller = function ($scope, Constant, localStorageService, MetaDataSvc, $
               }
             */
             var rows = [];
+
             for (var i = 0, len = data.length; i < len; i++) {
                 // find job type
                 var jobType = {};
                 var record = data[i];
+
                 for (var j = 0, jl = rows.length; j < jl; j++) {
-                    if (rows[j] && rows[j].name == record.TYPE) {
+                    if (rows[j] && rows[j].name === record.TYPE) {
                         rows[j].items.push(data[i]);
                         break;
                     }
                 }
-                if (j == jl) {
+                if (j === jl) {
                     jobType.name = record.TYPE;
                     jobType.items = [data[i]];
                     rows.push(jobType);

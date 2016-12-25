@@ -78,7 +78,7 @@ var Controller = function ($scope, $state, localStorageService, Constant, Wareho
     var idx, idlen;
 
     for (idx = 0, idlen = Constant.kpis.length; idx < idlen; idx++) {
-        if (Constant.kpis[idx].type == type) {
+        if (Constant.kpis[idx].type === type) {
             $scope.aspectTitle = Constant.kpis[idx].name;
             break;
         }
@@ -88,9 +88,10 @@ var Controller = function ($scope, $state, localStorageService, Constant, Wareho
         // $scope.menus=Constant.viewBoard.menus;
     } else {
         $scope.menus = Constant.kpiMenus[type];
+        /*eslint-disable*/
         KPIDetail(type).then(function (menus) {
             $scope.menus = menus;
-            if (type == 'security') {
+            if (type === 'security') {
                 // Green Cross
                 // $scope.menus[0].hatColor = ''; 
             }
@@ -98,14 +99,14 @@ var Controller = function ($scope, $state, localStorageService, Constant, Wareho
     }
     var selectedCriteria = localStorageService.get('criteria');
 
-    $scope.$on('$ionicView.enter', function (e) {
+    $scope.$on('$ionicView.enter', function () {
         $scope.criteriaFromCache = localStorageService.get('criteria');
         $scope.isKPI = !!$stateParams.aspect;
         selectedCriteria = localStorageService.get('criteria');
-        Warehouse.getWareHouse().then(function (Warehouse) {
-            $scope.kuqus = Warehouse;
+        Warehouse.getWareHouse().then(function (kuqus) {
+            $scope.kuqus = kuqus;
             var isExist = selectedCriteria && selectedCriteria.kuqu && !!$scope.kuqus.filter(function (kq) {
-                return kq.whse_code == selectedCriteria.kuqu.whse_code;
+                return kq.whse_code === selectedCriteria.kuqu.whse_code;
             }).length;
             
             if (isExist) {
@@ -113,8 +114,8 @@ var Controller = function ($scope, $state, localStorageService, Constant, Wareho
             } else {
                 $scope.criteria.kuqu = $scope.kuqus[0];
             }
-        }, function (Warehouse) {
-            $scope.kuqus = Warehouse;
+        }, function (kuqus) {
+            $scope.kuqus = kuqus;
         });
         $scope.kqDropdown.close();
         $scope.bzDropdown.close();
@@ -134,8 +135,9 @@ var Controller = function ($scope, $state, localStorageService, Constant, Wareho
         Zone.getZone($scope.criteria.kuqu.Id).then(function (zones) {
             $scope.banzus = zones;
             var isExist = selectedCriteria && selectedCriteria.banzu && !!$scope.banzus.filter(function (bz) {
-                return bz.zone_code == selectedCriteria.banzu.zone_code;
+                return bz.zone_code === selectedCriteria.banzu.zone_code;
             }).length;
+
             if (isExist) {
                 $scope.criteria.banzu = selectedCriteria.banzu;
             } else {
@@ -160,8 +162,9 @@ var Controller = function ($scope, $state, localStorageService, Constant, Wareho
         Shift.getShift($scope.criteria.kuqu.Id, $scope.criteria.banzu.Id).then(function (shifts) {
             $scope.bancis = shifts;
             var isExist = selectedCriteria && selectedCriteria.banci && !!$scope.bancis.filter(function (bc) {
-                return bc.shift_code == selectedCriteria.banci.shift_code && bc.ID == selectedCriteria.banci.ID;
+                return bc.shift_code === selectedCriteria.banci.shift_code && bc.ID === selectedCriteria.banci.ID;
             }).length;
+
             if (isExist) {
                 $scope.criteria.banci = selectedCriteria.banci;
             } else {
@@ -177,9 +180,11 @@ var Controller = function ($scope, $state, localStorageService, Constant, Wareho
         $scope.criteria.charger = '加载中';
         $scope.criteria.currentDate = '加载中';
         localStorageService.set('criteria', $scope.criteria);
-        var type = $stateParams.aspect;
-        if (type) {
-            KPIDetail(type).then(function (menus) {
+        var aType = $stateParams.aspect;
+
+        if (aType) {
+            /*eslint-disable*/
+            KPIDetail(aType).then(function (menus) {
 
                 MenuList.getList(menus, false, {
                     WareHouseId: $scope.criteria.kuqu ? $scope.criteria.kuqu.Id : -1,
@@ -188,7 +193,7 @@ var Controller = function ($scope, $state, localStorageService, Constant, Wareho
                     $scope.menus = menus;
                 });
 
-                if (type == 'security') {
+                if (aType === 'security') {
                     // Green Cross
                     $scope.menus[0].hatColor = '';
                 }

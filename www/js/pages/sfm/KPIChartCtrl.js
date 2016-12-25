@@ -2,16 +2,19 @@ var Controller = function ($scope, $stateParams, $state, $ionicScrollDelegate, M
 
     $scope.chart = {};
     var aspect = Constant.kpiMenus[$stateParams.aspect];
+
     $scope.aspect = $stateParams.aspect;
 
     $scope.isLine = $stateParams.isLine;
     var BizType = $stateParams.BizType;
-    for (var i = 0, len = aspect.length; i < len; i++) {
-        if (aspect[i].BizType == BizType) {
+    var i, len;
+
+    for (i = 0, len = aspect.length; i < len; i++) {
+        if (aspect[i].BizType === BizType) {
             $scope.KPITitle = aspect[i].nm;
         }
     }
-    $scope.chart.isRate = $stateParams.isPercentage == 'true';
+    $scope.chart.isRate = $stateParams.isPercentage === 'true';
     // $scope.chart.isRate = ($scope.aspect == 'member' || $scope.aspect == 'cost' || $scope.aspect=='quality');
 
     var ConstantTypes = {
@@ -33,8 +36,7 @@ var Controller = function ($scope, $stateParams, $state, $ionicScrollDelegate, M
         });
         $scope.chart1 = { data: null };
         $scope.chart.isDouble = false;
-        if (key == 'W') {
-            var total = $scope.chart.data;
+        if (key === 'W') {
             /* $scope.chart.data = total.filter(function(d){
               return d.month <27;
             });
@@ -85,14 +87,16 @@ var Controller = function ($scope, $stateParams, $state, $ionicScrollDelegate, M
     }
 
 
-    $scope.$on('$ionicView.enter', function (e) {
+    $scope.$on('$ionicView.enter', function () {
         $scope.selectedCriteria = localStorageService.get('criteria');
+        /*eslint-disable*/
         MetaDataSvc($stateParams.PageType, $scope.isLine).then(function (data) {
             $scope.metaData = data;
         });
 
         var lastDay = DateUtil.getLastDay();
 
+        /*eslint-disable*/
         KPIItem($stateParams.BizType, $scope.isLine).then(function (data) {
 
             /* data = data.map(function(d){
@@ -107,10 +111,13 @@ var Controller = function ($scope, $stateParams, $state, $ionicScrollDelegate, M
             $scope.types = {};
 
             var i, len;
+
             for (var dx = 0, dlen = data.length; dx < dlen; dx++) {
                 var ele = data[dx];
+
                 for (i = 0, len = types.length; i < len; i++) {
                     var type = types[i];
+
                     if (ele.ID.indexOf(type) === 0) {
                         if (type in $scope.types) {
                             $scope.types[type].push(ele);
@@ -130,14 +137,15 @@ var Controller = function ($scope, $stateParams, $state, $ionicScrollDelegate, M
                 });
             }
             var BizTypeLen = $stateParams.BizType.length;
-            if ($scope.aspect == 'flow' && $stateParams.BizType.charAt(BizTypeLen - 1) == '1') {
+
+            if ($scope.aspect === 'flow' && $stateParams.BizType.charAt(BizTypeLen - 1) === '1') {
                 $scope.typeDropdown.push({
                     key: 'flow-wall',
                     value: '明细',
                     isURL: true,
                     param: { PageType: $stateParams.PageType, BizType: $stateParams.BizType + '-1', isLine: $scope.isLine }
                 });
-            } else if ($scope.aspect == 'cost' && $stateParams.BizType.charAt(BizTypeLen - 1) == '2') {
+            } else if ($scope.aspect === 'cost' && $stateParams.BizType.charAt(BizTypeLen - 1) === '2') {
                 $scope.typeDropdown.push({
                     key: 'cost-wall',
                     value: '目视墙',

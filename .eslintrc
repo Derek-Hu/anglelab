@@ -74,6 +74,7 @@
         cordova,
         ionic,
         StatusBar,
-        LocalFileSystem
+        LocalFileSystem,
+        $
     }
 }
