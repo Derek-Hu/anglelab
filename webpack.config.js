@@ -28,7 +28,7 @@ module.exports = {
     plugins: [
         new ProgressBarPlugin(),
         new WebpackNotifierPlugin({ alwaysNotify: true }),
-        new HtmlWebpackPlugin({ template: 'www/index.ejs', inject: true }),
+        new HtmlWebpackPlugin({ template: 'www/index.ejs', inject: true })
     ],
     module: {
         preLoaders: [
