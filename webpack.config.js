@@ -32,20 +32,17 @@ module.exports = {
     ],
     module: {
         preLoaders: [
-            { test: /\.js$/, exclude: /node_modules/, loader: 'eslint' }
+           // { test: /\.js$/, exclude: /node_modules/, loader: 'eslint' }
         ],
         loaders: [
             { test: /\.js$/, exclude: /node_modules/, loader: 'babel' },
             { test: /\.(eot|woff(2)?|ttf|svg)(\?v=\d+\.\d+\.\d+)?$/, loader: 'file?name=fonts/[name]---[hash].[ext]' },
             { test: /\.json$/, loader: 'json' },
             { test: /\.html$/, loader: 'html' }, {
-                test: /\.(png|jpg)$/,
+                test: /.*www\/images\/.*\.(gif|png|jpe?g|svg)$/i,
                 loaders: [
-                    // 'file',
-                    "url-loader?name=images/[name]---[hash].[ext]&limit=8192"
-                    // ,
-                    // 'image-webpack?bypassOnDebug&optimizationLevel=7&interlaced=false'
-                    // 'image-webpack?{optimizationLevel: 7, interlaced: false, pngquant:{quality: "65-90", speed: 4}, mozjpeg: {quality: 85}}'
+                    "url-loader?name=img/[name].[ext]&limit=8192",
+                    'image-webpack?{optimizationLevel: 7, interlaced: false, pngquant:{quality: "65-90", speed: 4}, mozjpeg: {quality: 65}}'
                 ]
             },
             { test: /\.css$/, loader: 'style!css?importLoaders=1!postcss' }

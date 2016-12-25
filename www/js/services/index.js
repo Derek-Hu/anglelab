@@ -23,7 +23,7 @@ var services = [
 ];
 
 for (var i = 0, len = services.length; i < len; i++) {
-    app.service(services[i].name. services[i].fn);
+    app.service(services[i].name, services[i].fn);
 }
 
 module.exports = app.name;
