@@ -4969,7 +4969,7 @@
 /* 66 */
 /***/ function(module, exports, __webpack_require__) {
 
-	module.exports = "<ion-view hide-nav-bar=\"true\" hide-back-button=\"true\">\n\n  <ion-header-bar align-title=\"center\">\n        <single-title title=\"登录权限\"></single-title>\n    </ion-header-bar>\n\n    <ion-content scroll=\"false\">\n        <div class=\"entryWp ad-sub-permission login-dashboard\">\n            <div>\n            <a href=\"#/entry\" class=\"entry-home\">\n                <div class=\"entry\" style=\"left: 15%;\">\n                    <div class=\"img tc\">\n                        <img src=\"" + __webpack_require__(67) + "\"/>\n                    </div>\n                    <div class=\"group\">\n                        <span class=\"number\">SFM</span>\n                    </div>\n                </div>\n            </a>\n            <a href=\"#/ad/sub-permssion\" class=\"entry-home\">\n                <div class=\"entry\" style=\"right: 15%;\">\n                    <div class=\"img tc\">\n                        <img src=\"" + __webpack_require__(68) + "\"/>\n                    </div>\n                    <div class=\"group\">\n                        <span class=\"number\">AD Board</span>\n                    </div>\n                </div>\n            </a>\n            </div>\n        </div>\n    </ion-content>\n    <ion-footer-bar>\n        <div class=\"quickNav\">\n            <a href=\"#/ad/login\"><span class=\"glyphicon glyphicon-log-out\"></span></a>\n        </div>\n    </ion-footer-bar>\n</ion-view>\n";
+	module.exports = "<ion-view hide-nav-bar=\"true\" hide-back-button=\"true\">\n    <ion-header-bar align-title=\"center\">\n        <single-title title=\"登录权限\"></single-title>\n    </ion-header-bar>\n    <ion-content scroll=\"false\">\n        <div class=\"entryWp ad-sub-permission login-dashboard\">\n            <div>\n                <div ng-if=\"hasSFM\" class=\"menu-wpr\">\n                    <a href=\"#/entry\" class=\"entry-home\">\n                        <div class=\"entry\" style=\"left: 15%;\">\n                            <div class=\"img tc\">\n                                <img src=\"" + __webpack_require__(67) + "\" />\n                            </div>\n                            <div class=\"group\">\n                                <span class=\"number\">SFM</span>\n                            </div>\n                        </div>\n                    </a>\n                </div>\n                <div ng-if=\"hasAD\" class=\"menu-wpr\">\n                    <a href=\"#/ad/sub-permssion\" class=\"entry-home\">\n                        <div class=\"entry\" style=\"right: 15%;\">\n                            <div class=\"img tc\">\n                                <img src=\"" + __webpack_require__(68) + "\" />\n                            </div>\n                            <div class=\"group\">\n                                <span class=\"number\">AD Board</span>\n                            </div>\n                        </div>\n                    </a>\n                </div>\n            </div>\n        </div>\n    </ion-content>\n    <ion-footer-bar>\n        <div class=\"quickNav\">\n            <a href=\"#/ad/login\"><span class=\"glyphicon glyphicon-log-out\"></span></a>\n        </div>\n    </ion-footer-bar>\n</ion-view>\n";
 
 /***/ },
 /* 67 */
@@ -4995,28 +4995,20 @@
 	
 	        var hasDoublePermission = data.permssionMap.SFM && data.permssionMap.SFM.length && data.permssionMap.AD && data.permssionMap.AD.length;
 	
+	        $scope.hasSFM = false;
+	        $scope.hasAD = false;
+	
 	        if (!hasDoublePermission) {
 	            if (data.permssionMap.SFM && data.permssionMap.SFM.length) {
-	                if (data.permssionMap.SFM.length === 1) {
-	                    if (data.permssionMap.SFM[0] === 'line') {
-	                        // 线板
-	                        $state.go('kpi-view-board');
-	                    } else if (data.permssionMap.SFM[0] === 'board') {
-	                        // 看板
-	                        $state.go('dash');
-	                    }
-	                } else if (data.permssionMap.SFM.length >= 2) {
-	                    $state.go('entry');
-	                }
+	                $scope.hasSFM = true;
 	            } else if (data.permssionMap.AD && data.permssionMap.AD.length) {
-	                if (data.permssionMap.AD.length === 1) {
-	                    $state.go('ad-' + data.permssionMap.AD[0]);
-	                } else if (data.permssionMap.AD.length >= 2) {
-	                    $state.go('ad-sub-permssion');
-	                }
+	                $scope.hasAD = true;
 	            } else {
 	                $state.go('ad-login');
 	            }
+	        } else {
+	            $scope.hasSFM = true;
+	            $scope.hasAD = true;
 	        }
 	    });
 	};

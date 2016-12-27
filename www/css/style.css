@@ -1570,15 +1570,23 @@ a.entry-home:hover {
     top: 20%;
 }
 
+.ad-sub-permission.login-dashboard.entryWp div.menu-wpr {
+    width: 49%;
+    display: inline-block;
+    text-align: center;
+    padding: 2em;
+}
+
 .ad-sub-permission.login-dashboard.entryWp a {
     width: 50%;
-    display: block;
-    float: left;
+    display: inline-block;
+    padding: 0;
 }
 
 .ad-sub-permission.login-dashboard.entryWp a div.entry {
     text-align: center;
-    width: 70%;
+    width: 100%;
+    position: static;
 }
 
 .ad-sub-permission.login-dashboard.entryWp a div.entry .group {
