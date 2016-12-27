@@ -23,7 +23,7 @@ module.exports = {
         sourceMapFilename: 'maps/[file].map'
     },
     
-    devtool: '#source-map',
+    // devtool: '#source-map',
 
     plugins: [
         new ProgressBarPlugin(),

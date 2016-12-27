@@ -1,41 +1,41 @@
 /******/ (function(modules) { // webpackBootstrap
 /******/ 	// The module cache
 /******/ 	var installedModules = {};
-/******/
+
 /******/ 	// The require function
 /******/ 	function __webpack_require__(moduleId) {
-/******/
+
 /******/ 		// Check if module is in cache
 /******/ 		if(installedModules[moduleId])
 /******/ 			return installedModules[moduleId].exports;
-/******/
+
 /******/ 		// Create a new module (and put it into the cache)
 /******/ 		var module = installedModules[moduleId] = {
 /******/ 			exports: {},
 /******/ 			id: moduleId,
 /******/ 			loaded: false
 /******/ 		};
-/******/
+
 /******/ 		// Execute the module function
 /******/ 		modules[moduleId].call(module.exports, module, module.exports, __webpack_require__);
-/******/
+
 /******/ 		// Flag the module as loaded
 /******/ 		module.loaded = true;
-/******/
+
 /******/ 		// Return the exports of the module
 /******/ 		return module.exports;
 /******/ 	}
-/******/
-/******/
+
+
 /******/ 	// expose the modules object (__webpack_modules__)
 /******/ 	__webpack_require__.m = modules;
-/******/
+
 /******/ 	// expose the module cache
 /******/ 	__webpack_require__.c = installedModules;
-/******/
+
 /******/ 	// __webpack_public_path__
 /******/ 	__webpack_require__.p = "";
-/******/
+
 /******/ 	// Load entry module and return exports
 /******/ 	return __webpack_require__(0);
 /******/ })
@@ -45,21 +45,21 @@
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
-	
+
 	var routers = __webpack_require__(1);
 	var LocalStorageModule = __webpack_require__(3);
-	
+
 	angular.module('starter', [routers, LocalStorageModule, 'ionic', 'ngCordova']).run(function ($ionicPlatform, $rootScope, $window, localStorageService) {
-	
+
 	    $rootScope.$on('$stateChangeSuccess', function () {
 	        var loginUser = localStorageService.get('loginUser');
-	
+
 	        $rootScope.loginUser = loginUser;
 	    });
 	    $rootScope.historyBack = function () {
 	        $window.history.back();
 	    };
-	
+
 	    $ionicPlatform.ready(function () {
 	        // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
 	        // for form inputs)
@@ -72,7 +72,7 @@
 	            StatusBar.styleLightContent();
 	        }
 	    });
-	
+
 	    ionic.Platform.ready(function () {
 	        // will execute when device is ready, or immediately if the device is already ready.
 	        ionic.Platform.fullScreen(false, true);
@@ -84,37 +84,37 @@
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
-	
+
 	var servicesModule = __webpack_require__(2);
 	var componentsModule = __webpack_require__(22);
 	var LocalStorageModule = __webpack_require__(3);
 	var ngResource = __webpack_require__(5);
 	var app = angular.module('starter.routers', ['ionic', 'ngCordova', 'ui.bootstrap', LocalStorageModule, ngResource, servicesModule, componentsModule]);
-	
+
 	app.config(function ($stateProvider, $urlRouterProvider) {
-	
+
 	    // Ionic uses AngularUI Router which uses the concept of states
 	    // Learn more here: https://github.com/angular-ui/ui-router
 	    // Set up the various states which the app can be in.
 	    // Each state's controller can be found in controllers.js
 	    $stateProvider
-	
+
 	    // setup an abstract state for the tabs directive
 	    /* .state('tab', {
 	    url: '/tab',
 	    abstract: true,
 	    template: 'templates/tabs.html'
 	    })*/
-	
+
 	    // Each tab has its own nav history stack:
-	
+
 	    .state('dash', {
 	        url: '/dash',
 	        views: {
 	            'dash': {
 	                template: __webpack_require__(31),
 	                controller: __webpack_require__(32)
-	
+
 	            }
 	        }
 	    }).state('gwrx', {
@@ -348,19 +348,19 @@
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
-	
+
 	var LocalStorageModule = __webpack_require__(3);
 	var ngResource = __webpack_require__(5);
 	// var componentsModule = require('../components');
-	
+
 	var app = angular.module('starter.services', ['ionic', 'ngCordova', ngResource, LocalStorageModule]);
-	
+
 	var services = [__webpack_require__(7), __webpack_require__(8), __webpack_require__(9), __webpack_require__(10), __webpack_require__(11), __webpack_require__(12), __webpack_require__(13), __webpack_require__(14), __webpack_require__(15), __webpack_require__(16), __webpack_require__(17), __webpack_require__(18), __webpack_require__(19), __webpack_require__(20), __webpack_require__(21)];
-	
+
 	for (var i = 0, len = services.length; i < len; i++) {
 	    app.service(services[i].name, services[i].fn);
 	}
-	
+
 	module.exports = app.name;
 
 /***/ },
@@ -390,7 +390,7 @@
 	  isArray = angular.isArray,
 	  extend = angular.extend,
 	  toJson = angular.toJson;
-	
+
 	angular
 	  .module('LocalStorageModule', [])
 	  .provider('localStorageService', function() {
@@ -401,10 +401,10 @@
 	    //    localStorageServiceProvider.prefix = 'yourAppName';
 	    // });
 	    this.prefix = 'ls';
-	
+
 	    // You could change web storage type localstorage or sessionStorage
 	    this.storageType = 'localStorage';
-	
+
 	    // Cookie options (usually in case of fallback)
 	    // expiry = Number of days before cookies expire // 0 = Does not expire
 	    // path = The web path the cookie represents
@@ -414,22 +414,22 @@
 	      path: '/',
 	      secure: false
 	    };
-	
+
 	    // Decides wether we should default to cookies if localstorage is not supported.
 	    this.defaultToCookie = true;
-	
+
 	    // Send signals for each of the following actions?
 	    this.notify = {
 	      setItem: true,
 	      removeItem: false
 	    };
-	
+
 	    // Setter for the prefix
 	    this.setPrefix = function(prefix) {
 	      this.prefix = prefix;
 	      return this;
 	    };
-	
+
 	    // Setter for the storageType
 	    this.setStorageType = function(storageType) {
 	      this.storageType = storageType;
@@ -447,13 +447,13 @@
 	      this.cookie.secure = secure;
 	      return this;
 	    };
-	
+
 	    // Setter for cookie domain
 	    this.setStorageCookieDomain = function(domain) {
 	      this.cookie.domain = domain;
 	      return this;
 	    };
-	
+
 	    // Setter for notification config
 	    // itemSet & itemRemove should be booleans
 	    this.setNotify = function(itemSet, itemRemove) {
@@ -463,7 +463,7 @@
 	      };
 	      return this;
 	    };
-	
+
 	    this.$get = ['$rootScope', '$window', '$document', '$parse','$timeout', function($rootScope, $window, $document, $parse, $timeout) {
 	      var self = this;
 	      var prefix = self.prefix;
@@ -471,14 +471,14 @@
 	      var notify = self.notify;
 	      var storageType = self.storageType;
 	      var webStorage;
-	
+
 	      // When Angular's $document is not available
 	      if (!$document) {
 	        $document = document;
 	      } else if ($document[0]) {
 	        $document = $document[0];
 	      }
-	
+
 	      // If there is a prefix set in the config lets use that with an appended period for readability
 	      if (prefix.substr(-1) !== '.') {
 	        prefix = !!prefix ? prefix + '.' : '';
@@ -486,22 +486,22 @@
 	      var deriveQualifiedKey = function(key) {
 	        return prefix + key;
 	      };
-	
+
 	      // Removes prefix from the key.
 	      var underiveQualifiedKey = function (key) {
 	        return key.replace(new RegExp('^' + prefix, 'g'), '');
 	      };
-	
+
 	      // Check if the key is within our prefix namespace.
 	      var isKeyPrefixOurs = function (key) {
 	        return key.indexOf(prefix) === 0;
 	      };
-	
+
 	      // Checks the browser to see if local storage is supported
 	      var checkSupport = function () {
 	        try {
 	          var supported = (storageType in $window && $window[storageType] !== null);
-	
+
 	          // When Safari (OS X or iOS) is in private browsing mode, it appears as though localStorage
 	          // is available, but trying to call .setItem throws an exception.
 	          //
@@ -513,7 +513,7 @@
 	            webStorage.setItem(key, '');
 	            webStorage.removeItem(key);
 	          }
-	
+
 	          return supported;
 	        } catch (e) {
 	          // Only change storageType to cookies if defaulting is enabled.
@@ -524,32 +524,32 @@
 	        }
 	      };
 	      var browserSupportsLocalStorage = checkSupport();
-	
+
 	      // Directly adds a value to local storage
 	      // If local storage is not available in the browser use cookies
 	      // Example use: localStorageService.add('library','angular');
 	      var addToLocalStorage = function (key, value, type) {
 	        setStorageType(type);
-	
+
 	        // Let's convert undefined values to null to get the value consistent
 	        if (isUndefined(value)) {
 	          value = null;
 	        } else {
 	          value = toJson(value);
 	        }
-	
+
 	        // If this browser does not support local storage use cookies
 	        if (!browserSupportsLocalStorage && self.defaultToCookie || self.storageType === 'cookie') {
 	          if (!browserSupportsLocalStorage) {
 	            $rootScope.$broadcast('LocalStorageModule.notification.warning', 'LOCAL_STORAGE_NOT_SUPPORTED');
 	          }
-	
+
 	          if (notify.setItem) {
 	            $rootScope.$broadcast('LocalStorageModule.notification.setitem', {key: key, newvalue: value, storageType: 'cookie'});
 	          }
 	          return addToCookies(key, value);
 	        }
-	
+
 	        try {
 	          if (webStorage) {
 	            webStorage.setItem(deriveQualifiedKey(key), value);
@@ -563,34 +563,34 @@
 	        }
 	        return true;
 	      };
-	
+
 	      // Directly get a value from local storage
 	      // Example use: localStorageService.get('library'); // returns 'angular'
 	      var getFromLocalStorage = function (key, type) {
 	        setStorageType(type);
-	
+
 	        if (!browserSupportsLocalStorage && self.defaultToCookie  || self.storageType === 'cookie') {
 	          if (!browserSupportsLocalStorage) {
 	            $rootScope.$broadcast('LocalStorageModule.notification.warning', 'LOCAL_STORAGE_NOT_SUPPORTED');
 	          }
-	
+
 	          return getFromCookies(key);
 	        }
-	
+
 	        var item = webStorage ? webStorage.getItem(deriveQualifiedKey(key)) : null;
 	        // angular.toJson will convert null to 'null', so a proper conversion is needed
 	        // FIXME not a perfect solution, since a valid 'null' string can't be stored
 	        if (!item || item === 'null') {
 	          return null;
 	        }
-	
+
 	        try {
 	          return JSON.parse(item);
 	        } catch (e) {
 	          return item;
 	        }
 	      };
-	
+
 	      // Remove an item from local storage
 	      // Example use: localStorageService.remove('library'); // removes the key/value pair of library='angular'
 	      //
@@ -606,7 +606,7 @@
 	          consumed = 1;
 	          setStorageType(arguments[arguments.length - 1]);
 	        }
-	
+
 	        var i, key;
 	        for (i = 0; i < arguments.length - consumed; i++) {
 	          key = arguments[i];
@@ -614,7 +614,7 @@
 	            if (!browserSupportsLocalStorage) {
 	              $rootScope.$broadcast('LocalStorageModule.notification.warning', 'LOCAL_STORAGE_NOT_SUPPORTED');
 	            }
-	
+
 	            if (notify.removeItem) {
 	              $rootScope.$broadcast('LocalStorageModule.notification.removeitem', {key: key, storageType: 'cookie'});
 	            }
@@ -636,17 +636,17 @@
 	          }
 	        }
 	      };
-	
+
 	      // Return array of keys for local storage
 	      // Example use: var keys = localStorageService.keys()
 	      var getKeysForLocalStorage = function (type) {
 	        setStorageType(type);
-	
+
 	        if (!browserSupportsLocalStorage) {
 	          $rootScope.$broadcast('LocalStorageModule.notification.warning', 'LOCAL_STORAGE_NOT_SUPPORTED');
 	          return [];
 	        }
-	
+
 	        var prefixLength = prefix.length;
 	        var keys = [];
 	        for (var key in webStorage) {
@@ -662,19 +662,19 @@
 	        }
 	        return keys;
 	      };
-	
+
 	      // Remove all data for this app from local storage
 	      // Also optionally takes a regular expression string and removes the matching key-value pairs
 	      // Example use: localStorageService.clearAll();
 	      // Should be used mostly for development purposes
 	      var clearAllFromLocalStorage = function (regularExpression, type) {
 	        setStorageType(type);
-	
+
 	        // Setting both regular expressions independently
 	        // Empty strings result in catchall RegExp
 	        var prefixRegex = !!prefix ? new RegExp('^' + prefix) : new RegExp();
 	        var testRegex = !!regularExpression ? new RegExp(regularExpression) : new RegExp();
-	
+
 	        if (!browserSupportsLocalStorage && self.defaultToCookie  || self.storageType === 'cookie') {
 	          if (!browserSupportsLocalStorage) {
 	            $rootScope.$broadcast('LocalStorageModule.notification.warning', 'LOCAL_STORAGE_NOT_SUPPORTED');
@@ -684,7 +684,7 @@
 	        if (!browserSupportsLocalStorage && !self.defaultToCookie)
 	          return false;
 	        var prefixLength = prefix.length;
-	
+
 	        for (var key in webStorage) {
 	          // Only remove items that are for this app and match the regular expression
 	          if (prefixRegex.test(key) && testRegex.test(key.substr(prefixLength))) {
@@ -698,7 +698,7 @@
 	        }
 	        return true;
 	      };
-	
+
 	      // Checks the browser to see if cookies are supported
 	      var browserSupportsCookies = (function() {
 	        try {
@@ -710,28 +710,28 @@
 	            return false;
 	          }
 	        }());
-	
+
 	        // Directly adds a value to cookies
 	        // Typically used as a fallback if local storage is not available in the browser
 	        // Example use: localStorageService.cookie.add('library','angular');
 	        var addToCookies = function (key, value, daysToExpiry, secure) {
-	
+
 	          if (isUndefined(value)) {
 	            return false;
 	          } else if(isArray(value) || isObject(value)) {
 	            value = toJson(value);
 	          }
-	
+
 	          if (!browserSupportsCookies) {
 	            $rootScope.$broadcast('LocalStorageModule.notification.error', 'COOKIES_NOT_SUPPORTED');
 	            return false;
 	          }
-	
+
 	          try {
 	            var expiry = '',
 	            expiryDate = new Date(),
 	            cookieDomain = '';
-	
+
 	            if (value === null) {
 	              // Mark that the cookie has expired one day ago
 	              expiryDate.setTime(expiryDate.getTime() + (-1 * 24 * 60 * 60 * 1000));
@@ -771,7 +771,7 @@
 	          }
 	          return true;
 	        };
-	
+
 	        // Directly get a value from a cookie
 	        // Example use: localStorageService.cookie.get('library'); // returns 'angular'
 	        var getFromCookies = function (key) {
@@ -779,7 +779,7 @@
 	            $rootScope.$broadcast('LocalStorageModule.notification.error', 'COOKIES_NOT_SUPPORTED');
 	            return false;
 	          }
-	
+
 	          var cookies = $document.cookie && $document.cookie.split(';') || [];
 	          for(var i=0; i < cookies.length; i++) {
 	            var thisCookie = cookies[i];
@@ -797,31 +797,31 @@
 	          }
 	          return null;
 	        };
-	
+
 	        var removeFromCookies = function (key) {
 	          addToCookies(key,null);
 	        };
-	
+
 	        var clearAllFromCookies = function () {
 	          var thisCookie = null;
 	          var prefixLength = prefix.length;
 	          var cookies = $document.cookie.split(';');
 	          for(var i = 0; i < cookies.length; i++) {
 	            thisCookie = cookies[i];
-	
+
 	            while (thisCookie.charAt(0) === ' ') {
 	              thisCookie = thisCookie.substring(1, thisCookie.length);
 	            }
-	
+
 	            var key = thisCookie.substring(prefixLength, thisCookie.indexOf('='));
 	            removeFromCookies(key);
 	          }
 	        };
-	
+
 	        var getStorageType = function() {
 	          return storageType;
 	        };
-	
+
 	        var setStorageType = function(type) {
 	          if (type && storageType !== type) {
 	            storageType = type;
@@ -829,26 +829,26 @@
 	          }
 	          return browserSupportsLocalStorage;
 	        };
-	
+
 	        // Add a listener on scope variable to save its changes to local storage
 	        // Return a function which when called cancels binding
 	        var bindToScope = function(scope, key, def, lsKey, type) {
 	          lsKey = lsKey || key;
 	          var value = getFromLocalStorage(lsKey, type);
-	
+
 	          if (value === null && isDefined(def)) {
 	            value = def;
 	          } else if (isObject(value) && isObject(def)) {
 	            value = extend(value, def);
 	          }
-	
+
 	          $parse(key).assign(scope, value);
-	
+
 	          return scope.$watch(key, function(newVal) {
 	            addToLocalStorage(lsKey, newVal, type);
 	          }, isObject(scope[key]));
 	        };
-	
+
 	        // Add listener to local storage, for update callbacks.
 	        if (browserSupportsLocalStorage) {
 	            if ($window.addEventListener) {
@@ -864,7 +864,7 @@
 	                });
 	            }
 	        }
-	
+
 	        // Callback handler for storage changed.
 	        function handleStorageChangeCallback(e) {
 	            if (!e) { e = $window.event; }
@@ -878,12 +878,12 @@
 	                }
 	            }
 	        }
-	
+
 	        // Return localStorageService.length
 	        // ignore keys that not owned
 	        var lengthOfLocalStorage = function(type) {
 	          setStorageType(type);
-	
+
 	          var count = 0;
 	          var storage = $window[storageType];
 	          for(var i = 0; i < storage.length; i++) {
@@ -893,7 +893,7 @@
 	          }
 	          return count;
 	        };
-	
+
 	        return {
 	          isSupported: browserSupportsLocalStorage,
 	          getStorageType: getStorageType,
@@ -940,19 +940,19 @@
 	 * License: MIT
 	 */
 	(function(window, angular) {'use strict';
-	
+
 	var $resourceMinErr = angular.$$minErr('$resource');
-	
+
 	// Helper functions and regex to lookup a dotted path on an object
 	// stopping at undefined/null.  The path must be composed of ASCII
 	// identifiers (just like $parse)
 	var MEMBER_NAME_REGEX = /^(\.[a-zA-Z_$@][0-9a-zA-Z_$@]*)+$/;
-	
+
 	function isValidDottedPath(path) {
 	  return (path != null && path !== '' && path !== 'hasOwnProperty' &&
 	      MEMBER_NAME_REGEX.test('.' + path));
 	}
-	
+
 	function lookupDottedPath(obj, path) {
 	  if (!isValidDottedPath(path)) {
 	    throw $resourceMinErr('badmember', 'Dotted member path "@{0}" is invalid.', path);
@@ -964,26 +964,26 @@
 	  }
 	  return obj;
 	}
-	
+
 	/**
 	 * Create a shallow copy of an object and clear other fields from the destination
 	 */
 	function shallowClearAndCopy(src, dst) {
 	  dst = dst || {};
-	
+
 	  angular.forEach(dst, function(value, key) {
 	    delete dst[key];
 	  });
-	
+
 	  for (var key in src) {
 	    if (src.hasOwnProperty(key) && !(key.charAt(0) === '$' && key.charAt(1) === '$')) {
 	      dst[key] = src[key];
 	    }
 	  }
-	
+
 	  return dst;
 	}
-	
+
 	/**
 	 * @ngdoc module
 	 * @name ngResource
@@ -999,7 +999,7 @@
 	 *
 	 * See {@link ngResource.$resourceProvider} and {@link ngResource.$resource} for usage.
 	 */
-	
+
 	/**
 	 * @ngdoc provider
 	 * @name $resourceProvider
@@ -1013,7 +1013,7 @@
 	 * Requires the {@link ngResource } module to be installed.
 	 *
 	 */
-	
+
 	/**
 	 * @ngdoc service
 	 * @name $resource
@@ -1233,12 +1233,12 @@
 	      {userId:123, cardId:'@id'}, {
 	       charge: {method:'POST', params:{charge:true}}
 	      });
-	
+
 	     // We can retrieve a collection from the server
 	     var cards = CreditCard.query(function() {
 	       // GET: /user/123/card
 	       // server returns: [ {id:456, number:'1234', name:'Smith'} ];
-	
+
 	       var card = cards[0];
 	       // each item is an instance of CreditCard
 	       expect(card instanceof CreditCard).toEqual(true);
@@ -1247,12 +1247,12 @@
 	       card.$save();
 	       // POST: /user/123/card/456 {id:456, number:'1234', name:'J. Smith'}
 	       // server returns: {id:456, number:'1234', name: 'J. Smith'};
-	
+
 	       // our custom method is mapped as well.
 	       card.$charge({amount:9.99});
 	       // POST: /user/123/card/456?amount=9.99&charge=true {id:456, number:'1234', name:'J. Smith'}
 	     });
-	
+
 	     // we can create an instance as well
 	     var newCard = new CreditCard({number:'0123'});
 	     newCard.name = "Mike Smith";
@@ -1275,7 +1275,7 @@
 	 * When the data is returned from the server then the object is an instance of the resource type and
 	 * all of the non-GET methods are available with `$` prefix. This allows you to easily support CRUD
 	 * operations (create, read, update, delete) on server-side data.
-	
+
 	   ```js
 	     var User = $resource('/user/:userId', {userId:'@id'});
 	     User.get({userId:123}, function(user) {
@@ -1354,14 +1354,14 @@
 	       // Let's make the `query()` method cancellable
 	       query: {method: 'get', isArray: true, cancellable: true}
 	     });
-	
+
 	     // ...somewhere in the PlanVacationController...
 	     ...
 	     this.onDestinationChanged = function onDestinationChanged(destination) {
 	       // We don't care about any pending request for hotels
 	       // in a different destination any more
 	       this.availableHotels.$cancelRequest();
-	
+
 	       // Let's query for hotels in '<destination>'
 	       // (calls: /api/hotel?location=<destination>)
 	       this.availableHotels = Hotel.query({location: destination});
@@ -1372,9 +1372,9 @@
 	angular.module('ngResource', ['ng']).
 	  provider('$resource', function ResourceProvider() {
 	    var PROTOCOL_AND_IPV6_REGEX = /^https?:\/\/\[[^\]]*][^/]*/;
-	
+
 	    var provider = this;
-	
+
 	    /**
 	     * @ngdoc property
 	     * @name $resourceProvider#defaults
@@ -1443,10 +1443,10 @@
 	    this.defaults = {
 	      // Strip slashes by default
 	      stripTrailingSlashes: true,
-	
+
 	      // Make non-instance requests cancellable (via `$cancelRequest()`)
 	      cancellable: false,
-	
+
 	      // Default actions configuration
 	      actions: {
 	        'get': {method: 'GET'},
@@ -1456,9 +1456,9 @@
 	        'delete': {method: 'DELETE'}
 	      }
 	    };
-	
+
 	    this.$get = ['$http', '$log', '$q', '$timeout', function($http, $log, $q, $timeout) {
-	
+
 	      var noop = angular.noop,
 	          forEach = angular.forEach,
 	          extend = angular.extend,
@@ -1469,13 +1469,13 @@
 	          isNumber = angular.isNumber,
 	          encodeUriQuery = angular.$$encodeUriQuery,
 	          encodeUriSegment = angular.$$encodeUriSegment;
-	
+
 	      function Route(template, defaults) {
 	        this.template = template;
 	        this.defaults = extend({}, provider.defaults, defaults);
 	        this.urlParams = {};
 	      }
-	
+
 	      Route.prototype = {
 	        setUrlParams: function(config, params, actionUrl) {
 	          var self = this,
@@ -1483,7 +1483,7 @@
 	            val,
 	            encodedVal,
 	            protocolAndIpv6 = '';
-	
+
 	          var urlParams = self.urlParams = Object.create(null);
 	          forEach(url.split(/\W/), function(param) {
 	            if (param === 'hasOwnProperty') {
@@ -1501,7 +1501,7 @@
 	            protocolAndIpv6 = match;
 	            return '';
 	          });
-	
+
 	          params = params || {};
 	          forEach(self.urlParams, function(paramInfo, urlParam) {
 	            val = params.hasOwnProperty(urlParam) ? params[urlParam] : self.defaults[urlParam];
@@ -1525,19 +1525,19 @@
 	              });
 	            }
 	          });
-	
+
 	          // strip trailing slashes and set the url (unless this behavior is specifically disabled)
 	          if (self.defaults.stripTrailingSlashes) {
 	            url = url.replace(/\/+$/, '') || '/';
 	          }
-	
+
 	          // then replace collapse `/.` if found in the last URL path segment before the query
 	          // E.g. `http://url.com/id./format?q=x` becomes `http://url.com/id.format?q=x`
 	          url = url.replace(/\/\.(?=\w+($|\?))/, '.');
 	          // replace escaped `/\.` with `/.`
 	          config.url = protocolAndIpv6 + url.replace(/\/\\\./, '/.');
-	
-	
+
+
 	          // set params - delegate param encoding to $http
 	          forEach(params, function(value, key) {
 	            if (!self.urlParams[key]) {
@@ -1547,13 +1547,13 @@
 	          });
 	        }
 	      };
-	
-	
+
+
 	      function resourceFactory(url, paramDefaults, actions, options) {
 	        var route = new Route(url, options);
-	
+
 	        actions = extend({}, provider.defaults.actions, actions);
-	
+
 	        function extractParams(data, actionParams) {
 	          var ids = {};
 	          actionParams = extend({}, paramDefaults, actionParams);
@@ -1564,28 +1564,28 @@
 	          });
 	          return ids;
 	        }
-	
+
 	        function defaultResponseInterceptor(response) {
 	          return response.resource;
 	        }
-	
+
 	        function Resource(value) {
 	          shallowClearAndCopy(value || {}, this);
 	        }
-	
+
 	        Resource.prototype.toJSON = function() {
 	          var data = extend({}, this);
 	          delete data.$promise;
 	          delete data.$resolved;
 	          return data;
 	        };
-	
+
 	        forEach(actions, function(action, name) {
 	          var hasBody = /^(POST|PUT|PATCH)$/i.test(action.method);
 	          var numericTimeout = action.timeout;
 	          var cancellable = isDefined(action.cancellable) ?
 	              action.cancellable : route.defaults.cancellable;
-	
+
 	          if (numericTimeout && !isNumber(numericTimeout)) {
 	            $log.debug('ngResource:\n' +
 	                       '  Only numeric values are allowed as `timeout`.\n' +
@@ -1595,10 +1595,10 @@
 	            delete action.timeout;
 	            numericTimeout = null;
 	          }
-	
+
 	          Resource[name] = function(a1, a2, a3, a4) {
 	            var params = {}, data, success, error;
-	
+
 	            switch (arguments.length) {
 	              case 4:
 	                error = a4;
@@ -1612,7 +1612,7 @@
 	                    error = a2;
 	                    break;
 	                  }
-	
+
 	                  success = a2;
 	                  error = a3;
 	                  // falls through
@@ -1634,7 +1634,7 @@
 	                  'Expected up to 4 arguments [params, data, success, error], got {0} arguments',
 	                  arguments.length);
 	            }
-	
+
 	            var isInstanceCall = this instanceof Resource;
 	            var value = isInstanceCall ? data : (action.isArray ? [] : new Resource(data));
 	            var httpConfig = {};
@@ -1646,7 +1646,7 @@
 	            var hasResponseErrorInterceptor = !!responseErrorInterceptor;
 	            var timeoutDeferred;
 	            var numericTimeoutPromise;
-	
+
 	            forEach(action, function(value, key) {
 	              switch (key) {
 	                default:
@@ -1659,24 +1659,24 @@
 	                  break;
 	              }
 	            });
-	
+
 	            if (!isInstanceCall && cancellable) {
 	              timeoutDeferred = $q.defer();
 	              httpConfig.timeout = timeoutDeferred.promise;
-	
+
 	              if (numericTimeout) {
 	                numericTimeoutPromise = $timeout(timeoutDeferred.resolve, numericTimeout);
 	              }
 	            }
-	
+
 	            if (hasBody) httpConfig.data = data;
 	            route.setUrlParams(httpConfig,
 	              extend({}, extractParams(data, action.params || {}), params),
 	              action.url);
-	
+
 	            var promise = $http(httpConfig).then(function(response) {
 	              var data = response.data;
-	
+
 	              if (data) {
 	                // Need to convert action.isArray to boolean in case it is undefined
 	                if (isArray(data) !== (!!action.isArray)) {
@@ -1704,10 +1704,10 @@
 	                }
 	              }
 	              response.resource = value;
-	
+
 	              return response;
 	            });
-	
+
 	            promise = promise['finally'](function() {
 	              value.$resolved = true;
 	              if (!isInstanceCall && cancellable) {
@@ -1716,7 +1716,7 @@
 	                timeoutDeferred = numericTimeoutPromise = httpConfig.timeout = null;
 	              }
 	            });
-	
+
 	            promise = promise.then(
 	              function(response) {
 	                var value = responseInterceptor(response);
@@ -1736,7 +1736,7 @@
 	              // but still fulfill the returned promise with a rejection
 	              promise.catch(noop);
 	            }
-	
+
 	            if (!isInstanceCall) {
 	              // we are creating instance / collection
 	              // - set the initial promise
@@ -1744,20 +1744,20 @@
 	              value.$promise = promise;
 	              value.$resolved = false;
 	              if (cancellable) value.$cancelRequest = cancelRequest;
-	
+
 	              return value;
 	            }
-	
+
 	            // instance call
 	            return promise;
-	
+
 	            function cancelRequest(value) {
 	              promise.catch(noop);
 	              timeoutDeferred.resolve(value);
 	            }
 	          };
-	
-	
+
+
 	          Resource.prototype['$' + name] = function(params, success, error) {
 	            if (isFunction(params)) {
 	              error = success; success = params; params = {};
@@ -1766,20 +1766,20 @@
 	            return result.$promise || result;
 	          };
 	        });
-	
+
 	        Resource.bind = function(additionalParamDefaults) {
 	          var extendedParamDefaults = extend({}, paramDefaults, additionalParamDefaults);
 	          return resourceFactory(url, extendedParamDefaults, actions, options);
 	        };
-	
+
 	        return Resource;
 	      }
-	
+
 	      return resourceFactory;
 	    }];
 	  });
-	
-	
+
+
 	})(window, window.angular);
 
 
@@ -1788,7 +1788,7 @@
 /***/ function(module, exports) {
 
 	'use strict';
-	
+
 	module.exports = {
 	    name: 'Constant',
 	    fn: [function () {
@@ -1802,7 +1802,7 @@
 	            timeInterval: 10,
 	            imagePath: { name: '目录暂未选择', nativeURL: null }
 	        };
-	
+
 	        return {
 	            baseURL: function baseURL() {
 	                return settings.cacheURL;
@@ -1828,24 +1828,24 @@
 	            supportedExt: ['.jpg', '.jpeg', '.bmp', '.png', '.gif', '.tif'],
 	            isExtSupport: function isExtSupport(name) {
 	                var nameLen, extName, i, len;
-	
+
 	                if (!name) {
 	                    return false;
 	                }
 	                nameLen = name.length;
-	
+
 	                for (i = 0, len = this.supportedExt.length; i < len; i++) {
 	                    extName = this.supportedExt[i];
-	
+
 	                    if (name.substring(nameLen - extName.length, nameLen) === extName) {
 	                        return true;
 	                    }
 	                }
 	                return false;
 	            },
-	
+
 	            viewBoard: {
-	
+
 	                menus: [{
 	                    'MenuId': '1',
 	                    'PageType': 1,
@@ -2145,7 +2145,7 @@
 /***/ function(module, exports) {
 
 	'use strict';
-	
+
 	module.exports = {
 	    name: 'Backend',
 	    fn: ['$resource', 'Constant', function ($resource, Constant) {
@@ -2161,7 +2161,7 @@
 	            lgjh,
 	            kpi;
 	        var xiajiaListURL, xiajiaURL, pullListURL, startListURL, startActionURL, pullActionURL, pullHistoryURL, kucunListURL, adMemberURL, adAllMemberURL, adModifyMemberURL, login, userAuth;
-	
+
 	        /*
 	        var org = $resource('js/test/org.json');
 	        var gwrx = $resource('js/test/gwrx.json');
@@ -2173,7 +2173,7 @@
 	        var kuqu = $resource('js/test/kuqu.json');
 	        var banzu = $resource('js/test/banzu.json');
 	        var banCharge = $resource('js/test/banCharge.json');*/
-	
+
 	        return function () {
 	            if (baseURL !== Constant.baseURL()) {
 	                baseURL = Constant.baseURL();
@@ -2186,7 +2186,7 @@
 	                gwrx = $resource(baseURL + '/PositionFlexible.aspx');
 	                lgjh = $resource(baseURL + '/DutyRotation.aspx');
 	                kpi = $resource(baseURL + '/KPI.aspx');
-	
+
 	                // http://localhost:1460/AdPull/GetDownList.aspx?whseId=1
 	                xiajiaListURL = baseURL + '/AdPull/GetDownList.aspx';
 	                // http://localhost:1460/AdPull/DownShelves.aspx?epsSupplyId=1&userName=2
@@ -2205,7 +2205,7 @@
 	                login = baseURL + '/AdPull/Login.aspx';
 	                userAuth = baseURL + '/AdPull/UserAuthority.aspx';
 	            }
-	
+
 	            return {
 	                kaoqin: kaoqin,
 	                kuqu: kuqu,
@@ -2239,14 +2239,14 @@
 /***/ function(module, exports) {
 
 	'use strict';
-	
+
 	module.exports = {
 	    name: 'AD',
 	    fn: ['Backend', 'Constant', '$q', 'localStorageService', '$http', function (Backend, Constant, $q, localStorageService, $http) {
 	        return {
 	            login: function login(params) {
 	                var deferred = $q.defer();
-	
+
 	                /*
 	                  
 	                  {
@@ -2268,7 +2268,7 @@
 	                    url: Backend().login + '?name=' + params.name + '&pwd=' + params.pwd
 	                }).success(function (data) {
 	                    var msg;
-	
+
 	                    if (data && data.userId) {
 	                        $http({
 	                            method: 'GET',
@@ -2276,7 +2276,7 @@
 	                            url: Backend().userAuth + '?userId=' + data.userId
 	                        }).success(function (auth) {
 	                            var i, len;
-	
+
 	                            if (auth && auth.length) {
 	                                data.permssionMap = {
 	                                    SFM: [],
@@ -2316,7 +2316,7 @@
 	                        });
 	                    } else {
 	                        msg = '服务器异常';
-	
+
 	                        if (data) {
 	                            if ('userId' in data) {
 	                                msg = '用户名或密码错误';
@@ -2345,13 +2345,13 @@
 /***/ function(module, exports) {
 
 	'use strict';
-	
+
 	module.exports = {
 	    name: 'XiaJia',
 	    fn: ['Backend', 'Constant', '$q', '$http', function (Backend, Constant, $q, $http) {
 	        function getList(params) {
 	            var deferred = $q.defer();
-	
+
 	            /*eslint-disable*/
 	            $http({ method: 'GET', url: Backend().xiajiaListURL + params }).success(function (data, status, headers) {
 	                if (data && Object.prototype.toString.call(data) === '[object Array]') {
@@ -2364,10 +2364,10 @@
 	            });
 	            return deferred.promise;
 	        }
-	
+
 	        function xiajia(params) {
 	            var deferred = $q.defer();
-	
+
 	            /*eslint-disable*/
 	            $http({ method: 'GET', url: Backend().xiajiaURL + params }).success(function (data, status, headers) {
 	                if (data && data.respCode === 'success') {
@@ -2392,7 +2392,7 @@
 /***/ function(module, exports) {
 
 	'use strict';
-	
+
 	module.exports = {
 	    name: 'MetaDataSvc',
 	    fn: ['Backend', 'Constant', 'localStorageService', '$q', function (Backend, Constant, localStorageService, $q) {
@@ -2402,18 +2402,18 @@
 	            'shenhe': 'N/A',
 	            'pizhun': 'N/A'
 	        };
-	
+
 	        return function (menuId, isLine) {
 	            var deferred = $q.defer();
 	            var selectedCriteria = localStorageService.get('criteria');
-	
+
 	            if (isLine) {
 	                if (!selectedCriteria.kuqu) {
 	                    deferred.resolve([]);
 	                    return deferred.promise;
 	                }
 	            }
-	
+
 	            if (!isLine && (!selectedCriteria.kuqu || !selectedCriteria.banzu || !selectedCriteria.banci)) {
 	                deferred.resolve(empty);
 	                return deferred.promise;
@@ -2446,21 +2446,21 @@
 /***/ function(module, exports) {
 
 	'use strict';
-	
+
 	module.exports = {
 	    name: 'KPIItem',
 	    fn: ['Backend', 'Constant', 'localStorageService', '$q', function (Backend, Constant, localStorageService, $q) {
 	        return function (kpiType, isLine) {
 	            var deferred = $q.defer();
 	            var selectedCriteria = localStorageService.get('criteria');
-	
+
 	            if (isLine) {
 	                if (!selectedCriteria.kuqu) {
 	                    deferred.resolve([]);
 	                    return deferred.promise;
 	                }
 	            }
-	
+
 	            if (!isLine && (!selectedCriteria.kuqu || !selectedCriteria.banzu || !selectedCriteria.banci)) {
 	                deferred.resolve([]);
 	                return deferred.promise;
@@ -2489,14 +2489,14 @@
 /***/ function(module, exports) {
 
 	'use strict';
-	
+
 	module.exports = {
 	    name: 'Util',
 	    fn: [function () {
 	        return {
 	            getBorderFreq: function getBorderFreq(menuBorders, menu) {
 	                var i, len;
-	
+
 	                if (!menuBorders || !menu) {
 	                    return '';
 	                }
@@ -2516,7 +2516,7 @@
 /***/ function(module, exports) {
 
 	'use strict';
-	
+
 	module.exports = {
 	    name: 'MenuList',
 	    fn: ['Backend', 'Constant', 'localStorageService', '$q', function (Backend, Constant, localStorageService, $q) {
@@ -2524,7 +2524,7 @@
 	            getList: function getList(originalMenus, isLine, params) {
 	                var deferred = $q.defer();
 	                var i;
-	
+
 	                if (!params || !params.WareHouseId) {
 	                    deferred.resolve(originalMenus);
 	                    return deferred.promise;
@@ -2542,7 +2542,7 @@
 	                    'ZoneId': isLine ? -1 : params.ZoneId
 	                }, function (data) {
 	                    var displayNemnus, cMenu, shouldShow, j, idx;
-	
+
 	                    if (!data || !data[0] || data[0].ErrorCode !== undefined) {
 	                        deferred.resolve(originalMenus);
 	                    } else {
@@ -2576,15 +2576,15 @@
 /***/ function(module, exports) {
 
 	'use strict';
-	
+
 	module.exports = {
 	    name: 'MenuBorder',
 	    fn: ['Backend', 'Constant', 'localStorageService', '$q', function (Backend, Constant, localStorageService, $q) {
-	
+
 	        function getBoard(PageType) {
 	            return function (WareHouseId) {
 	                var deferred = $q.defer();
-	
+
 	                if (!WareHouseId || !PageType) {
 	                    deferred.resolve([]);
 	                    return deferred.promise;
@@ -2608,7 +2608,7 @@
 	        }
 	        var viewBoard = getBoard(1);
 	        var lineBoard = getBoard(2);
-	
+
 	        return {
 	            viewBoard: viewBoard,
 	            lineBoard: lineBoard
@@ -2621,7 +2621,7 @@
 /***/ function(module, exports) {
 
 	'use strict';
-	
+
 	module.exports = {
 	    name: 'KPIDetail',
 	    fn: ['Backend', 'Constant', 'localStorageService', '$q', function (Backend, Constant, localStorageService, $q) {
@@ -2629,7 +2629,7 @@
 	            var deferred = $q.defer();
 	            var selectedCriteria = localStorageService.get('criteria');
 	            var menus = angular.copy(Constant.kpiMenus[kpiType]);
-	
+
 	            if (isLine && kpiType === 'kpiHome') {
 	                menus = angular.copy(Constant.kpis);
 	                if (!selectedCriteria.kuqu) {
@@ -2637,7 +2637,7 @@
 	                    return deferred.promise;
 	                }
 	            }
-	
+
 	            if (!isLine && (!selectedCriteria.kuqu || !selectedCriteria.banzu || !selectedCriteria.banci)) {
 	                deferred.resolve(menus);
 	                return deferred.promise;
@@ -2650,12 +2650,12 @@
 	                'BizType': (isLine ? 'L-' : '') + Constant.kpiBizType[kpiType]
 	            }, function (data) {
 	                var i, len, ilen, j, jlen, idx;
-	
+
 	                // var isRate = (kpiType == 'member' || kpiType == 'cost' || kpiType == 'quality')
 	                if (!data) {
 	                    return;
 	                }
-	
+
 	                if (kpiType === 'kpiHome') {
 	                    for (i = 0, ilen = data.length; i < ilen; i++) {
 	                        for (j = 0, jlen = menus.length; j < jlen; j++) {
@@ -2668,9 +2668,9 @@
 	                    deferred.resolve(menus);
 	                    return;
 	                }
-	
+
 	                for (i = 0, len = data.length; i < len; i++) {
-	
+
 	                    idx = parseInt(data[i].ID.split('-')[1], 10) - 1;
 	                    if (menus[idx]) {
 	                        if (data[i].ACTUAL || data[i].TARGET) {
@@ -2697,13 +2697,13 @@
 /***/ function(module, exports) {
 
 	'use strict';
-	
+
 	module.exports = {
 	    name: 'DateUtil',
 	    fn: [function () {
 	        function getLastDay(pYear, pMonth) {
 	            var curr = new Date();
-	
+
 	            if (pYear) {
 	                curr.setFullYear(parseInt(pYear, 10));
 	            }
@@ -2712,14 +2712,14 @@
 	            }
 	            var year = curr.getFullYear();
 	            var month = curr.getMonth() + 1;
-	
+
 	            if (month >= 12) {
 	                month -= 12;
 	                year++;
 	            }
-	
+
 	            var nextFirstDay = new Date(year, month, 1);
-	
+
 	            console.log(nextFirstDay);
 	            return new Date(nextFirstDay.getTime() - 1000 * 60 * 60 * 24).getDate();
 	        }
@@ -2734,7 +2734,7 @@
 /***/ function(module, exports) {
 
 	'use strict';
-	
+
 	module.exports = {
 	    name: 'Warehouse',
 	    fn: ['Backend', '$q', function (Backend, $q) {
@@ -2744,7 +2744,7 @@
 	                'whse_code': 'N/A',
 	                'whse_name': 'N/A'
 	            }];
-	
+
 	            /*eslint-disable*/
 	            Backend().kuqu.query(function (data) {
 	                if (!data[0] || data[0].ErrorCode !== undefined) {
@@ -2773,7 +2773,7 @@
 /***/ function(module, exports) {
 
 	'use strict';
-	
+
 	module.exports = {
 	    name: 'Zone',
 	    fn: ['Backend', '$q', function (Backend, $q) {
@@ -2783,7 +2783,7 @@
 	                'zone_code': ' N/A',
 	                'description': 'N/A'
 	            }];
-	
+
 	            if (!WareHouseId) {
 	                deferred.resolve(empty);
 	                return;
@@ -2818,7 +2818,7 @@
 /***/ function(module, exports) {
 
 	'use strict';
-	
+
 	module.exports = {
 	    name: 'Shift',
 	    fn: ['Backend', '$q', function (Backend, $q) {
@@ -2828,7 +2828,7 @@
 	                'shift_code': 'N/A',
 	                'description': 'N/A'
 	            }];
-	
+
 	            /*eslint-disable*/
 	            Backend().banci.query({
 	                'WareHouseId': WareHouseId,
@@ -2860,7 +2860,7 @@
 /***/ function(module, exports) {
 
 	'use strict';
-	
+
 	module.exports = {
 	    name: 'Charge',
 	    fn: ['Backend', '$q', function (Backend, $q) {
@@ -2870,7 +2870,7 @@
 	                'DateTime': 'N/A'
 	            };
 	            var deferred = $q.defer();
-	
+
 	            /*eslint-disable*/
 	            Backend().metaData.query({
 	                'WareHouseId': WareHouseId,
@@ -2879,7 +2879,7 @@
 	                'BizType': 1
 	            }, function (data) {
 	                var res = data[0];
-	
+
 	                if (!data[0] || data[0].ErrorCode !== undefined) {
 	                    res = empty;
 	                }
@@ -2900,19 +2900,19 @@
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
-	
+
 	var app = angular.module('starter.components', []);
-	
+
 	var singleTitle = __webpack_require__(23);
 	var d3 = __webpack_require__(27);
 	var kaoqinChart = __webpack_require__(28);
 	var orgChart = __webpack_require__(29);
-	
+
 	app.service(d3.name, d3.fn);
 	app.directive(singleTitle.name, singleTitle.fn);
 	app.directive(kaoqinChart.name, kaoqinChart.fn);
 	app.directive(orgChart.name, orgChart.fn);
-	
+
 	module.exports = app.name;
 
 /***/ },
@@ -2920,9 +2920,9 @@
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
-	
+
 	var template = __webpack_require__(24);
-	
+
 	module.exports = {
 	    name: 'singleTitle',
 	    fn: [function () {
@@ -2967,11 +2967,11 @@
 /***/ function(module, exports) {
 
 	'use strict';
-	
+
 	module.exports = {
 	    name: 'kaoQinChart',
 	    fn: ['d3', function (d3) {
-	
+
 	        var textPadding = 0.5,
 	            textMargin = 1.5,
 	            lineH = 0.1,
@@ -2982,7 +2982,7 @@
 	        var lastRow = bottomR + textMargin,
 	            middleRow = 2 * textMargin;
 	        var chartCls = 'svg-content';
-	
+
 	        return {
 	            restrict: 'E',
 	            scope: {
@@ -2999,7 +2999,7 @@
 	                var fontSize = parseInt(d3.select('body').style('font-size'), 10);
 	                var margin = { top: fontSize * 3, right: fontSize * 9, bottom: fontSize * 10, left: fontSize * 3 };
 	                var title = scope.title;
-	
+
 	                function dynamicRender(svg, x, y, width, height, data, line, isRate) {
 	                    var barWidth = x.rangeBand();
 	                    var xRange = x.range();
@@ -3008,7 +3008,7 @@
 	                    // var xStart = xRange[0];
 	                    /* bar Axis */
 	                    /* Actual value in the table */
-	
+
 	                    svg.selectAll('.text').data(data).enter().append('text').attr('class', 'val targetVal').attr('x', function (d, i) {
 	                        return barWidth / 2 + xRange[i];
 	                    }).attr('y', function () {
@@ -3030,7 +3030,7 @@
 	                        }
 	                        return isRate ? Math.ceil(parseFloat(d.ACTUAL) * 10000) / 100 + '%' : d.ACTUAL;
 	                    });
-	
+
 	                    svg.selectAll('.chartBar').data(data).enter().append('rect').attr('class', 'chartBar').attr('x', function (d) {
 	                        return x(d.month);
 	                    }).attr('width', x.rangeBand()).attr('y', function (d) {
@@ -3056,20 +3056,20 @@
 	                    }).attr('width', fontSize).attr('y', function (d) {
 	                        return y(parseFloat(d.TARGET) ? parseFloat(d.TARGET) : 0);
 	                    }).attr('height', fontSize)
-	
+
 	                    /* .attr("r", middleRow+textPadding)
 	                    .attr("cx", function(d) { return x(d.month); })
 	                    .attr("cy", function(d) { return y(d.TARGET?d.TARGET:0); })*/
-	
+
 	                    .attr('transform', 'translate(' + (barWidth / 2 - fontSize / 2) + ',' + -fontSize / 2 + ')');
 	                }
-	
+
 	                function getDimension() {
 	                    var kpiCharts = $('.kpiChart');
 	                    var totalW = $(kpiCharts[0]).width();
 	                    var totalH = $(kpiCharts[0]).height();
 	                    var ki;
-	
+
 	                    console.log('scope.isDouble=' + scope.isDouble);
 	                    for (ki = 0; ki < kpiCharts.length; ki++) {
 	                        if ($(kpiCharts[ki]).width() > totalW) {
@@ -3085,18 +3085,18 @@
 	                    }
 	                    return [totalW - margin.left - margin.right, totalH - margin.top - margin.bottom];
 	                }
-	
+
 	                function sketch(svg, x, y, width, height, data) {
 	                    var barWidth = x.rangeBand();
 	                    var xRange = x.range();
 	                    var xExtent = x.rangeExtent();
 	                    var xStep = xRange[1] - xRange[0] - barWidth;
 	                    // var xStart = xRange[0];
-	
-	
+
+
 	                    /* Border of the table's row */
 	                    svg.append('line').attr('class', 'dtline').attr('x1', 0).attr('y1', fontSize * topTableBorder).attr('x2', xExtent[1] + fontSize * (lastRow + textPadding)).attr('y2', fontSize * topTableBorder).attr('transform', 'translate(0, ' + height + ')');
-	
+
 	                    /* Border of the table's row */
 	                    svg.append('line').attr('class', 'dtline').attr('x1', 0).attr('y1', fontSize * middleTableBorder).attr('x2', xExtent[1] + fontSize * (lastRow + textPadding)).attr('y2', fontSize * middleTableBorder).attr('transform', 'translate(0,' + height + ')');
 	                    /* Border of the table's row */
@@ -3105,13 +3105,13 @@
 	                    svg.append('line').attr('class', 'dtline').attr('x1', 0).attr('y1', 0).attr('x2', 0).attr('y2', fontSize * (lastRow - lineH)).attr('transform', 'translate(0,' + height + ')');
 	                    /* Left Border of the table */
 	                    svg.append('line').attr('class', 'dtline').attr('x1', xExtent[1] + fontSize * (lastRow + textPadding) * 2).attr('y1', fontSize * topTableBorder).attr('x2', xExtent[1] + fontSize * (lastRow + textPadding) * 2).attr('y2', fontSize * (lastRow - lineH)).attr('transform', 'translate(' + -fontSize * (lastRow + textPadding) + ',' + height + ')');
-	
+
 	                    /* Right Border of the table's col */
 	                    svg.append('line').attr('class', 'dtline').attr('x1', 0).attr('y1', 0).attr('x2', 0).attr('y2', fontSize * (lastRow - lineH)).attr('transform', 'translate(' + xExtent[1] + ',' + height + ')');
-	
+
 	                    /* XY Padding */
 	                    svg.append('path').attr('class', 'xyPadding').attr('d', 'M0,0H' + (fontSize + 1)).attr('transform', 'translate(0,' + height + ')');
-	
+
 	                    /* Vertical Line of the table */
 	                    svg.selectAll('.vtline').data(data).enter().append('line').attr('class', 'dtline').attr('x1', 0).attr('y1', 0).attr('x2', 0).attr('y2', fontSize * (lastRow - lineH)).attr('transform', function (d, i) {
 	                        if (i === 0) {
@@ -3123,61 +3123,61 @@
 	                            return 'none';
 	                        }
 	                    });
-	
+
 	                    svg.append('text')
 	                    // .attr("transform", function(d){return "translate("+d.month+","+d.TARGET+")"})
 	                    .attr('class', 'val').attr('x', xExtent[1] / 2).attr('y', -textMargin * fontSize).style('text-anchor', 'middle').text(title);
-	
+
 	                    /* target indicator in the bottom table */
 	                    svg.append('rect').attr('class', 'actualIndicator').attr('x', width).attr('width', fontSize * (lastRow + textPadding)).attr('y', fontSize * topTableBorder).attr('height', fontSize * (middleTableBorder - topTableBorder)).attr('transform', 'translate(0,' + height + ')');
-	
+
 	                    /* actual indicator in the bottom table */
 	                    svg.append('rect').attr('class', 'actualIndicator').attr('x', width).attr('width', fontSize * (lastRow + textPadding)).attr('y', fontSize * middleTableBorder).attr('height', fontSize * (middleTableBorder - topTableBorder)).style('fill', '#A1B752').attr('transform', 'translate(0,' + height + ')');
-	
+
 	                    /* Text 'Actual' in the bottom table */
 	                    svg.append('text')
 	                    // .attr("transform", function(d){return "translate("+d.month+","+d.TARGET+")"})
 	                    .attr('class', 'val').attr('x', width + fontSize * 4).attr('y', fontSize * middleRow).attr('dx', fontSize / 4).attr('dy', '.71em').attr('transform', 'translate(0,' + height + ')').style('text-anchor', 'end').style('fill', '#FFF').text('Actual');
-	
+
 	                    /* Text 'Target' in the bottom table */
 	                    svg.append('text')
 	                    // .attr("transform", function(d){return "translate("+d.month+","+d.TARGET+")"})
 	                    .attr('class', 'val').attr('x', width + fontSize * 4).attr('y', fontSize * bottomR).attr('dx', fontSize / 4).attr('dy', '.71em').attr('transform', 'translate(0,' + height + ')').style('text-anchor', 'end').style('fill', '#FFF').text('Target');
 	                }
-	
+
 	                function drawSchetch(data, width, height, isRate) {
-	
+
 	                    var x = d3.scale.ordinal().rangeRoundBands([fontSize, width], .1);
 	                    var y = d3.scale.linear().range([height, 0]);
-	
+
 	                    var yMax = d3.max([d3.max(data, function (d) {
 	                        return parseFloat(d.ACTUAL);
 	                    }), d3.max(data, function (d) {
 	                        return parseFloat(d.TARGET);
 	                    })]);
-	
+
 	                    x.domain(data.map(function (d) {
 	                        return d.month;
 	                    }));
 	                    y.domain([0, yMax ? yMax : 1]);
-	
+
 	                    var xAxis = d3.svg.axis().scale(x).orient('bottom').tickFormat(function (d) {
 	                        return d + (scope.xlabel ? scope.xlabel : '');
 	                    }).outerTickSize(0);
-	
+
 	                    var yAxis = d3.svg.axis().scale(y).orient('right');
-	
+
 	                    yAxis = isRate ? yAxis.ticks(15, '%') : yAxis.ticks(15, '');
-	
+
 	                    var svg, svgXA, svgYA;
-	
+
 	                    // reset
 	                    d3.select(element[0]).html('');
 	                    svg = d3.select(element[0]).append('div').attr('class', chartCls).style('width', width + 'px').append('svg').attr('width', width + margin.left + margin.right).attr('height', height + margin.top + margin.bottom).append('g').attr('transform', 'translate(' + margin.left + ',' + margin.top + ')');
-	
+
 	                    svgXA = svg.append('g').attr('class', 'x axis');
 	                    svgYA = svg.append('g').attr('class', 'y axis');
-	
+
 	                    svgXA.attr('transform', 'translate(0,' + height + ')').call(xAxis);
 	                    svgYA.attr('transform', 'translate(' + width + ', 0)').call(yAxis);
 	                    var line = d3.svg.line().x(function (d) {
@@ -3185,7 +3185,7 @@
 	                    }).y(function (d) {
 	                        return y(parseFloat(d.TARGET) ? parseFloat(d.TARGET) : 0);
 	                    });
-	
+
 	                    return {
 	                        svg: svg,
 	                        x: x,
@@ -3193,11 +3193,11 @@
 	                        line: line
 	                    };
 	                }
-	
+
 	                scope.$watch('data', function (n, o) {
-	
+
 	                    var data = scope.data;
-	
+
 	                    if (!data) {
 	                        return;
 	                    }
@@ -3214,9 +3214,9 @@
 	                    var dimension = getDimension();
 	                    var width = dimension[0],
 	                        height = dimension[1];
-	
+
 	                    var chart = drawSchetch(data, width, height, isRate);
-	
+
 	                    // checkData(scope.data, );
 	                    sketch(chart.svg, chart.x, chart.y, width, height, data, chart.line, isRate);
 	                    dynamicRender(chart.svg, chart.x, chart.y, width, height, data, chart.line, isRate);
@@ -3231,9 +3231,9 @@
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
-	
+
 	var template = __webpack_require__(30);
-	
+
 	module.exports = {
 	    name: 'org',
 	    fn: [function () {
@@ -3247,7 +3247,7 @@
 	            link: function link(scope) {
 	                scope.$watch('group', function () {
 	                    var i, totalNum, subTeamNum;
-	
+
 	                    scope.subTeams = [];
 	                    if (scope.group && scope.group.members) {
 	                        totalNum = scope.group.members.length;
@@ -3286,9 +3286,9 @@
 /***/ function(module, exports) {
 
 	'use strict';
-	
+
 	var Controller = function Controller($scope, $state, localStorageService, Constant, Warehouse, Zone, Shift, Charge, $stateParams, KPIDetail, MetaDataSvc, MenuBorder, Util, MenuList) {
-	
+
 	    $scope.getBorderFreq = Util.getBorderFreq;
 	    $scope.criteria = {
 	        kuqu: '',
@@ -3315,7 +3315,7 @@
 	            this.close();
 	        }
 	    };
-	
+
 	    $scope.bzDropdown = {
 	        isOpen: false,
 	        close: function close() {
@@ -3352,7 +3352,7 @@
 	            this.close();
 	        }
 	    };
-	
+
 	    $scope.goTo = function (menu) {
 	        localStorageService.set('criteria', $scope.criteria);
 	        if (!menu.state) {
@@ -3365,14 +3365,14 @@
 	    };
 	    var type = $stateParams.aspect;
 	    var idx, idlen;
-	
+
 	    for (idx = 0, idlen = Constant.kpis.length; idx < idlen; idx++) {
 	        if (Constant.kpis[idx].type === type) {
 	            $scope.aspectTitle = Constant.kpis[idx].name;
 	            break;
 	        }
 	    }
-	
+
 	    if (!type) {
 	        // $scope.menus=Constant.viewBoard.menus;
 	    } else {
@@ -3387,7 +3387,7 @@
 	        }, function () {});
 	    }
 	    var selectedCriteria = localStorageService.get('criteria');
-	
+
 	    $scope.$on('$ionicView.enter', function () {
 	        $scope.criteriaFromCache = localStorageService.get('criteria');
 	        $scope.isKPI = !!$stateParams.aspect;
@@ -3397,7 +3397,7 @@
 	            var isExist = selectedCriteria && selectedCriteria.kuqu && !!$scope.kuqus.filter(function (kq) {
 	                return kq.whse_code === selectedCriteria.kuqu.whse_code;
 	            }).length;
-	
+
 	            if (isExist) {
 	                $scope.criteria.kuqu = selectedCriteria.kuqu;
 	            } else {
@@ -3418,14 +3418,14 @@
 	        MenuBorder.viewBoard($scope.criteria.kuqu.Id).then(function (data) {
 	            $scope.menuBorders = data;
 	        });
-	
+
 	        $scope.criteria.banzu = '';
 	        Zone.getZone($scope.criteria.kuqu.Id).then(function (zones) {
 	            $scope.banzus = zones;
 	            var isExist = selectedCriteria && selectedCriteria.banzu && !!$scope.banzus.filter(function (bz) {
 	                return bz.zone_code === selectedCriteria.banzu.zone_code;
 	            }).length;
-	
+
 	            if (isExist) {
 	                $scope.criteria.banzu = selectedCriteria.banzu;
 	            } else {
@@ -3451,7 +3451,7 @@
 	            var isExist = selectedCriteria && selectedCriteria.banci && !!$scope.bancis.filter(function (bc) {
 	                return bc.shift_code === selectedCriteria.banci.shift_code && bc.ID === selectedCriteria.banci.ID;
 	            }).length;
-	
+
 	            if (isExist) {
 	                $scope.criteria.banci = selectedCriteria.banci;
 	            } else {
@@ -3467,18 +3467,18 @@
 	        $scope.criteria.currentDate = '加载中';
 	        localStorageService.set('criteria', $scope.criteria);
 	        var aType = $stateParams.aspect;
-	
+
 	        if (aType) {
 	            /*eslint-disable*/
 	            KPIDetail(aType).then(function (menus) {
-	
+
 	                MenuList.getList(menus, false, {
 	                    WareHouseId: $scope.criteria.kuqu ? $scope.criteria.kuqu.Id : -1,
 	                    ZoneId: $scope.criteria.banzu ? $scope.criteria.banzu.Id : -1
 	                }).then(function (menus) {
 	                    $scope.menus = menus;
 	                });
-	
+
 	                if (aType === 'security') {
 	                    // Green Cross
 	                    $scope.menus[0].hatColor = '';
@@ -3492,7 +3492,7 @@
 	        }
 	    });
 	};
-	
+
 	module.exports = ['$scope', '$state', 'localStorageService', 'Constant', 'Warehouse', 'Zone', 'Shift', 'Charge', '$stateParams', 'KPIDetail', 'MetaDataSvc', 'MenuBorder', 'Util', 'MenuList', Controller];
 
 /***/ },
@@ -3506,20 +3506,20 @@
 /***/ function(module, exports) {
 
 	'use strict';
-	
+
 	var Controller = function Controller(localStorageService, $scope, Backend, $stateParams, MetaDataSvc) {
 	    $scope.loadingStatus = '';
-	
+
 	    function convertObj(val) {
 	        var obj = {};
-	
+
 	        if (!val) {
 	            obj.isVal = true;
 	            obj.val = '';
 	            return obj;
 	        }
 	        var arr = val.split('/');
-	
+
 	        if (arr.length === 1) {
 	            obj.isVal = true;
 	            obj.val = val;
@@ -3543,9 +3543,9 @@
 	            'ShiftId': ShiftId
 	        }, function (data) {
 	            $scope.loadingStatus = '';
-	
+
 	            var p;
-	
+
 	            $scope.records = data.map(function (d) {
 	                for (p in d) {
 	                    if (d.hasOwnProperty(p)) {
@@ -3571,14 +3571,14 @@
 	    $scope.$on('$ionicView.enter', function () {
 	        $scope.selectedCriteria = localStorageService.get('criteria');
 	        $scope.loadGwrx($scope.selectedCriteria.kuqu.Id, $scope.selectedCriteria.banzu.Id, $scope.selectedCriteria.banci.ID);
-	
+
 	        /*eslint-disable*/
 	        MetaDataSvc($stateParams.PageType).then(function (data) {
 	            $scope.metaData = data;
 	        });
 	    });
 	};
-	
+
 	module.exports = ['localStorageService', '$scope', 'Backend', '$stateParams', 'MetaDataSvc', Controller];
 
 /***/ },
@@ -3592,9 +3592,9 @@
 /***/ function(module, exports) {
 
 	'use strict';
-	
+
 	var Controller = function Controller($scope, Constant, $state, localStorageService, KPIDetail, $ionicScrollDelegate) {
-	
+
 	    function directoryReaderSuccess(entries) {
 	        $scope.loading = '';
 	        // $scope.msg += '目录列表遍历中...';
@@ -3615,7 +3615,7 @@
 	        }*/
 	        $scope.$apply();
 	    }
-	
+
 	    function requestFileSystemSuccess(fileSystem) {
 	        // $scope.msg += '加载目录'+JSON.stringify(fileSystem)+'成功';
 	        // lets insert the current path into our UI
@@ -3624,7 +3624,7 @@
 	        // $scope._currentFileSystem = fileSystem;
 	        // create a directory reader
 	        var directoryReader = fileSystem.root.createReader();
-	
+
 	        // Get a list of all the entries in the directory
 	        $scope.loading = Constant.loading;
 	        directoryReader.readEntries(directoryReaderSuccess, function () {
@@ -3633,18 +3633,18 @@
 	            // $scope.msg += 'requestFileSystemSuccess目录'+path+'失败:'+JSON.stringify(err);
 	        });
 	    }
-	
+
 	    $scope.$on('$ionicView.enter', function () {
 	        $scope._treePath = [];
 	        document.addEventListener('deviceready', function () {
 	            $scope.beginBrowseForFiles();
 	        }, false);
 	    });
-	
+
 	    $scope.goToSettings = function () {
 	        $state.go('settings', { fromSelect: true });
 	    };
-	
+
 	    $scope.setImageFolder = function () {
 	        Constant.setImagePath({ name: $scope.folderName.fullPath, nativeURL: $scope.folderName.nativeURL });
 	        $state.go('settings');
@@ -3660,7 +3660,7 @@
 	            return;
 	        }
 	        var path = $scope._treePath.pop();
-	
+
 	        window.resolveLocalFileSystemURL(path, function (entry) {
 	            entry.getParent(function (filesystem) {
 	                requestFileSystemSuccess({ root: filesystem });
@@ -3673,7 +3673,7 @@
 	            // $scope.msg += '----------------2-返回上级目录'+path+'失败:'+JSON.stringify(err);
 	        });
 	    };
-	
+
 	    $scope.beginBrowseForFiles = function (file) {
 	        // $scope.msg = '';
 	        $scope.loading = Constant.loading;
@@ -3710,7 +3710,7 @@
 	    }
 	    */
 	};
-	
+
 	module.exports = ['$scope', 'Constant', '$state', 'localStorageService', 'KPIDetail', '$ionicScrollDelegate', Controller];
 
 /***/ },
@@ -3724,14 +3724,14 @@
 /***/ function(module, exports) {
 
 	'use strict';
-	
+
 	var Controller = function Controller($scope, Constant, $state, $window, $stateParams, Backend, $cordovaInAppBrowser, $cordovaFileTransfer, $timeout, $location) {
 	    $scope.settings = {};
-	
+
 	    $scope.noHomeMenu = 'noHomeMenu' in $location.search();
-	
+
 	    var isBackFromFolder = !!$stateParams.fromSelect;
-	
+
 	    $scope.back = function () {
 	        $window.history.go(isBackFromFolder ? -3 : -1);
 	    };
@@ -3755,7 +3755,7 @@
 	        $scope.isModify = false;
 	        $scope.settings.serverURL = $scope.serverAddr;
 	    };
-	
+
 	    $scope.openIntervalModify = function () {
 	        $scope.isIntervalModify = true;
 	        $scope.settings.editInterval = $scope.settings.timeInterval;
@@ -3815,7 +3815,7 @@
 	            fileOuterSystem.root.getDirectory('SFMDownload', { create: true }, function fileSystemSuccess(fileSystem) {
 	                fileSystem.getFile($scope.apkName, { create: true, exclusive: false }, function gotFileEntry(fileEntry) {
 	                    var path = fileEntry.nativeURL.replace($scope.apkName, '');
-	
+
 	                    // $scope.dbgMsg += JSON.stringify(fileEntry);
 	                    try {
 	                        fileEntry.remove();
@@ -3859,7 +3859,7 @@
 	        $scope.settings.imagePath = Constant.getImagePath();
 	    });
 	};
-	
+
 	module.exports = ['$scope', 'Constant', '$state', '$window', '$stateParams', 'Backend', '$cordovaInAppBrowser', '$cordovaFileTransfer', '$timeout', '$location', Controller];
 
 /***/ },
@@ -3873,7 +3873,7 @@
 /***/ function(module, exports) {
 
 	'use strict';
-	
+
 	var Controller = function Controller(localStorageService, $scope, Backend, MetaDataSvc, $stateParams) {
 	    $scope.loadingStatus = '';
 	    $scope.loadLgjh = function (WareHouseId, ZoneId, ShiftId) {
@@ -3906,7 +3906,7 @@
 	                }]
 	              }]
 	            */
-	
+
 	            /*
 	              {
 	                "Job_name":"检验",
@@ -3958,13 +3958,13 @@
 	    $scope.$on('$ionicView.enter', function (e) {
 	        $scope.selectedCriteria = localStorageService.get('criteria');
 	        $scope.loadLgjh($scope.selectedCriteria.kuqu.Id, $scope.selectedCriteria.banzu.Id, $scope.selectedCriteria.banci.ID);
-	
+
 	        MetaDataSvc($stateParams.PageType).then(function (data) {
 	            $scope.metaData = data;
 	        });
 	    });
 	};
-	
+
 	module.exports = ['localStorageService', '$scope', 'Backend', 'MetaDataSvc', '$stateParams', Controller];
 
 /***/ },
@@ -3990,9 +3990,9 @@
 /***/ function(module, exports) {
 
 	"use strict";
-	
+
 	var Controller = function Controller() {};
-	
+
 	module.exports = [Controller];
 
 /***/ },
@@ -4006,22 +4006,22 @@
 /***/ function(module, exports) {
 
 	'use strict';
-	
+
 	var Controller = function Controller($scope, Constant, $state, localStorageService) {
-	
+
 	    $scope.$on('$ionicView.enter', function () {
 	        $scope.selectedCriteria = localStorageService.get('criteria');
 	        $scope.myInterval = Constant.getInterval() * 1000;
 	        // $scope.msg = '';
 	        $scope.slides = [];
 	        var imagePath = Constant.getImagePath();
-	
+
 	        if (imagePath && imagePath.nativeURL) {
 	            window.resolveLocalFileSystemURL(Constant.getImagePath().nativeURL, function (filesystem) {
 	                // we must pass what the PhoneGap API doc examples call an "entry" to the reader
 	                // which appears to take the form constructed below.
 	                var directoryReader = filesystem.createReader();
-	
+
 	                // Get a list of all the entries in the directory
 	                // $scope.loading = Constant.loading;
 	                directoryReader.readEntries(function (entries) {
@@ -4055,22 +4055,22 @@
 	            });
 	        }
 	    });
-	
+
 	    $scope.myInterval = Constant.getInterval() * 1000;
-	
+
 	    $scope.noWrapSlides = false;
 	    $scope.slides = [];
-	
+
 	    /* $scope.addSlide = function(imageURL) {
 	      //var newWidth = 600 + slides.length + 1;
 	      $scope.slides.push({
 	        image: imageURL
 	      });
 	    };*/
-	
+
 	    $scope.next = function () {
 	        var i, len;
-	
+
 	        for (i = 0, len = $scope.slides.length; i < len; i++) {
 	            if ($scope.slides[i].active) {
 	                $scope.slides[i].active = false;
@@ -4085,7 +4085,7 @@
 	    };
 	    $scope.prev = function () {
 	        var i, len;
-	
+
 	        for (i = 0, len = $scope.slides.length; i < len; i++) {
 	            if ($scope.slides[i].active) {
 	                $scope.slides[i].active = false;
@@ -4099,7 +4099,7 @@
 	        }
 	    };
 	};
-	
+
 	module.exports = ['$scope', 'Constant', '$state', 'localStorageService', Controller];
 
 /***/ },
@@ -4113,20 +4113,20 @@
 /***/ function(module, exports) {
 
 	'use strict';
-	
+
 	var Controller = function Controller(localStorageService, Backend, $scope, $state, MetaDataSvc, $stateParams, Constant) {
 	    // With the new view caching in Ionic, Controllers are only called
 	    // when they are recreated or on app start, instead of every page change.
 	    // To listen for when this page is active (for example, to refresh data),
 	    // listen for the $ionicView.enter event:
 	    //
-	
+
 	    $scope.$on('$ionicView.enter', function () {
 	        /*eslint-disable*/
 	        MetaDataSvc($stateParams.PageType).then(function (data) {
 	            $scope.metaData = data;
 	        });
-	
+
 	        $scope.selectedCriteria = localStorageService.get('criteria');
 	        $scope.group = null;
 	        /*eslint-disable*/
@@ -4141,9 +4141,9 @@
 	            data.sort(function (a, b) {
 	                return parseInt(a.Order_number, 10) - parseInt(b.Order_number, 10);
 	            });
-	
+
 	            var i, len;
-	
+
 	            for (i = 0, len = data.length; i < len; i++) {
 	                data[i].Picture = Constant.baseURL() + '/Imagers/' + data[i].Picture;
 	            }
@@ -4158,7 +4158,7 @@
 	        $state.go('dash');
 	    };
 	};
-	
+
 	module.exports = ['localStorageService', 'Backend', '$scope', '$state', 'MetaDataSvc', '$stateParams', 'Constant', Controller];
 
 /***/ },
@@ -4172,9 +4172,9 @@
 /***/ function(module, exports) {
 
 	'use strict';
-	
+
 	var Controller = function Controller($scope, Constant, $state, localStorageService, KPIDetail, MenuList) {
-	
+
 	    $scope.$on('$ionicView.enter', function () {
 	        $scope.selectedCriteria = localStorageService.get('criteria');
 	        MenuList.getList(Constant.kpis, false, {
@@ -4183,7 +4183,7 @@
 	        }).then(function (menus) {
 	            $scope.kpis = menus;
 	        });
-	
+
 	        /* KPIDetail('kpiHome').then(function(menus){
 	          $scope.menus = menus;
 	         },function(){});*/
@@ -4192,7 +4192,7 @@
 	        $state.go('kpi-detail', { 'aspect': kpiType, 'PageType': PageType });
 	    };
 	};
-	
+
 	module.exports = ['$scope', 'Constant', '$state', 'localStorageService', 'KPIDetail', 'MenuList', Controller];
 
 /***/ },
@@ -4206,7 +4206,7 @@
 /***/ function(module, exports) {
 
 	'use strict';
-	
+
 	var Controller = function Controller(localStorageService, Backend, $scope, DateUtil, $ionicScrollDelegate, $state, $stateParams, MetaDataSvc) {
 	    /* $scope.goHome = function(type) {
 	      var scrollDelegate = $ionicScrollDelegate.$getByHandle(type);
@@ -4229,27 +4229,27 @@
 	        $scope.selectPickerOpen = false;
 	    };
 	    var headerCols = ['工号', '姓名'];
-	
+
 	    $scope.sendPicker = function (isSendEmail) {
 	        var values, daysNum, i, len;
-	
+
 	        try {
 	            values = angular.element(document.getElementById('selectedMonth')).val().match(/(\d{4}).*(\d{2})/);
-	
+
 	            if (values) {
 	                $scope.selectedYear = values[1];
 	                $scope.selectedMonth = values[2];
-	
+
 	                daysNum = DateUtil.getLastDay($scope.selectedYear, $scope.selectedMonth);
-	
+
 	                $scope.headers = headerCols;
 	                $scope.daysArr = [];
-	
+
 	                for (i = 1, len = daysNum; i <= len; i++) {
 	                    $scope.daysArr.push(i);
 	                }
 	                $scope.headers = $scope.headers.concat($scope.daysArr);
-	
+
 	                $scope.loadData($scope.selectedCriteria.kuqu.Id, $scope.selectedCriteria.banzu.Id, $scope.selectedCriteria.banci.ID, $scope.selectedYear + '-' + $scope.selectedMonth, isSendEmail ? 1 : 0);
 	            }
 	        } catch (e) {
@@ -4258,7 +4258,7 @@
 	        $scope.closePicker();
 	    };
 	    $scope.clzMap = ['absent', 'glyphicon glyphicon-ok', 'circle anjie-border', 'glyphicon glyphicon-remove', 'glyphicon glyphicon-star-empty', 'rect', 'anjie-bg circle anjie-border', 'glyphicon glyphicon-record', 'glyphicon glyphicon-triangle-top', 'glyphicon glyphicon-asterisk', 'rect half', 'hurt', 'glyphicon-triangle-bottom', 'glyphicon glyphicon-star'];
-	
+
 	    $scope.loadingStatus = '';
 	    // var tailCols = ['迟到', '早退', '正班', '加班', '旷工', '请假', '休假','调休','签名'];
 	    $scope.loadData = function (WareHouseId, ZoneId, ShiftId, Date, IsSendEmail) {
@@ -4287,24 +4287,24 @@
 	            $scope.loadingStatus = '加载失败';
 	        });
 	    };
-	
+
 	    $scope.$on('$ionicView.enter', function () {
 	        $scope.selectedCriteria = localStorageService.get('criteria');
-	
+
 	        var daysNum = DateUtil.getLastDay();
-	
+
 	        $scope.headers = headerCols;
 	        $scope.daysArr = [];
-	
+
 	        var i, len;
-	
+
 	        for (i = 1, len = daysNum; i <= len; i++) {
 	            $scope.daysArr.push(i);
 	        }
 	        $scope.headers = $scope.headers.concat($scope.daysArr);
-	
+
 	        var today = new Date();
-	
+
 	        $scope.selectedYear = today.getFullYear();
 	        $scope.selectedMonth = today.getMonth() + 1;
 	        $scope.loadData($scope.selectedCriteria.kuqu.Id, $scope.selectedCriteria.banzu.Id, $scope.selectedCriteria.banci.ID, $scope.selectedYear + '-' + $scope.selectedMonth, 0);
@@ -4314,7 +4314,7 @@
 	        });
 	    });
 	};
-	
+
 	module.exports = ['localStorageService', 'Backend', '$scope', 'DateUtil', '$ionicScrollDelegate', '$state', '$stateParams', 'MetaDataSvc', Controller];
 
 /***/ },
@@ -4328,11 +4328,11 @@
 /***/ function(module, exports) {
 
 	'use strict';
-	
+
 	var Controller = function Controller($scope, $stateParams, $state, $ionicScrollDelegate, MetaDataSvc, KPIItem, Constant, DateUtil, localStorageService) {
 	    function generate(data) {
 	        var i, len;
-	
+
 	        for (i = 0, len = DateUtil.getLastDay(); i < len; i++) {
 	            if (!data[i]) {
 	                data.push({
@@ -4347,39 +4347,39 @@
 	        }));
 	        $scope.rows.push(data.filter(function (el) {
 	            var id = parseInt(el.ID, 10);
-	
+
 	            return id > 3 && id <= 6;
 	        }));
 	        $scope.rows.push(data.filter(function (el) {
 	            var id = parseInt(el.ID, 10);
-	
+
 	            return id > 6 && id <= 13;
 	        }));
 	        $scope.rows.push(data.filter(function (el) {
 	            var id = parseInt(el.ID, 10);
-	
+
 	            return id > 13 && id <= 20;
 	        }));
 	        $scope.rows.push(data.filter(function (el) {
 	            var id = parseInt(el.ID, 10);
-	
+
 	            return id > 20 && id <= 27;
 	        }));
 	        var days = data.filter(function (el) {
 	            var id = parseInt(el.ID, 10);
-	
+
 	            return id > 27 && id <= 30;
 	        });
-	
+
 	        days.length = 3;
 	        $scope.rows.push(days);
-	
+
 	        days = data.filter(function (el) {
 	            var id = parseInt(el.ID, 10);
-	
+
 	            return id === 31;
 	        });
-	
+
 	        days.length = 3;
 	        $scope.rows.push(days);
 	    }
@@ -4397,7 +4397,7 @@
 	        /*eslint-disable*/
 	        KPIItem($stateParams.BizType, $scope.isLine).then(function (data) {
 	            var i, len;
-	
+
 	            if (!data.length) {
 	                data = [];
 	                for (i = 0, len = DateUtil.getLastDay(); i < len; i++) {
@@ -4412,7 +4412,7 @@
 	        }, function () {
 	            var holder = [];
 	            var i, len;
-	
+
 	            for (i = 0, len = DateUtil.getLastDay(); i < len; i++) {
 	                holder.push({
 	                    ID: i + 1,
@@ -4424,7 +4424,7 @@
 	        });
 	    });
 	};
-	
+
 	module.exports = ['$scope', '$stateParams', '$state', '$ionicScrollDelegate', 'MetaDataSvc', 'KPIItem', 'Constant', 'DateUtil', 'localStorageService', Controller];
 
 /***/ },
@@ -4438,9 +4438,9 @@
 /***/ function(module, exports) {
 
 	'use strict';
-	
+
 	var Controller = function Controller($scope, Constant, localStorageService, MetaDataSvc, $stateParams, KPIItem) {
-	
+
 	    $scope.loadingStatus = '加载中';
 	    $scope.headers = ['序号', '厂区', '周数', '停线时间', '停线累计分钟(补装台数)', '停线起止时间', '停线零件名称', '停线零件号', '情况描述', '责任方'];
 	    $scope.isLine = $stateParams.isLine;
@@ -4465,7 +4465,7 @@
 	        });
 	    });
 	};
-	
+
 	module.exports = ['$scope', 'Constant', 'localStorageService', 'MetaDataSvc', '$stateParams', 'KPIItem', Controller];
 
 /***/ },
@@ -4479,7 +4479,7 @@
 /***/ function(module, exports) {
 
 	'use strict';
-	
+
 	var Controller = function Controller($scope, Constant, localStorageService, MetaDataSvc, $stateParams, KPIItem) {
 	    $scope.isLine = $stateParams.isLine;
 	    $scope.loadingStatus = '加载中';
@@ -4492,7 +4492,7 @@
 	        $scope.loadingStatus = '加载中';
 	        /*eslint-disable*/
 	        KPIItem($stateParams.BizType, $scope.isLine).then(function (data) {
-	
+
 	            if (!data.length) {
 	                $scope.loadingStatus = '暂无数据';
 	                return;
@@ -4502,7 +4502,7 @@
 	            data.sort(function (a, b) {
 	                return parseInt(a.OrderNumber, 10) - parseInt(b.OrderNumber, 10);
 	            });
-	
+
 	            /*
 	              rows = [{
 	                name: 
@@ -4513,7 +4513,7 @@
 	                }]
 	              }]
 	            */
-	
+
 	            /*
 	            {
 	              CODE: 'XTAXG009',
@@ -4529,12 +4529,12 @@
 	              }
 	            */
 	            var rows = [];
-	
+
 	            for (var i = 0, len = data.length; i < len; i++) {
 	                // find job type
 	                var jobType = {};
 	                var record = data[i];
-	
+
 	                for (var j = 0, jl = rows.length; j < jl; j++) {
 	                    if (rows[j] && rows[j].name === record.TYPE) {
 	                        rows[j].items.push(data[i]);
@@ -4548,13 +4548,13 @@
 	                }
 	            }
 	            $scope.rows = rows;
-	
+
 	            for (i = 0, len = rows.length; i < len; i++) {
 	                rows[i].splitRows = [];
 	                rows[i].splitRows.length = Math.ceil(rows[i].items.length / 3);
 	            }
 	            console.log(rows);
-	
+
 	            /* // ----------
 	            var len = data.length, mod = len%4;
 	            if(mod){
@@ -4580,7 +4580,7 @@
 	        });
 	    });
 	};
-	
+
 	module.exports = ['$scope', 'Constant', 'localStorageService', 'MetaDataSvc', '$stateParams', 'KPIItem', Controller];
 
 /***/ },
@@ -4594,18 +4594,18 @@
 /***/ function(module, exports) {
 
 	'use strict';
-	
+
 	var Controller = function Controller($scope, $stateParams, $state, $ionicScrollDelegate, MetaDataSvc, KPIItem, Constant, DateUtil, localStorageService) {
-	
+
 	    $scope.chart = {};
 	    var aspect = Constant.kpiMenus[$stateParams.aspect];
-	
+
 	    $scope.aspect = $stateParams.aspect;
-	
+
 	    $scope.isLine = $stateParams.isLine;
 	    var BizType = $stateParams.BizType;
 	    var i, len;
-	
+
 	    for (i = 0, len = aspect.length; i < len; i++) {
 	        if (aspect[i].BizType === BizType) {
 	            $scope.KPITitle = aspect[i].nm;
@@ -4613,7 +4613,7 @@
 	    }
 	    $scope.chart.isRate = $stateParams.isPercentage === 'true';
 	    // $scope.chart.isRate = ($scope.aspect == 'member' || $scope.aspect == 'cost' || $scope.aspect=='quality');
-	
+
 	    var ConstantTypes = {
 	        'M': '月',
 	        'W': '周',
@@ -4624,7 +4624,7 @@
 	        'W': '',
 	        'D': ''
 	    };
-	
+
 	    function renderData(key) {
 	        $scope.chart.xlabel = xTypes[key];
 	        $scope.chart.data = $scope.types[key].map(function (d) {
@@ -4649,7 +4649,7 @@
 	            $scope.chart1.data = null;
 	        }
 	    }
-	
+
 	    function generatorDropdown(name, items, defaultOpt) {
 	        $scope[name] = {};
 	        $scope[name].isOpen = false;
@@ -4682,19 +4682,19 @@
 	            $scope[name].selectOption(defaultOpt);
 	        }
 	    }
-	
+
 	    $scope.$on('$ionicView.enter', function () {
 	        $scope.selectedCriteria = localStorageService.get('criteria');
 	        /*eslint-disable*/
 	        MetaDataSvc($stateParams.PageType, $scope.isLine).then(function (data) {
 	            $scope.metaData = data;
 	        });
-	
+
 	        var lastDay = DateUtil.getLastDay();
-	
+
 	        /*eslint-disable*/
 	        KPIItem($stateParams.BizType, $scope.isLine).then(function (data) {
-	
+
 	            /* data = data.map(function(d){
 	              if($scope.chart.isRate){
 	                d.ACTUAL =  d.ACTUAL + '%';
@@ -4702,18 +4702,18 @@
 	              }
 	              return d;
 	            });*/
-	
+
 	            var types = Object.keys(ConstantTypes);
 	            $scope.types = {};
-	
+
 	            var i, len;
-	
+
 	            for (var dx = 0, dlen = data.length; dx < dlen; dx++) {
 	                var ele = data[dx];
-	
+
 	                for (i = 0, len = types.length; i < len; i++) {
 	                    var type = types[i];
-	
+
 	                    if (ele.ID.indexOf(type) === 0) {
 	                        if (type in $scope.types) {
 	                            $scope.types[type].push(ele);
@@ -4733,7 +4733,7 @@
 	                });
 	            }
 	            var BizTypeLen = $stateParams.BizType.length;
-	
+
 	            if ($scope.aspect === 'flow' && $stateParams.BizType.charAt(BizTypeLen - 1) === '1') {
 	                $scope.typeDropdown.push({
 	                    key: 'flow-wall',
@@ -4753,7 +4753,7 @@
 	        });
 	    });
 	};
-	
+
 	module.exports = ['$scope', '$stateParams', '$state', '$ionicScrollDelegate', 'MetaDataSvc', 'KPIItem', 'Constant', 'DateUtil', 'localStorageService', Controller];
 
 /***/ },
@@ -4767,14 +4767,14 @@
 /***/ function(module, exports) {
 
 	'use strict';
-	
+
 	var Controller = function Controller($scope, KPIDetail, Constant, $stateParams, MetaDataSvc, $state, localStorageService, MenuList) {
 	    var idx, idlen, type;
-	
+
 	    $scope.aspect = $stateParams.aspect;
-	
+
 	    $scope.goKPIDetail = function (state, BizType, isPercentage, isInvalid) {
-	
+
 	        if (isInvalid) {
 	            return;
 	        }
@@ -4786,10 +4786,10 @@
 	            'isLine': $stateParams.isLine
 	        });
 	    };
-	
+
 	    $scope.isLine = $stateParams.isLine;
 	    type = $stateParams.aspect;
-	
+
 	    for (idx = 0, idlen = Constant.kpis.length; idx < idlen; idx++) {
 	        if (Constant.kpis[idx].type === type) {
 	            $scope.aspectTitle = Constant.kpis[idx].name;
@@ -4798,30 +4798,30 @@
 	    }
 	    $scope.$on('$ionicView.enter', function () {
 	        $scope.criteriaFromCache = localStorageService.get('criteria');
-	
+
 	        /*eslint-disable*/
 	        KPIDetail(type, $scope.isLine).then(function (menus) {
-	
+
 	            MenuList.getList(menus, $scope.isLine, {
 	                WareHouseId: $scope.criteriaFromCache.kuqu ? $scope.criteriaFromCache.kuqu.Id : -1,
 	                ZoneId: $scope.criteriaFromCache.banzu ? $scope.criteriaFromCache.banzu.Id : -1
 	            }).then(function (emptyMenus) {
 	                $scope.menus = emptyMenus;
 	            });
-	
+
 	            if (type === 'security') {
 	                // Green Cross
 	                // $scope.menus[0].hatColor = ''; 
 	            }
 	        }, function () {});
-	
+
 	        /*eslint-disable*/
 	        MetaDataSvc($stateParams.PageType).then(function (data) {
 	            $scope.metaData = data;
 	        });
 	    });
 	};
-	
+
 	module.exports = ['$scope', 'KPIDetail', 'Constant', '$stateParams', 'MetaDataSvc', '$state', 'localStorageService', 'MenuList', Controller];
 
 /***/ },
@@ -4835,11 +4835,11 @@
 /***/ function(module, exports) {
 
 	'use strict';
-	
+
 	var Controller = function Controller($scope, $stateParams, $state, $ionicScrollDelegate, MetaDataSvc, KPIItem, Constant, DateUtil, localStorageService, Warehouse, MenuBorder, Util, MenuList) {
-	
+
 	    $scope.getBorderFreq = Util.getBorderFreq;
-	
+
 	    $scope.lineMenus = [{
 	        'MenuId': '10',
 	        'PageType': 10,
@@ -4857,7 +4857,7 @@
 	        'state': '',
 	        'bg': 'img/svg/problem-tracking.svg'
 	    }];
-	
+
 	    $scope.goTo = function (menu) {
 	        localStorageService.set('criteria', $scope.criteria);
 	        if (!menu.state) {
@@ -4865,7 +4865,7 @@
 	        }
 	        $state.go(menu.state, { PageType: menu.PageType });
 	    };
-	
+
 	    $scope.kqDropdown = {
 	        isOpen: false,
 	        close: function close() {
@@ -4887,20 +4887,20 @@
 	    $scope.criteria = {};
 	    $scope.$on('$ionicView.enter', function () {
 	        var selectedCriteria = localStorageService.get('criteria');
-	
+
 	        MenuList.getList($scope.lineMenus, true, {
 	            WareHouseId: selectedCriteria.kuqu ? selectedCriteria.kuqu.Id : -1,
 	            ZoneId: selectedCriteria.banzu ? selectedCriteria.banzu.Id : -1
 	        }).then(function (menus) {
 	            $scope.menus = menus;
 	        });
-	
+
 	        Warehouse.getWareHouse().then(function (kqs) {
 	            $scope.kuqus = kqs;
 	            var isExist = selectedCriteria && selectedCriteria.kuqu && !!$scope.kuqus.filter(function (kq) {
 	                return kq.whse_code === selectedCriteria.kuqu.whse_code;
 	            }).length;
-	
+
 	            if (isExist) {
 	                $scope.criteria.kuqu = selectedCriteria.kuqu;
 	            } else {
@@ -4911,25 +4911,25 @@
 	        });
 	        $scope.kqDropdown.close();
 	    });
-	
+
 	    $scope.$watch('criteria.kuqu', function () {
 	        if (!$scope.criteria || !$scope.criteria.kuqu) {
 	            return;
 	        }
-	
+
 	        MenuList.getList($scope.lineMenus, true, {
 	            WareHouseId: $scope.criteria.kuqu.Id,
 	            ZoneId: -1
 	        }).then(function (menus) {
 	            $scope.menus = menus;
 	        });
-	
+
 	        MenuBorder.lineBoard($scope.criteria.kuqu.Id).then(function (data) {
 	            $scope.menuBorders = data;
 	        });
 	    });
 	};
-	
+
 	module.exports = ['$scope', '$stateParams', '$state', '$ionicScrollDelegate', 'MetaDataSvc', 'KPIItem', 'Constant', 'DateUtil', 'localStorageService', 'Warehouse', 'MenuBorder', 'Util', 'MenuList', Controller];
 
 /***/ },
@@ -4937,9 +4937,9 @@
 /***/ function(module, exports) {
 
 	'use strict';
-	
+
 	var Controller = function Controller($scope, Constant, $state, localStorageService, KPIDetail, MetaDataSvc, MenuList) {
-	
+
 	    // $scope.kpis=Constant.kpis;
 	    $scope.isLine = true;
 	    $scope.$on('$ionicView.enter', function () {
@@ -4962,7 +4962,7 @@
 	        $state.go('kpi-detail', { 'aspect': kpiType, 'PageType': Constant.lineKpiPageType, isLine: true });
 	    };
 	};
-	
+
 	module.exports = ['$scope', 'Constant', '$state', 'localStorageService', 'KPIDetail', 'MetaDataSvc', 'MenuList', Controller];
 
 /***/ },
@@ -4988,16 +4988,16 @@
 /***/ function(module, exports) {
 
 	'use strict';
-	
+
 	var Controller = function Controller($scope, $state, localStorageService) {
 	    $scope.$on('$ionicView.enter', function () {
 	        var data = localStorageService.get('loginUser');
-	
+
 	        var hasDoublePermission = data.permssionMap.SFM && data.permssionMap.SFM.length && data.permssionMap.AD && data.permssionMap.AD.length;
-	
+
 	        $scope.hasSFM = false;
 	        $scope.hasAD = false;
-	
+
 	        if (!hasDoublePermission) {
 	            if (data.permssionMap.SFM && data.permssionMap.SFM.length) {
 	                $scope.hasSFM = true;
@@ -5012,7 +5012,7 @@
 	        }
 	    });
 	};
-	
+
 	module.exports = ['$scope', '$state', 'localStorageService', Controller];
 
 /***/ },
@@ -5026,21 +5026,21 @@
 /***/ function(module, exports) {
 
 	'use strict';
-	
+
 	var Controller = function Controller($scope, XiaJia, localStorageService, $state, $ionicPopup, $rootScope, $timeout) {
-	
+
 	    var seconds = 120000;
-	
+
 	    // An alert dialog
 	    $scope.showAlert = function (msg, isSuccess, errorMsg) {
 	        var alertPopup = $ionicPopup.alert({
 	            template: '<div class="xiajia"><img src="./img/ad/off-' + isSuccess + '.jpg" />' + msg + '<span>' + (errorMsg ? errorMsg : '') + '</span></div>',
 	            okText: '知道了'
 	        });
-	
+
 	        alertPopup.then(function () {});
 	    };
-	
+
 	    $scope.off = function (item) {
 	        item.txt = '下架中';
 	        XiaJia.xiajia('?epsSupplyId=' + item.id + '&userName=' + $scope.loginUser.loginNme).then(function () {
@@ -5052,24 +5052,24 @@
 	        });
 	    };
 	    var timing = false;
-	
+
 	    $scope.loadList = function () {
 	        $scope.loadingStatus = '加载中';
 	        $scope.data = [];
 	        timing = true;
-	
+
 	        XiaJia.getList('?whseId=' + $rootScope.loginUser.whseId).then(function (data) {
 	            $timeout(function () {
 	                $scope.loadList();
 	            }, seconds);
-	
+
 	            $scope.loadingStatus = '';
 	            $scope.data = data;
 	            if (!$scope.data.length) {
 	                $scope.loadingStatus = '暂无数据';
 	                return;
 	            }
-	
+
 	            $scope.data = $scope.data.map(function (d) {
 	                d.txt = '下架';
 	                return d;
@@ -5077,7 +5077,7 @@
 	        }, function () {
 	            $scope.loadingStatus = '加载失败';
 	            $scope.data = [];
-	
+
 	            $timeout(function () {
 	                $scope.loadList();
 	            }, seconds);
@@ -5089,7 +5089,7 @@
 	        }
 	    });
 	};
-	
+
 	module.exports = ['$scope', 'XiaJia', 'localStorageService', '$state', '$ionicPopup', '$rootScope', '$timeout', Controller];
 
 /***/ },
@@ -5103,27 +5103,27 @@
 /***/ function(module, exports) {
 
 	'use strict';
-	
+
 	var Controller = function Controller($scope, $state, $http, Backend, $rootScope, $ionicPopup, $timeout) {
-	
+
 	    var seconds = 120000;
-	
+
 	    // An alert dialog
 	    $scope.showAlert = function (msg, isSuccess, errorMsg) {
 	        var alertPopup = $ionicPopup.alert({
 	            template: '<div class="xiajia"><img src="./img/ad/off-' + isSuccess + '.jpg" />' + msg + '<span>' + (errorMsg ? errorMsg : '') + '</span></div>',
 	            okText: '知道了'
 	        });
-	
+
 	        alertPopup.then(function () {});
 	    };
-	
+
 	    $scope.start = function (item) {
 	        if (item.txt === '上线中') {
 	            return;
 	        }
 	        item.txt = '上线中';
-	
+
 	        $http({
 	            method: 'GET',
 	            /*eslint-disable*/
@@ -5140,7 +5140,7 @@
 	        });
 	    };
 	    var timing = false;
-	
+
 	    $scope.getList = function () {
 	        $scope.errorMsg = '加载中';
 	        $scope.menus = [];
@@ -5153,7 +5153,7 @@
 	            $timeout(function () {
 	                $scope.getList();
 	            }, seconds);
-	
+
 	            $scope.errorMsg = null;
 	            if (data && Object.prototype.toString.call(data) === '[object Array]') {
 	                $scope.menus = data;
@@ -5172,7 +5172,7 @@
 	            $timeout(function () {
 	                $scope.getList();
 	            }, seconds);
-	
+
 	            $scope.menus = [];
 	            $scope.errorMsg = '加载失败';
 	        });
@@ -5183,7 +5183,7 @@
 	        }
 	    });
 	};
-	
+
 	module.exports = ['$scope', '$state', '$http', 'Backend', '$rootScope', '$ionicPopup', '$timeout', Controller];
 
 /***/ },
@@ -5197,9 +5197,9 @@
 /***/ function(module, exports) {
 
 	'use strict';
-	
+
 	var Controller = function Controller($scope, $state, $http, Backend, $rootScope, $ionicPopup) {
-	
+
 	    $scope.goPullHistory = function () {
 	        $state.go('ad-pull-hisotry');
 	    };
@@ -5212,7 +5212,7 @@
 	            template: '<div class="xiajia"><img src="./img/ad/off-' + isSuccess + '.jpg" />' + msg + '<span>' + (errorMsg ? errorMsg : '') + '</span></div>',
 	            okText: '知道了'
 	        });
-	
+
 	        alertPopup.then(function () {
 	            // $scope.getList();
 	        });
@@ -5223,7 +5223,7 @@
 	            okText: '确认',
 	            template: '<div class="xiajia"><img src="./img/ad/tip.png" /><div style="margin-bottom: 0.5em"><span style="margin:0;color: #333;">' + item.itemCode + '</span><span style="margin:0;color: #333;">' + item.routeCode + '</span><span style="margin:0;color: #333;">' + item.lsa + '</span><span style="margin:0;color: #333;">' + item.nickName + '</span></div>是否确认拉动？</div>'
 	        });
-	
+
 	        confirmPopup.then(function (res) {
 	            if (res) {
 	                $scope.pull(item);
@@ -5277,7 +5277,7 @@
 	                                    nickName: 'nickName4'
 	                                }];
 	                                return;*/
-	
+
 	            $scope.menus = [];
 	            $scope.errorMsg = '加载失败';
 	        });
@@ -5286,7 +5286,7 @@
 	        $scope.getList();
 	    });
 	};
-	
+
 	module.exports = ['$scope', '$state', '$http', 'Backend', '$rootScope', '$ionicPopup', Controller];
 
 /***/ },
@@ -5300,9 +5300,9 @@
 /***/ function(module, exports) {
 
 	'use strict';
-	
+
 	var Controller = function Controller($scope, $http, Backend, $rootScope) {
-	
+
 	    $scope.getList = function () {
 	        $scope.errorMsg = '加载中';
 	        $scope.menus = [];
@@ -5330,7 +5330,7 @@
 	        $scope.getList();
 	    });
 	};
-	
+
 	module.exports = ['$scope', '$http', 'Backend', '$rootScope', Controller];
 
 /***/ },
@@ -5344,19 +5344,19 @@
 /***/ function(module, exports) {
 
 	'use strict';
-	
+
 	var Controller = function Controller(AD, $scope, $rootScope, $q, $http, Backend, $ionicPopup) {
-	
+
 	    if ($rootScope.loginUser.groupId === '0') {
 	        $scope.noPermission = '用户班组未维护';
 	        return;
 	    }
 	    $scope.noPermission = null;
-	
+
 	    function doModify(item, lastName, isRevert) {
 	        item.txt = item.txt + '中';
 	        var typeMsg = isRevert ? '还原' : '修改';
-	
+
 	        $http({
 	            method: 'GET',
 	            /*eslint-disable*/
@@ -5374,22 +5374,22 @@
 	            $scope.showAlert(typeMsg + '失败', false, '服务器异常');
 	        });
 	    }
-	
+
 	    // An alert dialog
 	    $scope.showAlert = function (msg, isSuccess, errorMsg) {
 	        var alertPopup = $ionicPopup.alert({
 	            template: '<div class="xiajia"><img src="./img/ad/off-' + isSuccess + '.jpg" />' + msg + '<span>' + (errorMsg ? errorMsg : '') + '</span></div>',
 	            okText: '知道了'
 	        });
-	
+
 	        alertPopup.then(function () {});
 	    };
-	
+
 	    $scope.showModifyMember = function (item, isRevert) {
 	        var htmlSelect = '<select id="memberSelection">';
 	        var i, len;
 	        var confirmPopup;
-	
+
 	        for (i = 0, len = $scope.members.length; i < len; i++) {
 	            htmlSelect += '<option value="' + $scope.members[i] + '">' + $scope.members[i] + '</option>';
 	        }
@@ -5401,7 +5401,7 @@
 	            okText: '确认',
 	            template: '<div class="member"><table><tr><td class="name">当前选择零件号：</td><td><span>' + item.itemCode + '</span></td></tr><tr><td class="name">人员：</td><td>' + htmlSelect + '</td></tr></table></div>'
 	        });
-	
+
 	        confirmPopup.then(function (res) {
 	            if (res) {
 	                doModify(item, document.getElementById('memberSelection').value, isRevert);
@@ -5418,7 +5418,7 @@
 	                    $scope.loadingItems = '暂无数据';
 	                    return;
 	                }
-	
+
 	                $scope.itemMembers = data.map(function (elem) {
 	                    elem.txt = elem.firstUser === elem.lastUser ? '修改' : '还原';
 	                    return elem;
@@ -5454,7 +5454,7 @@
 	    };
 	    $scope.loadItemMembers = function (member) {
 	        var deferred = $q.defer();
-	
+
 	        $http({
 	            method: 'GET',
 	            /*eslint-disable*/
@@ -5472,24 +5472,24 @@
 	    };
 	    $scope.modifyMember = function (item) {
 	        var isRevert;
-	
+
 	        // 修改中, 还原中
 	        if (item.txt.indexOf('中') !== -1) {
 	            return;
 	        }
 	        // 还原中
 	        isRevert = item.firstUser !== item.lastUser;
-	
+
 	        if (isRevert) {
 	            doModify(item, item.firstUser, isRevert);
 	        } else {
 	            $scope.showModifyMember(item, isRevert);
 	        }
 	    };
-	
+
 	    $scope.getMembers = function () {
 	        var deferred = $q.defer();
-	
+
 	        $http({
 	            method: 'GET',
 	            /*eslint-disable*/
@@ -5507,7 +5507,7 @@
 	    };
 	    $scope.$on('$ionicView.enter', function () {
 	        $scope.errorMsg = '加载中';
-	
+
 	        if ($rootScope.loginUser.groupId === '0') {
 	            $scope.noPermission = '用户班组未维护';
 	            return;
@@ -5517,7 +5517,7 @@
 	        $scope.loadList();
 	    });
 	};
-	
+
 	module.exports = ['AD', '$scope', '$rootScope', '$q', '$http', 'Backend', '$ionicPopup', Controller];
 
 /***/ },
@@ -5531,10 +5531,10 @@
 /***/ function(module, exports) {
 
 	'use strict';
-	
+
 	var Controller = function Controller($scope, localStorageService, $state, $stateParams, $http, $rootScope, Backend) {
 	    $scope.itemCode = $stateParams.itemCode;
-	
+
 	    function loadList() {
 	        $scope.loadingStatus = '加载中';
 	        $scope.data = [];
@@ -5563,7 +5563,7 @@
 	        loadList();
 	    });
 	};
-	
+
 	module.exports = ['$scope', 'localStorageService', '$state', '$stateParams', '$http', '$rootScope', 'Backend', Controller];
 
 /***/ },
@@ -5577,9 +5577,9 @@
 /***/ function(module, exports) {
 
 	'use strict';
-	
+
 	var Controller = function Controller($scope, AD, $state, localStorageService) {
-	
+
 	    $scope.params = {};
 	    $scope.login = function () {
 	        $scope.errorMsg = '';
@@ -5620,7 +5620,7 @@
 	                $scope.errorMsg = '服务器异常';
 	                return;
 	            }
-	
+
 	            if (error.respCode === 'unknow') {
 	                $scope.errorMsg = error.errorMsg;
 	            } else if (error.respCode === 500) {
@@ -5636,7 +5636,7 @@
 	        $scope.params.pwd = '';
 	    });
 	};
-	
+
 	module.exports = ['$scope', 'AD', '$state', 'localStorageService', Controller];
 
 /***/ },
@@ -5650,9 +5650,9 @@
 /***/ function(module, exports) {
 
 	'use strict';
-	
+
 	var Controller = function Controller($scope, localStorageService, $state) {
-	
+
 	    $scope.menuConfig = {
 	        off: {
 	            name: '下架',
@@ -5679,21 +5679,20 @@
 	    $scope.$on('$ionicView.enter', function () {
 	        var loginUser = localStorageService.get('loginUser');
 	        var permssions, i, len;
-	
+
 	        if (!loginUser) {
 	            $state.go('ad-login');
 	            return;
 	        }
 	        permssions = loginUser.permssionMap.AD;
-	
+
 	        for (i = 0, len = permssions.length; i < len; i++) {
 	            $scope.menuConfig[permssions[i]].show = true;
 	        }
 	    });
 	};
-	
+
 	module.exports = ['$scope', 'localStorageService', '$state', Controller];
 
 /***/ }
 /******/ ]);
-//# sourceMappingURL=maps/boundle.js.map
