@@ -1794,8 +1794,8 @@
 	    fn: [function () {
 	        var settings = {
 	            // cacheURL: 'http://192.168.0.43:1460',
-	            cacheURL: 'http://58.246.227.27:83',
-	            // cacheURL: 'http://localhost:8080',
+	            // cacheURL: 'http://58.246.227.27:83',
+	            cacheURL: 'http://localhost:8080/api',
 	            // cacheURL: 'http://221.181.71.171:8082',
 	            // Private
 	            // cacheURL : 'http://10.102.10.207:8082',
@@ -5337,7 +5337,7 @@
 /* 78 */
 /***/ function(module, exports) {
 
-	module.exports = "<ion-view hide-nav-bar=\"true\" hide-back-button=\"true\">\n    <ion-header-bar align-title=\"center\">\n        <single-title title=\"人员调整\"></single-title>\n    </ion-header-bar>\n    <ion-content class=\"bgFF\" style=\"background: #FFF;bottom: 4em;\" on-double-tap=\"goHome('kqhz')\">\n        <div class=\"kqhz gwrx xiajia member content-wrapper\">\n            <p ng-if=\"noPermission\" ng-bind=\"noPermission\" style=\"font-size: 1.5em\"></p>\n            <table ng-hide=\"noPermission\">\n                <thead>\n                    <tr>\n                        <!-- <th>选择(可以多选)</th> -->\n                        <th>序号</th>\n                        <th>零件号</th>\n                        <th>班组</th>\n                        <th>初始用户</th>\n                        <th>当前用户</th>\n                        <th>修改时间</th>\n                    </tr>\n                </thead>\n                <tbody ng-show=\"errorMsg\" class=\"errorMsg\">\n                    <tr>\n                        <td colspan=\"6\">\n                            <span ng-bind=\"errorMsg\" style=\"display: inline;\">加载中</span>\n                        </td>\n                    </tr>\n                </tbody>\n                <tbody ng-repeat=\"r in itemMembers\">\n                    <tr>\n                        <!-- <td  class=\"check\"><label><span><span class=\"glyphicon glyphicon-ok\"></span></span></label></td> -->\n                        <td ng-bind=\"$index+1\"></td>\n                        <td ng-bind=\"r.itemCode\"></td>\n                        <td ng-bind=\"r.groupName\"></td>\n                        <td ng-bind=\"r.firstUser\"></td>\n                        <td class=\"operation\">\n                            <span ng-bind=\"r.lastUser\"></span>\n                            <span ng-bind=\"r.txt\" ng-click=\"modifyMember(r)\">&nbsp;</span>\n                        </td>\n                        <td ng-bind=\"r.lastModify\"></td>\n                    </tr>\n                </tbody>\n            </table>\n        </div>\n    </ion-content>\n    <ion-footer-bar>\n        <div class=\"quickNav\">\n            <a ng-click=\"loadList()\"><span class=\"glyphicon glyphicon glyphicon-repeat\"></span></a>\n            <a href=\"#/ad/sub-permssion\"><span class=\"glyphicon glyphicon-circle-arrow-left\"></span></a>\n            <a href=\"#/login-dashboard\"><span class=\"glyphicon glyphicon-home\"></span></a>\n            <a href=\"#/ad/login\"><span class=\"glyphicon glyphicon-log-out\"></span></a>\n        </div>\n    </ion-footer-bar>\n</ion-view>\n";
+	module.exports = "<ion-view hide-nav-bar=\"true\" hide-back-button=\"true\">\n    <ion-header-bar align-title=\"center\">\n        <single-title title=\"人员调整\"></single-title>\n    </ion-header-bar>\n    <ion-content class=\"bgFF\" style=\"background: #FFF;bottom: 4em;\" on-double-tap=\"goHome('kqhz')\">\n        <div class=\"kqhz gwrx xiajia member content-wrapper\">\n            <p ng-if=\"noPermission\" ng-bind=\"noPermission\" style=\"font-size: 1.5em\"></p>\n            <div ng-hide=\"noPermission\">\n                <div class=\"list\" style=\"width: 20em;\">\n                    <label class=\"item item-input item-select\">\n                        <div class=\"input-label\">\n                            人员列表\n                        </div>\n                        <select ng-model=\"selectedMemeber\" ng-options=\"m.name for m in membersObj\" ng-change=\"loadItems(selectedMemeber)\"></select>\n                    </label>\n                </div>\n                <table ng-hide=\"noPermission\">\n                    <thead>\n                        <tr>\n                            <!-- <th>选择(可以多选)</th> -->\n                            <th>序号</th>\n                            <th>零件号</th>\n                            <th>班组</th>\n                            <th>初始用户</th>\n                            <th>当前用户</th>\n                            <th>修改时间</th>\n                        </tr>\n                    </thead>\n                    <tbody ng-show=\"loadingItems || errorMsg\" class=\"errorMsg\">\n                        <tr>\n                            <td colspan=\"6\">\n                                <span ng-bind=\"errorMsg?errorMsg:loadingItems\" style=\"display: inline;\">加载中</span>\n                            </td>\n                        </tr>\n                    </tbody>\n                    <tbody ng-repeat=\"r in itemMembers\">\n                        <tr>\n                            <!-- <td  class=\"check\"><label><span><span class=\"glyphicon glyphicon-ok\"></span></span></label></td> -->\n                            <td ng-bind=\"$index+1\"></td>\n                            <td ng-bind=\"r.itemCode\"></td>\n                            <td ng-bind=\"r.groupName\"></td>\n                            <td ng-bind=\"r.firstUser\"></td>\n                            <td class=\"operation\">\n                                <span ng-bind=\"r.lastUser\"></span>\n                                <span ng-bind=\"r.txt\" ng-click=\"modifyMember(r)\">&nbsp;</span>\n                            </td>\n                            <td ng-bind=\"r.lastModify\"></td>\n                        </tr>\n                    </tbody>\n                </table>\n            </div>\n        </div>\n    </ion-content>\n    <ion-footer-bar>\n        <div class=\"quickNav\">\n            <a ng-click=\"loadList()\"><span class=\"glyphicon glyphicon glyphicon-repeat\"></span></a>\n            <a href=\"#/ad/sub-permssion\"><span class=\"glyphicon glyphicon-circle-arrow-left\"></span></a>\n            <a href=\"#/login-dashboard\"><span class=\"glyphicon glyphicon-home\"></span></a>\n            <a href=\"#/ad/login\"><span class=\"glyphicon glyphicon-log-out\"></span></a>\n        </div>\n    </ion-footer-bar>\n</ion-view>\n";
 
 /***/ },
 /* 79 */
@@ -5408,7 +5408,26 @@
 	            }
 	        });
 	    };
-	    // $scope.showAlert('修改成功', true);
+	    $scope.loadItems = function (selectedMemeber) {
+	        if (selectedMemeber) {
+	            $scope.loadingItems = '加载中';
+	            $scope.itemMembers = [];
+	            $scope.loadItemMembers(selectedMemeber).then(function (data) {
+	                $scope.loadingItems = null;
+	                if (!data || !data.length) {
+	                    $scope.loadingItems = '暂无数据';
+	                    return;
+	                }
+	
+	                $scope.itemMembers = data.map(function (elem) {
+	                    elem.txt = elem.firstUser === elem.lastUser ? '修改' : '还原';
+	                    return elem;
+	                });
+	            }, function () {
+	                $scope.loadingItems = '加载失败';
+	            });
+	        }
+	    };
 	    $scope.loadList = function () {
 	        $scope.errorMsg = '加载中';
 	        $scope.itemMembers = [];
@@ -5419,6 +5438,13 @@
 	                return elem;
 	            });
 	            $scope.members = datas[1];
+	            $scope.membersObj = $scope.members.map(function (m) {
+	                return {
+	                    id: m,
+	                    name: m
+	                };
+	            });
+	            $scope.selectedMemeber = $scope.membersObj[0];
 	            if (!$scope.itemMembers.length) {
 	                $scope.errorMsg = '暂无数据';
 	            }
@@ -5426,13 +5452,13 @@
 	            $scope.errorMsg = '加载失败';
 	        });
 	    };
-	    $scope.loadItemMembers = function () {
+	    $scope.loadItemMembers = function (member) {
 	        var deferred = $q.defer();
 	
 	        $http({
 	            method: 'GET',
 	            /*eslint-disable*/
-	            url: Backend().adMemberURL + '?groupId=' + $rootScope.loginUser.groupId
+	            url: Backend().adMemberURL + '?groupId=' + $rootScope.loginUser.groupId + (member ? '&lastUserName=' + member.id : '')
 	        }).success(function (data) {
 	            if (data && Object.prototype.toString.call(data) === '[object Array]') {
 	                deferred.resolve(data);
@@ -5480,10 +5506,13 @@
 	        return deferred.promise;
 	    };
 	    $scope.$on('$ionicView.enter', function () {
+	        $scope.errorMsg = '加载中';
+	
 	        if ($rootScope.loginUser.groupId === '0') {
 	            $scope.noPermission = '用户班组未维护';
 	            return;
 	        }
+	        $scope.errorMsg = null;
 	        $scope.noPermission = null;
 	        $scope.loadList();
 	    });

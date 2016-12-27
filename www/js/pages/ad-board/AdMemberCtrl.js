@@ -63,7 +63,26 @@ var Controller = function (AD, $scope, $rootScope, $q, $http, Backend, $ionicPop
             }
         });
     };
-    // $scope.showAlert('修改成功', true);
+    $scope.loadItems = function(selectedMemeber) {
+        if (selectedMemeber) {
+            $scope.loadingItems = '加载中';
+            $scope.itemMembers = [];
+            $scope.loadItemMembers(selectedMemeber).then(function(data) {
+                $scope.loadingItems = null;
+                if (!data || !data.length) {
+                    $scope.loadingItems = '暂无数据';
+                    return;
+                }
+
+                $scope.itemMembers = data.map(function(elem) {
+                    elem.txt = (elem.firstUser === elem.lastUser) ? '修改' : '还原';
+                    return elem;
+                });
+            }, function() {
+                $scope.loadingItems = '加载失败';
+            });
+        }
+    };
     $scope.loadList = function() {
         $scope.errorMsg = '加载中';
         $scope.itemMembers = [];
@@ -77,6 +96,13 @@ var Controller = function (AD, $scope, $rootScope, $q, $http, Backend, $ionicPop
                 return elem;
             });
             $scope.members = datas[1];
+            $scope.membersObj = $scope.members.map(function(m) {
+                return {
+                    id: m,
+                    name: m
+                };
+            });
+            $scope.selectedMemeber = $scope.membersObj[0];
             if (!$scope.itemMembers.length) {
                 $scope.errorMsg = '暂无数据';
             }
@@ -84,13 +110,13 @@ var Controller = function (AD, $scope, $rootScope, $q, $http, Backend, $ionicPop
             $scope.errorMsg = '加载失败';
         });
     };
-    $scope.loadItemMembers = function() {
+    $scope.loadItemMembers = function(member) {
         var deferred = $q.defer();
 
         $http({
             method: 'GET',
             /*eslint-disable*/
-            url: Backend().adMemberURL + '?groupId=' + $rootScope.loginUser.groupId
+            url: Backend().adMemberURL + '?groupId=' + $rootScope.loginUser.groupId + (member ? ('&lastUserName=' + member.id) : '')
         }).
         success(function(data) {
             if (data && Object.prototype.toString.call(data) === '[object Array]') {
@@ -142,10 +168,13 @@ var Controller = function (AD, $scope, $rootScope, $q, $http, Backend, $ionicPop
         return deferred.promise;
     };
     $scope.$on('$ionicView.enter', function() {
+        $scope.errorMsg = '加载中';
+
         if ($rootScope.loginUser.groupId === '0') {
             $scope.noPermission = '用户班组未维护';
             return;
         }
+        $scope.errorMsg = null;
         $scope.noPermission = null;
         $scope.loadList();
     });
