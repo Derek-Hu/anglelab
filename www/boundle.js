@@ -79,6 +79,18 @@
 	    });
 	});
 
+	(function () {
+	    document.addEventListener("deviceready", function () {
+	        var initInjector = angular.injector(["starter.services"]);
+	        var Constant = initInjector.get("Constant");
+	        Constant.initBackendURL().then(function () {
+	            angular.element(document).ready(function () {
+	                angular.bootstrap(document, ['starter']);
+	            });
+	        });
+	    }, false);
+	})();
+
 /***/ },
 /* 1 */
 /***/ function(module, exports, __webpack_require__) {
@@ -1789,38 +1801,107 @@
 
 	'use strict';
 
+	var URLKey = 'backendURL';
+	var Dict = 'SFM-Dict';
+	var ConfigFileName = 'SFM-cfg-url.properties';
+	var ConfigIntervalName = 'SFM-cfg-interval.properties';
+	var ConfigImgPathName = 'SFM-cfg-img-path.properties';
+	var settings = {
+	    cacheURL: 'http://221.181.71.171:8082',
+	    timeInterval: 10,
+	    imagePath: { name: '目录暂未选择', nativeURL: null }
+	};
+
 	module.exports = {
 	    name: 'Constant',
-	    fn: [function () {
-	        var settings = {
-	            // cacheURL: 'http://192.168.0.43:1460',
-	            cacheURL: 'http://58.246.227.27:83',
-	            // cacheURL: 'http://localhost:8080/api',
-	            // cacheURL: 'http://221.181.71.171:8082',
-	            // Private
-	            // cacheURL : 'http://10.102.10.207:8082',
-	            timeInterval: 10,
-	            imagePath: { name: '目录暂未选择', nativeURL: null }
-	        };
+	    fn: ['$q', '$cordovaFile', function ($q, $cordovaFile) {
+	        function readFromFile(fileName) {
+	            var defer = $q.defer();
+	            $cordovaFile.checkFile(cordova.file.dataDirectory, fileName).then(function () {
+	                $cordovaFile.readAsText(cordova.file.dataDirectory, fileName).then(function (value) {
+	                    //alert('Fetch ' + fileName + ' value = '+ value);
+	                    defer.resolve(value);
+	                }, function () {
+	                    defer.resolve(null);
+	                });
+	            }, function () {
+	                defer.resolve(null);
+	            });
+	            return defer.promise;
+	        }
+
+	        function saveToFile(fileName, value) {
+	            var defer = $q.defer();
+	            $cordovaFile.createFile(cordova.file.dataDirectory, fileName, true).then(function () {
+	                $cordovaFile.writeFile(cordova.file.dataDirectory, fileName, value, true).then(function () {
+	                    //alert('save to ' + fileName + ' value = '+ value);
+	                    defer.resolve(value);
+	                }, function () {
+	                    defer.resolve(null);
+	                });
+	            }, function () {
+	                defer.resolve(null);
+	            });
+	            return defer.promise;
+	        }
 
 	        return {
+	            initBackendURL: function initBackendURL() {
+	                return $q.all([readFromFile(ConfigFileName), readFromFile(ConfigIntervalName), readFromFile(ConfigImgPathName)]).then(function (values) {
+	                    if (values) {
+	                        if (values[0]) {
+	                            settings.cacheURL = values[0];
+	                        }
+	                        if (values[1]) {
+	                            settings.timeInterval = values[1];
+	                        }
+	                        if (values[2]) {
+	                            try {
+	                                settings.imagePath = JSON.parse(values[2]);
+	                            } catch (e) {}
+	                        }
+	                    }
+	                });
+	            },
 	            baseURL: function baseURL() {
 	                return settings.cacheURL;
 	            },
 	            getInterval: function getInterval() {
 	                return settings.timeInterval;
 	            },
-	            updateInterval: function updateInterval(timeInterval) {
-	                settings.timeInterval = timeInterval;
+	            updateInterval: function updateInterval(timeInterval, callback) {
+	                return saveToFile(ConfigIntervalName, timeInterval).then(function (time) {
+	                    if (time) {
+	                        settings.timeInterval = time;
+	                    }
+	                    if (callback) {
+	                        callback();
+	                    }
+	                });
 	            },
-	            updateServerURL: function updateServerURL(url) {
-	                settings.cacheURL = url;
+	            updateServerURL: function updateServerURL(url, callback) {
+	                return saveToFile(ConfigFileName, url).then(function (backendURL) {
+	                    if (backendURL) {
+	                        settings.cacheURL = url;
+	                    }
+	                    if (callback) {
+	                        callback();
+	                    }
+	                });
 	            },
 	            getImagePath: function getImagePath() {
 	                return settings.imagePath;
 	            },
-	            setImagePath: function setImagePath(imagePath) {
-	                settings.imagePath = imagePath;
+	            setImagePath: function setImagePath(imagePath, callback) {
+	                return saveToFile(ConfigImgPathName, JSON.stringify(imagePath)).then(function (path) {
+	                    if (path) {
+	                        // path is string, imagePath is the original object
+	                        settings.imagePath = imagePath;
+	                    }
+	                    if (callback) {
+	                        callback();
+	                    }
+	                });
 	            },
 	            lineKpiPageType: 10,
 	            loading: '加载中',
@@ -11572,8 +11653,9 @@
 	    };
 
 	    $scope.setImageFolder = function () {
-	        Constant.setImagePath({ name: $scope.folderName.fullPath, nativeURL: $scope.folderName.nativeURL });
-	        $state.go('settings');
+	        Constant.setImagePath({ name: $scope.folderName.fullPath, nativeURL: $scope.folderName.nativeURL }, function () {
+	            $state.go('settings');
+	        });
 	    };
 	    $scope.doDirectoryUp = function () {
 	        // var path = $scope._currentFileSystem.root.fullPath;
@@ -11669,10 +11751,11 @@
 	        $scope.settings.serverURL = $scope.serverAddr;
 	    };
 	    $scope.modify = function (serverURL) {
-	        $scope.isModify = false;
-	        Constant.updateServerURL(serverURL);
-	        $scope.serverAddr = serverURL;
-	        $scope.settings.serverURL = serverURL;
+	        Constant.updateServerURL(serverURL, function () {
+	            $scope.isModify = false;
+	            $scope.serverAddr = serverURL;
+	            $scope.settings.serverURL = serverURL;
+	        });
 	    };
 	    $scope.getURL = function () {
 	        return $scope.settings.serverURL;
@@ -11690,9 +11773,10 @@
 	        if (!time) {
 	            time = 1;
 	        }
-	        Constant.updateInterval(time);
-	        $scope.settings.timeInterval = time;
-	        $scope.isIntervalModify = false;
+	        Constant.updateInterval(time, function () {
+	            $scope.settings.timeInterval = time;
+	            $scope.isIntervalModify = false;
+	        });
 	    };
 	    $scope.cancelIntervalModify = function () {
 	        $scope.isIntervalModify = false;
@@ -11746,7 +11830,7 @@
 	                    try {
 	                        fileEntry.remove();
 	                        /*eslint-disable*/
-	                    } catch (e) {}
+	                    } catch (e) {};
 	                    $cordovaFileTransfer.download($scope.apkURL, path + '' + $scope.apkName, {}, true).then(function () {
 	                        window.plugins.webintent.startActivity({
 	                            action: window.plugins.webintent.ACTION_VIEW,

@@ -1,58 +1,58 @@
-var Controller = function($scope, Constant, $state, $window, $stateParams, Backend, $cordovaInAppBrowser, $cordovaFileTransfer, $timeout, $location) {
+var Controller = function ($scope, Constant, $state, $window, $stateParams, Backend, $cordovaInAppBrowser, $cordovaFileTransfer, $timeout, $location) {
     $scope.settings = {};
 
     $scope.noHomeMenu = ('noHomeMenu' in $location.search());
 
     var isBackFromFolder = !!$stateParams.fromSelect;
 
-    $scope.back = function() {
+    $scope.back = function () {
         $window.history.go(isBackFromFolder ? -3 : -1);
     };
-    $scope.goToFolderSelector = function() {
+    $scope.goToFolderSelector = function () {
         $state.go('folderPath', { select: true });
     };
-    $scope.openModify = function() {
+    $scope.openModify = function () {
         $scope.isModify = true;
         $scope.settings.serverURL = $scope.serverAddr;
     };
-    $scope.modify = function(serverURL) {
-        Constant.updateServerURL(serverURL, function() {
+    $scope.modify = function (serverURL) {
+        Constant.updateServerURL(serverURL, function () {
             $scope.isModify = false;
             $scope.serverAddr = serverURL;
             $scope.settings.serverURL = serverURL;
         });
     };
-    $scope.getURL = function() {
+    $scope.getURL = function () {
         return $scope.settings.serverURL;
     };
-    $scope.cancelModify = function() {
+    $scope.cancelModify = function () {
         $scope.isModify = false;
         $scope.settings.serverURL = $scope.serverAddr;
     };
 
-    $scope.openIntervalModify = function() {
+    $scope.openIntervalModify = function () {
         $scope.isIntervalModify = true;
         $scope.settings.editInterval = $scope.settings.timeInterval;
     };
-    $scope.modifyInterval = function(time) {
+    $scope.modifyInterval = function (time) {
         if (!time) {
             time = 1;
         }
-        Constant.updateInterval(time, function() {
+        Constant.updateInterval(time, function () {
             $scope.settings.timeInterval = time;
             $scope.isIntervalModify = false;
         });
     };
-    $scope.cancelIntervalModify = function() {
+    $scope.cancelIntervalModify = function () {
         $scope.isIntervalModify = false;
         $scope.settings.editInterval = $scope.settings.timeInterval;
     };
-    $scope.getInterval = function() {
+    $scope.getInterval = function () {
         return $scope.settings.timeInterval;
     };
-    $scope.checkVersion = function() {
+    $scope.checkVersion = function () {
         $scope.checkVersionText = '版本检查中...';
-        cordova.getAppVersion.getVersionNumber().then(function(version) {
+        cordova.getAppVersion.getVersionNumber().then(function (version) {
             /*eslint-disable*/
             Backend().metaData.query({
                 'BizType': 5,
