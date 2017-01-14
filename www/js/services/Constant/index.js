@@ -1,5 +1,3 @@
-var URLKey = 'backendURL';
-var Dict = 'SFM-Dict';
 var ConfigFileName = 'SFM-cfg-url.properties';
 var ConfigIntervalName = 'SFM-cfg-interval.properties';
 var ConfigImgPathName = 'SFM-cfg-img-path.properties';
@@ -14,6 +12,7 @@ module.exports = {
     fn: ['$q', '$cordovaFile', function ($q, $cordovaFile) {
         function readFromFile(fileName) {
             var defer = $q.defer();
+
             $cordovaFile.checkFile(cordova.file.dataDirectory, fileName)
                 .then(function () {
                     $cordovaFile.readAsText(cordova.file.dataDirectory, fileName)
@@ -31,6 +30,7 @@ module.exports = {
 
         function saveToFile(fileName, value) {
             var defer = $q.defer();
+
             $cordovaFile.createFile(cordova.file.dataDirectory, fileName, true)
                 .then(function () {
                     $cordovaFile.writeFile(cordova.file.dataDirectory, fileName, value, true)

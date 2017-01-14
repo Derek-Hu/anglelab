@@ -39,6 +39,7 @@ angular.module('starter', [routers, LocalStorageModule, 'ionic', 'ngCordova'])
     document.addEventListener('deviceready', function () {
         var initInjector = angular.injector(['starter.services']);
         var Constant = initInjector.get('Constant');
+        
         Constant.initBackendURL().then(function () {
             angular.element(document).ready(function () {
                 angular.bootstrap(document, ['starter']);

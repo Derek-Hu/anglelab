@@ -80,9 +80,10 @@
 	});
 
 	(function () {
-	    document.addEventListener("deviceready", function () {
-	        var initInjector = angular.injector(["starter.services"]);
-	        var Constant = initInjector.get("Constant");
+	    document.addEventListener('deviceready', function () {
+	        var initInjector = angular.injector(['starter.services']);
+	        var Constant = initInjector.get('Constant');
+
 	        Constant.initBackendURL().then(function () {
 	            angular.element(document).ready(function () {
 	                angular.bootstrap(document, ['starter']);
@@ -1801,8 +1802,6 @@
 
 	'use strict';
 
-	var URLKey = 'backendURL';
-	var Dict = 'SFM-Dict';
 	var ConfigFileName = 'SFM-cfg-url.properties';
 	var ConfigIntervalName = 'SFM-cfg-interval.properties';
 	var ConfigImgPathName = 'SFM-cfg-img-path.properties';
@@ -1817,9 +1816,10 @@
 	    fn: ['$q', '$cordovaFile', function ($q, $cordovaFile) {
 	        function readFromFile(fileName) {
 	            var defer = $q.defer();
+
 	            $cordovaFile.checkFile(cordova.file.dataDirectory, fileName).then(function () {
 	                $cordovaFile.readAsText(cordova.file.dataDirectory, fileName).then(function (value) {
-	                    //alert('Fetch ' + fileName + ' value = '+ value);
+	                    // alert('Fetch ' + fileName + ' value = '+ value);
 	                    defer.resolve(value);
 	                }, function () {
 	                    defer.resolve(null);
@@ -1832,9 +1832,10 @@
 
 	        function saveToFile(fileName, value) {
 	            var defer = $q.defer();
+
 	            $cordovaFile.createFile(cordova.file.dataDirectory, fileName, true).then(function () {
 	                $cordovaFile.writeFile(cordova.file.dataDirectory, fileName, value, true).then(function () {
-	                    //alert('save to ' + fileName + ' value = '+ value);
+	                    // alert('save to ' + fileName + ' value = '+ value);
 	                    defer.resolve(value);
 	                }, function () {
 	                    defer.resolve(null);
