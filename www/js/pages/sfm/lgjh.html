@@ -21,13 +21,12 @@
 	</ion-header-bar>
     <ion-content class="bgFF" style="background: #FFF;bottom: 4em;" on-double-tap="goHome('kqhz')">
 	    <div class="kqhz gwrx content-wrapper">
-		<table>
+		<table class="lgjh">
 			<thead>
 			<tr>
 				<th rowspan="2">序号</th>
-				<th rowspan="2">岗位名称</th>
-				<th rowspan="2">岗位操作人</th>
-				<th rowspan="2">轮岗人</th>
+				<th rowspan="3">岗位名称</th>
+				<th rowspan="2">岗位编号</th>
 				<th colspan="12">轮岗计划</th>
 			</tr>
 			<tr>
@@ -46,62 +45,25 @@
 			</tr>
 			</thead>
 			<tbody ng-show="loadingStatus!=''" >
-				<tr><td colspan="17">
+				<tr><td colspan="16">
 					<span ng-bind="loadingStatus" style="display: inline;">加载中</span>
 				</td></tr>
 			</tbody>
 			<tbody ng-repeat="r in rows">
-				<!-- 
-					rows = [{
-			          name: 
-			          items: [{
-			            operator:,
-			            rotate: ,
-			            months: [1,0,0,1,1,0,0,1,1,0,0,1]
-			          }]
-			        }]
-				-->
 				<tr>
 					<td rowspan="{{r.items.length}}" ng-bind="$index+1"></td>
 					<td rowspan="{{r.items.length}}" ng-bind="r.name"></td>
-					<td ng-bind="r.items[0].operator"></td>
-					<td ng-bind="r.items[0].rotate"></td>
+					<td ng-bind="r.items[0].Job_code"></td>
 					<td ng-repeat="m in r.items[0].months track by $index">
-						<span class="{{m==1? 'glyphicon glyphicon-ok': ''}}"></span>
+						<span ng-bind="m"></span>
 					</td>
 				</tr>
 				<tr ng-if="$index!=0" ng-repeat="item in r.items">
-					<td ng-bind="item.operator"></td>
-					<td ng-bind="item.rotate"></td>
+					<td ng-bind="item.Job_code"></td>
 					<td ng-repeat="m in item.months track by $index">
-						<span class="{{m==1? 'glyphicon glyphicon-ok': ''}}"></span>
+						<span ng-bind="m"></span>
 					</td>
 				</tr>
-				<!--
-				<tr ng-if="$index!=0" ng-repeat="it in rows[0].items">
-					<td ng-bind="it.operator"></td>
-					<td ng-bind="it.rotate"></td>
-					<td ng-repeat="m in it.months track by $index">
-						<span class="{{m==1? 'glyphicon glyphicon-ok': ''}}"></span>
-					</td>
-				</tr>
-				<tr ng-if="$index!=0" ng-repeat="r in rows">
-					<td rowspan="{{r.items.length}}" ng-bind="$index+1"></td>
-					<td rowspan="{{r.items.length}}" ng-bind="r.name"></td>
-					<td ng-bind="r.items[0].operator"></td>
-					<td ng-bind="r.items[0].rotate"></td>
-					<td ng-repeat="m in r.items[0].months track by $index">
-						<span class="{{m==1? 'glyphicon glyphicon-ok': ''}}"></span>
-					</td>
-				</tr>
-				<tr ng-if="$index!=0" ng-repeat="it in rows[1].items">
-					<td ng-bind="it.operator"></td>
-					<td ng-bind="it.rotate"></td>
-					<td ng-repeat="m in it.months track by $index">
-						<span class="{{m==1? 'glyphicon glyphicon-ok': ''}}"></span>
-					</td>
-				</tr> -->
-				
 			</tbody>
 		</table>
 		</div>

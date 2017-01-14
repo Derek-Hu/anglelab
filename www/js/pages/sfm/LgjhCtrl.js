@@ -16,6 +16,7 @@ var Controller = function (localStorageService, $scope, Backend, MetaDataSvc, $s
                 $scope.loadingStatus = '加载失败';
                 return;
             }
+
             /*data.sort(function (a, b) {
                 return parseInt(a.Order_number, 10) - parseInt(b.Order_number, 10);
             });*/
