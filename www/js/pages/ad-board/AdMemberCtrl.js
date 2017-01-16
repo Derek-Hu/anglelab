@@ -9,7 +9,7 @@ var Controller = function (AD, $scope, $rootScope, $q, $http, Backend, $ionicPop
     function doModify(item, lastName, isRevert) {
         item.txt = item.txt + '中';
         var typeMsg = isRevert ? '还原' : '修改';
-
+        
         $http({
             method: 'GET',
             /*eslint-disable*/
@@ -86,16 +86,10 @@ var Controller = function (AD, $scope, $rootScope, $q, $http, Backend, $ionicPop
     $scope.loadList = function() {
         $scope.errorMsg = '加载中';
         $scope.itemMembers = [];
-        $q.all([
-            $scope.loadItemMembers(),
-            $scope.getMembers()
-        ]).then(function(datas) {
-            $scope.errorMsg = null;
-            $scope.itemMembers = datas[0].map(function(elem) {
-                elem.txt = (elem.firstUser === elem.lastUser) ? '修改' : '还原';
-                return elem;
-            });
-            $scope.members = datas[1];
+
+        $scope.getMembers().then(function(data) {
+
+            $scope.members = data;
             $scope.membersObj = $scope.members.map(function(m) {
                 return {
                     id: m,
@@ -103,10 +97,9 @@ var Controller = function (AD, $scope, $rootScope, $q, $http, Backend, $ionicPop
                 };
             });
             $scope.selectedMemeber = $scope.membersObj[0];
-            if (!$scope.itemMembers.length) {
-                $scope.errorMsg = '暂无数据';
-            }
-        }).catch(function() {
+            $scope.errorMsg = null;
+            $scope.loadItems($scope.selectedMemeber);
+        }, function() {
             $scope.errorMsg = '加载失败';
         });
     };
@@ -116,7 +109,7 @@ var Controller = function (AD, $scope, $rootScope, $q, $http, Backend, $ionicPop
         $http({
             method: 'GET',
             /*eslint-disable*/
-            url: Backend().adMemberURL + '?groupId=' + $rootScope.loginUser.groupId + (member ? ('&lastUserName=' + member.id) : '')
+            url: Backend().adMemberURL + '?groupId=' + $rootScope.loginUser.groupId + (member ? ('&lastUser=' + member.id) : '')
         }).
         success(function(data) {
             if (data && Object.prototype.toString.call(data) === '[object Array]') {
