@@ -36,14 +36,20 @@ angular.module('starter', [routers, LocalStorageModule, 'ionic', 'ngCordova'])
 
 
 (function () {
+    alert('waiting for device ready...');
     document.addEventListener('deviceready', function () {
+        alert('device is ready, inject angular service......');
         var initInjector = angular.injector(['starter.services']);
         var Constant = initInjector.get('Constant');
-        
+        alert('try to load config...');
         Constant.initBackendURL().then(function () {
+            alert('bootsrap loaded config');
             angular.element(document).ready(function () {
+                alert('bootsrap successfully');
                 angular.bootstrap(document, ['starter']);
+                alert('bootsrap successfully yes');
             });
         });
+        alert('load request sended...');
     }, false);
 })();
