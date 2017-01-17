@@ -80,16 +80,22 @@
 	});
 
 	(function () {
-	    document.addEventListener('deviceready', function () {
+	    alert('waiting for device ready...');
+	    // document.addEventListener('deviceready', function () {
+	        alert('device is ready, inject angular service......');
 	        var initInjector = angular.injector(['starter.services']);
 	        var Constant = initInjector.get('Constant');
-
+	        alert('try to load config...');
 	        Constant.initBackendURL().then(function () {
+	            alert('bootsrap loaded config');
 	            angular.element(document).ready(function () {
+	                alert('bootsrap successfully');
 	                angular.bootstrap(document, ['starter']);
+	                alert('bootsrap successfully yes');
 	            });
 	        });
-	    }, false);
+	        alert('load request sended...');
+	    //}, false);
 	})();
 
 /***/ },
@@ -366,7 +372,8 @@
 	var ngResource = __webpack_require__(5);
 	// var componentsModule = require('../components');
 
-	var app = angular.module('starter.services', ['ionic', 'ngCordova', ngResource, LocalStorageModule]);
+	// var app = angular.module('starter.services', [ngResource, LocalStorageModule]);
+	var app = angular.module('starter.services', ['ng', 'ngCordova', ngResource, LocalStorageModule]);
 
 	var services = [__webpack_require__(7), __webpack_require__(8), __webpack_require__(9), __webpack_require__(10), __webpack_require__(11), __webpack_require__(12), __webpack_require__(13), __webpack_require__(14), __webpack_require__(15), __webpack_require__(16), __webpack_require__(17), __webpack_require__(18), __webpack_require__(19), __webpack_require__(20), __webpack_require__(21)];
 
