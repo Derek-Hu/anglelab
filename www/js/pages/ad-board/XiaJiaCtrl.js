@@ -23,12 +23,10 @@ var Controller = function ($scope, XiaJia, localStorageService, $state, $ionicPo
             item.txt = '下架';
         });
     };
-    var timing = false;
 
     $scope.loadList = function () {
         $scope.loadingStatus = '加载中';
         $scope.data = [];
-        timing = true;
 
         XiaJia.getList('?whseId=' + $rootScope.loginUser.whseId).then(function (data) {
             $timeout(function () {
@@ -58,9 +56,7 @@ var Controller = function ($scope, XiaJia, localStorageService, $state, $ionicPo
         });
     };
     $scope.$on('$ionicView.enter', function () {
-        if (!timing) {
-            $scope.loadList();
-        }
+        $scope.loadList();
     });
 
 };

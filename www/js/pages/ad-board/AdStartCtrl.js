@@ -29,7 +29,7 @@ var Controller = function ($scope, $state, $http, Backend, $rootScope, $ionicPop
                 '&factoryCode=' + $rootScope.loginUser.factoryCode +
                 '&zoneId=' + $rootScope.loginUser.zoneId
         }).
-        success(function (data) {
+        success(function(data) {
             if (data && data.respCode === 'success') {
                 $scope.showAlert('上线成功', true);
                 $scope.getList();
@@ -37,23 +37,21 @@ var Controller = function ($scope, $state, $http, Backend, $rootScope, $ionicPop
                 $scope.showAlert('上线失败', false, (data && data.respCode) ? data.respCode : null);
             }
         }).
-        error(function () {
+        error(function() {
             $scope.showAlert('上线失败', false, '服务器异常');
         });
     };
-    var timing = false;
 
-    $scope.getList = function () {
+    $scope.getList = function() {
         $scope.errorMsg = '加载中';
         $scope.menus = [];
-        timing = true;
         $http({
             method: 'GET',
             /*eslint-disable*/
             url: Backend().startListURL + '?whseId=' + $rootScope.loginUser.whseId + '&userName=' + $rootScope.loginUser.loginNme
         }).
-        success(function (data) {
-            $timeout(function () {
+        success(function(data) {
+            $timeout(function() {
                 $scope.getList();
             }, seconds);
 
@@ -63,7 +61,7 @@ var Controller = function ($scope, $state, $http, Backend, $rootScope, $ionicPop
                 if (!data.length) {
                     $scope.errorMsg = '暂无数据';
                 }
-                $scope.menus = $scope.menus.map(function (d) {
+                $scope.menus = $scope.menus.map(function(d) {
                     d.txt = '上线';
                     return d;
                 });
@@ -72,8 +70,8 @@ var Controller = function ($scope, $state, $http, Backend, $rootScope, $ionicPop
                 $scope.errorMsg = (data && data.respCode) ? data.respCode : '加载失败';
             }
         }).
-        error(function (data, status, headers, config) {
-            $timeout(function () {
+        error(function(data, status, headers, config) {
+            $timeout(function() {
                 $scope.getList();
             }, seconds);
 
@@ -81,10 +79,8 @@ var Controller = function ($scope, $state, $http, Backend, $rootScope, $ionicPop
             $scope.errorMsg = '加载失败';
         });
     };
-    $scope.$on('$ionicView.enter', function () {
-        if (!timing) {
-            $scope.getList();
-        }
+    $scope.$on('$ionicView.enter', function() {
+        $scope.getList();
     });
 };
 
