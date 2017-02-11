@@ -80,21 +80,22 @@
 	});
 
 	(function () {
-	    alert('waiting for device ready...');
+	    // alert('waiting for device ready...');
 	    document.addEventListener('deviceready', function () {
-	        alert('device is ready, inject angular service......');
+	        // alert('device is ready, inject angular service......');
 	        var initInjector = angular.injector(['starter.services']);
 	        var Constant = initInjector.get('Constant');
-	        alert('try to load config...');
+	        //alert('try to load config...');
+
 	        Constant.initBackendURL().then(function () {
-	            alert('bootsrap loaded config');
+	            // alert('bootsrap loaded config');
 	            angular.element(document).ready(function () {
-	                alert('bootsrap successfully');
+	                // alert('bootsrap successfully');
 	                angular.bootstrap(document, ['starter']);
-	                alert('bootsrap successfully yes');
+	                // alert('bootsrap successfully yes');
 	            });
 	        });
-	        alert('load request sended...');
+	        // alert('load request sended...');
 	    }, false);
 	})();
 
@@ -13054,12 +13055,10 @@
 	            item.txt = '下架';
 	        });
 	    };
-	    var timing = false;
 
 	    $scope.loadList = function () {
 	        $scope.loadingStatus = '加载中';
 	        $scope.data = [];
-	        timing = true;
 
 	        XiaJia.getList('?whseId=' + $rootScope.loginUser.whseId).then(function (data) {
 	            $timeout(function () {
@@ -13087,9 +13086,7 @@
 	        });
 	    };
 	    $scope.$on('$ionicView.enter', function () {
-	        if (!timing) {
-	            $scope.loadList();
-	        }
+	        $scope.loadList();
 	    });
 	};
 
@@ -13142,12 +13139,10 @@
 	            $scope.showAlert('上线失败', false, '服务器异常');
 	        });
 	    };
-	    var timing = false;
 
 	    $scope.getList = function () {
 	        $scope.errorMsg = '加载中';
 	        $scope.menus = [];
-	        timing = true;
 	        $http({
 	            method: 'GET',
 	            /*eslint-disable*/
@@ -13181,9 +13176,7 @@
 	        });
 	    };
 	    $scope.$on('$ionicView.enter', function () {
-	        if (!timing) {
-	            $scope.getList();
-	        }
+	        $scope.getList();
 	    });
 	};
 

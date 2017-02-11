@@ -41,7 +41,7 @@ angular.module('starter', [routers, LocalStorageModule, 'ionic', 'ngCordova'])
         // alert('device is ready, inject angular service......');
         var initInjector = angular.injector(['starter.services']);
         var Constant = initInjector.get('Constant');
-        //alert('try to load config...');
+        // alert('try to load config...');
         
         Constant.initBackendURL().then(function () {
             // alert('bootsrap loaded config');
