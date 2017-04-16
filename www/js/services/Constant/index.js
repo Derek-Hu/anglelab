@@ -279,12 +279,12 @@ module.exports = {
                     'isPercentage': false
                 }
                     /* ,{
-                      "nm": "物流工废索赔额", 
+                      "nm": "物流工废索赔额",
                       'MenuId': '5-5-7',
                       "BizType": '5-7',
                       "enm": "Industry Waste Claims",
-                      "fc": "#aaa", 
-                      "bc": "#049BF4", 
+                      "fc": "#aaa",
+                      "bc": "#049BF4",
                       "bg": 'img/svg/industry-waste-claims.svg'
                     }*/
                 ],
