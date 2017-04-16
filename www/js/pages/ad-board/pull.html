@@ -15,7 +15,7 @@
                                     <span class="routeCode" ng-bind="m.routeCode"></span>
                                     <span class="lsa" ng-bind="m.lsa"></span>
                                     <span class="nickName" ng-bind="m.nickName"></span>
-                                    <span class="count" ng-bind="'拉动'+m.pullCount +'次'"></span>
+                                    <span class="count" ng-bind="'当天拉动'+(m.pullCount?m.pullCount:0) +'次'"></span>
                                 </div>
                             </div>
                         </div>

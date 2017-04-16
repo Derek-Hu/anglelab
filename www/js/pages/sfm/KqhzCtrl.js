@@ -100,7 +100,7 @@ var Controller = function ($ionicPopup, localStorageService, Backend, $scope, Da
             if (!data || !data.length) {
                 $scope.loadingStatus = '暂无数据';
                 if(IsSendEmail){
-                  $scope.showAlert('邮件发送成功', true);
+                  $scope.showAlert('邮件已发送', true);
                 }
                 return;
             } else if (data.length === 1 && data[0].ErrorCode !== undefined) {
@@ -111,7 +111,7 @@ var Controller = function ($ionicPopup, localStorageService, Backend, $scope, Da
                 return;
             }
             if(IsSendEmail){
-              $scope.showAlert('邮件发送成功', true);
+              $scope.showAlert('邮件已发送', true);
             }
             $scope.loadingStatus = '';
             $scope.data = data;
