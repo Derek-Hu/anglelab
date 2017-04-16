@@ -37,17 +37,15 @@ var Controller = function ($scope, $stateParams, $state, $ionicScrollDelegate, M
         $scope.chart1 = { data: null };
         $scope.chart.isDouble = false;
         if (key === 'W') {
-            /* $scope.chart.data = total.filter(function(d){
-              return d.month <27;
-            });
             $scope.chart.isDouble = true;
-            $scope.chart1 = {
-              data: total.filter(function(d){
-                return d.month >=27;
-              })
-            };*/
-            $scope.chart1.data = null;
-            $scope.chart.isDouble = false;
+            $scope.chart1.data =  $scope.chart.data.filter(function (d) {
+                return d.month >= 27;
+            });
+            $scope.chart.data = $scope.chart.data.filter(function (d) {
+                return d.month < 27;
+            });
+            // $scope.chart1.data = null;
+            // $scope.chart.isDouble = false;
         } else {
             $scope.chart1.data = null;
         }
