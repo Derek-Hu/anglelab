@@ -2,6 +2,7 @@ var ProgressBarPlugin = require('progress-bar-webpack-plugin');
 var WebpackNotifierPlugin = require('webpack-notifier');
 var HtmlWebpackPlugin = require('html-webpack-plugin');
 var assets = require('postcss-assets');
+var webpack = require('webpack');
 var autoprefixer = require('autoprefixer');
 
 module.exports = {
@@ -26,7 +27,8 @@ module.exports = {
     plugins: [
         new ProgressBarPlugin(),
         new WebpackNotifierPlugin({ alwaysNotify: true }),
-        new HtmlWebpackPlugin({ template: 'www/index.ejs', inject: 'body' })
+        new HtmlWebpackPlugin({ template: 'www/index.ejs', inject: 'body' }),
+        new webpack.optimize.UglifyJsPlugin({ compress: { warnings: false }, mangle: false }),
     ],
     module: {
         preLoaders: [

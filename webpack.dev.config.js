@@ -31,6 +31,7 @@ module.exports = {
         new ProgressBarPlugin(),
         new WebpackNotifierPlugin({ alwaysNotify: true }),
         new webpack.HotModuleReplacementPlugin(),
+        new webpack.optimize.UglifyJsPlugin({ compress: { warnings: false }, mangle: false }),
         new HtmlWebpackPlugin({ template: 'www/index.ejs', inject: true })
     ],
     module: {
