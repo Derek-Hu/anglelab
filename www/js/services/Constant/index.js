@@ -3,11 +3,11 @@ module.exports = {
     fn: [function () {
         var settings = {
             // cacheURL: 'http://192.168.0.43:1460',
-            cacheURL: 'http://58.246.227.27:83',
+            // cacheURL: 'http://58.246.227.27:83',
             // cacheURL: 'http://localhost:8080/api',
             // cacheURL: 'http://221.181.71.171:8082',
             // Private
-            // cacheURL : 'http://10.102.10.207:8082',
+            cacheURL : 'http://10.102.10.207:8082',
             timeInterval: 10,
             imagePath: { name: '目录暂未选择', nativeURL: null }
         };

@@ -21,7 +21,7 @@ var Controller = function ($scope, $state, $http, Backend, $rootScope, $ionicPop
         var confirmPopup = $ionicPopup.confirm({
             cancelText: '取消',
             okText: '确认',
-            template: '<div class="xiajia"><img src="./img/ad/tip.png" /><div style="margin-bottom: 0.5em"><span style="margin:0;color: #333;">' + item.itemCode + '</span><span style="margin:0;color: #333;">' + item.routeCode + '</span><span style="margin:0;color: #333;">' + item.lsa + '</span><span style="margin:0;color: #333;">' + item.nickName + '</span></div>是否确认拉动？</div>'
+            template: '<div class="xiajia"><img src="./img/ad/tip.png" /><div style="margin-bottom: 0.5em"><span style="margin:0;color: #333;font-weight:bold;">' + item.itemCode + '</span><span style="margin:0;color: #333;">' + item.routeCode + '</span><span style="margin:0;color: #333;">' + item.lsa + '</span><span style="margin:0;color: #333;">' + item.nickName + '</span><span style="margin:0;color: #333;">当天拉动' + (item.pullCount?item.pullCount:0) + '次</span></div>是否确认拉动？</div>'
         });
 
         confirmPopup.then(function (res) {

@@ -27,7 +27,7 @@ module.exports = {
             },
             link: function (scope, element) {
                 var fontSize = parseInt(d3.select('body').style('font-size'), 10);
-                var margin = { top: fontSize * 3, right: fontSize * 9, bottom: fontSize * 10, left: fontSize * 3 };
+                var margin = { top: fontSize * 1, right: fontSize * 9, bottom: fontSize * 10, left: fontSize * 3 };
                 var title = scope.title;
 
                 function dynamicRender(svg, x, y, width, height, data, line, isRate) {
