@@ -6,7 +6,7 @@
         <div style="display: block; bottom: 3.5em; width: 100%; height: 100%;">
             <div class="clear pull" style="height: 100%; padding-top: 2em;">
                 <p ng-if="errorMsg" ng-bind="errorMsg"></p>
-                <div ng-repeat="m in menus" class="bz-menu col-3">
+                <div ng-repeat="m in menus" class="bz-menu col-3-2">
                     <a ng-click="showConfirmPull(m)">
                         <div class="list card" ng-class="{active: m.isPulling}">
                             <div>
@@ -15,6 +15,7 @@
                                     <span class="routeCode" ng-bind="m.routeCode"></span>
                                     <span class="lsa" ng-bind="m.lsa"></span>
                                     <span class="nickName" ng-bind="m.nickName"></span>
+                                    <span class="count" ng-bind="'拉动'+m.pullCount +'次'"></span>
                                 </div>
                             </div>
                         </div>

@@ -1794,9 +1794,9 @@
 	    fn: [function () {
 	        var settings = {
 	            // cacheURL: 'http://192.168.0.43:1460',
-	            cacheURL: 'http://58.246.227.27:83',
+	            // cacheURL: 'http://58.246.227.27:83',
 	            // cacheURL: 'http://localhost:8080/api',
-	            // cacheURL: 'http://221.181.71.171:8082',
+	            cacheURL: 'http://221.181.71.171:8082',
 	            // Private
 	            // cacheURL : 'http://10.102.10.207:8082',
 	            timeInterval: 10,
@@ -2070,12 +2070,12 @@
 	                    'isPercentage': false
 	                }
 	                /* ,{
-	                  "nm": "物流工废索赔额", 
+	                  "nm": "物流工废索赔额",
 	                  'MenuId': '5-5-7',
 	                  "BizType": '5-7',
 	                  "enm": "Industry Waste Claims",
-	                  "fc": "#aaa", 
-	                  "bc": "#049BF4", 
+	                  "fc": "#aaa",
+	                  "bc": "#049BF4",
 	                  "bg": 'img/svg/industry-waste-claims.svg'
 	                }*/
 	                ],
@@ -12963,12 +12963,10 @@
 	            item.txt = '下架';
 	        });
 	    };
-	    var timing = false;
 
 	    $scope.loadList = function () {
 	        $scope.loadingStatus = '加载中';
 	        $scope.data = [];
-	        timing = true;
 
 	        XiaJia.getList('?whseId=' + $rootScope.loginUser.whseId).then(function (data) {
 	            $timeout(function () {
@@ -12996,9 +12994,7 @@
 	        });
 	    };
 	    $scope.$on('$ionicView.enter', function () {
-	        if (!timing) {
-	            $scope.loadList();
-	        }
+	        $scope.loadList();
 	    });
 	};
 
@@ -13051,12 +13047,10 @@
 	            $scope.showAlert('上线失败', false, '服务器异常');
 	        });
 	    };
-	    var timing = false;
 
 	    $scope.getList = function () {
 	        $scope.errorMsg = '加载中';
 	        $scope.menus = [];
-	        timing = true;
 	        $http({
 	            method: 'GET',
 	            /*eslint-disable*/
@@ -13090,9 +13084,7 @@
 	        });
 	    };
 	    $scope.$on('$ionicView.enter', function () {
-	        if (!timing) {
-	            $scope.getList();
-	        }
+	        $scope.getList();
 	    });
 	};
 
@@ -13102,7 +13094,7 @@
 /* 74 */
 /***/ function(module, exports) {
 
-	module.exports = "<ion-view hide-nav-bar=\"true\" hide-back-button=\"true\">\n    <ion-header-bar align-title=\"center\">\n        <single-title title=\"线边拉动\"></single-title>\n    </ion-header-bar>\n    <ion-content>\n        <div style=\"display: block; bottom: 3.5em; width: 100%; height: 100%;\">\n            <div class=\"clear pull\" style=\"height: 100%; padding-top: 2em;\">\n                <p ng-if=\"errorMsg\" ng-bind=\"errorMsg\"></p>\n                <div ng-repeat=\"m in menus\" class=\"bz-menu col-3\">\n                    <a ng-click=\"showConfirmPull(m)\">\n                        <div class=\"list card\" ng-class=\"{active: m.isPulling}\">\n                            <div>\n                                <div>\n                                    <span class=\"itemCode\" ng-bind=\"m.itemCode\"></span>\n                                    <span class=\"routeCode\" ng-bind=\"m.routeCode\"></span>\n                                    <span class=\"lsa\" ng-bind=\"m.lsa\"></span>\n                                    <span class=\"nickName\" ng-bind=\"m.nickName\"></span>\n                                </div>\n                            </div>\n                        </div>\n                    </a>\n                </div>\n            </div>\n        </div>\n        <div class=\"clear\"></div>\n    </ion-content>\n    <ion-footer-bar>\n        <div class=\"pull-histroy\">\n            <button ng-click=\"goPullHistory()\" class=\"button button-light\">拉动历史查询</button>\n        </div>\n        <div class=\"quickNav\">\n            <a ng-click=\"getList()\"><span class=\"glyphicon glyphicon glyphicon-repeat\"></span></a>\n            <a href=\"#/ad/sub-permssion\"><span class=\"glyphicon glyphicon-circle-arrow-left\"></span></a>\n            <a href=\"#/login-dashboard\"><span class=\"glyphicon glyphicon-home\"></span></a>\n            <a href=\"#/ad/login\"><span class=\"glyphicon glyphicon-log-out\"></span></a>\n        </div>\n    </ion-footer-bar>\n</ion-view>\n";
+	module.exports = "<ion-view hide-nav-bar=\"true\" hide-back-button=\"true\">\n    <ion-header-bar align-title=\"center\">\n        <single-title title=\"线边拉动\"></single-title>\n    </ion-header-bar>\n    <ion-content>\n        <div style=\"display: block; bottom: 3.5em; width: 100%; height: 100%;\">\n            <div class=\"clear pull\" style=\"height: 100%; padding-top: 2em;\">\n                <p ng-if=\"errorMsg\" ng-bind=\"errorMsg\"></p>\n                <div ng-repeat=\"m in menus\" class=\"bz-menu col-3-2\">\n                    <a ng-click=\"showConfirmPull(m)\">\n                        <div class=\"list card\" ng-class=\"{active: m.isPulling}\">\n                            <div>\n                                <div>\n                                    <span class=\"itemCode\" ng-bind=\"m.itemCode\"></span>\n                                    <span class=\"routeCode\" ng-bind=\"m.routeCode\"></span>\n                                    <span class=\"lsa\" ng-bind=\"m.lsa\"></span>\n                                    <span class=\"nickName\" ng-bind=\"m.nickName\"></span>\n                                </div>\n                            </div>\n                        </div>\n                    </a>\n                </div>\n            </div>\n        </div>\n        <div class=\"clear\"></div>\n    </ion-content>\n    <ion-footer-bar>\n        <div class=\"pull-histroy\">\n            <button ng-click=\"goPullHistory()\" class=\"button button-light\">拉动历史查询</button>\n        </div>\n        <div class=\"quickNav\">\n            <a ng-click=\"getList()\"><span class=\"glyphicon glyphicon glyphicon-repeat\"></span></a>\n            <a href=\"#/ad/sub-permssion\"><span class=\"glyphicon glyphicon-circle-arrow-left\"></span></a>\n            <a href=\"#/login-dashboard\"><span class=\"glyphicon glyphicon-home\"></span></a>\n            <a href=\"#/ad/login\"><span class=\"glyphicon glyphicon-log-out\"></span></a>\n        </div>\n    </ion-footer-bar>\n</ion-view>\n";
 
 /***/ },
 /* 75 */

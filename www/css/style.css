@@ -225,6 +225,11 @@ ion-view.view {
     width: 50%;
 }
 
+.col-3-2 {
+    width: 33.3%;
+    height: 46%;
+}
+
 .col-3 {
     width: 33.3%;
     height: 33.3%;
@@ -1863,6 +1868,11 @@ div.pull .bz-menu .nickName {
 div.pull .bz-menu .itemCode {
     display: block;
     color: #159EDC;
+    font-weight: bold;
+}
+
+div.pull .bz-menu .count {
+  display: block;
 }
 
 div.pull .bz-menu .routeCode {
