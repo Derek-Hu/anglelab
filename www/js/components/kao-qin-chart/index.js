@@ -151,7 +151,7 @@ module.exports = {
                     }
                     if (scope.isDouble) {
                         // totalW = totalW/2;
-                        totalH = totalH / 2;
+                        totalH /= 2;
                     }
                     return [totalW - margin.left - margin.right, totalH - margin.top - margin.bottom];
                 }

@@ -1,10 +1,9 @@
-var path = require('path');
-var webpack = require( 'webpack');
-var ProgressBarPlugin = require( 'progress-bar-webpack-plugin');
-var WebpackNotifierPlugin = require( 'webpack-notifier');
-var HtmlWebpackPlugin = require( 'html-webpack-plugin');
+var ProgressBarPlugin = require('progress-bar-webpack-plugin');
+var WebpackNotifierPlugin = require('webpack-notifier');
+var HtmlWebpackPlugin = require('html-webpack-plugin');
 var assets = require('postcss-assets');
-var autoprefixer = require( 'autoprefixer');
+var webpack = require('webpack');
+var autoprefixer = require('autoprefixer');
 
 module.exports = {
     eslint: {
@@ -19,16 +18,17 @@ module.exports = {
         path: 'www',
         publicPath: '',
         filename: '[name].js',
-        chunkFilename: "[id].[chunkhash].bundle.js",
+        chunkFilename: '[id].[chunkhash].bundle.js',
         sourceMapFilename: 'maps/[file].map'
     },
-    
+
     // devtool: '#source-map',
 
     plugins: [
         new ProgressBarPlugin(),
         new WebpackNotifierPlugin({ alwaysNotify: true }),
-        new HtmlWebpackPlugin({ template: 'www/index.ejs', inject: true })
+        new HtmlWebpackPlugin({ template: 'www/index.ejs', inject: 'body' }),
+        new webpack.optimize.UglifyJsPlugin({ compress: { warnings: false }, mangle: false }),
     ],
     module: {
         preLoaders: [
@@ -40,7 +40,7 @@ module.exports = {
             { test: /\.html$/, loader: 'html' }, {
                 test: /.*www\/img\/.*\.(gif|png|jpe?g|svg)$/i,
                 loaders: [
-                    "url-loader?name=font/[name].[ext]&limit=8192",
+                    'url-loader?name=font/[name].[ext]&limit=8192',
                     'image-webpack?{optimizationLevel: 7, interlaced: false, pngquant:{quality: "65-90", speed: 4}, mozjpeg: {quality: 65}}'
                 ]
             },
@@ -48,10 +48,10 @@ module.exports = {
         ]
     },
 
-    postcss: function() {
+    postcss: function () {
         return [assets, autoprefixer({
             browsers: [
-                "last 2 versions"
+                'last 2 versions'
             ]
         })];
     }

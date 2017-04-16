@@ -7,7 +7,7 @@ var Controller = function (AD, $scope, $rootScope, $q, $http, Backend, $ionicPop
     $scope.noPermission = null;
 
     function doModify(item, lastName, isRevert) {
-        item.txt = item.txt + '中';
+        item.txt += '中';
         var typeMsg = isRevert ? '还原' : '修改';
         
         $http({
