@@ -1794,9 +1794,9 @@
 	    fn: [function () {
 	        var settings = {
 	            // cacheURL: 'http://192.168.0.43:1460',
-	            // cacheURL: 'http://58.246.227.27:83',
+	            cacheURL: 'http://58.246.227.27:83',
 	            // cacheURL: 'http://localhost:8080/api',
-	            cacheURL: 'http://221.181.71.171:8082',
+	            // cacheURL: 'http://221.181.71.171:8082',
 	            // Private
 	            // cacheURL : 'http://10.102.10.207:8082',
 	            timeInterval: 10,
@@ -2070,12 +2070,12 @@
 	                    'isPercentage': false
 	                }
 	                /* ,{
-	                  "nm": "物流工废索赔额",
+	                  "nm": "物流工废索赔额", 
 	                  'MenuId': '5-5-7',
 	                  "BizType": '5-7',
 	                  "enm": "Industry Waste Claims",
-	                  "fc": "#aaa",
-	                  "bc": "#049BF4",
+	                  "fc": "#aaa", 
+	                  "bc": "#049BF4", 
 	                  "bg": 'img/svg/industry-waste-claims.svg'
 	                }*/
 	                ],
@@ -12201,25 +12201,25 @@
 	            if (!data || !data.length) {
 	                $scope.loadingStatus = '暂无数据';
 	                if (IsSendEmail) {
-	                    $scope.showAlert('发送成功', true);
+	                    $scope.showAlert('邮件发送成功', true);
 	                }
 	                return;
 	            } else if (data.length === 1 && data[0].ErrorCode !== undefined) {
 	                $scope.loadingStatus = '加载失败';
 	                if (IsSendEmail) {
-	                    $scope.showAlert('发送失败', false, '服务器异常');
+	                    $scope.showAlert('邮件发送失败', false, '服务器异常');
 	                }
 	                return;
 	            }
 	            if (IsSendEmail) {
-	                $scope.showAlert('发送成功', true);
+	                $scope.showAlert('邮件发送成功', true);
 	            }
 	            $scope.loadingStatus = '';
 	            $scope.data = data;
 	        }, function () {
 	            $scope.loadingStatus = '加载失败';
 	            if (IsSendEmail) {
-	                $scope.showAlert('发送失败', false, '服务器异常');
+	                $scope.showAlert('邮件发送失败', false, '服务器异常');
 	            }
 	        });
 	    };
@@ -12570,17 +12570,15 @@
 	        $scope.chart1 = { data: null };
 	        $scope.chart.isDouble = false;
 	        if (key === 'W') {
-	            /* $scope.chart.data = total.filter(function(d){
-	              return d.month <27;
-	            });
 	            $scope.chart.isDouble = true;
-	            $scope.chart1 = {
-	              data: total.filter(function(d){
-	                return d.month >=27;
-	              })
-	            };*/
-	            $scope.chart1.data = null;
-	            $scope.chart.isDouble = false;
+	            $scope.chart1.data = $scope.chart.data.filter(function (d) {
+	                return d.month >= 27;
+	            });
+	            $scope.chart.data = $scope.chart.data.filter(function (d) {
+	                return d.month < 27;
+	            });
+	            // $scope.chart1.data = null;
+	            // $scope.chart.isDouble = false;
 	        } else {
 	            $scope.chart1.data = null;
 	        }
