@@ -12931,7 +12931,7 @@
 /* 70 */
 /***/ function(module, exports) {
 
-	module.exports = "<ion-view hide-nav-bar=\"true\" hide-back-button=\"true\">\n  <ion-header-bar align-title=\"center\">\n        <single-title title=\"零件下架\"></single-title>\n    </ion-header-bar>\n    <ion-content class=\"bgFF\" style=\"background: #FFF;bottom: 4em;\">\n        <div class=\"kqhz gwrx xiajia content-wrapper\">\n        <table>\n            <thead>\n            <tr>\n                <th>序号</th>\n                <th>零件号</th>\n                <th>线路号</th>\n                <th>推荐库位</th>\n                <th>推荐箱号</th>\n                <th>拉动时间</th>\n                <th> 预计上线时间</th>\n                <th class=\"operation\">操作</th>\n            </tr>\n            </thead>\n            <tbody ng-show=\"loadingStatus!=''\" >\n                <tr><td colspan=\"8\">\n                    <span ng-bind=\"loadingStatus\" style=\"display: inline;\">加载中</span>\n                </td></tr>\n            </tbody>\n            <tbody ng-repeat=\"r in data\">\n                <tr>\n                    <td ng-bind=\"$index+1\"></td>\n                    <td ng-bind=\"r.itemCode\"></td>\n                    <td ng-bind=\"r.routeCode\"></td>\n                    <td ng-bind=\"r.locCode\"></td>\n                    <td ng-bind=\"r.lp\"></td>\n                    <td ng-bind=\"r.pullTime\"></td>\n                    <td ng-bind=\"r.planOnlineTime\"></td>\n                    <td class=\"operation\">\n                        <span ng-bind=\"r.txt\" ng-click=\"off(r)\">下&nbsp;架</span>\n                        <a ng-href=\"#/ad/kucun/{{r.itemCode}}\"><span>库&nbsp;存</span></a>\n                    </td>\n                </tr>\n            </tbody>\n        </table>\n        </div>\n    </ion-content>\n    <ion-footer-bar>\n        <!-- <div class=\"clear header six tc color-menu-type\">\n            <div class=\"twrapper\">\n                <div class=\"type two clear\">\n                <div class=\"name\">编制</div>\n                <div class=\"value\">&nbsp;<span ng-bind=\"metaData.bianzhi\"></span></div>\n            </div>\n            </div>\n            <div class=\"twrapper\"><div class=\"type two clear\">\n                <div class=\"name\">审核</div>\n                <div class=\"value\">&nbsp;<span ng-bind=\"metaData.shenhe\"></span></div>\n            </div></div>\n            <div class=\" twrapper\"><div class=\"type two clear\">\n                <div class=\"name\">批准</div>\n                <div class=\"value\">&nbsp;<span ng-bind=\"metaData.pizhun\"></span></div>\n            </div></div>\n            <div class=\" twrapper\" style=\"width:20%\"><div class=\"type two clear\">\n                <div class=\"name\">日期</div>\n                <div class=\"value\">&nbsp;<span ng-bind=\"metaData.bianzhi_date\"></span></div>\n            </div></div>\n        </div> -->\n        <div class=\"quickNav\">\n            <a ng-click=\"loadList()\"><span class=\"glyphicon glyphicon glyphicon-repeat\"></span></a>\n            <a href=\"#/ad/sub-permssion\"><span class=\"glyphicon glyphicon-circle-arrow-left\"></span></a>\n            <a href=\"#/login-dashboard\"><span class=\"glyphicon glyphicon-home\"></span></a>\n            <a href=\"#/ad/login\"><span class=\"glyphicon glyphicon-log-out\"></span></a>\n        </div>\n    </ion-footer-bar>\n</ion-view>\n";
+	module.exports = "<ion-view hide-nav-bar=\"true\" hide-back-button=\"true\">\n  <ion-header-bar align-title=\"center\">\n        <single-title title=\"零件下架\"></single-title>\n    </ion-header-bar>\n    <ion-content class=\"bgFF\" style=\"background: #FFF;bottom: 4em;\">\n        <div class=\"kqhz gwrx xiajia content-wrapper\">\n        <table>\n            <thead>\n            <tr>\n                <th>序号</th>\n                <th>零件号</th>\n                <th>线路号</th>\n                <th>推荐库位</th>\n                <th>推荐箱号</th>\n                <th>编组区域</th>\n                <th>最晚下架时间</th>\n                <th class=\"operation\">操作</th>\n            </tr>\n            </thead>\n            <tbody ng-show=\"loadingStatus!=''\" >\n                <tr><td colspan=\"8\">\n                    <span ng-bind=\"loadingStatus\" style=\"display: inline;\">加载中</span>\n                </td></tr>\n            </tbody>\n            <tbody ng-repeat=\"r in data\">\n                <tr>\n                    <td ng-bind=\"$index+1\"></td>\n                    <td ng-bind=\"r.itemCode\"></td>\n                    <td ng-bind=\"r.routeCode\"></td>\n                    <td ng-bind=\"r.locCode\"></td>\n                    <td ng-bind=\"r.lp\"></td>\n                    <td ng-bind=\"r.groupsCode\"></td>\n                    <td ng-bind=\"r.planOnlineTime\"></td>\n                    <td class=\"operation\">\n                        <span ng-bind=\"r.txt\" ng-click=\"off(r)\">下&nbsp;架</span>\n                        <a ng-href=\"#/ad/kucun/{{r.itemCode}}\"><span>库&nbsp;存</span></a>\n                    </td>\n                </tr>\n            </tbody>\n        </table>\n        </div>\n    </ion-content>\n    <ion-footer-bar>\n        <!-- <div class=\"clear header six tc color-menu-type\">\n            <div class=\"twrapper\">\n                <div class=\"type two clear\">\n                <div class=\"name\">编制</div>\n                <div class=\"value\">&nbsp;<span ng-bind=\"metaData.bianzhi\"></span></div>\n            </div>\n            </div>\n            <div class=\"twrapper\"><div class=\"type two clear\">\n                <div class=\"name\">审核</div>\n                <div class=\"value\">&nbsp;<span ng-bind=\"metaData.shenhe\"></span></div>\n            </div></div>\n            <div class=\" twrapper\"><div class=\"type two clear\">\n                <div class=\"name\">批准</div>\n                <div class=\"value\">&nbsp;<span ng-bind=\"metaData.pizhun\"></span></div>\n            </div></div>\n            <div class=\" twrapper\" style=\"width:20%\"><div class=\"type two clear\">\n                <div class=\"name\">日期</div>\n                <div class=\"value\">&nbsp;<span ng-bind=\"metaData.bianzhi_date\"></span></div>\n            </div></div>\n        </div> -->\n        <div class=\"quickNav\">\n            <a ng-click=\"loadList()\"><span class=\"glyphicon glyphicon glyphicon-repeat\"></span></a>\n            <a href=\"#/ad/sub-permssion\"><span class=\"glyphicon glyphicon-circle-arrow-left\"></span></a>\n            <a href=\"#/login-dashboard\"><span class=\"glyphicon glyphicon-home\"></span></a>\n            <a href=\"#/ad/login\"><span class=\"glyphicon glyphicon-log-out\"></span></a>\n        </div>\n    </ion-footer-bar>\n</ion-view>\n";
 
 /***/ },
 /* 71 */
@@ -13094,7 +13094,7 @@
 /* 74 */
 /***/ function(module, exports) {
 
-	module.exports = "<ion-view hide-nav-bar=\"true\" hide-back-button=\"true\">\n    <ion-header-bar align-title=\"center\">\n        <single-title title=\"线边拉动\"></single-title>\n    </ion-header-bar>\n    <ion-content>\n        <div style=\"display: block; bottom: 3.5em; width: 100%; height: 100%;\">\n            <div class=\"clear pull\" style=\"height: 100%; padding-top: 2em;\">\n                <p ng-if=\"errorMsg\" ng-bind=\"errorMsg\"></p>\n                <div ng-repeat=\"m in menus\" class=\"bz-menu col-3-2\">\n                    <a ng-click=\"showConfirmPull(m)\">\n                        <div class=\"list card\" ng-class=\"{active: m.isPulling}\">\n                            <div>\n                                <div>\n                                    <span class=\"itemCode\" ng-bind=\"m.itemCode\"></span>\n                                    <span class=\"routeCode\" ng-bind=\"m.routeCode\"></span>\n                                    <span class=\"lsa\" ng-bind=\"m.lsa\"></span>\n                                    <span class=\"nickName\" ng-bind=\"m.nickName\"></span>\n                                </div>\n                            </div>\n                        </div>\n                    </a>\n                </div>\n            </div>\n        </div>\n        <div class=\"clear\"></div>\n    </ion-content>\n    <ion-footer-bar>\n        <div class=\"pull-histroy\">\n            <button ng-click=\"goPullHistory()\" class=\"button button-light\">拉动历史查询</button>\n        </div>\n        <div class=\"quickNav\">\n            <a ng-click=\"getList()\"><span class=\"glyphicon glyphicon glyphicon-repeat\"></span></a>\n            <a href=\"#/ad/sub-permssion\"><span class=\"glyphicon glyphicon-circle-arrow-left\"></span></a>\n            <a href=\"#/login-dashboard\"><span class=\"glyphicon glyphicon-home\"></span></a>\n            <a href=\"#/ad/login\"><span class=\"glyphicon glyphicon-log-out\"></span></a>\n        </div>\n    </ion-footer-bar>\n</ion-view>\n";
+	module.exports = "<ion-view hide-nav-bar=\"true\" hide-back-button=\"true\">\n    <ion-header-bar align-title=\"center\">\n        <single-title title=\"线边拉动\"></single-title>\n    </ion-header-bar>\n    <ion-content>\n        <div style=\"display: block; bottom: 3.5em; width: 100%; height: 100%;\">\n            <div class=\"clear pull\" style=\"height: 100%; padding-top: 2em;\">\n                <p ng-if=\"errorMsg\" ng-bind=\"errorMsg\"></p>\n                <div ng-repeat=\"m in menus\" class=\"bz-menu col-3-2\">\n                    <a ng-click=\"showConfirmPull(m)\">\n                        <div class=\"list card\" ng-class=\"{active: m.isPulling}\">\n                            <div>\n                                <div>\n                                    <span class=\"itemCode\" ng-bind=\"m.itemCode\"></span>\n                                    <span class=\"routeCode\" ng-bind=\"m.routeCode\"></span>\n                                    <span class=\"lsa\" ng-bind=\"m.lsa\"></span>\n                                    <span class=\"nickName\" ng-bind=\"m.nickName\"></span>\n                                    <span class=\"count\" ng-bind=\"'拉动'+m.pullCount +'次'\"></span>\n                                </div>\n                            </div>\n                        </div>\n                    </a>\n                </div>\n            </div>\n        </div>\n        <div class=\"clear\"></div>\n    </ion-content>\n    <ion-footer-bar>\n        <div class=\"pull-histroy\">\n            <button ng-click=\"goPullHistory()\" class=\"button button-light\">拉动历史查询</button>\n        </div>\n        <div class=\"quickNav\">\n            <a ng-click=\"getList()\"><span class=\"glyphicon glyphicon glyphicon-repeat\"></span></a>\n            <a href=\"#/ad/sub-permssion\"><span class=\"glyphicon glyphicon-circle-arrow-left\"></span></a>\n            <a href=\"#/login-dashboard\"><span class=\"glyphicon glyphicon-home\"></span></a>\n            <a href=\"#/ad/login\"><span class=\"glyphicon glyphicon-log-out\"></span></a>\n        </div>\n    </ion-footer-bar>\n</ion-view>\n";
 
 /***/ },
 /* 75 */
@@ -13553,30 +13553,30 @@
 
 	var Controller = function Controller($scope, localStorageService, $state) {
 
-	    $scope.menuConfig = {
-	        off: {
-	            name: '下架',
-	            enName: 'off the shelf',
-	            show: false
-	        },
-	        start: {
-	            name: '上线',
-	            enName: 'on-line',
-	            show: false
-	        },
-	        pull: {
-	            name: '拉动',
-	            enName: 'kick-start',
-	            show: false
-	        },
-	        member: {
-	            name: '人员调整',
-	            enName: 'turnover',
-	            show: false
-	        }
-	    };
-	    $scope.menus = Object.keys($scope.menuConfig);
 	    $scope.$on('$ionicView.enter', function () {
+	        $scope.menuConfig = {
+	            off: {
+	                name: '下架',
+	                enName: 'off the shelf',
+	                show: false
+	            },
+	            start: {
+	                name: '上线',
+	                enName: 'on-line',
+	                show: false
+	            },
+	            pull: {
+	                name: '拉动',
+	                enName: 'kick-start',
+	                show: false
+	            },
+	            member: {
+	                name: '人员调整',
+	                enName: 'turnover',
+	                show: false
+	            }
+	        };
+	        $scope.menus = Object.keys($scope.menuConfig);
 	        var loginUser = localStorageService.get('loginUser');
 	        var permssions, i, len;
 
