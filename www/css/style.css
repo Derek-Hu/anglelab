@@ -1616,7 +1616,7 @@ a.entry-home:hover {
 }
 
 .xiajia.content-wrapper table td {
-    padding: 2em 0.2em;
+    padding: 1em 0.2em;
     font-size: 1.2em;
 }
 
@@ -1635,10 +1635,10 @@ a.entry-home:hover {
 .xiajia.content-wrapper table td.operation span {
     display: inline-block;
     width: 45%;
-    height: 3em;
+    height: 4em;
     color: #FFF;
     border-radius: 0.2em;
-    line-height: 3em;
+    line-height: 4em;
 }
 
 .xiajia.content-wrapper table th.operation {

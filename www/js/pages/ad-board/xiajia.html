@@ -12,8 +12,8 @@
                 <th>线路号</th>
                 <th>推荐库位</th>
                 <th>推荐箱号</th>
-                <th>拉动时间</th>
-                <th> 预计上线时间</th>
+                <th>编组区域</th>
+                <th>最晚下架时间</th>
                 <th class="operation">操作</th>
             </tr>
             </thead>
@@ -29,7 +29,7 @@
                     <td ng-bind="r.routeCode"></td>
                     <td ng-bind="r.locCode"></td>
                     <td ng-bind="r.lp"></td>
-                    <td ng-bind="r.pullTime"></td>
+                    <td ng-bind="r.groupsCode"></td>
                     <td ng-bind="r.planOnlineTime"></td>
                     <td class="operation">
                         <span ng-bind="r.txt" ng-click="off(r)">下&nbsp;架</span>
