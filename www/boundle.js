@@ -12119,7 +12119,7 @@
 
 	'use strict';
 
-	var Controller = function Controller(localStorageService, Backend, $scope, DateUtil, $ionicScrollDelegate, $state, $stateParams, MetaDataSvc) {
+	var Controller = function Controller($ionicPopup, localStorageService, Backend, $scope, DateUtil, $ionicScrollDelegate, $state, $stateParams, MetaDataSvc) {
 	    /* $scope.goHome = function(type) {
 	      var scrollDelegate = $ionicScrollDelegate.$getByHandle(type);
 	      var view = scrollDelegate.getScrollView();
@@ -12141,6 +12141,18 @@
 	        $scope.selectPickerOpen = false;
 	    };
 	    var headerCols = ['工号', '姓名'];
+
+	    // An alert dialog
+	    $scope.showAlert = function (msg, isSuccess, errorMsg) {
+	        var alertPopup = $ionicPopup.alert({
+	            template: '<div class="xiajia"><img src="./img/ad/off-' + isSuccess + '.jpg" />' + msg + '<span>' + (errorMsg ? errorMsg : '') + '</span></div>',
+	            okText: '知道了'
+	        });
+
+	        alertPopup.then(function () {
+	            // $scope.getList();
+	        });
+	    };
 
 	    $scope.sendPicker = function (isSendEmail) {
 	        var values, daysNum, i, len;
@@ -12188,15 +12200,27 @@
 	        }, function (data) {
 	            if (!data || !data.length) {
 	                $scope.loadingStatus = '暂无数据';
+	                if (IsSendEmail) {
+	                    $scope.showAlert('发送成功', true);
+	                }
 	                return;
 	            } else if (data.length === 1 && data[0].ErrorCode !== undefined) {
 	                $scope.loadingStatus = '加载失败';
+	                if (IsSendEmail) {
+	                    $scope.showAlert('发送失败', false, '服务器异常');
+	                }
 	                return;
+	            }
+	            if (IsSendEmail) {
+	                $scope.showAlert('发送成功', true);
 	            }
 	            $scope.loadingStatus = '';
 	            $scope.data = data;
 	        }, function () {
 	            $scope.loadingStatus = '加载失败';
+	            if (IsSendEmail) {
+	                $scope.showAlert('发送失败', false, '服务器异常');
+	            }
 	        });
 	    };
 
@@ -12227,7 +12251,7 @@
 	    });
 	};
 
-	module.exports = ['localStorageService', 'Backend', '$scope', 'DateUtil', '$ionicScrollDelegate', '$state', '$stateParams', 'MetaDataSvc', Controller];
+	module.exports = ['$ionicPopup', 'localStorageService', 'Backend', '$scope', 'DateUtil', '$ionicScrollDelegate', '$state', '$stateParams', 'MetaDataSvc', Controller];
 
 /***/ },
 /* 53 */
