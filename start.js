@@ -112,6 +112,6 @@ function serve(port) {
 
     });
 }
-var DEFAULT_PORT = 4000;
+var DEFAULT_PORT = 4001;
 
 serve(DEFAULT_PORT);

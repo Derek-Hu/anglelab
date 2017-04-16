@@ -1998,3 +1998,6 @@ div.pull .bz-menu .list.card > div > div {
 .kqhz table.lgjh td > span{
     width: 100%;
 }
+kao-qin-chart + kao-qin-chart > div {
+  margin-top: -1em;
+}

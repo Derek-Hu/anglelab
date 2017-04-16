@@ -2,7 +2,7 @@ var ConfigFileName = 'SFM-cfg-url.properties';
 var ConfigIntervalName = 'SFM-cfg-interval.properties';
 var ConfigImgPathName = 'SFM-cfg-img-path.properties';
 var settings = {
-    cacheURL: 'http://221.181.71.171:8082',
+    cacheURL: 'http://10.102.10.207:8082',
     timeInterval: 10,
     imagePath: { name: '目录暂未选择', nativeURL: null }
 };
