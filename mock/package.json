@@ -17,12 +17,12 @@
   },
   "serverConfig": {
     "mockAPIPrefix": "/api",
-    "proxyBasePort": 3000,
+    "proxyBasePort": 8076,
     "proxyTargetURLs": [
       "http://192.168.0.43:1460",
       "http://58.246.227.27:83",
       "http://221.181.71.171:8082",
-      "http://10.102.10.207:8082",
+      "http://10.102.10.207:8082"
     ]
   },
   "devDependencies": {},

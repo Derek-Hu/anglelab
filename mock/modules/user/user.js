@@ -4,26 +4,107 @@ import Mock from 'mockjs';
 
 function subRouter(express) {
 
-    /*eslint-disable*/
-    var router = express.Router();
+  /*eslint-disable*/
+  var router = express.Router();
 
-    // Get Method
-    router.get('/user', function(req, res) {
-        // http://www.expressjs.com.cn/4x/api.html#res.json
-        return res.json({
-            result: 'success',
-            content: {
-                // http://www.expressjs.com.cn/4x/api.html#req.params
-                planId: req.params.planId,
-                desc: Mock.Random.paragraph()
-            }
-        });
+  // Get Method
+  router.get('/AdPull/Login.aspx', function (req, res) {
+      // http://www.expressjs.com.cn/4x/api.html#res.json
+      return res.json({
+        userId: 10002,
+      });
+    });
+  // Get Method
+  router.get('/AdPullOn/DownShelves.aspx', function (req, res) {
+      // http://www.expressjs.com.cn/4x/api.html#res.json
+      return res.json({
+        userId: 10002,
+      });
     });
 
-    return router;
+  router.get('/AdPull/UserAuthority.aspx', function (req, res) {
+      // http://www.expressjs.com.cn/4x/api.html#res.json
+      return res.json([{
+        name: '拉动',
+      }, {
+        name: '上线',
+      }, {
+        name: '下架',
+      }, {
+        name: '人员调整',
+      },]);
+    });
+
+  router.get('/AdPull/GetDownList.aspx', function (req, res) {
+      // http://www.expressjs.com.cn/4x/api.html#res.json
+      return res.json([{
+        itemCode: '222',
+        routeCode: '333',
+        locCode: '444',
+        lp: '555',
+        groupsCode: '666',
+        planOnlineTime: '777',
+      }, {
+        itemCode: '2221',
+        routeCode: '333',
+        locCode: '444',
+        lp: '555',
+        groupsCode: '666',
+        planOnlineTime: '777',
+      }, {
+        itemCode: '2222',
+        routeCode: '333',
+        locCode: '444',
+        lp: '555',
+        groupsCode: '666',
+        planOnlineTime: '777',
+      }, {
+        itemCode: '2223',
+        routeCode: '333',
+        locCode: '444',
+        lp: '555',
+        groupsCode: '666',
+        planOnlineTime: '777',
+      }, ]);
+    });
+
+  router.get('/AdPullOn/GetDownList.aspx', function (req, res) {
+      // http://www.expressjs.com.cn/4x/api.html#res.json
+      return res.json([{
+        itemCode: '222',
+        routeCode: '333',
+        locCode: '444',
+        lp: '555',
+        groupsCode: '666',
+        planOnlineTime: '777',
+      }, {
+        itemCode: '2221',
+        routeCode: '333',
+        locCode: '444',
+        lp: '555',
+        groupsCode: '666',
+        planOnlineTime: '777',
+      }, {
+        itemCode: '2222',
+        routeCode: '333',
+        locCode: '444',
+        lp: '555',
+        groupsCode: '666',
+        planOnlineTime: '777',
+      }, {
+        itemCode: '2223',
+        routeCode: '333',
+        locCode: '444',
+        lp: '555',
+        groupsCode: '666',
+        planOnlineTime: '777',
+      }, ]);
+    });
+
+  return router;
 }
 
 export default {
     root: '/',
-    router: subRouter
-};
+    router: subRouter,
+  };

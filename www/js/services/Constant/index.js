@@ -4,33 +4,39 @@ module.exports = {
         var settings = {
             // cacheURL: 'http://192.168.0.43:1460',
             // cacheURL: 'http://58.246.227.27:83',
-            // cacheURL: 'http://localhost:8080/api',
+            cacheURL: 'http://localhost:8080/api',
             // cacheURL: 'http://221.181.71.171:8082',
             // Private
-            cacheURL : 'http://10.102.10.207:8082',
+            // cacheURL : 'http://10.102.10.207:8082',
             timeInterval: 10,
-            imagePath: { name: '目录暂未选择', nativeURL: null }
-        };
+            imagePath: { name: '目录暂未选择', nativeURL: null },
+          };
 
         return {
             baseURL: function () {
                 return settings.cacheURL;
-            },
+              },
+
             getInterval: function () {
                 return settings.timeInterval;
-            },
+              },
+
             updateInterval: function (timeInterval) {
                 settings.timeInterval = timeInterval;
-            },
+              },
+
             updateServerURL: function (url) {
                 settings.cacheURL = url;
-            },
+              },
+
             getImagePath: function () {
                 return settings.imagePath;
-            },
+              },
+
             setImagePath: function (imagePath) {
                 settings.imagePath = imagePath;
-            },
+              },
+
             lineKpiPageType: 10,
             loading: '加载中',
             loadingError: '加载失败',
@@ -39,46 +45,48 @@ module.exports = {
                 var nameLen, extName, i, len;
 
                 if (!name) {
-                    return false;
+                  return false;
                 }
+
                 nameLen = name.length;
 
                 for (i = 0, len = this.supportedExt.length; i < len; i++) {
-                    extName = this.supportedExt[i];
+                  extName = this.supportedExt[i];
 
-                    if (name.substring(nameLen - extName.length, nameLen) === extName) {
-                        return true;
-                    }
+                  if (name.substring(nameLen - extName.length, nameLen) === extName) {
+                      return true;
+                  }
                 }
+
                 return false;
-            },
+              },
 
             viewBoard: {
 
                 menus: [{
-                    'MenuId': '1',
-                    'PageType': 1,
-                    'nm': '班组结构图',
-                    'enm': 'Team Structure',
-                    'fc': '#36CD14',
-                    'state': 'org',
-                    'bg': 'img/svg/team-structure.svg'
-                }, {
-                    'MenuId': '2',
-                    'PageType': 2,
-                    'nm': '考勤汇总',
-                    'enm': 'Attendance Summary',
-                    'fc': '#62839D',
-                    'state': 'kqhz',
-                    'bg': 'img/svg/attendance-summary.svg'
-                }, {
-                    'MenuId': '3',
-                    'PageType': 3,
-                    'nm': '岗位柔性表',
-                    'enm': 'Flexible Job List',
-                    'fc': '#aaa',
-                    'bg': 'img/svg/flexible-job-list.svg',
-                    'state': 'gwrx'
+                    MenuId: '1',
+                    PageType: 1,
+                    nm: '班组结构图',
+                    enm: 'Team Structure',
+                    fc: '#36CD14',
+                    state: 'org',
+                    bg: 'img/svg/team-structure.svg',
+                  }, {
+                    MenuId: '2',
+                    PageType: 2,
+                    nm: '考勤汇总',
+                    enm: 'Attendance Summary',
+                    fc: '#62839D',
+                    state: 'kqhz',
+                    bg: 'img/svg/attendance-summary.svg',
+                  }, {
+                    MenuId: '3',
+                    PageType: 3,
+                    nm: '岗位柔性表',
+                    enm: 'Flexible Job List',
+                    fc: '#aaa',
+                    bg: 'img/svg/flexible-job-list.svg',
+                    state: 'gwrx',
                 }, {
                     'MenuId': '4',
                     'PageType': 4,

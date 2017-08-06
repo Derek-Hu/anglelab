@@ -13,13 +13,13 @@ var Controller = function ($scope, XiaJia, localStorageService, $state, $ionicPo
       };
 
     $scope.off = function (item) {
-        item.txt = '下架中';
-        XiaJia.xiajia('?epsSupplyId=' + item.id + '&userName=' + $scope.loginUser.loginNme).then(function () {
-            $scope.showAlert('下架成功', true);
+        item.txt = '上架中';
+        XiaJia.shangjia('?epsSupplyId=' + item.id + '&userName=' + $scope.loginUser.loginNme).then(function () {
+            $scope.showAlert('上架成功', true);
             $scope.loadList();
           }).catch(function (errorMsg) {
-            $scope.showAlert('下架失败', false, errorMsg);
-            item.txt = '下架';
+            $scope.showAlert('上架失败', false, errorMsg);
+            item.txt = '上架';
           });
       };
 
@@ -27,7 +27,7 @@ var Controller = function ($scope, XiaJia, localStorageService, $state, $ionicPo
         $scope.loadingStatus = '加载中';
         $scope.data = [];
 
-        XiaJia.getList('?whseId=' + $rootScope.loginUser.whseId + '&userName=' + $scope.loginUser.loginNme).then(function (data) {
+        XiaJia.getOnList('?whseId=' + $rootScope.loginUser.whseId).then(function (data) {
             $timeout(function () {
                 $scope.loadList();
               }, seconds);
@@ -40,7 +40,7 @@ var Controller = function ($scope, XiaJia, localStorageService, $state, $ionicPo
             }
 
             $scope.data = $scope.data.map(function (d) {
-                d.txt = '下架';
+                d.txt = '上架';
                 return d;
               });
 
