@@ -4,45 +4,51 @@ var ConfigImgPathName = 'SFM-cfg-img-path.properties';
 var settings = {
     cacheURL: 'http://10.102.10.207:8082',
     timeInterval: 10,
-    imagePath: { name: '目录暂未选择', nativeURL: null }
-};
+    imagePath: { name: '目录暂未选择', nativeURL: null },
+  };
 
 module.exports = {
     name: 'Constant',
     fn: ['$q', '$cordovaFile', function ($q, $cordovaFile) {
         function readFromFile(fileName) {
-            var defer = $q.defer();
+          var defer = $q.defer();
 
-            $cordovaFile.checkFile(cordova.file.dataDirectory, fileName)
-                .then(function () {
-                    $cordovaFile.readAsText(cordova.file.dataDirectory, fileName)
-                        .then(function (value) {
-                            // alert('Fetch ' + fileName + ' value = '+ value);
-                            defer.resolve(value);
-                        }, function () {
-                            defer.resolve(null);
-                        });
-                }, function () {
-                    defer.resolve(null);
-                });
+          $cordovaFile.checkFile(cordova.file.dataDirectory, fileName)
+              .then(function () {
+                  $cordovaFile.readAsText(cordova.file.dataDirectory, fileName)
+                      .then(function (value) {
+                          // alert('Fetch ' + fileName + ' value = '+ value);
+                          defer.resolve(value);
+                      }, function () {
+
+                          defer.resolve(null);
+                      });
+              }, function () {
+
+                  defer.resolve(null);
+              });
+
             return defer.promise;
         }
 
         function saveToFile(fileName, value) {
-            var defer = $q.defer();
+          var defer = $q.defer();
 
-            $cordovaFile.createFile(cordova.file.dataDirectory, fileName, true)
-                .then(function () {
-                    $cordovaFile.writeFile(cordova.file.dataDirectory, fileName, value, true)
-                        .then(function () {
-                            // alert('save to ' + fileName + ' value = '+ value);
-                            defer.resolve(value);
-                        }, function () {
-                            defer.resolve(null);
-                        });
-                }, function () {
-                    defer.resolve(null);
-                });
+          $cordovaFile.createFile(cordova.file.dataDirectory, fileName, true)
+              .then(function () {
+                  $cordovaFile.writeFile(cordova.file.dataDirectory, fileName, value, true)
+                      .then(function () {
+                          // alert('save to ' + fileName + ' value = '+ value);
+                          defer.resolve(value);
+                      }, function () {
+
+                          defer.resolve(null);
+                      });
+              }, function () {
+
+                  defer.resolve(null);
+              });
+
             return defer.promise;
         }
 
@@ -50,46 +56,54 @@ module.exports = {
             initBackendURL: function () {
                 return $q.all([readFromFile(ConfigFileName),
                     readFromFile(ConfigIntervalName),
-                    readFromFile(ConfigImgPathName)
+                    readFromFile(ConfigImgPathName),
                 ]).then(function (values) {
                     if (values) {
-                        if (values[0]) {
-                            settings.cacheURL = values[0];
-                        }
+                      if (values[0]) {
+                          settings.cacheURL = values[0];
+                      }
+
                         if (values[1]) {
-                            settings.timeInterval = values[1];
-                        }
+                        settings.timeInterval = values[1];
+                      }
+
                         if (values[2]) {
-                            try {
-                                settings.imagePath = JSON.parse(values[2]);
-                            } catch (e) {}
-                        }
+                        try {
+                            settings.imagePath = JSON.parse(values[2]);
+                        } catch (e) {}
+                      }
                     }
-                });
-            },
+                  });
+              },
+
             baseURL: function () {
                 return settings.cacheURL;
-            },
+              },
+
             getInterval: function () {
                 return settings.timeInterval;
-            },
+              },
+
             updateInterval: function (timeInterval, callback) {
                 return saveToFile(ConfigIntervalName, timeInterval).then(function (time) {
                     if (time) {
-                        settings.timeInterval = time;
+                      settings.timeInterval = time;
                     }
+
                     if (callback) {
-                        callback();
+                      callback();
                     }
-                });
-            },
+                  });
+              },
+
             updateServerURL: function (url, callback) {
                 return saveToFile(ConfigFileName, url).then(function (backendURL) {
                     if (backendURL) {
-                        settings.cacheURL = url;
+                      settings.cacheURL = url;
                     }
+
                     if (callback) {
-                        callback();
+                      callback();
                     }
                 });
             },
@@ -115,46 +129,48 @@ module.exports = {
                 var nameLen, extName, i, len;
 
                 if (!name) {
-                    return false;
+                  return false;
                 }
+
                 nameLen = name.length;
 
                 for (i = 0, len = this.supportedExt.length; i < len; i++) {
-                    extName = this.supportedExt[i];
+                  extName = this.supportedExt[i];
 
-                    if (name.substring(nameLen - extName.length, nameLen) === extName) {
-                        return true;
-                    }
+                  if (name.substring(nameLen - extName.length, nameLen) === extName) {
+                      return true;
+                  }
                 }
+
                 return false;
-            },
+              },
 
             viewBoard: {
 
                 menus: [{
-                    'MenuId': '1',
-                    'PageType': 1,
-                    'nm': '班组结构图',
-                    'enm': 'Team Structure',
-                    'fc': '#36CD14',
-                    'state': 'org',
-                    'bg': 'img/svg/team-structure.svg'
-                }, {
-                    'MenuId': '2',
-                    'PageType': 2,
-                    'nm': '考勤汇总',
-                    'enm': 'Attendance Summary',
-                    'fc': '#62839D',
-                    'state': 'kqhz',
-                    'bg': 'img/svg/attendance-summary.svg'
-                }, {
-                    'MenuId': '3',
-                    'PageType': 3,
-                    'nm': '岗位柔性表',
-                    'enm': 'Flexible Job List',
-                    'fc': '#aaa',
-                    'bg': 'img/svg/flexible-job-list.svg',
-                    'state': 'gwrx'
+                    MenuId: '1',
+                    PageType: 1,
+                    nm: '班组结构图',
+                    enm: 'Team Structure',
+                    fc: '#36CD14',
+                    state: 'org',
+                    bg: 'img/svg/team-structure.svg',
+                  }, {
+                    MenuId: '2',
+                    PageType: 2,
+                    nm: '考勤汇总',
+                    enm: 'Attendance Summary',
+                    fc: '#62839D',
+                    state: 'kqhz',
+                    bg: 'img/svg/attendance-summary.svg',
+                  }, {
+                    MenuId: '3',
+                    PageType: 3,
+                    nm: '岗位柔性表',
+                    enm: 'Flexible Job List',
+                    fc: '#aaa',
+                    bg: 'img/svg/flexible-job-list.svg',
+                    state: 'gwrx',
                 }, {
                     'MenuId': '4',
                     'PageType': 4,

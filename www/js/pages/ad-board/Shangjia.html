@@ -1,0 +1,48 @@
+<ion-view hide-nav-bar="true" hide-back-button="true">
+  <ion-header-bar align-title="center">
+        <single-title title="零件上架"></single-title>
+    </ion-header-bar>
+    <ion-content class="bgFF" style="background: #FFF;bottom: 4em;">
+        <div class="kqhz gwrx xiajia content-wrapper">
+        <table>
+            <thead>
+            <tr>
+                <th>序号</th>
+                <th>零件号</th>
+                <th>上架库位</th>
+                <th>箱号</th>
+                <th>最迟上架时间</th>
+                <th>取货库位</th>
+                <th class="operation">操作</th>
+            </tr>
+            </thead>
+            <tbody ng-show="loadingStatus!=''" >
+                <tr><td colspan="8">
+                    <span ng-bind="loadingStatus" style="display: inline;">加载中</span>
+                </td></tr>
+            </tbody>
+            <tbody ng-repeat="r in data">
+                <tr>
+                    <td ng-bind="$index+1"></td>
+                    <td ng-bind="r.itemCode"></td>
+                    <td ng-bind="r.locCode"></td>
+                    <td ng-bind="r.lp"></td>
+                    <td ng-bind="r.planShiftTime"></td>
+                    <td ng-bind="r.fromLocCode"></td>
+                    <td class="operation">
+                        <span ng-bind="r.txt" ng-click="off(r)">上&nbsp;架</span>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        </div>
+    </ion-content>
+    <ion-footer-bar>
+        <div class="quickNav">
+            <a ng-click="loadList()"><span class="glyphicon glyphicon glyphicon-repeat"></span></a>
+            <a href="#/ad/sub-permssion"><span class="glyphicon glyphicon-circle-arrow-left"></span></a>
+            <a href="#/login-dashboard"><span class="glyphicon glyphicon-home"></span></a>
+            <a href="#/ad/login"><span class="glyphicon glyphicon-log-out"></span></a>
+        </div>
+    </ion-footer-bar>
+</ion-view>
