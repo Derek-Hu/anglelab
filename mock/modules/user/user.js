@@ -31,6 +31,8 @@ function subRouter(express) {
       }, {
         name: '下架',
       }, {
+        name: '上架',
+      }, {
         name: '人员调整',
       },]);
     });
@@ -68,7 +70,7 @@ function subRouter(express) {
       }, ]);
     });
 
-  router.get('/AdPullOn/GetDownList.aspx', function (req, res) {
+  router.get('/AdPull/GetShiftList.aspx', function (req, res) {
       // http://www.expressjs.com.cn/4x/api.html#res.json
       return res.json([{
         itemCode: '222',

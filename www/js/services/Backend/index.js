@@ -33,10 +33,10 @@ module.exports = {
 
               // http://localhost:1460/AdPull/GetDownList.aspx?whseId=1
               xiajiaListURL = baseURL + '/AdPull/GetDownList.aspx';
-              shangjiaListURL = baseURL + '/AdPullOn/GetDownList.aspx';
+              shangjiaListURL = baseURL + '/AdPull/GetShiftList.aspx';
               // http://localhost:1460/AdPull/DownShelves.aspx?epsSupplyId=1&userName=2
               xiajiaURL = baseURL + '/AdPull/DownShelves.aspx';
-              shangjiaURL = baseURL + '/AdPullOn/DownShelves.aspx';
+              shangjiaURL = baseURL + '/AdPull/ShiftShelves.aspx';
               pullListURL = baseURL + '/AdPull/GetItemPullInfo.aspx';
               startListURL = baseURL + '/AdPull/SelectGroupNos.aspx';
               startActionURL = baseURL + '/AdPull/GroupOnline.aspx';
