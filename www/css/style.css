@@ -1766,10 +1766,16 @@ a.entry-home:hover {
 }
 
 .ad-sub-permission a {
+  width: 25%;
+}
+.ad-sub-permission.five a{
+  width: 20%;
+}
+.ad-sub-permission a {
     display: inline-block;
-    width: 25%;
     padding: 2em;
 }
+
 
 .ad-sub-permission a .entry div.img {
     padding: 2em;

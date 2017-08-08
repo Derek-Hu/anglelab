@@ -3,7 +3,7 @@
         <single-title title="登录权限"></single-title>
     </ion-header-bar>
     <ion-content scroll="false">
-        <div class="entryWp ad-sub-permission">
+        <div class="entryWp ad-sub-permission" ng-class="{five:menus.length===5}">
             <div class="tc">
                 <a ng-repeat="m in menus" ng-if="menuConfig[m].show" ng-href="#/ad/{{m}}" class="entry-home">
                     <div class="entry">
