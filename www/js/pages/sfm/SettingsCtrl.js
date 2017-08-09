@@ -98,6 +98,7 @@ var Controller = function ($scope, Constant, $state, $window, $stateParams, Back
                     } catch (e) {};
                     $cordovaFileTransfer.download($scope.apkURL, path + '' + $scope.apkName, {}, true)
                         .then(function() {
+                            if(window.plugins && window.plugins.webintent && window.plugins.webintent.startActivity){
                             window.plugins.webintent.startActivity({
                                     action: window.plugins.webintent.ACTION_VIEW,
                                     // url: 'file://' + entry.fullPath,
@@ -105,8 +106,11 @@ var Controller = function ($scope, Constant, $state, $window, $stateParams, Back
                                     type: 'application/vnd.android.package-archive'
                                 },
                                 function() {},
-                                function() { alert('Error launching app update'); }
+                                function() { alert('自动安装失败，请手动点击安装，路径为:'+path + '' + $scope.apkName); }
                             );
+                          }else{
+                            alert('请手动安装，路径为:'+path + '' + $scope.apkName);
+                          }
                         }, function() {
                             alert('DownLoad Error');
                         }, function(progress) {
