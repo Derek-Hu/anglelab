@@ -1,4 +1,4 @@
-var Controller = function ($scope, Constant, $state, $window, $stateParams, Backend, $cordovaInAppBrowser, $cordovaFileTransfer, $timeout, $location) {
+var Controller = function ($scope, Constant, $state, $window, $stateParams, Backend, $cordovaInAppBrowser, $cordovaFileTransfer, $timeout, $location, $cordovaFileOpener2) {
     $scope.settings = {};
 
     $scope.noHomeMenu = ('noHomeMenu' in $location.search());
@@ -98,19 +98,28 @@ var Controller = function ($scope, Constant, $state, $window, $stateParams, Back
                     } catch (e) {};
                     $cordovaFileTransfer.download($scope.apkURL, path + '' + $scope.apkName, {}, true)
                         .then(function() {
-                            if(window.plugins && window.plugins.webintent && window.plugins.webintent.startActivity){
-                            window.plugins.webintent.startActivity({
-                                    action: window.plugins.webintent.ACTION_VIEW,
-                                    // url: 'file://' + entry.fullPath,
-                                    url: path + '' + $scope.apkName,
-                                    type: 'application/vnd.android.package-archive'
-                                },
-                                function() {},
-                                function() { alert('自动安装失败，请手动点击安装，路径为:'+path + '' + $scope.apkName); }
-                            );
-                          }else{
-                            alert('请手动安装，路径为:'+path + '' + $scope.apkName);
-                          }
+                          //   if(window.plugins && window.plugins.webintent && window.plugins.webintent.startActivity){
+                          //   window.plugins.webintent.startActivity({
+                          //           action: window.plugins.webintent.ACTION_VIEW,
+                          //           // url: 'file://' + entry.fullPath,
+                          //           url: path + '' + $scope.apkName,
+                          //           type: 'application/vnd.android.package-archive'
+                          //       },
+                          //       function() {},
+                          //       function() { alert('自动安装失败，请手动点击安装，路径为:'+path + '' + $scope.apkName); }
+                          //   );
+                          // }else{
+                          //   alert('请手动安装，路径为:'+path + '' + $scope.apkName);
+                          // }
+                          $cordovaFileOpener2.open(
+                            // '/sdcard/Download/gmail.apk',
+                            path + '' + $scope.apkName,
+                            'application/vnd.android.package-archive'
+                          ).then(function() {
+                              // Success!
+                          }, function(err) {
+                              // An error occurred. Show a message to the user
+                          });
                         }, function() {
                             alert('DownLoad Error');
                         }, function(progress) {
@@ -141,4 +150,4 @@ var Controller = function ($scope, Constant, $state, $window, $stateParams, Back
 };
 
 
-module.exports = ['$scope', 'Constant', '$state', '$window', '$stateParams', 'Backend', '$cordovaInAppBrowser', '$cordovaFileTransfer', '$timeout', '$location', Controller];
+module.exports = ['$scope', 'Constant', '$state', '$window', '$stateParams', 'Backend', '$cordovaInAppBrowser', '$cordovaFileTransfer', '$timeout', '$location', '$cordovaFileOpener2', Controller];
