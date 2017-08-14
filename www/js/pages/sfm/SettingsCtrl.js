@@ -1,4 +1,4 @@
-var Controller = function ($scope, Constant, $state, $window, $stateParams, Backend, $cordovaInAppBrowser, $cordovaFileTransfer, $timeout, $location) {
+var Controller = function ($scope, Constant, $state, $window, $stateParams, Backend, $cordovaInAppBrowser, $cordovaFileTransfer, $timeout, $location, $cordovaFileOpener2) {
     $scope.settings = {};
 
     $scope.noHomeMenu = ('noHomeMenu' in $location.search());
@@ -96,15 +96,24 @@ var Controller = function ($scope, Constant, $state, $window, $stateParams, Back
                     } catch (e) {}
                     $cordovaFileTransfer.download($scope.apkURL, path + '' + $scope.apkName, {}, true)
                         .then(function () {
-                            window.plugins.webintent.startActivity({
-                                action: window.plugins.webintent.ACTION_VIEW,
-                                    // url: 'file://' + entry.fullPath,
-                                url: path + '' + $scope.apkName,
-                                type: 'application/vnd.android.package-archive'
-                            },
-                                function () {},
-                                function () { alert('Error launching app update'); }
-                            );
+                            // window.plugins.webintent.startActivity({
+                            //     action: window.plugins.webintent.ACTION_VIEW,
+                            //         // url: 'file://' + entry.fullPath,
+                            //     url: path + '' + $scope.apkName,
+                            //     type: 'application/vnd.android.package-archive'
+                            // },
+                            //     function () {},
+                            //     function () { alert('Error launching app update'); }
+                            // );
+                            $cordovaFileOpener2.open(
+                              // '/sdcard/Download/gmail.apk',
+                              path + '' + $scope.apkName,
+                              'application/vnd.android.package-archive'
+                            ).then(function() {
+                                // Success!
+                            }, function(err) {
+                                // An error occurred. Show a message to the user
+                            });
                         }, function () {
                             alert('DownLoad Error');
                         }, function (progress) {
@@ -135,4 +144,4 @@ var Controller = function ($scope, Constant, $state, $window, $stateParams, Back
 };
 
 
-module.exports = ['$scope', 'Constant', '$state', '$window', '$stateParams', 'Backend', '$cordovaInAppBrowser', '$cordovaFileTransfer', '$timeout', '$location', Controller];
+module.exports = ['$scope', 'Constant', '$state', '$window', '$stateParams', 'Backend', '$cordovaInAppBrowser', '$cordovaFileTransfer', '$timeout', '$location', '$cordovaFileOpener2', Controller];
