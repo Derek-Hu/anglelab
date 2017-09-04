@@ -1,6 +1,7 @@
 var Controller = function ($scope, XiaJia, localStorageService, $state, $ionicPopup, $rootScope, $timeout) {
 
-    var seconds = 120000;
+    var seconds = 180000;
+    var hasInterval = false;
 
     // An alert dialog
     $scope.showAlert = function (msg, isSuccess, errorMsg) {
@@ -28,9 +29,14 @@ var Controller = function ($scope, XiaJia, localStorageService, $state, $ionicPo
         $scope.data = [];
 
         XiaJia.getList('?whseId=' + $rootScope.loginUser.whseId + '&userName=' + $scope.loginUser.loginNme).then(function (data) {
-            $timeout(function () {
-                $scope.loadList();
-              }, seconds);
+
+            if(!hasInterval){
+              $timeout(function () {
+                  $scope.loadList();
+                }, seconds);
+
+              hasInterval = true;
+            }
 
             $scope.loadingStatus = '';
             $scope.data = data;
@@ -49,9 +55,14 @@ var Controller = function ($scope, XiaJia, localStorageService, $state, $ionicPo
             $scope.loadingStatus = '加载失败';
             $scope.data = [];
 
-            $timeout(function () {
-                $scope.loadList();
-              }, seconds);
+            if(!hasInterval){
+              $timeout(function () {
+                  $scope.loadList();
+                }, seconds);
+
+              hasInterval = true;
+            }
+
           });
       };
 
