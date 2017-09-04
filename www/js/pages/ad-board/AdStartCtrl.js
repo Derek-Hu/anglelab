@@ -1,6 +1,7 @@
 var Controller = function ($scope, $state, $http, Backend, $rootScope, $ionicPopup, $timeout) {
 
-    var seconds = 120000;
+    var seconds = 180000;
+    var hasInterval = false;
 
     // An alert dialog
     $scope.showAlert = function (msg, isSuccess, errorMsg) {
@@ -51,9 +52,14 @@ var Controller = function ($scope, $state, $http, Backend, $rootScope, $ionicPop
             url: Backend().startListURL + '?whseId=' + $rootScope.loginUser.whseId + '&userName=' + $rootScope.loginUser.loginNme
         }).
         success(function(data) {
-            $timeout(function() {
+
+            if(!hasInterval){
+              $timeout(function() {
                 $scope.getList();
-            }, seconds);
+              }, seconds);
+
+              hasInterval = true;
+            }
 
             $scope.errorMsg = null;
             if (data && Object.prototype.toString.call(data) === '[object Array]') {
@@ -71,9 +77,13 @@ var Controller = function ($scope, $state, $http, Backend, $rootScope, $ionicPop
             }
         }).
         error(function(data, status, headers, config) {
-            $timeout(function() {
-                $scope.getList();
-            }, seconds);
+            if(!hasInterval){
+              $timeout(function() {
+                  $scope.getList();
+              }, seconds);
+              hasInterval = true;
+            }
+
 
             $scope.menus = [];
             $scope.errorMsg = '加载失败';
