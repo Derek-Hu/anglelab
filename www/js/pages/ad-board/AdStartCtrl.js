@@ -1,7 +1,7 @@
-var Controller = function ($scope, $state, $http, Backend, $rootScope, $ionicPopup, $timeout) {
+var Controller = function ($scope, $state, $http, Backend, $rootScope, $ionicPopup, $interval) {
 
-    var seconds = 180000;
-    var hasInterval = false;
+    var seconds = 185000;
+    var timer = false;
 
     // An alert dialog
     $scope.showAlert = function (msg, isSuccess, errorMsg) {
@@ -53,12 +53,10 @@ var Controller = function ($scope, $state, $http, Backend, $rootScope, $ionicPop
         }).
         success(function(data) {
 
-            if(!hasInterval){
-              $timeout(function() {
+            if(!timer){
+              timer = $interval(function() {
                 $scope.getList();
               }, seconds);
-
-              hasInterval = true;
             }
 
             $scope.errorMsg = null;
@@ -77,13 +75,11 @@ var Controller = function ($scope, $state, $http, Backend, $rootScope, $ionicPop
             }
         }).
         error(function(data, status, headers, config) {
-            if(!hasInterval){
-              $timeout(function() {
+            if(!timer){
+              timer = $interval(function() {
                   $scope.getList();
               }, seconds);
-              hasInterval = true;
             }
-
 
             $scope.menus = [];
             $scope.errorMsg = '加载失败';
@@ -94,4 +90,4 @@ var Controller = function ($scope, $state, $http, Backend, $rootScope, $ionicPop
     });
 };
 
-module.exports = ['$scope', '$state', '$http', 'Backend', '$rootScope', '$ionicPopup', '$timeout', Controller];
+module.exports = ['$scope', '$state', '$http', 'Backend', '$rootScope', '$ionicPopup', '$interval', Controller];

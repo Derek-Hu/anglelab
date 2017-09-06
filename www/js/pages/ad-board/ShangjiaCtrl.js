@@ -1,7 +1,7 @@
-var Controller = function ($ionicActionSheet, $scope, XiaJia, localStorageService, $state, $ionicPopup, $rootScope, $timeout) {
+var Controller = function ($ionicActionSheet, $scope, XiaJia, localStorageService, $state, $ionicPopup, $rootScope, $interval) {
 
-    var seconds = 180000;
-    var hasInterval = false;
+    var seconds = 185000;
+    var timer = null;
 
     // An alert dialog
     $scope.showAlert = function (msg, isSuccess, errorMsg) {
@@ -14,6 +14,11 @@ var Controller = function ($ionicActionSheet, $scope, XiaJia, localStorageServic
       };
 
     function showSelectKuwei(kuweis, item){
+      if(timer){
+        $interval.cancel(timer);
+        timer = null;
+      }
+
       var hideSheet = $ionicActionSheet.show({
          buttons: kuweis.map(function(kw){
            return {text: kw.locCode+'('+kw.locId+')'}
@@ -21,7 +26,11 @@ var Controller = function ($ionicActionSheet, $scope, XiaJia, localStorageServic
          titleText: '选择零件'+item.itemCode+'上架库位',
          cancelText: '取消',
          cancel: function() {
-              // add cancel code..
+           if(!timer){
+             timer = $interval(function () {
+                 $scope.loadList();
+               }, seconds);
+           }
         　},
          buttonClicked: function(index) {
            _shangjiaWithKuwei(kuweis[index].locId, item);
@@ -36,6 +45,13 @@ var Controller = function ($ionicActionSheet, $scope, XiaJia, localStorageServic
         }).catch(function (errorMsg) {
           $scope.showAlert('上架失败', false, errorMsg);
           item.txt = '上架';
+
+          if(!timer){
+            timer = $interval(function () {
+                $scope.loadList();
+              }, seconds);
+          }
+
         });
     }
 
@@ -60,12 +76,10 @@ var Controller = function ($ionicActionSheet, $scope, XiaJia, localStorageServic
 
         XiaJia.getOnList('?whseId=' + $rootScope.loginUser.whseId + '&userName=' + $scope.loginUser.loginNme).then(function (data) {
 
-            if(!hasInterval){
-              $timeout(function () {
+            if(!timer){
+              timer = $interval(function () {
                   $scope.loadList();
                 }, seconds);
-
-              hasInterval = true;
             }
 
             $scope.loadingStatus = '';
@@ -85,12 +99,10 @@ var Controller = function ($ionicActionSheet, $scope, XiaJia, localStorageServic
             $scope.loadingStatus = '加载失败';
             $scope.data = [];
 
-            if(!hasInterval){
-              $timeout(function () {
+            if(!timer){
+              timer = $interval(function () {
                   $scope.loadList();
                 }, seconds);
-
-              hasInterval = true;
             }
 
           });
@@ -102,4 +114,4 @@ var Controller = function ($ionicActionSheet, $scope, XiaJia, localStorageServic
 
   };
 
-module.exports = ['$ionicActionSheet', '$scope', 'XiaJia', 'localStorageService', '$state', '$ionicPopup', '$rootScope', '$timeout', Controller];
+module.exports = ['$ionicActionSheet', '$scope', 'XiaJia', 'localStorageService', '$state', '$ionicPopup', '$rootScope', '$interval', Controller];
