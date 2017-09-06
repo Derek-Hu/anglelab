@@ -21,6 +21,18 @@ function subRouter(express) {
         userId: 10002,
       });
     });
+  router.get('/AdPull/ShiftShelvesNew.aspx', function (req, res) {
+      // http://www.expressjs.com.cn/4x/api.html#res.json
+      return res.json([{
+        locCode: '001',
+        locId: '101',
+        orderNum: 2
+      },{
+        locCode: '002',
+        locId: '102',
+        orderNum: 1
+      }]);
+    });
 
   router.get('/AdPull/UserAuthority.aspx', function (req, res) {
       // http://www.expressjs.com.cn/4x/api.html#res.json

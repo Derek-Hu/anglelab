@@ -1,4 +1,4 @@
-var Controller = function ($scope, XiaJia, localStorageService, $state, $ionicPopup, $rootScope, $timeout) {
+var Controller = function ($ionicActionSheet, $scope, XiaJia, localStorageService, $state, $ionicPopup, $rootScope, $timeout) {
 
     var seconds = 180000;
     var hasInterval = false;
@@ -13,11 +13,41 @@ var Controller = function ($scope, XiaJia, localStorageService, $state, $ionicPo
         alertPopup.then(function () {});
       };
 
-    $scope.off = function (item) {
-        item.txt = '上架中';
-        XiaJia.shangjia('?shiftId=' + item.id + '&userName=' + $scope.loginUser.loginNme + '&epsSupplyId=' + item.id).then(function () {
+    function showSelectKuwei(kuweis, item){
+      var hideSheet = $ionicActionSheet.show({
+         buttons: kuweis.map(function(kw){
+           return {text: kw.locCode+'('+kw.locId+')'}
+         }),
+         titleText: '选择零件'+item.itemCode+'上架库位',
+         cancelText: '取消',
+         cancel: function() {
+              // add cancel code..
+        　},
+         buttonClicked: function(index) {
+           _shangjiaWithKuwei(kuweis[index].locId, item);
+           return true;
+         }
+       });
+    }
+    function _shangjiaWithKuwei(locId, item){
+      XiaJia.shangjiaWithKuwei('?shiftId=' + item.id + '&userName=' + $scope.loginUser.loginNme + '&locId=' + locId).then(function () {
             $scope.showAlert('上架成功', true);
             $scope.loadList();
+        }).catch(function (errorMsg) {
+          $scope.showAlert('上架失败', false, errorMsg);
+          item.txt = '上架';
+        });
+    }
+
+    $scope.off = function (item) {
+        item.txt = '上架中';
+        XiaJia.shangjia('?shiftId=' + item.id + '&userName=' + $scope.loginUser.loginNme + '&epsSupplyId=' + item.id).then(function (kuweis) {
+            if(!kuweis){
+              $scope.showAlert('上架成功', true);
+              $scope.loadList();
+            }else{
+              showSelectKuwei(kuweis, item);
+            }
           }).catch(function (errorMsg) {
             $scope.showAlert('上架失败', false, errorMsg);
             item.txt = '上架';
@@ -72,4 +102,4 @@ var Controller = function ($scope, XiaJia, localStorageService, $state, $ionicPo
 
   };
 
-module.exports = ['$scope', 'XiaJia', 'localStorageService', '$state', '$ionicPopup', '$rootScope', '$timeout', Controller];
+module.exports = ['$ionicActionSheet', '$scope', 'XiaJia', 'localStorageService', '$state', '$ionicPopup', '$rootScope', '$timeout', Controller];

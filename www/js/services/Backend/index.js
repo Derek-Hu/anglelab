@@ -2,7 +2,7 @@ module.exports = {
     name: 'Backend',
     fn: ['$resource', 'Constant', function ($resource, Constant) {
         // Might use a resource here that returns a JSON array
-        var baseURL = '',
+        var baseURL = '', shangjiaWithKuwei,
             kaoqin, kuqu, banzu, banci, metaData, org, gwrx, lgjh, kpi, shangjiaListURL, shangjiaURL;
         var xiajiaListURL, xiajiaURL, pullListURL, startListURL, startActionURL, pullActionURL, pullHistoryURL, kucunListURL, adMemberURL, adAllMemberURL, adModifyMemberURL, login, userAuth;
 
@@ -36,7 +36,8 @@ module.exports = {
               shangjiaListURL = baseURL + '/AdPull/GetShiftList.aspx';
               // http://localhost:1460/AdPull/DownShelves.aspx?epsSupplyId=1&userName=2
               xiajiaURL = baseURL + '/AdPull/DownShelves.aspx';
-              shangjiaURL = baseURL + '/AdPull/ShiftShelves.aspx';
+              shangjiaURL = baseURL + '/AdPull/ShiftShelvesNew.aspx';
+              shangjiaWithKuwei = baseURL + '/AdPull/ShiftShelvesNewSec.aspx';
               pullListURL = baseURL + '/AdPull/GetItemPullInfo.aspx';
               startListURL = baseURL + '/AdPull/SelectGroupNos.aspx';
               startActionURL = baseURL + '/AdPull/GroupOnline.aspx';
@@ -66,6 +67,7 @@ module.exports = {
                 xiajiaURL: xiajiaURL,
                 shangjiaListURL: shangjiaListURL,
                 shangjiaURL: shangjiaURL,
+                shangjiaWithKuwei: shangjiaWithKuwei,
                 kucunListURL: kucunListURL,
                 adMemberURL: adMemberURL,
                 adAllMemberURL: adAllMemberURL,
