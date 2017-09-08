@@ -21,12 +21,35 @@ function subRouter(express) {
         userId: 10002,
       });
     });
+  router.get('/AdPull/ShiftShelvesNewSec.aspx', function (req, res) {
+      // http://www.expressjs.com.cn/4x/api.html#res.json
+      return res.json({
+        respCode: 'success'
+      });
+    });
+  router.get('/AdPull/GetItemPullInfo.aspx', function (req, res) {
+      // http://www.expressjs.com.cn/4x/api.html#res.json
+      return res.json([{
+                              itemCode: 'itemCode1',
+                              routeCode: 'routeCode2',
+                              lsa: 'lsa3',
+                              nickName: 'nickName4'
+                          }]);
+    });
   router.get('/AdPull/ShiftShelvesNew.aspx', function (req, res) {
       // http://www.expressjs.com.cn/4x/api.html#res.json
       return res.json([{
         locCode: '001',
         locId: '101',
         orderNum: 2
+      },{
+        locCode: '002',
+        locId: '102',
+        orderNum: 1
+      },{
+        locCode: '002',
+        locId: '102',
+        orderNum: 1
       },{
         locCode: '002',
         locId: '102',

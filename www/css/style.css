@@ -1902,19 +1902,19 @@ div.pull .bz-menu .list.card.active {
     border-color: #159FDD;
 }
 
-div.pull .bz-menu .list.card {
+div.pull .bz-menu .list.card,  .popup-container.shangjiaSelectKuwei .list.card{
     background: #FFF;
     border-color: #FFF;
     font-size: 1.5em;
 }
 
-div.pull .bz-menu .list.card > div {
+div.pull .bz-menu .list.card > div, .popup-container.shangjiaSelectKuwei .list.card > div {
     display: table;
     height: 100%;
     width: 100%;
 }
 
-div.pull .bz-menu .list.card > div > div {
+div.pull .bz-menu .list.card > div > div, .popup-container.shangjiaSelectKuwei .list.card > div > div {
     display: table-cell;
     vertical-align: middle;
     text-align: center;
@@ -2006,4 +2006,44 @@ div.pull .bz-menu .list.card > div > div {
 }
 kao-qin-chart + kao-qin-chart > div {
   margin-top: -1em;
+}
+.popup-container.shangjiaSelectKuwei{
+  width: 90%;
+  height: 100%;
+  margin: 0 auto;
+}
+.popup-container.shangjiaSelectKuwei .popup{
+  height: 90%;
+  width: 100%;
+  background-color: #19426e;
+  color: #FFF;
+}
+.popup-container.shangjiaSelectKuwei .popup .popup-buttons {width: 50%;margin: 0 auto;}
+.popup-container.shangjiaSelectKuwei .popup .popup-buttons .button.button-positive{height: 3.5em; border: #12AAEB;}
+.popup-container.shangjiaSelectKuwei .list.card {
+  width: 33%;
+  height: 6em;
+  /* border-radius: 0.5em; */
+  float: left;
+  color: #5B7B97;
+  margin: 0;
+  border: 0;
+  padding: 0.5em;
+  background: transparent;
+  border: 0;
+  box-shadow: 0 0 0 0;
+}
+.popup-container.shangjiaSelectKuwei .list.card > div{
+  display: table;
+height: 100%;
+width: 100%;
+background: #FFF;
+border-radius: 0.5em;
+}
+.popup-container.shangjiaSelectKuwei .list.card span{
+  display: block;
+}
+.popup-container.shangjiaSelectKuwei .list.card span.first{
+  color: #159EDC;
+font-weight: bold;
 }
