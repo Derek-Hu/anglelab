@@ -20,7 +20,7 @@
     "eslint": "3.16.1",
     "express": "~4.14.0",
     "express-http-proxy": "~0.6.0",
-    "ionic":"1.7.16",
+    "ionic": "1.7.16",
     "log4js": "~0.6.35",
     "mockjs": "~1.0.1-beta3",
     "request": "~2.67.0",
