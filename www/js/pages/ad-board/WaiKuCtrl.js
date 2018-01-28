@@ -1,4 +1,4 @@
-var Controller = function (AD, $scope, $rootScope, $q, $http, Backend, $ionicPopup, XiaJia) {
+var Controller = function (AD, $scope, $rootScope, $q, $http, Backend, $ionicPopup, XiaJia, $interval) {
 
     if ($rootScope.loginUser.groupId === '0') {
         $scope.noPermission = '用户班组未维护';
@@ -7,10 +7,12 @@ var Controller = function (AD, $scope, $rootScope, $q, $http, Backend, $ionicPop
     $scope.noPermission = null;
     $scope.criteria = {};
 
+    var timer = false;
+    var seconds = 185000;
+
     function doQiangda(item) {
         XiaJia.qiangda('?queueId=' +item.ID+ '&userName='+$rootScope.loginUser.loginNme).then(function(data) {
             $scope.showAlert('抢答成功', true);
-            $scope.loadList();
         }, function(message) {
             $scope.showAlert('抢答失败', false, message?message:'服务器异常');
         });
@@ -18,7 +20,6 @@ var Controller = function (AD, $scope, $rootScope, $q, $http, Backend, $ionicPop
     function doXiajia(item) {
         XiaJia.waiKuXiajia('?queueId=' +item.ID+ '&userName='+$rootScope.loginUser.loginNme).then(function(data) {
             $scope.showAlert('下架成功', true);
-            $scope.loadList();
         }, function(message) {
             $scope.showAlert('下架失败', false, message?message:'服务器异常');
         });
@@ -31,12 +32,17 @@ var Controller = function (AD, $scope, $rootScope, $q, $http, Backend, $ionicPop
             okText: '知道了'
         });
 
-        alertPopup.then(function() {});
+        alertPopup.then(function() {
+          $scope.isPopShowing = false;
+          if(isSuccess){
+            $scope.loadList();
+          }
+        });
     };
 
     $scope.showXiajia = function(item) {
         var confirmPopup;
-
+        $scope.isPopShowing = true;
         confirmPopup = $ionicPopup.confirm({
             scope: $scope,
             title: '确认下架',
@@ -53,7 +59,7 @@ var Controller = function (AD, $scope, $rootScope, $q, $http, Backend, $ionicPop
     };
     $scope.showQiangda = function(item, isRevert) {
       var confirmPopup;
-
+      $scope.isPopShowing = true;
       confirmPopup = $ionicPopup.confirm({
           scope: $scope,
           title: '确认抢答',
@@ -75,6 +81,9 @@ var Controller = function (AD, $scope, $rootScope, $q, $http, Backend, $ionicPop
       $scope.loadList();
     }
     $scope.loadList = function() {
+        if($scope.isPopShowing){
+          return;
+        }
         $scope.errorMsg = '加载中';
         $scope.itemMembers = [];
         var selectTarget = (!$scope.criteria.selectedTargetCangKu || $scope.criteria.selectedTargetCangKu.value==='全部')?0:$scope.criteria.selectedTargetCangKu.value;
@@ -82,6 +91,12 @@ var Controller = function (AD, $scope, $rootScope, $q, $http, Backend, $ionicPop
 
         XiaJia.getWaiKuList('?whseId=' +$rootScope.loginUser.whseId+ '&userName='+$rootScope.loginUser.loginNme+ '&destWhseId='+selectTarget+ '&shipCrossing=' +selectDaoKou).then(function(data) {
             $scope.errorMsg = null;
+
+            if(!timer){
+              timer = $interval(function() {
+                $scope.loadList();
+              }, seconds);
+            }
 
             if(data.cangku){
               data.cangku.unshift({
@@ -117,6 +132,13 @@ var Controller = function (AD, $scope, $rootScope, $q, $http, Backend, $ionicPop
             $scope.itemMembers = data.data;
         }, function() {
             $scope.errorMsg = '加载失败';
+
+            if(!timer){
+              timer = $interval(function() {
+                  $scope.loadList();
+              }, seconds);
+            }
+
         });
     };
     function findElem(array, elem){
@@ -157,6 +179,7 @@ var Controller = function (AD, $scope, $rootScope, $q, $http, Backend, $ionicPop
             $scope.noPermission = '用户班组未维护';
             return;
         }
+        $scope.isPopShowing = false;
         $scope.errorMsg = null;
         $scope.noPermission = null;
         $scope.loadList();
@@ -164,4 +187,4 @@ var Controller = function (AD, $scope, $rootScope, $q, $http, Backend, $ionicPop
 
 };
 
-module.exports = ['AD', '$scope', '$rootScope', '$q', '$http', 'Backend', '$ionicPopup', 'XiaJia', Controller];
+module.exports = ['AD', '$scope', '$rootScope', '$q', '$http', 'Backend', '$ionicPopup', 'XiaJia', '$interval', Controller];
