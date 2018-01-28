@@ -248,8 +248,8 @@ app.config(function ($stateProvider, $urlRouterProvider) {
               },
           })
           // 外库大件下架
-          .state('ad-waiku-xiajia', {
-              url: '/ad/xiajia-waiku',
+          .state('ad-off-waiku', {
+              url: '/ad/off-waiku',
               views: {
                   dash: {
                       template: require('../pages/ad-board/waiku.html'),

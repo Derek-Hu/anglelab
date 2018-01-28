@@ -1932,6 +1932,18 @@ div.pull .bz-menu .list.card > div > div, .popup-container.shangjiaSelectKuwei .
 .xiajia.waiku.content-wrapper table span.waiku-qiangda-btn:last-child{
   background-color: #F5AA35;
 }
+.xiajia.waiku.content-wrapper div.refresh{
+  width: 5em;
+  height: 50px;
+  line-height: 50px;
+  background: #149fdd;
+  color: #FFF;
+  float: right;
+  cursor: pointer;
+  border: 1px solid #EEE;
+  border-radius: 0.2em;
+  text-align: center;
+}
 .xiajia.waiku.content-wrapper table span.waiku-qiangda-btn,
 .xiajia.waiku.content-wrapper table span.waiku-xiajia-btn {
   min-width: 3em;

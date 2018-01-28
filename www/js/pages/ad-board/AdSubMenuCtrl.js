@@ -3,10 +3,15 @@ var Controller = function ($scope, localStorageService, $state) {
     $scope.$on('$ionicView.enter', function () {
         $scope.menuConfig = {
             off: {
-                name: '下架',
-                enName: 'off the shelf',
-                show: false,
-              },
+              name: '下架',
+              enName: 'off the shelf',
+              show: false,
+            },
+            'off-waiku':{
+              name: '下架(外)',
+              enName: 'off the shelf',
+              show: false
+            },
             start: {
                 name: '上线',
                 enName: 'on-line',

@@ -26,7 +26,29 @@ module.exports = {
           /*eslint-disable*/
           $http({ method: 'GET', url: Backend().waikuXiajiaList + params }).
           success(function (data, status, headers) {
-              if (data && 'data' in data) {
+              if (data && 'warehouselist' in data) {
+                if(data.crossingList){
+                  data.daokou = data.crossingList.map(function(item){
+                    return {
+                      name: item,
+                      value: item
+                    }
+                  })
+                }
+                if(data.warehouselist){
+                  data.cangku = data.warehouselist.map(function(item){
+                    return {
+                      name: item.whseName,
+                      value: item.whseId
+                    }
+                  })
+                }
+                if(data.recordList){
+                  data.data = data.recordList.map(function(item){
+                    item.ID = item.id;
+                    return item;
+                  })
+                }
                 deferred.resolve(data);
               } else {
                 deferred.reject((data && data.respCode) ? data.respCode : null);
