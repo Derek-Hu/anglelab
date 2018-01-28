@@ -247,6 +247,16 @@ app.config(function ($stateProvider, $urlRouterProvider) {
                   },
               },
           })
+          // 外库大件下架
+          .state('ad-waiku-xiajia', {
+              url: '/ad/xiajia-waiku',
+              views: {
+                  dash: {
+                      template: require('../pages/ad-board/waiku.html'),
+                      controller: require('../pages/ad-board/WaiKuCtrl'),
+                    },
+                },
+            })
         // 零件库存
         .state('ad-kucun', {
             url: '/ad/kucun/:itemCode',

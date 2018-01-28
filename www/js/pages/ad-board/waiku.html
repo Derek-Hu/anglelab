@@ -1,0 +1,79 @@
+<ion-view hide-nav-bar="true" hide-back-button="true">
+    <ion-header-bar align-title="center">
+        <single-title title="外库大件下架"></single-title>
+    </ion-header-bar>
+    <ion-content class="bgFF" style="background: #FFF;bottom: 4em;" on-double-tap="goHome('kqhz')">
+        <div class="kqhz gwrx xiajia waiku content-wrapper">
+            <p ng-if="noPermission" ng-bind="noPermission" style="font-size: 1.5em"></p>
+            <div ng-hide="noPermission">
+                <div class="list" style="width: 20em;">
+                    <label class="item item-input item-select">
+                        <div class="input-label">
+                            目的仓库
+                        </div>
+                        <select ng-model="selectedTargetCangKu" ng-options="m.name for m in membersObj" ng-change="loadItems(selectedMemeber)"></select>
+                    </label>
+                </div>
+                <div class="list" style="width: 20em;">
+                    <label class="item item-input item-select">
+                        <div class="input-label">
+                            发出道口
+                        </div>
+                        <select ng-model="selectedDaoKou" ng-options="m.name for m in membersObj" ng-change="loadItems(selectedMemeber)"></select>
+                    </label>
+                </div>
+                <div class="refresh">
+                  <span>刷新</span>
+                </div>
+                <table ng-hide="noPermission">
+                    <thead>
+                        <tr>
+                            <th>序号</th>
+                            <th>零件代码</th>
+                            <th>推荐库位</th>
+                            <th>推荐料箱</th>
+                            <th>总箱数</th>
+                            <th>截止拣货时间</th>
+                            <th>发出道口</th>
+                            <th>目的仓库</th>
+                            <th>紧急件</th>
+                            <th>操作</th>
+                        </tr>
+                    </thead>
+                    <tbody ng-show="loadingItems || errorMsg" class="errorMsg">
+                        <tr>
+                            <td colspan="10">
+                                <span ng-bind="errorMsg?errorMsg:loadingItems" style="display: inline;">加载中</span>
+                            </td>
+                        </tr>
+                    </tbody>
+                    <tbody ng-repeat="r in itemMembers">
+                        <tr ng-class="{isColorRed: r.isColorRed===1 || r.isColorRed==='1'}">
+                            <td ng-bind="$index+1"></td>
+                            <td ng-bind="r.itemCode"></td>
+                            <td ng-bind="r.locCode"></td>
+                            <td ng-bind="r.lp"></td>
+                            <td ng-bind="r.needMuQty"></td>
+                            <td ng-bind="r.duedate"></td>
+                            <td ng-bind="r.srcCrossing"></td>
+                            <td ng-bind="r.destWhseName"></td>
+                            <td ng-bind="(r.isUrgency===1 || r.isUrgency==='1')?'是':'否'"></td>
+                            <td class="operation">
+                                <span class="waiku-xiajia-btn" ng-show="r.IsQd===1 || r.IsQd==='1'" ng-click="showXiajia(r)">下架</span>
+                                <span class="waiku-qiangda-btn" ng-show="r.IsQd===0 || r.IsQd==='0'" ng-click="showQiangda(r)">抢答</span>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </ion-content>
+    <ion-footer-bar>
+        <div class="quickNav">
+            <!-- <a ng-click="loadList()"><span class="glyphicon glyphicon glyphicon-repeat"></span></a> -->
+            <a href="#/ad/sub-permssion"><span class="glyphicon glyphicon-circle-arrow-left"></span></a>
+            <a href="#/login-dashboard"><span class="glyphicon glyphicon-home"></span></a>
+            <a href="#/ad/login"><span class="glyphicon glyphicon-log-out"></span></a>
+        </div>
+    </ion-footer-bar>
+</ion-view>

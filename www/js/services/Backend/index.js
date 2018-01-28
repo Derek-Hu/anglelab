@@ -4,7 +4,7 @@ module.exports = {
         // Might use a resource here that returns a JSON array
         var baseURL = '', shangjiaWithKuwei,
             kaoqin, kuqu, banzu, banci, metaData, org, gwrx, lgjh, kpi, shangjiaListURL, shangjiaURL;
-        var xiajiaListURL, xiajiaURL, pullListURL, startListURL, startActionURL, pullActionURL, pullHistoryURL, kucunListURL, adMemberURL, adAllMemberURL, adModifyMemberURL, login, userAuth;
+        var xiajiaListURL,waikuXiajiaList,waikuQiangda,waikuXiajiaAction, xiajiaURL, pullListURL, startListURL, startActionURL, pullActionURL, pullHistoryURL, kucunListURL, adMemberURL, adAllMemberURL, adModifyMemberURL, login, userAuth;
 
         /*
         var org = $resource('js/test/org.json');
@@ -51,6 +51,9 @@ module.exports = {
               // http://192.168.0.147:8083/AdPull/Login.aspx?name=wmh&pwd=1111
               login = baseURL + '/AdPull/Login.aspx';
               userAuth = baseURL + '/AdPull/UserAuthority.aspx';
+              waikuXiajiaList = baseURL + '/AdPull/LocGetDownList.aspx';
+              waikuQiangda = baseURL + '/AdPull/LocAdAnswer.aspx';
+              waikuXiajiaAction = baseURL + '/AdPull/LocDownShelves.aspx';
             }
 
             return {
@@ -79,6 +82,9 @@ module.exports = {
                 startListURL: startListURL,
                 startActionURL: startActionURL,
                 pullHistoryURL: pullHistoryURL,
+                waikuXiajiaList: waikuXiajiaList,
+                waikuQiangda: waikuQiangda,
+                waikuXiajiaAction: waikuXiajiaAction
               };
           };
       }, ],

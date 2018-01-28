@@ -1929,6 +1929,17 @@ div.pull .bz-menu .list.card > div > div, .popup-container.shangjiaSelectKuwei .
     border-radius: 0.2em;
 }
 
+.xiajia.waiku.content-wrapper table span.waiku-qiangda-btn:last-child{
+  background-color: #F5AA35;
+}
+.xiajia.waiku.content-wrapper table span.waiku-qiangda-btn,
+.xiajia.waiku.content-wrapper table span.waiku-xiajia-btn {
+  min-width: 3em;
+  width: 100%;
+}
+.xiajia.waiku.content-wrapper table tr.isColorRed td {
+  color: red;
+}
 .xiajia.member.content-wrapper table td.operation {
     text-align: right;
 }
@@ -2045,5 +2056,5 @@ border-radius: 0.5em;
 }
 .popup-container.shangjiaSelectKuwei .list.card span.first{
   color: #159EDC;
-font-weight: bold;
+  font-weight: bold;
 }
