@@ -53,6 +53,8 @@ module.exports = {
                                 data.permssionMap.AD.push('start');
                               } else if (auth[i].name === '下架') {
                                 data.permssionMap.AD.push('off');
+                              } else if (auth[i].name === '下架(外)') {
+                                data.permssionMap.AD.push('off-waiku');
                               } else if (auth[i].name === '人员调整') {
                                 data.permssionMap.AD.push('member');
                               } else if (auth[i].name === '上架') {

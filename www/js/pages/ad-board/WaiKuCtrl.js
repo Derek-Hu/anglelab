@@ -5,6 +5,7 @@ var Controller = function (AD, $scope, $rootScope, $q, $http, Backend, $ionicPop
         return;
     }
     $scope.noPermission = null;
+    $scope.criteria = {};
 
     function doQiangda(item) {
         XiaJia.qiangda('?queueId=' +item.ID+ '&userName='+$rootScope.loginUser.loginNme).then(function(data) {
@@ -67,97 +68,88 @@ var Controller = function (AD, $scope, $rootScope, $q, $http, Backend, $ionicPop
           }
       });
     };
-    $scope.loadItems = function(selectedMemeber) {
-        if (selectedMemeber) {
-            $scope.loadingItems = '加载中';
-            $scope.itemMembers = [];
-            $scope.loadItemMembers(selectedMemeber).then(function(data) {
-                $scope.loadingItems = null;
-                if (!data || !data.length) {
-                    $scope.loadingItems = '暂无数据';
-                    return;
-                }
-
-                $scope.itemMembers = data.map(function(elem) {
-                    elem.txt = (elem.firstUser === elem.lastUser) ? '修改' : '还原';
-                    return elem;
-                });
-            }, function() {
-                $scope.loadingItems = '加载失败';
-            });
-        }
-    };
+    $scope.tryRefresh = function(){
+      if($scope.errorMsg === '加载中'){
+        return false;
+      }
+      $scope.loadList();
+    }
     $scope.loadList = function() {
         $scope.errorMsg = '加载中';
         $scope.itemMembers = [];
-        var selectTarget = (!$scope.selectedTargetCangKu || $scope.selectedTargetCangKu==='全部')?0:$scope.selectedTargetCangKu;
-        var selectDaoKou = (!$scope.selectedDaoKou || $scope.selectedDaoKou==='全部')?'':$scope.selectedDaoKou;
+        var selectTarget = (!$scope.criteria.selectedTargetCangKu || $scope.criteria.selectedTargetCangKu.value==='全部')?0:$scope.criteria.selectedTargetCangKu.value;
+        var selectDaoKou = (!$scope.criteria.selectedDaoKou || $scope.criteria.selectedDaoKou.value==='全部')?'':$scope.criteria.selectedDaoKou.value;
 
         XiaJia.getWaiKuList('?whseId=' +$rootScope.loginUser.whseId+ '&userName='+$rootScope.loginUser.loginNme+ '&destWhseId='+selectTarget+ '&shipCrossing=' +selectDaoKou).then(function(data) {
             $scope.errorMsg = null;
 
+            if(data.cangku){
+              data.cangku.unshift({
+                name: '全部',
+                value: '全部'
+              })
+            }
+            if(data.daokou){
+              data.daokou.unshift({
+                name: '全部',
+                value: '全部'
+              })
+            }
+            if(!isEqual(data.cangku, $scope.cangku)){
+              if(!$scope.cangku){
+                $scope.criteria.selectedTargetCangKu =  data.cangku[0];
+              }else{
+                $scope.criteria.selectedTargetCangKu = findElem(data.cangku, $scope.criteria.selectedTargetCangKu);
+              }
+
+              $scope.cangku = data.cangku;
+            }
+
+
+            if(!isEqual(data.daokou, $scope.daokou)){
+              if(!$scope.daokou){
+                $scope.criteria.selectedDaoKou =  data.daokou[0];
+              }else{
+                $scope.criteria.selectedDaoKou = findElem(data.daokou, $scope.criteria.selectedDaoKou);
+              }
+              $scope.daokou = data.daokou;
+            }
             $scope.itemMembers = data.data;
         }, function() {
             $scope.errorMsg = '加载失败';
         });
     };
-    $scope.loadItemMembers = function(member) {
-        var deferred = $q.defer();
-
-        $http({
-            method: 'GET',
-            /*eslint-disable*/
-            url: Backend().adMemberURL + '?groupId=' + $rootScope.loginUser.groupId + (member ? ('&lastUser=' + member.id) : '')
-        }).
-        success(function(data) {
-            if (data && Object.prototype.toString.call(data) === '[object Array]') {
-                deferred.resolve(data);
-            } else {
-                deferred.reject(null);
-            }
-        }).
-        error(function() {
-            deferred.reject(null);
-        });
-        return deferred.promise;
-    };
-    $scope.modifyMember = function(item) {
-        var isRevert;
-
-        // 修改中, 还原中
-        if (item.txt.indexOf('中') !== -1) {
-            return;
+    function findElem(array, elem){
+      var i, len= array.length;
+      for(i=0;i<len;i++){
+        if(array[i].name === elem.name && array[i].name === elem.name ){
+          return array[i];
         }
-        // 还原中
-        isRevert = (item.firstUser !== item.lastUser);
-
-        if (isRevert) {
-            doModify(item, item.firstUser, isRevert);
-        } else {
-            $scope.showModifyMember(item, isRevert);
+      }
+      return null;
+    }
+    function isEqual(first, next){
+      if(first === next){
+        return true;
+      }
+      if(!first || !next){
+        return false;
+      }
+      var fL = first.length, nL = next.length;
+      if(fL!==nL){
+        return false;
+      }
+      var idx;
+      for(idx=0;idx<fL;idx++){
+        if(first[idx].name !== next[idx].name){
+          return false;
         }
-    };
-
-    $scope.getMembers = function() {
-        var deferred = $q.defer();
-
-        $http({
-            method: 'GET',
-            /*eslint-disable*/
-            url: Backend().adAllMemberURL + '?groupId=' + $rootScope.loginUser.groupId
-        }).
-        success(function(data) {
-            if (data && Object.prototype.toString.call(data) === '[object Array]') {
-                deferred.resolve(data);
-            } else {
-                deferred.reject(null);
-            }
-        }).
-        error(function() {
-            deferred.reject(null);
-        });
-        return deferred.promise;
-    };
+        if(first[idx].value !== next[idx].value){
+          return false;
+        }
+      }
+      return true;
+    }
     $scope.$on('$ionicView.enter', function() {
         $scope.errorMsg = '加载中';
 

@@ -6,25 +6,23 @@
         <div class="kqhz gwrx xiajia waiku content-wrapper">
             <p ng-if="noPermission" ng-bind="noPermission" style="font-size: 1.5em"></p>
             <div ng-hide="noPermission">
-                <div class="list" style="width: 20em;">
+                <div class="list" style="width: 20em;float:left;">
                     <label class="item item-input item-select">
                         <div class="input-label">
                             目的仓库
                         </div>
-                        <select ng-model="selectedTargetCangKu" ng-options="m.name for m in membersObj" ng-change="loadItems(selectedMemeber)"></select>
+                        <select ng-model="criteria.selectedTargetCangKu" ng-options="m.name for m in cangku" ng-change="loadList()"></select>
                     </label>
                 </div>
-                <div class="list" style="width: 20em;">
+                <div class="list" style="width: 20em;float:left;margin-left:2em;">
                     <label class="item item-input item-select">
                         <div class="input-label">
                             发出道口
                         </div>
-                        <select ng-model="selectedDaoKou" ng-options="m.name for m in membersObj" ng-change="loadItems(selectedMemeber)"></select>
+                        <select ng-model="criteria.selectedDaoKou" ng-options="m.name for m in daokou" ng-change="loadList()"></select>
                     </label>
                 </div>
-                <div class="refresh">
-                  <span>刷新</span>
-                </div>
+                <div class="refresh" ng-click="tryRefresh()">刷新</div>
                 <table ng-hide="noPermission">
                     <thead>
                         <tr>
@@ -54,13 +52,13 @@
                             <td ng-bind="r.locCode"></td>
                             <td ng-bind="r.lp"></td>
                             <td ng-bind="r.needMuQty"></td>
-                            <td ng-bind="r.duedate"></td>
+                            <td ng-bind="r.dueDate"></td>
                             <td ng-bind="r.srcCrossing"></td>
                             <td ng-bind="r.destWhseName"></td>
                             <td ng-bind="(r.isUrgency===1 || r.isUrgency==='1')?'是':'否'"></td>
                             <td class="operation">
-                                <span class="waiku-xiajia-btn" ng-show="r.IsQd===1 || r.IsQd==='1'" ng-click="showXiajia(r)">下架</span>
-                                <span class="waiku-qiangda-btn" ng-show="r.IsQd===0 || r.IsQd==='0'" ng-click="showQiangda(r)">抢答</span>
+                                <span class="waiku-xiajia-btn" ng-show="r.isQd===1 || r.isQd==='1'" ng-click="showXiajia(r)">下架</span>
+                                <span class="waiku-qiangda-btn" ng-show="r.isQd===0 || r.isQd==='0'" ng-click="showQiangda(r)">抢答</span>
                             </td>
                         </tr>
                     </tbody>
