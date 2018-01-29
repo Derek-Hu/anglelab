@@ -1,9 +1,5 @@
 var Controller = function (AD, $scope, $rootScope, $q, $http, Backend, $ionicPopup, XiaJia, $interval) {
 
-    // if ($rootScope.loginUser.groupId === '0') {
-    //     $scope.noPermission = '用户班组未维护';
-    //     return;
-    // }
     $scope.noPermission = null;
     $scope.criteria = {};
 
@@ -175,10 +171,6 @@ var Controller = function (AD, $scope, $rootScope, $q, $http, Backend, $ionicPop
     $scope.$on('$ionicView.enter', function() {
         $scope.errorMsg = '加载中';
 
-        if ($rootScope.loginUser.groupId === '0') {
-            $scope.noPermission = '用户班组未维护';
-            return;
-        }
         $scope.isPopShowing = false;
         $scope.errorMsg = null;
         $scope.noPermission = null;
