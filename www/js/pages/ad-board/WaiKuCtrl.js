@@ -1,9 +1,9 @@
 var Controller = function (AD, $scope, $rootScope, $q, $http, Backend, $ionicPopup, XiaJia, $interval) {
 
-    if ($rootScope.loginUser.groupId === '0') {
-        $scope.noPermission = '用户班组未维护';
-        return;
-    }
+    // if ($rootScope.loginUser.groupId === '0') {
+    //     $scope.noPermission = '用户班组未维护';
+    //     return;
+    // }
     $scope.noPermission = null;
     $scope.criteria = {};
 
